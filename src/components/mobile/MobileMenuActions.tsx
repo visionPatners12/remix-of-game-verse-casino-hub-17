@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/ui';
-import { Bell, MessageSquare, Globe, History, ChevronRight, Ticket, CreditCard, Images, Settings } from 'lucide-react';
+import { Bell, MessageSquare, Gamepad2, Wallet, Images, Settings } from 'lucide-react';
 import { MenuAction } from '@/components/shared/MenuAction';
 import { SoonOverlay } from '@/components/ui/SoonOverlay';
 
@@ -24,9 +24,15 @@ export function MobileMenuActions({
       <div>
         <h3 className="text-xs font-medium text-muted-foreground px-4 py-2 bg-muted/20">Action Center</h3>
         <MenuAction 
-          icon={Ticket} 
+          icon={Gamepad2} 
           label="Mes Parties" 
           onClick={() => onNavigate('/my-games')}
+          variant="mobile"
+        />
+        <MenuAction 
+          icon={Wallet} 
+          label="Wallet" 
+          onClick={() => onNavigate('/wallet')}
           variant="mobile"
         />
         <MenuAction 
