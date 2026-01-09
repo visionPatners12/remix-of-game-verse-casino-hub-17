@@ -28,6 +28,12 @@ export default function ShareTarget() {
       if (url.hostname.includes('pryzen') || url.hostname.includes('localhost')) {
         targetPath = url.pathname + url.search;
         
+        // Handle Ludo game room links: /games/ludo/play/:gameId
+        const ludoMatch = url.pathname.match(/^\/games\/ludo\/play\/([a-zA-Z0-9-]+)$/);
+        if (ludoMatch) {
+          targetPath = `/games/ludo/play/${ludoMatch[1]}`;
+        }
+        
         // Handle referral codes
         const refCode = url.searchParams.get('ref');
         if (refCode) {
@@ -42,11 +48,17 @@ export default function ShareTarget() {
         }
       }
     } catch {
-      // If not a valid URL, check if it contains a referral code pattern
-      const codeMatch = sharedUrl.match(/\/r\/([A-Za-z0-9]+)/);
-      if (codeMatch) {
-        saveReferralCode(codeMatch[1]);
-        targetPath = '/auth';
+      // If not a valid URL, check for Ludo game link pattern
+      const ludoMatch = sharedUrl.match(/\/games\/ludo\/play\/([a-zA-Z0-9-]+)/);
+      if (ludoMatch) {
+        targetPath = `/games/ludo/play/${ludoMatch[1]}`;
+      } else {
+        // Check if it contains a referral code pattern
+        const codeMatch = sharedUrl.match(/\/r\/([A-Za-z0-9]+)/);
+        if (codeMatch) {
+          saveReferralCode(codeMatch[1]);
+          targetPath = '/auth';
+        }
       }
     }
     

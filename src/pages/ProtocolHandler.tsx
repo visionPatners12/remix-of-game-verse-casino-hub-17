@@ -21,15 +21,22 @@ export default function ProtocolHandler() {
       // Format: web+pryzen://path or web+pryzen:path
       const cleanUrl = protocolUrl.replace(/^web\+pryzen:\/?\/?/, '');
       
+      // Handle Ludo game room links: games/ludo/play/ROOM_ID
+      const gameMatch = cleanUrl.match(/^games\/ludo\/play\/([a-zA-Z0-9-]+)/);
+      if (gameMatch) {
+        targetPath = `/games/ludo/play/${gameMatch[1]}`;
+      }
       // Handle referral code format: r/CODE
-      const referralMatch = cleanUrl.match(/^r\/([A-Za-z0-9]+)/);
-      if (referralMatch) {
-        saveReferralCode(referralMatch[1]);
-        targetPath = '/auth';
-      } else if (cleanUrl.startsWith('/')) {
-        targetPath = cleanUrl;
-      } else if (cleanUrl) {
-        targetPath = '/' + cleanUrl;
+      else {
+        const referralMatch = cleanUrl.match(/^r\/([A-Za-z0-9]+)/);
+        if (referralMatch) {
+          saveReferralCode(referralMatch[1]);
+          targetPath = '/auth';
+        } else if (cleanUrl.startsWith('/')) {
+          targetPath = cleanUrl;
+        } else if (cleanUrl) {
+          targetPath = '/' + cleanUrl;
+        }
       }
     } catch {
       // Fallback to home

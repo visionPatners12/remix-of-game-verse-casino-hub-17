@@ -1,0 +1,23 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["*"],
+        "components": [
+          {
+            "/": "/games/ludo/*",
+            "comment": "Matches all Ludo game URLs"
+          },
+          {
+            "/": "/r/*",
+            "comment": "Matches all referral URLs"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": []
+  }
+}
