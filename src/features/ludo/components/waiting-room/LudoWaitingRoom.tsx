@@ -36,15 +36,25 @@ interface LudoWaitingRoomProps {
 // Countdown component
 const CountdownOverlay: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
   const [count, setCount] = useState(3);
+  const [showGo, setShowGo] = useState(false);
+  const hasCalledComplete = React.useRef(false);
 
   useEffect(() => {
     if (count > 0) {
       const timer = setTimeout(() => setCount(count - 1), 1000);
       return () => clearTimeout(timer);
-    } else {
-      onComplete();
+    } else if (count === 0 && !showGo) {
+      // Show GO! for 800ms before calling onComplete
+      setShowGo(true);
+      const goTimer = setTimeout(() => {
+        if (!hasCalledComplete.current) {
+          hasCalledComplete.current = true;
+          onComplete();
+        }
+      }, 800);
+      return () => clearTimeout(goTimer);
     }
-  }, [count, onComplete]);
+  }, [count, showGo, onComplete]);
 
   return (
     <motion.div
@@ -69,8 +79,9 @@ const CountdownOverlay: React.FC<{ onComplete: () => void }> = ({ onComplete }) 
           <motion.div
             key="go"
             initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            animate={{ scale: 1.2, opacity: 1 }}
             exit={{ scale: 2, opacity: 0 }}
+            transition={{ duration: 0.3 }}
             className="text-6xl font-bold text-primary animated-gradient-text"
           >
             GO!
