@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
-import { Dice5, Gamepad2, MessageCircle, TrendingUp } from "lucide-react";
+import { Dice5, Gamepad2, Wallet } from "lucide-react";
 import { FaBasketballBall } from "react-icons/fa";
 import { useAuth } from "@/hooks/useAuth";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -53,7 +53,7 @@ export const MobileBottomBar = () => {
     },
     {
       to: "/wallet",
-      icon: <Gamepad2 className="text-lg mb-0.5" />,
+      icon: <Wallet className="text-lg mb-0.5" />,
       label: t('menu.wallet'),
       isActive: location.pathname === "/wallet" || location.pathname.startsWith("/wallet")
     },

@@ -15,7 +15,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useBaseBetslip } from '@azuro-org/sdk';
 
 // Icônes Lucide React
-import { MessageCircle, Dice5, Gamepad2, Ticket, Search, TrendingUp } from "lucide-react";
+import { Dice5, Gamepad2, Wallet } from "lucide-react";
 import { FaBasketballBall } from "react-icons/fa";
 
 interface NavigationContentProps {
@@ -55,7 +55,7 @@ export const NavigationContent = ({ disableNavigation = false }: NavigationConte
     { 
       label: t('menu.wallet'), 
       href: "/wallet", 
-      icon: <Dice5 className="text-sm sm:text-base md:text-lg" />
+      icon: <Wallet className="text-sm sm:text-base md:text-lg" />
     },
   ];
 
@@ -112,15 +112,6 @@ export const NavigationContent = ({ disableNavigation = false }: NavigationConte
                 disableNavigation={disableNavigation}
                 isLoading={isLoading}
               />
-              
-              
-              {/* Search Icon for Mobile */}
-              <Link 
-                to="/search" 
-                className="p-2.5 hover:bg-muted/20 transition-all duration-200 rounded-lg"
-              >
-                <Search className="h-5 w-5 text-foreground" />
-              </Link>
             </div>
           </div>
         </div>
@@ -150,14 +141,6 @@ export const NavigationContent = ({ disableNavigation = false }: NavigationConte
           />
           
           <div className="flex items-center gap-3">
-            
-            {/* Search Icon for Desktop */}
-            <Link 
-              to="/search" 
-              className="p-2.5 hover:bg-muted/20 transition-all duration-200 rounded-lg"
-            >
-              <Search className="h-5 w-5 text-foreground" />
-            </Link>
             
             <UserSection
               isAuthenticated={!!session}
