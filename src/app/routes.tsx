@@ -18,6 +18,7 @@ const PageLoader = () => (
 );
 
 // Lazy loaded pages with retry
+const Games = lazyWithRetry(() => import('@/pages/Games'));
 const Dashboard = lazyWithRetry(() => import('@/pages/Dashboard'));
 const PublicHome = lazyWithRetry(() => import('@/pages/PublicHome'));
 const News = lazyWithRetry(() => import('@/pages/News'));
@@ -77,10 +78,18 @@ export function AppRoutes() {
       <Suspense fallback={<PageLoader />}>
         <Routes>
           {/* Landing route - redirects authenticated users to dashboard */}
+        {/* Redirection vers Games (Ludo) */}
         <Route path="/" element={
           <PublicRoute>
             <LandingHome />
           </PublicRoute>
+        } />
+        
+        {/* Dashboard redirige vers games */}
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Games />
+          </ProtectedRoute>
         } />
         
         {/* Auth routes - critical */}

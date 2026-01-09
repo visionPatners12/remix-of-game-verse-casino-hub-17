@@ -48,45 +48,23 @@ export const NavigationContent = ({ disableNavigation = false }: NavigationConte
   
   const authenticatedNavItems: NavItem[] = [
     { 
-      label: t('menu.feed'), 
-      href: "/dashboard", 
-      icon: <MessageCircle className="text-sm sm:text-base md:text-lg" /> 
-    },
-    { 
-      label: t('menu.sport'),
-      href: "/sports",
-      icon: <FaBasketballBall className="text-sm sm:text-base md:text-lg" />
-    },
-    { 
-      label: t('menu.polymarket'), 
-      href: "/polymarket", 
-      icon: <TrendingUp className="text-sm sm:text-base md:text-lg" />
-    },
-    { 
       label: t('menu.game'), 
       href: "/games", 
-      icon: <Gamepad2 className="text-sm sm:text-base md:text-lg" />,
-      badge: t('badges.soon')
+      icon: <Gamepad2 className="text-sm sm:text-base md:text-lg" />
+    },
+    { 
+      label: t('menu.wallet'), 
+      href: "/wallet", 
+      icon: <Dice5 className="text-sm sm:text-base md:text-lg" />
     },
   ];
 
   const publicNavItems: NavItem[] = [
     { 
-      label: t('menu.sport'), 
-      href: "/sports",
-      icon: <FaBasketballBall className="text-sm sm:text-base md:text-lg" />
-    },
-    { 
-      label: t('menu.polymarket'), 
-      href: "/polymarket", 
-      icon: <TrendingUp className="text-sm sm:text-base md:text-lg" />
-    },
-    { 
       label: t('menu.game'), 
       href: "/games", 
-      icon: <Gamepad2 className="text-sm sm:text-base md:text-lg" />,
-      badge: t('badges.soon')
-    }
+      icon: <Gamepad2 className="text-sm sm:text-base md:text-lg" />
+    },
   ];
   
   const handleLogout = async () => {

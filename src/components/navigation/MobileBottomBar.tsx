@@ -46,29 +46,16 @@ export const MobileBottomBar = () => {
       isActive: location.pathname === "/mobile-menu"
     },
     {
-      to: "/dashboard",
-      icon: <MessageCircle className="text-lg mb-0.5" />,
-      label: t('menu.feed'),
-      isActive: location.pathname === "/dashboard"
-    },
-    {
-      to: "/sports",
-      icon: <FaBasketballBall className="text-lg mb-0.5" />,
-      label: t('menu.sport'),
-      isActive: location.pathname === "/sports" || location.pathname.startsWith("/sports")
-    },
-    {
-      to: "/polymarket",
-      icon: <TrendingUp className="text-lg mb-0.5" />,
-      label: t('menu.polymarket'),
-      isActive: location.pathname === "/polymarket" || location.pathname.startsWith("/polymarket")
-    },
-    {
       to: "/games",
       icon: <Dice5 className="text-lg mb-0.5" />,
       label: t('menu.game'),
-      badge: t('badges.soon'),
       isActive: location.pathname === "/games" || location.pathname.startsWith("/games")
+    },
+    {
+      to: "/wallet",
+      icon: <Gamepad2 className="text-lg mb-0.5" />,
+      label: t('menu.wallet'),
+      isActive: location.pathname === "/wallet" || location.pathname.startsWith("/wallet")
     },
   ];
 
@@ -87,14 +74,14 @@ export const MobileBottomBar = () => {
               <span className="text-[9px] font-medium text-center leading-none">
                 {item.label}
               </span>
-              {item.badge && (
+              {'badge' in item && item.badge && (
                 <Badge className={cn(
                   "absolute -top-0.5 -right-0.5 h-4 w-4 p-0 text-[7px] flex items-center justify-center border-2 border-background",
                   isDisabled 
                     ? "bg-amber-500/20 text-amber-500 border-amber-500/30" 
                     : "bg-destructive text-destructive-foreground"
                 )}>
-                  {item.badge}
+                  {String(item.badge)}
                 </Badge>
               )}
             </>
