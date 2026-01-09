@@ -9,9 +9,7 @@ import { useState } from "react";
 import { Menu, ArrowRight } from "lucide-react";
 
 const navLinks = [
-  { href: "/discover/sports", label: "Sports" },
-  { href: "/discover/gaming", label: "Games" },
-  { href: "/discover/web3", label: "Web3" },
+  { href: "/games", label: "Jeux" },
   { href: "/roadmap", label: "Roadmap" },
 ];
 
@@ -44,12 +42,12 @@ export function LandingNavbar() {
         <div className="hidden md:flex items-center gap-3">
           <Link to="/auth">
             <Button variant="ghost" size="sm">
-              Log In
+              Connexion
             </Button>
           </Link>
           <Link to="/auth">
             <Button size="sm" className="gap-1">
-              Get Started <ArrowRight className="w-3.5 h-3.5" />
+              Jouer maintenant <ArrowRight className="w-3.5 h-3.5" />
             </Button>
           </Link>
         </div>
@@ -85,11 +83,11 @@ export function LandingNavbar() {
 
               <div className="border-t border-border pt-4 space-y-2">
                 <Link to="/auth" onClick={() => setMobileOpen(false)}>
-                  <Button className="w-full">Get Started</Button>
+                  <Button className="w-full">Jouer maintenant</Button>
                 </Link>
                 <Link to="/auth" onClick={() => setMobileOpen(false)}>
                   <Button variant="outline" className="w-full">
-                    Log In
+                    Connexion
                   </Button>
                 </Link>
               </div>

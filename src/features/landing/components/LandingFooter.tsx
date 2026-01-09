@@ -14,34 +14,32 @@ export function LandingFooter() {
               <span className="text-lg font-semibold">PRYZEN</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              The social network for sports fans.
+              Jeux on-chain avec mises en USDT sur Polygon.
             </p>
           </div>
 
           {/* Product */}
           <div>
-            <h4 className="font-medium mb-3 text-sm">Product</h4>
+            <h4 className="font-medium mb-3 text-sm">Produit</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/discover/sports" className="hover:text-foreground transition-colors">Sports</Link></li>
-              <li><Link to="/discover/gaming" className="hover:text-foreground transition-colors">Games</Link></li>
-              <li><Link to="/discover/web3" className="hover:text-foreground transition-colors">Web3</Link></li>
+              <li><Link to="/games" className="hover:text-foreground transition-colors">Jeux</Link></li>
               <li><Link to="/roadmap" className="hover:text-foreground transition-colors">Roadmap</Link></li>
             </ul>
           </div>
 
           {/* Legal */}
           <div>
-            <h4 className="font-medium mb-3 text-sm">Legal</h4>
+            <h4 className="font-medium mb-3 text-sm">Légal</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
-              <li><Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/responsible-gaming" className="hover:text-foreground transition-colors">Responsible Gaming</Link></li>
+              <li><Link to="/terms" className="hover:text-foreground transition-colors">Conditions d'utilisation</Link></li>
+              <li><Link to="/privacy" className="hover:text-foreground transition-colors">Politique de confidentialité</Link></li>
+              <li><Link to="/responsible-gaming" className="hover:text-foreground transition-colors">Jeu responsable</Link></li>
             </ul>
           </div>
 
           {/* Social */}
           <div>
-            <h4 className="font-medium mb-3 text-sm">Community</h4>
+            <h4 className="font-medium mb-3 text-sm">Communauté</h4>
             <div className="flex gap-3">
               <a 
                 href="https://twitter.com/pryzen" 
@@ -82,14 +80,14 @@ export function LandingFooter() {
 
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <p>© {currentYear} PRYZEN. All rights reserved.</p>
+          <p>© {currentYear} PRYZEN. Tous droits réservés.</p>
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1.5">
               <span className="w-5 h-5 rounded-full bg-destructive/20 text-destructive flex items-center justify-center text-[10px] font-bold">18+</span>
-              Adults only
+              Réservé aux adultes
             </span>
             <span className="text-border">•</span>
-            <span>Play responsibly</span>
+            <span>Jouez de manière responsable</span>
           </div>
         </div>
       </div>

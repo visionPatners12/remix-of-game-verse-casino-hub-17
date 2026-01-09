@@ -4,143 +4,140 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LandingLayout } from "../components/LandingLayout";
-import { SportsTicker } from "../components/shared/SportsTicker";
 import { DownloadButtons } from "../components/shared/DownloadButtons";
 import { PhoneMockup } from "../components/shared/PhoneMockup";
 import { ScreenshotPlaceholder } from "../components/shared/ScreenshotPlaceholder";
 import { useStandaloneMode } from "@/hooks/useStandaloneMode";
 import { 
-  Newspaper, 
-  Users, 
-  Radio, 
   Gamepad2,
   UserPlus,
-  Heart,
   Trophy,
   ArrowRight,
-  Coins,
-  Image,
-  Lock,
-  Rocket,
+  Wallet,
+  Users,
+  Zap,
   CheckCircle2,
   Circle,
-  Zap
+  DollarSign,
+  Shield,
+  Clock,
+  Dices
 } from "lucide-react";
 
 const highlights = [
   {
-    icon: Newspaper,
-    title: "Your Sports Feed",
-    description: "Follow the teams and players that matter to you. Comments, analyses, real-time debates."
+    icon: Gamepad2,
+    title: "Ludo On-Chain",
+    description: "Le jeu de société classique revisité. Misez en USDT et affrontez jusqu'à 4 joueurs en temps réel."
+  },
+  {
+    icon: Wallet,
+    title: "Wallet Intégré",
+    description: "Déposez et retirez en USDT sur Polygon. Transactions rapides et frais minimes."
   },
   {
     icon: Users,
-    title: "Top Tipsters",
-    description: "Discover tipsters with the best track records. Copy their analyses or create your own."
+    title: "Parties Privées",
+    description: "Créez des parties privées et invitez vos amis. Choisissez le montant de la mise."
   },
   {
-    icon: Radio,
-    title: "Every Match Live",
-    description: "Live stats, lineups, real-time odds. Everything you need to follow the action."
-  },
-  {
-    icon: Gamepad2,
-    title: "Play with Friends",
-    description: "Challenge your friends on Ludo and other games. Crypto stakes, instant results."
+    icon: Zap,
+    title: "Gains Instantanés",
+    description: "Victoire = gains directs dans votre wallet. Pas d'attente, pas d'intermédiaire."
   }
 ];
 
 const steps = [
   {
     icon: UserPlus,
-    title: "Create your account",
-    description: "Sign up in 30 seconds with email or wallet"
+    title: "Connectez-vous",
+    description: "Email ou wallet crypto en quelques secondes"
   },
   {
-    icon: Heart,
-    title: "Follow your favorites",
-    description: "Teams, players, tipsters - build your personalized feed"
+    icon: DollarSign,
+    title: "Déposez des USDT",
+    description: "Minimum 5 USDT sur Polygon pour commencer"
   },
   {
     icon: Trophy,
-    title: "Share and win",
-    description: "Post your analyses, climb the leaderboards"
+    title: "Jouez et gagnez",
+    description: "Rejoignez une partie ou créez la vôtre"
   }
 ];
 
-const web3Features = [
+const features = [
   {
-    icon: Coins,
-    title: "PRZ Token",
-    description: "Earn tokens for activity, tips, and engagement"
+    icon: Gamepad2,
+    title: "Ludo Multiplayer",
+    description: "Affrontez jusqu'à 4 joueurs en temps réel. Mises flexibles de 1 à 100 USDT. Le gagnant remporte la mise totale.",
+    mockupLabel: "Ludo Game",
+    reverse: false
   },
   {
-    icon: Image,
-    title: "NFT Rewards",
-    description: "Every winning bet generates a unique collectible NFT"
+    icon: Wallet,
+    title: "Wallet Crypto",
+    description: "Gérez vos USDT facilement. Dépôts et retraits rapides sur Polygon. Historique complet de vos transactions.",
+    mockupLabel: "Wallet",
+    reverse: true
   },
   {
-    icon: Lock,
-    title: "Staking",
-    description: "Stake PRZ to unlock premium features and rewards"
+    icon: Trophy,
+    title: "Historique & Stats",
+    description: "Suivez toutes vos parties, vos victoires et vos gains. Statistiques détaillées de votre progression.",
+    mockupLabel: "Stats",
+    reverse: false
+  },
+  {
+    icon: Dices,
+    title: "Plus de jeux bientôt",
+    description: "Crash, Dice, et d'autres jeux classiques arrivent. Même système de mise USDT, même expérience fluide.",
+    mockupLabel: "Coming Soon",
+    reverse: true
   }
 ];
 
 const roadmapPhases = [
   {
     phase: "Phase 1",
-    title: "Foundation",
-    status: "completed",
-    items: ["Social feed", "Tipster profiles", "Live scores"]
+    title: "Lancement",
+    status: "current",
+    items: ["Ludo multiplayer", "Wallet USDT", "Profils joueurs"]
   },
   {
     phase: "Phase 2",
-    title: "Expansion",
-    status: "current",
-    items: ["Mobile app", "Ludo games", "Premium tipsters"]
+    title: "Social",
+    status: "upcoming",
+    items: ["Tournois", "Leaderboards", "Invitations amis"]
   },
   {
     phase: "Phase 3",
-    title: "Web3 & Rewards",
+    title: "Expansion",
     status: "upcoming",
-    items: ["PRZ Token", "NFT rewards", "Staking"]
+    items: ["Crash game", "Dice game", "Card games"]
   },
   {
     phase: "Phase 4",
-    title: "Gaming Hub",
+    title: "Rewards",
     status: "upcoming",
-    items: ["More games", "Tournaments", "Leaderboards"]
+    items: ["Token rewards", "NFT achievements", "VIP program"]
   }
 ];
 
-const features = [
+const trustFeatures = [
   {
-    icon: Newspaper,
-    title: "Your Sports Feed",
-    description: "Follow the teams and players that matter to you. Get real-time updates, comments, and expert analyses all in one place.",
-    mockupLabel: "Sports Feed",
-    reverse: false
+    icon: Shield,
+    title: "100% On-Chain",
+    description: "Toutes les transactions sont vérifiables sur la blockchain Polygon"
   },
   {
-    icon: Users,
-    title: "Top Tipsters",
-    description: "Discover tipsters with verified track records. Follow their predictions, learn from the best, or become one yourself.",
-    mockupLabel: "Tipsters",
-    reverse: true
+    icon: Clock,
+    title: "Retraits Instantanés",
+    description: "Vos gains sont disponibles immédiatement dans votre wallet"
   },
   {
-    icon: Radio,
-    title: "Every Match Live",
-    description: "Live stats, lineups, real-time odds and score updates. Never miss a moment of the action.",
-    mockupLabel: "Live Matches",
-    reverse: false
-  },
-  {
-    icon: Gamepad2,
-    title: "Play with Friends",
-    description: "Challenge your friends on Ludo and other games. Stake crypto, compete for prizes, instant results.",
-    mockupLabel: "Games",
-    reverse: true
+    icon: DollarSign,
+    title: "Frais Minimes",
+    description: "Profitez des frais réduits du réseau Polygon"
   }
 ];
 
@@ -149,19 +146,16 @@ export function LandingHome() {
   const { isStandalone } = useStandaloneMode();
 
   useEffect(() => {
-    // PWA mode: redirect to auth (PublicRoute will handle if already logged in)
     if (isStandalone) {
       navigate('/auth', { replace: true });
     }
   }, [isStandalone, navigate]);
-
-  // Note: Authenticated user redirect is handled by PublicRoute wrapper in routes.tsx
   
   return (
     <LandingLayout>
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/3 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
         <div className="container px-4 py-24 md:py-40 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -169,54 +163,69 @@ export function LandingHome() {
             transition={{ duration: 0.5 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <p className="text-sm text-muted-foreground uppercase tracking-wider mb-4">
-              The social network for sports fans
-            </p>
+            <Badge variant="outline" className="mb-6 border-primary/50 text-primary gap-1.5">
+              <Zap className="w-3 h-3" /> Powered by Polygon
+            </Badge>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              Share your passion.
-              <span className="block text-primary">Join the community.</span>
+              Jouez. Misez.
+              <span className="block text-primary">Gagnez.</span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-10">
-              Follow the best tipsters, debate with your community, 
-              and experience every match intensely.
+              Affrontez vos amis sur des jeux classiques. 
+              Mises en USDT sur Polygon. Gains instantanés.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
               <Link to="/auth">
-                <Button size="lg" className="w-full sm:w-auto px-8">
-                  Get Started Free
+                <Button size="lg" className="w-full sm:w-auto px-8 gap-2">
+                  <Gamepad2 className="w-5 h-5" />
+                  Commencer à jouer
                 </Button>
               </Link>
-              <Link to="/discover">
+              <Link to="/games">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 gap-2">
-                  Discover <ArrowRight className="w-4 h-4" />
+                  Voir les jeux <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
             </div>
 
-            {/* Prominent Download Buttons */}
+            {/* Download Buttons */}
             <div className="pt-6 border-t border-border/30">
-              <p className="text-sm text-muted-foreground mb-4">Download the app</p>
+              <p className="text-sm text-muted-foreground mb-4">Téléchargez l'app</p>
               <DownloadButtons size="lg" className="justify-center" />
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Sports Ticker */}
-      <SportsTicker />
+      {/* Trust Bar */}
+      <section className="py-8 border-y border-border/20 bg-muted/30">
+        <div className="container px-4">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+            {trustFeatures.map((feature) => (
+              <div key={feature.title} className="flex items-center gap-3">
+                <feature.icon className="w-5 h-5 text-primary" />
+                <div>
+                  <p className="text-sm font-medium">{feature.title}</p>
+                  <p className="text-xs text-muted-foreground hidden sm:block">{feature.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Highlights Section */}
       <section className="py-20 md:py-28">
         <div className="container px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Everything to experience sports differently
+              Le gaming on-chain simplifié
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              A platform built for true fans
+              Tout ce qu'il faut pour jouer et gagner en crypto
             </p>
           </div>
 
@@ -248,15 +257,15 @@ export function LandingHome() {
         <div className="container px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              See it in action
+              Découvrez l'expérience
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              Designed for the best mobile experience
+              Une app conçue pour le gaming mobile
             </p>
           </div>
 
           <div className="space-y-24">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <motion.div
                 key={feature.title}
                 initial={{ opacity: 0, y: 40 }}
@@ -290,10 +299,10 @@ export function LandingHome() {
         <div className="container px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              How it works
+              Comment ça marche
             </h2>
             <p className="text-muted-foreground">
-              Join the community in 3 steps
+              Commencez à jouer en 3 étapes
             </p>
           </div>
 
@@ -323,64 +332,15 @@ export function LandingHome() {
         </div>
       </section>
 
-      {/* Web3 Rewards Section */}
-      <section className="py-20 md:py-28 bg-accent/20">
-        <div className="container px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <Badge variant="outline" className="mb-4 border-primary/50 text-primary">
-              COMING SOON
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Web3 Rewards Ecosystem
-            </h2>
-            <p className="text-muted-foreground max-w-lg mx-auto">
-              Earn PRZ tokens for your activity. Every winning bet generates a unique NFT collectible.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
-            {web3Features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="p-6 rounded-2xl border border-border/50 bg-card/50 text-center"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link to="/discover/web3">
-              <Button variant="outline" size="lg" className="gap-2">
-                Learn More <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Roadmap Preview Section */}
-      <section className="py-20 md:py-28">
+      <section className="py-20 md:py-28 bg-accent/20">
         <div className="container px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Our Roadmap
+              Notre Roadmap
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              Building the future of sports social networking
+              L'évolution de la plateforme gaming
             </p>
           </div>
 
@@ -426,7 +386,7 @@ export function LandingHome() {
           <div className="text-center">
             <Link to="/roadmap">
               <Button variant="outline" size="lg" className="gap-2">
-                View Full Roadmap <ArrowRight className="w-4 h-4" />
+                Voir la roadmap complète <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
           </div>
@@ -443,10 +403,10 @@ export function LandingHome() {
             className="text-center max-w-xl mx-auto"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to join the community?
+              Prêt à jouer ?
             </h2>
             <p className="text-muted-foreground mb-8">
-              Download the app and start sharing your analyses today.
+              Téléchargez l'app et commencez à gagner dès aujourd'hui.
             </p>
             <DownloadButtons size="lg" className="justify-center" />
           </motion.div>
