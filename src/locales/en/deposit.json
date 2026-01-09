@@ -12,7 +12,7 @@
     "title": "Choose Deposit Method",
     "crypto": {
       "title": "Cryptocurrency",
-      "description": "USDT Polygon only"
+      "description": "Deposit with USDT"
     },
     "coinbase": {
       "title": "Coinbase Pay",

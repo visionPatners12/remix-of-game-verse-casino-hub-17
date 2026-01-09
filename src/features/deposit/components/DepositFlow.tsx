@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Wallet, CreditCard, Smartphone, Building2, ChevronRight, Check, Copy, Shield, Clock, AlertCircle } from 'lucide-react';
-import { CopyAddressCard } from '@/components/shared/CopyAddressCard';
+import { ArrowLeft, Smartphone, Building2, ChevronRight, Check, Copy, Shield, Clock, AlertCircle } from 'lucide-react';
 import { useDeposit } from '../hooks/useDeposit';
 import { useUnifiedWallet } from '@/features/wallet';
 import { useFundWallet } from '@privy-io/react-auth';
@@ -11,6 +10,7 @@ import { base } from 'viem/chains';
 import { cn } from '@/lib/utils';
 import QRCode from 'react-qr-code';
 import { toast } from 'sonner';
+import coinbaseLogo from '@/assets/coinbase-logo.png';
 
 type DepositMethod = 'crypto' | 'coinbase' | 'mobile-money' | 'bank-transfer' | 'apple-pay';
 
@@ -18,7 +18,7 @@ interface DepositMethodOption {
   id: DepositMethod;
   titleKey: string;
   descriptionKey: string;
-  icon: React.ElementType;
+  iconType: 'usdt' | 'coinbase' | 'smartphone' | 'bank';
   available: boolean;
   recommended?: boolean;
 }
@@ -39,7 +39,7 @@ const DepositFlow = () => {
       id: 'crypto',
       titleKey: 'methods.crypto.title',
       descriptionKey: 'methods.crypto.description',
-      icon: Wallet,
+      iconType: 'usdt',
       available: true,
       recommended: true
     },
@@ -47,24 +47,45 @@ const DepositFlow = () => {
       id: 'coinbase',
       titleKey: 'methods.coinbase.title',
       descriptionKey: 'methods.coinbase.description',
-      icon: CreditCard,
+      iconType: 'coinbase',
       available: false
     },
     {
       id: 'mobile-money',
       titleKey: 'methods.mobileMoney.title',
       descriptionKey: 'methods.mobileMoney.description',
-      icon: Smartphone,
+      iconType: 'smartphone',
       available: false
     },
     {
       id: 'bank-transfer',
       titleKey: 'methods.bankTransfer.title',
       descriptionKey: 'methods.bankTransfer.description',
-      icon: Building2,
+      iconType: 'bank',
       available: false
     }
   ];
+
+  const renderMethodIcon = (iconType: DepositMethodOption['iconType'], available: boolean) => {
+    const iconClass = cn("h-5 w-5", available ? "text-primary" : "text-muted-foreground");
+    
+    switch (iconType) {
+      case 'usdt':
+        return (
+          <img 
+            src="https://cryptologos.cc/logos/tether-usdt-logo.svg" 
+            alt="USDT" 
+            className="h-6 w-6"
+          />
+        );
+      case 'coinbase':
+        return <img src={coinbaseLogo} alt="Coinbase" className="h-6 w-6" />;
+      case 'smartphone':
+        return <Smartphone className={iconClass} />;
+      case 'bank':
+        return <Building2 className={iconClass} />;
+    }
+  };
 
   const handleApplePayFund = async () => {
     if (!address) return;
@@ -134,7 +155,6 @@ const DepositFlow = () => {
   const renderMethodSelection = () => (
     <div className="px-4 py-6 space-y-2">
       {depositMethods.map((method) => {
-        const Icon = method.icon;
         return (
           <button
             key={method.id}
@@ -149,13 +169,10 @@ const DepositFlow = () => {
             )}
           >
             <div className={cn(
-              "w-11 h-11 rounded-full flex items-center justify-center",
+              "w-11 h-11 rounded-full flex items-center justify-center overflow-hidden",
               method.available ? "bg-primary/10" : "bg-muted"
             )}>
-              <Icon className={cn(
-                "h-5 w-5",
-                method.available ? "text-primary" : "text-muted-foreground"
-              )} />
+              {renderMethodIcon(method.iconType, method.available)}
             </div>
             
             <div className="flex-1 text-left">
