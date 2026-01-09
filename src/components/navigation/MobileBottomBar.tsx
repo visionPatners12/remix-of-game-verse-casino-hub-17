@@ -1,12 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Dice5, Gamepad2, Wallet } from "lucide-react";
-import { FaBasketballBall } from "react-icons/fa";
+import { Wallet } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Avatar, AvatarFallback, AvatarImage, Badge } from "@/ui";
 import { getMetadataString, type UserMetadata } from "@/types/user-metadata";
+import { LudoIcon } from "./LudoIcon";
 
 export const MobileBottomBar = () => {
   const location = useLocation();
@@ -47,9 +48,10 @@ export const MobileBottomBar = () => {
     },
     {
       to: "/games",
-      icon: <Dice5 className="text-lg mb-0.5" />,
+      icon: <LudoIcon size={20} className="mb-0.5" />,
       label: t('menu.game'),
-      isActive: location.pathname === "/games" || location.pathname.startsWith("/games")
+      isActive: location.pathname === "/games" || location.pathname.startsWith("/games"),
+      hasActiveGame: true // Demo: show pulsing badge when game in progress
     },
     {
       to: "/wallet",
@@ -65,12 +67,21 @@ export const MobileBottomBar = () => {
       <div className="flex items-center justify-around py-2 max-w-sm mx-auto h-16">
         {navigationItems.map((item) => {
           const isDisabled = 'comingSoon' in item && item.comingSoon;
+          const hasActiveGame = 'hasActiveGame' in item && item.hasActiveGame;
           
           const content = item.component || (
             <>
-              <div className="flex items-center justify-center h-5 w-5 mb-0.5">
+              <motion.div 
+                className="relative flex items-center justify-center h-5 w-5 mb-0.5"
+                whileTap={{ scale: 0.85 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 {item.icon}
-              </div>
+                {/* Pulsing badge for active game */}
+                {hasActiveGame && !item.isActive && (
+                  <span className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-emerald-500 animate-[active-game-pulse_2s_ease-in-out_infinite]" />
+                )}
+              </motion.div>
               <span className="text-[9px] font-medium text-center leading-none">
                 {item.label}
               </span>
@@ -108,9 +119,15 @@ export const MobileBottomBar = () => {
           }
           
           return (
-            <Link key={item.to} to={item.to} className={baseClassName}>
-              {content}
-            </Link>
+            <motion.div
+              key={item.to}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <Link to={item.to} className={baseClassName}>
+                {content}
+              </Link>
+            </motion.div>
           );
         })}
       </div>
