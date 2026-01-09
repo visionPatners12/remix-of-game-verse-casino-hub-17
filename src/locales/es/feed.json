@@ -1,0 +1,81 @@
+{
+  "navigation": {
+    "forYou": "Para ti",
+    "betsHub": "Hub de apuestas",
+    "bets": "Apuestas",
+    "predictions": "Predicciones",
+    "highlights": "Destacados",
+    "trending": "Tendencias",
+    "hot": "Caliente",
+    "liveNow": "En vivo ahora",
+    "live": "En vivo",
+    "liveBadge": "EN VIVO"
+  },
+  "loading": {
+    "initStream": "Inicializando Stream...",
+    "feed": "Cargando feed...",
+    "socialFeed": "Cargando feed social...",
+    "bets": "Cargando apuestas...",
+    "predictions": "Cargando predicciones...",
+    "trendingTopics": "Cargando temas tendencia...",
+    "more": "Cargando más...",
+    "generic": "Cargando..."
+  },
+  "empty": {
+    "noPosts": "No hay publicaciones disponibles por el momento.",
+    "noBets": "No hay apuestas disponibles por el momento.",
+    "noPredictions": "No hay predicciones disponibles por el momento.",
+    "noTrending": "Sin temas tendencia ahora mismo",
+    "noMatchPredictions": "Aún no hay predicciones ni apuestas para este partido",
+    "predictionsWillAppear": "Las predicciones y apuestas aparecerán aquí",
+    "noComments": "Aún no hay comentarios",
+    "beFirst": "¡Sé el primero en comentar!"
+  },
+  "end": {
+    "allPosts": "Has visto todas las publicaciones",
+    "allBets": "Has visto todas las apuestas",
+    "allPredictions": "Has visto todas las predicciones",
+    "allLoaded": "Todas las publicaciones cargadas"
+  },
+  "error": {
+    "unableToLoad": "No se pudo cargar el feed",
+    "somethingWrong": "Algo salió mal al cargar tu feed. Por favor, intenta de nuevo.",
+    "tryAgain": "Intentar de nuevo"
+  },
+  "focus": {
+    "post": "Publicación",
+    "highlight": "Destacado",
+    "match": "Partido",
+    "comments": "Comentarios",
+    "goToMatch": "Ir al partido"
+  },
+  "live": {
+    "title": "En vivo",
+    "liveCount": "{{count}} en vivo",
+    "createLive": "Crear un directo",
+    "upcoming": "Próximos"
+  },
+  "trending": {
+    "title": "Tendencias",
+    "hashtags": "Hashtags tendencia",
+    "popularPosts": "Publicaciones populares",
+    "disabledMessage": "Publicaciones tendencia deshabilitadas temporalmente durante refactorización"
+  },
+  "tipsters": {
+    "title": "Top Tipsters",
+    "top4": "Top 4",
+    "seeAll": "Ver todos",
+    "viewRankings": "Ver clasificación",
+    "tips": "tips",
+    "winRate": "Tasa de aciertos",
+    "avgOdds": "Cuota media",
+    "form": "Forma",
+    "open": "Abrir"
+  },
+  "ticket": {
+    "bet": "Apuesta",
+    "prediction": "Predicción",
+    "parlay": "Combinada",
+    "single": "Simple"
+  }
+}

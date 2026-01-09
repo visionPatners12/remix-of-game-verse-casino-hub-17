@@ -1,0 +1,51 @@
+{
+  "title": "Recherche",
+  "placeholder": "Rechercher utilisateurs, équipes, ligues...",
+  "placeholderShort": "Rechercher...",
+  "clear": "Effacer",
+  "cancel": "Annuler",
+  "tabs": {
+    "all": "Tout",
+    "users": "Utilisateurs",
+    "leagues": "Ligues",
+    "teams": "Équipes",
+    "players": "Joueurs",
+    "matches": "Matchs"
+  },
+  "recent": {
+    "title": "Recherches récentes",
+    "clear": "Tout effacer",
+    "noRecent": "Aucune recherche récente"
+  },
+  "trending": {
+    "title": "Tendances",
+    "topics": "Sujets tendance",
+    "searches": "Recherches populaires"
+  },
+  "suggested": {
+    "title": "Suggestions",
+    "users": "Utilisateurs suggérés",
+    "teams": "Équipes populaires",
+    "leagues": "Top ligues"
+  },
+  "results": {
+    "title": "Résultats",
+    "showAll": "Voir tous les résultats",
+    "noResults": "Aucun résultat trouvé",
+    "tryDifferent": "Essaie un autre terme de recherche",
+    "found": "{{count}} résultats trouvés"
+  },
+  "filters": {
+    "title": "Filtres",
+    "sport": "Sport",
+    "country": "Pays",
+    "verified": "Vérifiés uniquement",
+    "apply": "Appliquer les filtres",
+    "reset": "Réinitialiser"
+  },
+  "actions": {
+    "follow": "Suivre",
+    "following": "Suivi",
+    "view": "Voir"
+  }
+}

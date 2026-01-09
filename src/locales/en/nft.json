@@ -1,0 +1,71 @@
+{
+  "title": "NFT Collections",
+  "myNFTs": "My NFTs",
+  "explore": "Explore",
+  "create": "Create",
+  "collection": {
+    "title": "Collection",
+    "items": "items",
+    "owners": "owners",
+    "floorPrice": "Floor Price",
+    "volume": "Volume",
+    "description": "Description",
+    "viewAll": "View All"
+  },
+  "item": {
+    "owner": "Owner",
+    "creator": "Creator",
+    "price": "Price",
+    "lastSale": "Last Sale",
+    "rarity": "Rarity",
+    "traits": "Traits",
+    "history": "History",
+    "buy": "Buy Now",
+    "makeOffer": "Make Offer",
+    "transfer": "Transfer",
+    "sell": "Sell",
+    "burn": "Burn"
+  },
+  "mint": {
+    "title": "Mint NFT",
+    "upload": "Upload File",
+    "dragDrop": "Drag & drop or click to upload",
+    "formats": "PNG, JPG, GIF, MP4 (Max 50MB)",
+    "name": "Name",
+    "description": "Description",
+    "collection": "Collection",
+    "properties": "Properties",
+    "addProperty": "Add Property",
+    "supply": "Supply",
+    "royalties": "Royalties",
+    "mint": "Mint",
+    "minting": "Minting..."
+  },
+  "transfer": {
+    "title": "Transfer NFT",
+    "recipient": "Recipient Address",
+    "confirm": "Confirm Transfer",
+    "warning": "This action is irreversible"
+  },
+  "filters": {
+    "title": "Filters",
+    "priceRange": "Price Range",
+    "rarity": "Rarity",
+    "traits": "Traits",
+    "status": "Status",
+    "forSale": "For Sale",
+    "hasOffers": "Has Offers"
+  },
+  "sort": {
+    "title": "Sort By",
+    "priceAsc": "Price: Low to High",
+    "priceDesc": "Price: High to Low",
+    "recent": "Recently Listed",
+    "oldest": "Oldest"
+  },
+  "empty": {
+    "noItems": "No NFTs found",
+    "noCollections": "No collections found",
+    "startCollecting": "Start collecting NFTs"
+  }
+}

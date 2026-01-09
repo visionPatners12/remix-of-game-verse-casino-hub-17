@@ -1,0 +1,289 @@
+/* === PRIVY MODAL CUSTOMIZATION === */
+/* Global CSS variables to customize all visual aspects of the Privy modal */
+
+:root {
+  /* ========== COLORS ========== */
+  /* Background colors */
+  --privy-color-background: hsl(var(--background));
+  --privy-color-background-2: hsl(var(--card));
+  
+  /* Foreground/text colors */
+  --privy-color-foreground: hsl(var(--foreground));
+  --privy-color-foreground-2: hsl(var(--muted-foreground));
+  --privy-color-foreground-3: hsl(var(--muted-foreground) / 0.7);
+  --privy-color-foreground-4: hsl(var(--muted-foreground) / 0.5);
+  
+  /* Accent/primary colors */
+  --privy-color-accent: hsl(var(--primary));
+  --privy-color-accent-light: hsl(var(--primary) / 0.1);
+  --privy-color-accent-dark: hsl(var(--primary));
+  
+  /* Success/error colors */
+  --privy-color-success: hsl(142 76% 36%);
+  --privy-color-error: hsl(var(--destructive));
+  --privy-color-warn: hsl(38 92% 50%);
+  
+  /* ========== BORDER RADIUS ========== */
+  --privy-border-radius-xs: 4px;
+  --privy-border-radius-sm: 8px;
+  --privy-border-radius-md: 12px;
+  --privy-border-radius-lg: 16px;
+  --privy-border-radius-xl: 20px;
+  --privy-border-radius-full: 9999px;
+  
+  /* Modal specific radius */
+  --privy-border-radius-modal: 20px;
+  --privy-border-radius-modal-desktop: 24px;
+  
+  /* ========== BORDERS ========== */
+  --privy-border-width: 1px;
+  --privy-border-color: hsl(var(--border));
+  --privy-border-color-light: hsl(var(--border) / 0.5);
+  
+  /* ========== SPACING ========== */
+  --privy-spacing-xs: 4px;
+  --privy-spacing-sm: 8px;
+  --privy-spacing-md: 16px;
+  --privy-spacing-lg: 24px;
+  --privy-spacing-xl: 32px;
+  
+  /* Modal padding */
+  --privy-modal-padding: 24px;
+  --privy-modal-padding-mobile: 20px;
+  
+  /* ========== SHADOWS ========== */
+  --privy-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --privy-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --privy-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --privy-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* Modal overlay */
+  --privy-overlay-background: rgb(0 0 0 / 0.6);
+  --privy-modal-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  
+  /* ========== TYPOGRAPHY ========== */
+  --privy-font-family: var(--font-family-sans);
+  --privy-font-size-xs: 12px;
+  --privy-font-size-sm: 14px;
+  --privy-font-size-md: 16px;
+  --privy-font-size-lg: 18px;
+  --privy-font-size-xl: 20px;
+  --privy-font-size-2xl: 24px;
+  
+  --privy-font-weight-normal: 400;
+  --privy-font-weight-medium: 500;
+  --privy-font-weight-semibold: 600;
+  --privy-font-weight-bold: 700;
+  
+  --privy-line-height-tight: 1.25;
+  --privy-line-height-normal: 1.5;
+  --privy-line-height-relaxed: 1.75;
+  
+  /* ========== BUTTONS ========== */
+  --privy-button-height: 48px;
+  --privy-button-height-sm: 40px;
+  --privy-button-padding-x: 20px;
+  --privy-button-font-size: 15px;
+  --privy-button-font-weight: 600;
+  --privy-button-border-radius: var(--privy-border-radius-md);
+  
+  /* Primary button */
+  --privy-button-primary-bg: hsl(var(--primary));
+  --privy-button-primary-bg-hover: hsl(var(--primary) / 0.9);
+  --privy-button-primary-text: hsl(var(--primary-foreground));
+  
+  /* Secondary button */
+  --privy-button-secondary-bg: hsl(var(--secondary));
+  --privy-button-secondary-bg-hover: hsl(var(--secondary) / 0.8);
+  --privy-button-secondary-text: hsl(var(--secondary-foreground));
+  
+  /* ========== INPUTS ========== */
+  --privy-input-height: 48px;
+  --privy-input-padding-x: 16px;
+  --privy-input-font-size: 16px;
+  --privy-input-border-radius: var(--privy-border-radius-md);
+  --privy-input-background: hsl(var(--input));
+  --privy-input-border-color: hsl(var(--border));
+  --privy-input-border-color-focus: hsl(var(--ring));
+  --privy-input-placeholder-color: hsl(var(--muted-foreground));
+  
+  /* ========== WALLET LIST ========== */
+  --privy-wallet-item-height: 56px;
+  --privy-wallet-item-padding: 12px 16px;
+  --privy-wallet-item-border-radius: var(--privy-border-radius-md);
+  --privy-wallet-item-bg: transparent;
+  --privy-wallet-item-bg-hover: hsl(var(--accent));
+  --privy-wallet-icon-size: 32px;
+  
+  /* ========== TRANSITIONS ========== */
+  --privy-transition-fast: 150ms ease;
+  --privy-transition-normal: 200ms ease;
+  --privy-transition-slow: 300ms ease;
+}
+
+/* Dark theme overrides (applied by default since we force dark mode) */
+.dark {
+  --privy-color-background: hsl(var(--background));
+  --privy-color-background-2: hsl(var(--card));
+  --privy-overlay-background: rgb(0 0 0 / 0.75);
+  --privy-modal-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+}
+
+/* ========== PRIVY MODAL STYLES ========== */
+/* These styles target Privy's internal components */
+
+/* Modal backdrop/overlay */
+[data-privy-dialog-backdrop] {
+  background: var(--privy-overlay-background) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Modal container */
+[data-privy-dialog] {
+  background: var(--privy-color-background) !important;
+  border-radius: var(--privy-border-radius-modal) !important;
+  box-shadow: var(--privy-modal-shadow) !important;
+  border: var(--privy-border-width) solid var(--privy-border-color) !important;
+  font-family: var(--privy-font-family) !important;
+  padding: var(--privy-modal-padding) !important;
+}
+
+/* Mobile modal adjustments */
+@media (max-width: 640px) {
+  [data-privy-dialog] {
+    padding: var(--privy-modal-padding-mobile) !important;
+    border-radius: var(--privy-border-radius-modal) var(--privy-border-radius-modal) 0 0 !important;
+  }
+}
+
+/* Modal header */
+[data-privy-dialog] h1,
+[data-privy-dialog] h2 {
+  color: var(--privy-color-foreground) !important;
+  font-family: var(--privy-font-family) !important;
+  font-weight: var(--privy-font-weight-semibold) !important;
+}
+
+/* Modal text */
+[data-privy-dialog] p,
+[data-privy-dialog] span {
+  color: var(--privy-color-foreground-2) !important;
+  font-family: var(--privy-font-family) !important;
+}
+
+/* Primary buttons */
+[data-privy-dialog] button[data-privy-button="primary"] {
+  background: var(--privy-button-primary-bg) !important;
+  color: var(--privy-button-primary-text) !important;
+  height: var(--privy-button-height) !important;
+  border-radius: var(--privy-button-border-radius) !important;
+  font-weight: var(--privy-button-font-weight) !important;
+  font-size: var(--privy-button-font-size) !important;
+  transition: background var(--privy-transition-fast) !important;
+}
+
+[data-privy-dialog] button[data-privy-button="primary"]:hover {
+  background: var(--privy-button-primary-bg-hover) !important;
+}
+
+/* Secondary/outline buttons */
+[data-privy-dialog] button[data-privy-button="secondary"],
+[data-privy-dialog] button[data-privy-button="outline"] {
+  background: var(--privy-button-secondary-bg) !important;
+  color: var(--privy-button-secondary-text) !important;
+  border: var(--privy-border-width) solid var(--privy-border-color) !important;
+  height: var(--privy-button-height) !important;
+  border-radius: var(--privy-button-border-radius) !important;
+  font-weight: var(--privy-button-font-weight) !important;
+  transition: background var(--privy-transition-fast) !important;
+}
+
+[data-privy-dialog] button[data-privy-button="secondary"]:hover,
+[data-privy-dialog] button[data-privy-button="outline"]:hover {
+  background: var(--privy-button-secondary-bg-hover) !important;
+}
+
+/* Input fields */
+[data-privy-dialog] input {
+  background: var(--privy-input-background) !important;
+  border: var(--privy-border-width) solid var(--privy-input-border-color) !important;
+  border-radius: var(--privy-input-border-radius) !important;
+  height: var(--privy-input-height) !important;
+  padding: 0 var(--privy-input-padding-x) !important;
+  font-size: var(--privy-input-font-size) !important;
+  color: var(--privy-color-foreground) !important;
+  transition: border-color var(--privy-transition-fast) !important;
+}
+
+[data-privy-dialog] input::placeholder {
+  color: var(--privy-input-placeholder-color) !important;
+}
+
+[data-privy-dialog] input:focus {
+  border-color: var(--privy-input-border-color-focus) !important;
+  outline: none !important;
+}
+
+/* Wallet list items */
+[data-privy-dialog] [data-privy-wallet-list] > div,
+[data-privy-dialog] [data-privy-connector-button] {
+  background: var(--privy-wallet-item-bg) !important;
+  border-radius: var(--privy-wallet-item-border-radius) !important;
+  padding: var(--privy-wallet-item-padding) !important;
+  transition: background var(--privy-transition-fast) !important;
+}
+
+[data-privy-dialog] [data-privy-wallet-list] > div:hover,
+[data-privy-dialog] [data-privy-connector-button]:hover {
+  background: var(--privy-wallet-item-bg-hover) !important;
+}
+
+/* Wallet icons */
+[data-privy-dialog] [data-privy-wallet-icon] {
+  width: var(--privy-wallet-icon-size) !important;
+  height: var(--privy-wallet-icon-size) !important;
+  border-radius: var(--privy-border-radius-sm) !important;
+}
+
+/* Dividers/separators */
+[data-privy-dialog] hr,
+[data-privy-dialog] [data-privy-divider] {
+  border-color: var(--privy-border-color-light) !important;
+}
+
+/* Links */
+[data-privy-dialog] a {
+  color: var(--privy-color-accent) !important;
+  transition: opacity var(--privy-transition-fast) !important;
+}
+
+[data-privy-dialog] a:hover {
+  opacity: 0.8;
+}
+
+/* Error messages */
+[data-privy-dialog] [data-privy-error] {
+  color: var(--privy-color-error) !important;
+  font-size: var(--privy-font-size-sm) !important;
+}
+
+/* Success messages */
+[data-privy-dialog] [data-privy-success] {
+  color: var(--privy-color-success) !important;
+}
+
+/* Close button */
+[data-privy-dialog] [data-privy-close-button] {
+  color: var(--privy-color-foreground-3) !important;
+  transition: color var(--privy-transition-fast) !important;
+}
+
+[data-privy-dialog] [data-privy-close-button]:hover {
+  color: var(--privy-color-foreground) !important;
+}
+
+/* Loading spinner */
+[data-privy-dialog] [data-privy-spinner] {
+  border-color: var(--privy-color-accent-light) !important;
+  border-top-color: var(--privy-color-accent) !important;
+}

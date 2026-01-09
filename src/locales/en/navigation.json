@@ -1,0 +1,39 @@
+{
+  "menu": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "feed": "Feed",
+    "sport": "Sport",
+    "polymarket": "Polymarket",
+    "game": "Game",
+    "profile": "Profile",
+    "settings": "Settings",
+    "search": "Search",
+    "notifications": "Notifications",
+    "messages": "Messages",
+    "wallet": "Wallet",
+    "history": "History",
+    "achievements": "Achievements",
+    "logout": "Logout",
+    "back": "Back",
+    "userMenu": "User Menu"
+  },
+  "quickActions": {
+    "title": "Quick Actions",
+    "bet": "Bet",
+    "wallet": "Wallet",
+    "messages": "Messages",
+    "performance": "Performance"
+  },
+  "links": {
+    "myProfile": "My Profile",
+    "history": "History",
+    "achievements": "Achievements",
+    "notifications": "Notifications",
+    "settings": "Settings"
+  },
+  "badges": {
+    "new": "New",
+    "soon": "Soon"
+  }
+}

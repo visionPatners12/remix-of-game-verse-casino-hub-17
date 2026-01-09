@@ -1,0 +1,71 @@
+{
+  "title": "Collections NFT",
+  "myNFTs": "Mes NFTs",
+  "explore": "Explorer",
+  "create": "Créer",
+  "collection": {
+    "title": "Collection",
+    "items": "éléments",
+    "owners": "propriétaires",
+    "floorPrice": "Prix plancher",
+    "volume": "Volume",
+    "description": "Description",
+    "viewAll": "Voir tout"
+  },
+  "item": {
+    "owner": "Propriétaire",
+    "creator": "Créateur",
+    "price": "Prix",
+    "lastSale": "Dernière vente",
+    "rarity": "Rareté",
+    "traits": "Traits",
+    "history": "Historique",
+    "buy": "Acheter",
+    "makeOffer": "Faire une offre",
+    "transfer": "Transférer",
+    "sell": "Vendre",
+    "burn": "Brûler"
+  },
+  "mint": {
+    "title": "Créer un NFT",
+    "upload": "Télécharger un fichier",
+    "dragDrop": "Glisser-déposer ou cliquer pour télécharger",
+    "formats": "PNG, JPG, GIF, MP4 (Max 50Mo)",
+    "name": "Nom",
+    "description": "Description",
+    "collection": "Collection",
+    "properties": "Propriétés",
+    "addProperty": "Ajouter une propriété",
+    "supply": "Quantité",
+    "royalties": "Royalties",
+    "mint": "Créer",
+    "minting": "Création en cours..."
+  },
+  "transfer": {
+    "title": "Transférer le NFT",
+    "recipient": "Adresse du destinataire",
+    "confirm": "Confirmer le transfert",
+    "warning": "Cette action est irréversible"
+  },
+  "filters": {
+    "title": "Filtres",
+    "priceRange": "Fourchette de prix",
+    "rarity": "Rareté",
+    "traits": "Traits",
+    "status": "Statut",
+    "forSale": "En vente",
+    "hasOffers": "Avec offres"
+  },
+  "sort": {
+    "title": "Trier par",
+    "priceAsc": "Prix : croissant",
+    "priceDesc": "Prix : décroissant",
+    "recent": "Récemment listés",
+    "oldest": "Plus anciens"
+  },
+  "empty": {
+    "noItems": "Aucun NFT trouvé",
+    "noCollections": "Aucune collection trouvée",
+    "startCollecting": "Commence à collectionner des NFTs"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "title": "Search",
+  "placeholder": "Search users, teams, leagues...",
+  "placeholderShort": "Search...",
+  "clear": "Clear",
+  "cancel": "Cancel",
+  "tabs": {
+    "all": "All",
+    "users": "Users",
+    "leagues": "Leagues",
+    "teams": "Teams",
+    "players": "Players",
+    "matches": "Matches"
+  },
+  "recent": {
+    "title": "Recent Searches",
+    "clear": "Clear All",
+    "noRecent": "No recent searches"
+  },
+  "trending": {
+    "title": "Trending",
+    "topics": "Trending Topics",
+    "searches": "Popular Searches"
+  },
+  "suggested": {
+    "title": "Suggested",
+    "users": "Suggested Users",
+    "teams": "Popular Teams",
+    "leagues": "Top Leagues"
+  },
+  "results": {
+    "title": "Results",
+    "showAll": "Show all results",
+    "noResults": "No results found",
+    "tryDifferent": "Try a different search term",
+    "found": "{{count}} results found"
+  },
+  "filters": {
+    "title": "Filters",
+    "sport": "Sport",
+    "country": "Country",
+    "verified": "Verified Only",
+    "apply": "Apply Filters",
+    "reset": "Reset"
+  },
+  "actions": {
+    "follow": "Follow",
+    "following": "Following",
+    "view": "View"
+  }
+}

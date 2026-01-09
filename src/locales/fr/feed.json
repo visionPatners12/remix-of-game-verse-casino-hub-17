@@ -1,0 +1,81 @@
+{
+  "navigation": {
+    "forYou": "Pour toi",
+    "betsHub": "Paris",
+    "bets": "Paris",
+    "predictions": "Pronostics",
+    "highlights": "Highlights",
+    "trending": "Tendances",
+    "hot": "Hot",
+    "liveNow": "En direct",
+    "live": "Live",
+    "liveBadge": "LIVE"
+  },
+  "loading": {
+    "initStream": "Initialisation du flux...",
+    "feed": "Chargement du feed...",
+    "socialFeed": "Chargement du feed social...",
+    "bets": "Chargement des paris...",
+    "predictions": "Chargement des pronostics...",
+    "trendingTopics": "Chargement des tendances...",
+    "more": "Chargement...",
+    "generic": "Chargement..."
+  },
+  "empty": {
+    "noPosts": "Aucun post disponible pour le moment.",
+    "noBets": "Aucun pari disponible pour le moment.",
+    "noPredictions": "Aucun pronostic disponible pour le moment.",
+    "noTrending": "Aucune tendance pour le moment",
+    "noMatchPredictions": "Aucun pronostic ou pari pour ce match",
+    "predictionsWillAppear": "Les pronostics et paris apparaîtront ici",
+    "noComments": "Pas encore de commentaires",
+    "beFirst": "Sois le premier à commenter !"
+  },
+  "end": {
+    "allPosts": "Tu as vu tous les posts",
+    "allBets": "Tu as vu tous les paris",
+    "allPredictions": "Tu as vu tous les pronostics",
+    "allLoaded": "Tous les posts sont chargés"
+  },
+  "error": {
+    "unableToLoad": "Impossible de charger le feed",
+    "somethingWrong": "Une erreur s'est produite lors du chargement. Réessaie.",
+    "tryAgain": "Réessayer"
+  },
+  "focus": {
+    "post": "Post",
+    "highlight": "Highlight",
+    "match": "Match",
+    "comments": "Commentaires",
+    "goToMatch": "Voir le match"
+  },
+  "live": {
+    "title": "En direct",
+    "liveCount": "{{count}} en direct",
+    "createLive": "Créer un live",
+    "upcoming": "À venir"
+  },
+  "trending": {
+    "title": "Tendances",
+    "hashtags": "Hashtags tendance",
+    "popularPosts": "Posts populaires",
+    "disabledMessage": "Posts tendance temporairement désactivés"
+  },
+  "tipsters": {
+    "title": "Top Tipsters",
+    "top4": "Top 4",
+    "seeAll": "Voir tout",
+    "viewRankings": "Voir le classement",
+    "tips": "tips",
+    "winRate": "Taux de réussite",
+    "avgOdds": "Cote moy.",
+    "form": "Forme",
+    "open": "En cours"
+  },
+  "ticket": {
+    "bet": "Bet",
+    "prediction": "Prono",
+    "parlay": "Combiné",
+    "single": "Simple"
+  }
+}

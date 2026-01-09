@@ -1,0 +1,1 @@
+export { CreatePostPageUI } from './CreatePostPageUI';

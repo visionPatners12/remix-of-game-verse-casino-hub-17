@@ -1,0 +1,28 @@
+project_id = "swgfutwpszlqdyrpwkhg"
+
+[functions.fetch-player-stats]
+verify_jwt = false
+
+[functions.fetch-match-lineup]
+verify_jwt = false
+
+[functions.fetch-match-data]
+verify_jwt = false
+
+[functions.fetch-match-boxscore]
+verify_jwt = false
+
+[functions.deploy-split]
+verify_jwt = false
+
+[functions.fetch-h2h]
+verify_jwt = false
+
+[functions.poll-tipster-subscriptions]
+verify_jwt = false
+
+[functions.generate-sitemap]
+verify_jwt = false
+
+[functions.indexnow]
+verify_jwt = false

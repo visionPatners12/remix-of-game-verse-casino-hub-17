@@ -1,0 +1,107 @@
+{
+  "buttons": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "submit": "Soumettre",
+    "back": "Retour",
+    "next": "Suivant",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "retry": "Réessayer",
+    "loading": "Chargement...",
+    "saveChanges": "Enregistrer les modifications",
+    "copy": "Copier",
+    "share": "Partager"
+  },
+  "tabs": {
+    "posts": "Publications",
+    "bets": "Paris",
+    "predictions": "Pronostics"
+  },
+  "errors": {
+    "generic": "Une erreur est survenue",
+    "notFound": "Non trouvé",
+    "unauthorized": "Non autorisé",
+    "networkError": "Erreur réseau",
+    "loadingError": "Erreur de chargement",
+    "checkConnection": "Veuillez vérifier votre connexion et réessayer.",
+    "tryAgain": "Veuillez réessayer",
+    "refresh": "Rafraîchir"
+  },
+  "status": {
+    "online": "En ligne",
+    "offline": "Hors ligne",
+    "loading": "Chargement",
+    "success": "Succès",
+    "error": "Erreur"
+  },
+  "settings": {
+    "username": "Nom d'utilisateur",
+    "noUsername": "Pas de nom d'utilisateur",
+    "email": "Email",
+    "noEmail": "Aucun email configuré",
+    "emailHint": "L'email ne peut pas être modifié depuis cette interface",
+    "phone": "Numéro de téléphone",
+    "phonePlaceholder": "+33 6 12 34 56 78",
+    "phoneHint": "Utilisé pour la vérification et la sécurité du compte",
+    "verify": "Vérifier",
+    "oddsFormat": "Format des cotes",
+    "oddsFormatHint": "Comment les cotes de paris sont affichées dans l'application",
+    "decimal": "Décimal",
+    "american": "Américain",
+    "fractional": "Fractionnaire",
+    "language": "Langue",
+    "languageHint": "Choisissez votre langue préférée",
+    "english": "Anglais",
+    "french": "Français",
+    "updating": "Mise à jour...",
+    "profileUpdated": "Profil mis à jour",
+    "profileUpdatedDesc": "Tes informations ont été enregistrées avec succès.",
+    "errorTitle": "Erreur",
+    "usernameTaken": "Ce nom d'utilisateur est déjà pris",
+    "errorUpdating": "Erreur lors de la mise à jour du profil"
+  },
+  "referral": {
+    "linkCopied": "Lien copié !",
+    "shareTitle": "Rejoins PRYZEN !",
+    "shareText": "Inscris-toi sur PRYZEN avec mon lien et reçois $10 de bonus !",
+  "yourReferralCode": "Ton Code de Parrainage",
+  "uniqueCode": "Ton code unique",
+  "peopleReferred": "personnes parrainées"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "tipster": {
+      "title": "Tipster Premium",
+      "description": "Monétise tes analyses sportives",
+      "benefits": {
+        "revenue": "Revenus récurrents",
+        "subscribers": "Abonnés payants",
+        "visibility": "Visibilité accrue",
+        "analytics": "Analytics détaillées"
+      },
+      "statusActive": "Profil actif",
+      "statusInactive": "Profil inactif",
+      "goToDashboard": "Accéder au tableau de bord Tipster",
+      "becomeTipster": "Devenir Tipster Premium"
+    },
+    "mlm": {
+      "title": "Programme de Parrainage",
+    "description": "Gagne des commissions en parrainant tes amis",
+    "benefits": {
+      "referral": "Parraine tes amis",
+      "commission": "Commissions sur les gains",
+        "network": "Réseau multi-niveaux"
+      }
+    }
+  },
+  "stats": {
+    "yourStats": "Tes Statistiques",
+    "referrals": "Filleuls",
+    "networkMargin": "Marge",
+    "totalEarnings": "Gains",
+    "pending": "En attente"
+  }
+}

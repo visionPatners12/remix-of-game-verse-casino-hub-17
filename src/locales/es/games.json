@@ -1,0 +1,61 @@
+{
+  "title": "Juegos",
+  "categories": {
+    "all": "Todos los juegos",
+    "board": "Juegos de mesa",
+    "casino": "Casino",
+    "sports": "Deportes"
+  },
+  "soon": "Próximamente",
+  "play": "Jugar ahora",
+  "players": "jugadores",
+  "ludo": {
+    "title": "Ludo",
+    "createGame": "Crear partida",
+    "joinGame": "Unirse a partida",
+    "joinWithCode": "Unirse con código",
+    "enterCode": "Introduce el código de sala",
+    "publicGames": "Partidas públicas",
+    "privateGame": "Partida privada",
+    "betAmount": "Cantidad de apuesta",
+    "maxPlayers": "Máx. jugadores",
+    "roomCode": "Código de sala",
+    "waitingForPlayers": "Esperando jugadores...",
+    "gameStarting": "Partida iniciando...",
+    "yourTurn": "¡Tu turno!",
+    "rollDice": "Tirar dado",
+    "selectPiece": "Selecciona una ficha para mover",
+    "colors": {
+      "red": "Rojo",
+      "blue": "Azul",
+      "green": "Verde",
+      "yellow": "Amarillo"
+    },
+    "status": {
+      "created": "Esperando",
+      "active": "En progreso",
+      "finished": "Terminada",
+      "abandoned": "Abandonada"
+    },
+    "winner": "Ganador",
+    "youWon": "¡Ganaste!",
+    "youLost": "Fin del juego",
+    "claimWinnings": "Reclamar ganancias",
+    "leaveGame": "Salir del juego",
+    "confirmLeave": "¿Seguro que quieres salir?",
+    "leaveWarning": "Perderás tu apuesta si sales.",
+    "depositRequired": "Depósito requerido",
+    "depositPending": "Depósito pendiente...",
+    "ready": "Listo",
+    "notReady": "No listo",
+    "startGame": "Iniciar partida",
+    "extraTurnOnSix": "Turno extra con 6",
+    "rules": {
+      "title": "Reglas del juego",
+      "rule1": "Saca un 6 para entrar una ficha",
+      "rule2": "Mueve las fichas en sentido horario",
+      "rule3": "Aterrizar sobre un oponente lo envía a casa",
+      "rule4": "El primero en llevar todas las fichas a casa gana"
+    }
+  }
+}

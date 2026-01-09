@@ -1,0 +1,29 @@
+===== KNIP CLEAN REPORT =====
+Date: Jeu 14 aoû 2025 11:04:44 WAT
+
+### Unused files (0)
+(none)
+
+### Unused dependencies (18)
+@dr.pogodin/react-helmet
+@faker-js/faker
+@reown/appkit-adapter-wagmi
+@stream-io/video-client
+@tamagui/config
+@tamagui/core
+@thirdweb-dev/wagmi-adapter
+canvas-confetti
+dayjs
+filepond
+filepond-plugin-file-validate-type
+filepond-plugin-image-preview
+filepond-plugin-image-resize
+react-day-picker
+react-filepond
+stream-chat
+use-sync-external-store
+zustand
+
+### Unused devDependencies (0)
+(none)
+

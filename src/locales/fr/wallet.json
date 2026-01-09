@@ -1,0 +1,74 @@
+{
+  "title": "Portefeuille",
+  "balance": "Solde",
+  "availableBalance": "Solde disponible",
+  "totalBalance": "Solde total",
+  "pendingBalance": "En attente",
+  "send": "Envoyer",
+  "receive": "Recevoir",
+  "deposit": "Déposer",
+  "withdraw": "Retirer",
+  "swap": "Échanger",
+  "buy": "Acheter",
+  "sell": "Vendre",
+  "copyAddress": "Copier l'adresse",
+  "addressCopied": "Adresse copiée !",
+  "scanQR": "Scanner le QR Code",
+  "shareAddress": "Partager l'adresse",
+  "transactions": {
+    "title": "Transactions",
+    "history": "Historique des transactions",
+    "pending": "En attente",
+    "completed": "Terminées",
+    "failed": "Échouées",
+    "noTransactions": "Aucune transaction",
+    "viewAll": "Voir tout",
+    "sent": "Envoyé",
+    "received": "Reçu",
+    "swapped": "Échangé",
+    "deposited": "Déposé",
+    "withdrawn": "Retiré"
+  },
+  "assets": {
+    "title": "Actifs",
+    "tokens": "Jetons",
+    "nfts": "NFTs",
+    "noAssets": "Aucun actif trouvé"
+  },
+  "network": {
+    "title": "Réseau",
+    "polygon": "Polygon",
+    "ethereum": "Ethereum",
+    "switchNetwork": "Changer de réseau"
+  },
+  "security": {
+    "title": "Sécurité",
+    "backup": "Sauvegarder le wallet",
+    "exportKey": "Exporter la clé privée",
+    "warning": "Ne partage jamais ta clé privée"
+  },
+  "ens": {
+    "domain": "Domaine ENS",
+    "fullAddress": "Adresse complète"
+  },
+  "clipboard": {
+    "copied": "Copié",
+    "addressCopied": "Adresse copiée",
+    "addressCopiedDesc": "Adresse du wallet copiée dans le presse-papier",
+    "txHashCopied": "Hash de transaction copié dans le presse-papier"
+  },
+  "qr": {
+    "title": "Mon Wallet Crypto",
+    "copyAddress": "Copier l'adresse",
+    "explorer": "Explorer"
+  },
+  "balance": {
+    "total": "Solde Total",
+    "connect": "Connecte ton wallet pour voir le solde"
+  },
+  "actions": {
+    "deposit": "Déposer",
+    "send": "Envoyer",
+    "receive": "Recevoir"
+  }
+}

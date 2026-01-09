@@ -1,0 +1,78 @@
+/* === BASE STYLES === */
+/* Reset and fundamental styles */
+
+* {
+  border-color: hsl(var(--border));
+  /* Disable native tap highlight for app-like feel */
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  /* Native-like scrolling behavior */
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-family-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-sm);
+  font-weight: var(--font-regular);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent overscroll bounce on body */
+  overscroll-behavior-y: contain;
+}
+
+/* Prevent zoom on input focus (iOS) */
+input, textarea, select {
+  font-size: 16px;
+}
+
+/* Touch-optimized scrollable areas */
+.scroll-native {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+}
+
+/* === PWA STANDALONE SAFE AREA SUPPORT === */
+/* Ensure safe areas work correctly in iOS standalone mode */
+@supports (padding-top: env(safe-area-inset-top)) {
+  body {
+    /* Apply safe area as padding in standalone mode */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Standalone mode specific overrides */
+@media all and (display-mode: standalone) {
+  html, body {
+    /* Ensure body stretches to full viewport */
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Portrait-only overlay for mobile (except when in fullscreen for videos) */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  body:not(:fullscreen)::after {
+    content: "📱 Veuillez faire pivoter votre appareil en mode portrait";
+    position: fixed;
+    inset: 0;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    font-size: 18px;
+    text-align: center;
+    padding: 20px;
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "title": "Games",
+  "categories": {
+    "all": "All Games",
+    "board": "Board Games",
+    "casino": "Casino",
+    "sports": "Sports"
+  },
+  "soon": "Coming Soon",
+  "play": "Play Now",
+  "players": "players",
+  "ludo": {
+    "title": "Ludo",
+    "createGame": "Create Game",
+    "joinGame": "Join Game",
+    "joinWithCode": "Join with Code",
+    "enterCode": "Enter room code",
+    "publicGames": "Public Games",
+    "privateGame": "Private Game",
+    "betAmount": "Bet Amount",
+    "maxPlayers": "Max Players",
+    "roomCode": "Room Code",
+    "waitingForPlayers": "Waiting for players...",
+    "gameStarting": "Game starting...",
+    "yourTurn": "Your turn!",
+    "rollDice": "Roll Dice",
+    "selectPiece": "Select a piece to move",
+    "colors": {
+      "red": "Red",
+      "blue": "Blue",
+      "green": "Green",
+      "yellow": "Yellow"
+    },
+    "status": {
+      "created": "Waiting",
+      "active": "In Progress",
+      "finished": "Finished",
+      "abandoned": "Abandoned"
+    },
+    "winner": "Winner",
+    "youWon": "You Won!",
+    "youLost": "Game Over",
+    "claimWinnings": "Claim Winnings",
+    "leaveGame": "Leave Game",
+    "confirmLeave": "Are you sure you want to leave?",
+    "leaveWarning": "You will forfeit your bet if you leave.",
+    "depositRequired": "Deposit Required",
+    "depositPending": "Deposit Pending...",
+    "ready": "Ready",
+    "notReady": "Not Ready",
+    "startGame": "Start Game",
+    "extraTurnOnSix": "Extra turn on 6",
+    "rules": {
+      "title": "Game Rules",
+      "rule1": "Roll a 6 to enter a piece",
+      "rule2": "Move pieces clockwise around the board",
+      "rule3": "Landing on an opponent sends them home",
+      "rule4": "First to get all pieces home wins"
+    }
+  }
+}

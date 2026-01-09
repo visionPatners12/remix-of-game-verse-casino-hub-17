@@ -1,0 +1,66 @@
+{
+  "title": "Soporte",
+  "subtitle": "¿Cómo podemos ayudarte?",
+  "contactUs": "Contáctanos",
+  "email": "Correo electrónico",
+  "socialMedia": "Redes sociales",
+  "helpCenter": "Centro de ayuda",
+  "faq": "FAQ",
+  "guides": "Guías",
+  "tickets": {
+    "title": "Mis tickets",
+    "create": "Crear ticket",
+    "noTickets": "Aún no hay tickets",
+    "viewAll": "Ver todos los tickets",
+    "subject": "Asunto",
+    "subjectPlaceholder": "Breve descripción de tu problema",
+    "message": "Mensaje",
+    "messagePlaceholder": "Describe tu problema en detalle...",
+    "category": "Categoría",
+    "priority": "Prioridad",
+    "submit": "Enviar ticket",
+    "submitting": "Enviando..."
+  },
+  "categories": {
+    "technical": "Problema técnico",
+    "billing": "Facturación y pagos",
+    "behavior": "Reportar usuario",
+    "other": "Otro"
+  },
+  "priority": {
+    "low": "Baja",
+    "medium": "Media",
+    "high": "Alta",
+    "urgent": "Urgente"
+  },
+  "status": {
+    "open": "Abierto",
+    "inProgress": "En progreso",
+    "resolved": "Resuelto",
+    "closed": "Cerrado"
+  },
+  "chat": {
+    "title": "Conversación del ticket",
+    "reply": "Responder",
+    "replyPlaceholder": "Escribe tu respuesta...",
+    "send": "Enviar",
+    "fromSupport": "Equipo de soporte",
+    "attachFile": "Adjuntar archivo"
+  },
+  "howToAddFunds": {
+    "title": "Cómo añadir fondos",
+    "step1": "Conecta tu billetera",
+    "step2": "Ve a Depósito",
+    "step3": "Elige tu método",
+    "step4": "Confirma la transacción"
+  },
+  "success": {
+    "ticketCreated": "Ticket creado correctamente",
+    "messageSent": "Mensaje enviado"
+  },
+  "errors": {
+    "subjectRequired": "El asunto es obligatorio",
+    "messageRequired": "El mensaje es obligatorio",
+    "submitFailed": "Error al enviar el ticket"
+  }
+}

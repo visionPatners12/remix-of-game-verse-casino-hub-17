@@ -1,0 +1,66 @@
+{
+  "title": "Support",
+  "subtitle": "Comment pouvons-nous t'aider ?",
+  "contactUs": "Nous contacter",
+  "email": "Email",
+  "socialMedia": "Réseaux sociaux",
+  "helpCenter": "Centre d'aide",
+  "faq": "FAQ",
+  "guides": "Guides",
+  "tickets": {
+    "title": "Mes tickets",
+    "create": "Créer un ticket",
+    "noTickets": "Aucun ticket",
+    "viewAll": "Voir tous les tickets",
+    "subject": "Sujet",
+    "subjectPlaceholder": "Description brève de ton problème",
+    "message": "Message",
+    "messagePlaceholder": "Décris ton problème en détail...",
+    "category": "Catégorie",
+    "priority": "Priorité",
+    "submit": "Envoyer le ticket",
+    "submitting": "Envoi en cours..."
+  },
+  "categories": {
+    "technical": "Problème technique",
+    "billing": "Paiements & Facturation",
+    "behavior": "Signaler un utilisateur",
+    "other": "Autre"
+  },
+  "priority": {
+    "low": "Basse",
+    "medium": "Moyenne",
+    "high": "Haute",
+    "urgent": "Urgente"
+  },
+  "status": {
+    "open": "Ouvert",
+    "inProgress": "En cours",
+    "resolved": "Résolu",
+    "closed": "Fermé"
+  },
+  "chat": {
+    "title": "Conversation du ticket",
+    "reply": "Répondre",
+    "replyPlaceholder": "Écris ta réponse...",
+    "send": "Envoyer",
+    "fromSupport": "Équipe Support",
+    "attachFile": "Joindre un fichier"
+  },
+  "howToAddFunds": {
+    "title": "Comment ajouter des fonds",
+    "step1": "Connecte ton wallet",
+    "step2": "Va dans Dépôt",
+    "step3": "Choisis ta méthode",
+    "step4": "Confirme la transaction"
+  },
+  "success": {
+    "ticketCreated": "Ticket créé avec succès",
+    "messageSent": "Message envoyé"
+  },
+  "errors": {
+    "subjectRequired": "Le sujet est requis",
+    "messageRequired": "Le message est requis",
+    "submitFailed": "Échec de l'envoi du ticket"
+  }
+}

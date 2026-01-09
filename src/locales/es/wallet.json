@@ -1,0 +1,74 @@
+{
+  "title": "Billetera",
+  "balance": "Saldo",
+  "availableBalance": "Saldo disponible",
+  "totalBalance": "Saldo total",
+  "pendingBalance": "Pendiente",
+  "send": "Enviar",
+  "receive": "Recibir",
+  "deposit": "Depositar",
+  "withdraw": "Retirar",
+  "swap": "Intercambiar",
+  "buy": "Comprar",
+  "sell": "Vender",
+  "copyAddress": "Copiar dirección",
+  "addressCopied": "¡Dirección copiada!",
+  "scanQR": "Escanear código QR",
+  "shareAddress": "Compartir dirección",
+  "transactions": {
+    "title": "Transacciones",
+    "history": "Historial de transacciones",
+    "pending": "Pendientes",
+    "completed": "Completadas",
+    "failed": "Fallidas",
+    "noTransactions": "Aún no hay transacciones",
+    "viewAll": "Ver todas",
+    "sent": "Enviado",
+    "received": "Recibido",
+    "swapped": "Intercambiado",
+    "deposited": "Depositado",
+    "withdrawn": "Retirado"
+  },
+  "assets": {
+    "title": "Activos",
+    "tokens": "Tokens",
+    "nfts": "NFTs",
+    "noAssets": "No se encontraron activos"
+  },
+  "network": {
+    "title": "Red",
+    "polygon": "Polygon",
+    "ethereum": "Ethereum",
+    "switchNetwork": "Cambiar red"
+  },
+  "security": {
+    "title": "Seguridad",
+    "backup": "Respaldar billetera",
+    "exportKey": "Exportar clave privada",
+    "warning": "Nunca compartas tu clave privada"
+  },
+  "ens": {
+    "domain": "Dominio ENS",
+    "fullAddress": "Dirección completa"
+  },
+  "clipboard": {
+    "copied": "Copiado",
+    "addressCopied": "Dirección copiada",
+    "addressCopiedDesc": "Dirección de billetera copiada al portapapeles",
+    "txHashCopied": "Hash de transacción copiado al portapapeles"
+  },
+  "qr": {
+    "title": "Mi billetera crypto",
+    "copyAddress": "Copiar dirección",
+    "explorer": "Explorador"
+  },
+  "balance": {
+    "total": "Saldo total",
+    "connect": "Conecta tu billetera para ver el saldo"
+  },
+  "actions": {
+    "deposit": "Depositar",
+    "send": "Enviar",
+    "receive": "Recibir"
+  }
+}

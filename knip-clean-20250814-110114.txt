@@ -1,0 +1,21 @@
+===== KNIP CLEAN REPORT =====
+Date: Jeu 14 aoû 2025 11:01:18 WAT
+
+### Unused files (0)
+(none)
+
+### Unused dependencies (0)
+(none)
+
+### Unused devDependencies (0)
+(none)
+
+### Unused exports (0) — review manuel recommandé
+(none)
+
+### Unlisted (utilisés mais non listés dans package.json)
+(none)
+
+### Binaries (détectés)
+(none)
+

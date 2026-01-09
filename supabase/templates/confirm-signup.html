@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmez votre inscription - PRYZEN</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e293b 0%, #7c3aed 50%, #1e293b 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+        
+        .tagline {
+            font-size: 14px;
+            color: #c084fc;
+            font-weight: 500;
+            letter-spacing: 3px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+        
+        .title-accent {
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #d97706);
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 32px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        
+        .manual-code {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            font-weight: bold;
+            color: #fbbf24;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+        }
+        
+        .code-label {
+            font-size: 14px;
+            color: #fbbf24;
+            text-align: center;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .instructions {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .instructions-title {
+            font-weight: bold;
+            color: #fbbf24;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .instructions-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-text {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+        
+        .footer-link {
+            color: #fbbf24;
+            text-decoration: none;
+        }
+        
+        .gaming-accent {
+            background: linear-gradient(90deg, #ec4899, #8b5cf6, #06b6d4);
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .security-note {
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 24px;
+            font-size: 12px;
+            color: #fbbf24;
+            text-align: center;
+        }
+        
+        .welcome-gold {
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 16px;
+            }
+            
+            .card {
+                padding: 24px;
+            }
+            
+            .title {
+                font-size: 20px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+            
+            .manual-code {
+                font-size: 18px;
+                letter-spacing: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo gaming-accent">PRYZEN</div>
+            <div class="tagline">GAMING EVOLVED</div>
+        </div>
+        
+        <div class="card">
+            <h1 class="title">
+                Bienvenue <span class="title-accent">{{ .Data }}</span> dans la communauté
+            </h1>
+            <p class="subtitle">
+                Merci de vous être inscrit sur PRYZEN. Pour activer votre compte et commencer à jouer, 
+                veuillez utiliser le code de confirmation ci-dessous.
+            </p>
+            
+            <div class="instructions">
+                <div class="instructions-title">Instructions de confirmation</div>
+                <div class="instructions-text">
+                    Rendez-vous sur l'application PRYZEN et saisissez ce code de confirmation dans la page dédiée.
+                </div>
+            </div>
+            
+            <div class="code-label">Votre code de confirmation :</div>
+            <div class="manual-code">{{ .Token }}</div>
+            
+            <div class="security-note">
+                Si vous n'avez pas créé de compte sur PRYZEN, vous pouvez ignorer cet email en toute sécurité.
+                Ce code expire dans 24 heures.
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p class="footer-text">
+                Cet email a été envoyé par <strong class="welcome-gold">PRYZEN</strong><br>
+                La plateforme gaming nouvelle génération<br><br>
+                
+                Besoin d'aide ? Contactez notre support à 
+                <a href="mailto:support@pryzen.com" class="footer-link">support@pryzen.com</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

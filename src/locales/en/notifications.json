@@ -1,0 +1,56 @@
+{
+  "title": "Notifications",
+  "markAllRead": "Mark all as read",
+  "clearAll": "Clear all",
+  "settings": "Notification Settings",
+  "empty": {
+    "title": "No notifications",
+    "description": "You're all caught up!"
+  },
+  "tabs": {
+    "all": "All",
+    "unread": "Unread",
+    "mentions": "Mentions",
+    "bets": "Bets",
+    "social": "Social"
+  },
+  "types": {
+    "betWon": "Bet Won",
+    "betLost": "Bet Lost",
+    "betSettled": "Bet Settled",
+    "matchStarting": "Match Starting",
+    "matchEnded": "Match Ended",
+    "newFollower": "New Follower",
+    "newLike": "New Like",
+    "newComment": "New Comment",
+    "newMention": "Mentioned You",
+    "tipsterTip": "New Tip",
+    "deposit": "Deposit Confirmed",
+    "withdraw": "Withdrawal Processed",
+    "promo": "Promotion",
+    "system": "System"
+  },
+  "time": {
+    "now": "Just now",
+    "minutesAgo": "{{count}} min ago",
+    "hoursAgo": "{{count}}h ago",
+    "daysAgo": "{{count}}d ago",
+    "weeksAgo": "{{count}}w ago"
+  },
+  "actions": {
+    "view": "View",
+    "dismiss": "Dismiss",
+    "viewBet": "View Bet",
+    "viewMatch": "View Match",
+    "viewProfile": "View Profile"
+  },
+  "preferences": {
+    "title": "Preferences",
+    "push": "Push Notifications",
+    "email": "Email Notifications",
+    "bets": "Bet Updates",
+    "matches": "Match Alerts",
+    "social": "Social Activity",
+    "marketing": "Marketing & Promotions"
+  }
+}

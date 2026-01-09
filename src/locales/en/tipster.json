@@ -1,0 +1,47 @@
+{
+  "dashboard": {
+    "tabs": {
+      "stats": "Stats",
+      "fanzone": "Fanzone"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "perMonth": "USDT/month",
+    "stats": {
+      "winRate": "Win Rate",
+      "won": "won",
+      "yield": "Yield",
+      "profit": "Profit",
+      "subscribers": "Subscribers",
+      "avgOdds": "Avg. Odds",
+      "tipsInProgress": "tips in progress"
+    },
+    "form": {
+      "title": "Recent Form"
+    },
+    "predictions": {
+      "title": "Recent Predictions",
+      "viewAll": "View all",
+      "none": "No recent predictions"
+    },
+    "subscribers": {
+      "title": "Recent Subscribers",
+      "active": "active",
+      "since": "Since"
+    },
+    "toast": {
+      "activated": "Profile activated",
+      "deactivated": "Profile deactivated",
+      "visiblePublicly": "Your profile is now visible",
+      "notVisiblePublicly": "Your profile is no longer publicly visible",
+      "error": "Error",
+      "statusError": "Unable to modify status"
+    },
+    "feed": {
+      "noPremiumTips": "No premium tips published",
+      "noPremiumTipsDesc": "Your premium tips will appear here. Create your first tip to start sharing your analyses with your subscribers."
+    }
+  }
+}

@@ -1,0 +1,317 @@
+/* 3D Dice Styles */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.dice-container {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dice-container-small {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dice-cube {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+}
+
+.dice-cube-small {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+}
+
+.dice-face {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
+  border: 2px solid hsl(var(--border));
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: hsl(var(--primary));
+  box-shadow: 
+    0 0 10px hsl(var(--primary) / 0.2),
+    inset 0 0 10px hsl(var(--background));
+}
+
+/* Face positions */
+.dice-face-1 {
+  transform: translateZ(30px);
+}
+
+.dice-face-2 {
+  transform: rotateY(90deg) translateZ(30px);
+}
+
+.dice-face-3 {
+  transform: rotateY(180deg) translateZ(30px);
+}
+
+.dice-face-4 {
+  transform: rotateY(-90deg) translateZ(30px);
+}
+
+.dice-face-5 {
+  transform: rotateX(90deg) translateZ(30px);
+}
+
+.dice-face-6 {
+  transform: rotateX(-90deg) translateZ(30px);
+}
+
+/* Small dice face positions */
+.dice-cube-small .dice-face {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.dice-cube-small .dice-face-1 {
+  transform: translateZ(20px);
+}
+
+.dice-cube-small .dice-face-2 {
+  transform: rotateY(90deg) translateZ(20px);
+}
+
+.dice-cube-small .dice-face-3 {
+  transform: rotateY(180deg) translateZ(20px);
+}
+
+.dice-cube-small .dice-face-4 {
+  transform: rotateY(-90deg) translateZ(20px);
+}
+
+.dice-cube-small .dice-face-5 {
+  transform: rotateX(90deg) translateZ(20px);
+}
+
+.dice-cube-small .dice-face-6 {
+  transform: rotateX(-90deg) translateZ(20px);
+}
+
+/* Animations */
+@keyframes dice-roll {
+  0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+  25% { transform: rotateX(90deg) rotateY(180deg) rotateZ(90deg); }
+  50% { transform: rotateX(180deg) rotateY(360deg) rotateZ(180deg); }
+  75% { transform: rotateX(270deg) rotateY(540deg) rotateZ(270deg); }
+  100% { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
+}
+
+.animate-dice-roll {
+  animation: dice-roll 0.1s linear infinite;
+}
+
+/* Hover effects */
+.dice-cube:hover .dice-face {
+  box-shadow: 
+    0 0 15px hsl(var(--primary) / 0.4),
+    inset 0 0 15px hsl(var(--background));
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .dice-container {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .dice-cube {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .dice-face {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+  
+  .dice-face-1 { transform: translateZ(25px); }
+  .dice-face-2 { transform: rotateY(90deg) translateZ(25px); }
+  .dice-face-3 { transform: rotateY(180deg) translateZ(25px); }
+  .dice-face-4 { transform: rotateY(-90deg) translateZ(25px); }
+  .dice-face-5 { transform: rotateX(90deg) translateZ(25px); }
+  .dice-face-6 { transform: rotateX(-90deg) translateZ(25px); }
+}
+
+/* Dice dots styling */
+.dice-dot {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.dice-cube-small .dice-dot {
+  width: 6px;
+  height: 6px;
+}
+
+.dice-dots {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.dice-cube-small .dice-dots {
+  padding: 5px;
+}
+
+/* 1 dot - center */
+.dice-1 {
+  place-items: center;
+}
+
+/* 2 dots - diagonal */
+.dice-2 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.dice-2 .dice-dot:nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  align-self: start;
+}
+.dice-2 .dice-dot:nth-child(2) {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  align-self: end;
+}
+
+/* 3 dots - diagonal */
+.dice-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+.dice-3 .dice-dot:nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  align-self: start;
+}
+.dice-3 .dice-dot:nth-child(2) {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: center;
+  align-self: center;
+}
+.dice-3 .dice-dot:nth-child(3) {
+  grid-column: 3;
+  grid-row: 3;
+  justify-self: end;
+  align-self: end;
+}
+
+/* 4 dots - corners */
+.dice-4 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.dice-4 .dice-dot:nth-child(1) {
+  justify-self: start;
+  align-self: start;
+}
+.dice-4 .dice-dot:nth-child(2) {
+  justify-self: end;
+  align-self: start;
+}
+.dice-4 .dice-dot:nth-child(3) {
+  justify-self: start;
+  align-self: end;
+}
+.dice-4 .dice-dot:nth-child(4) {
+  justify-self: end;
+  align-self: end;
+}
+
+/* 5 dots - corners + center */
+.dice-5 {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+.dice-5 .dice-dot:nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  align-self: start;
+}
+.dice-5 .dice-dot:nth-child(2) {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  align-self: start;
+}
+.dice-5 .dice-dot:nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: center;
+  align-self: center;
+}
+.dice-5 .dice-dot:nth-child(4) {
+  grid-column: 1;
+  grid-row: 3;
+  justify-self: start;
+  align-self: end;
+}
+.dice-5 .dice-dot:nth-child(5) {
+  grid-column: 3;
+  grid-row: 3;
+  justify-self: end;
+  align-self: end;
+}
+
+/* 6 dots - 2 columns */
+.dice-6 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+.dice-6 .dice-dot:nth-child(1) {
+  justify-self: start;
+  align-self: start;
+}
+.dice-6 .dice-dot:nth-child(2) {
+  justify-self: end;
+  align-self: start;
+}
+.dice-6 .dice-dot:nth-child(3) {
+  justify-self: start;
+  align-self: center;
+}
+.dice-6 .dice-dot:nth-child(4) {
+  justify-self: end;
+  align-self: center;
+}
+.dice-6 .dice-dot:nth-child(5) {
+  justify-self: start;
+  align-self: end;
+}
+.dice-6 .dice-dot:nth-child(6) {
+  justify-self: end;
+  align-self: end;
+}

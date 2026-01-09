@@ -1,0 +1,6 @@
+
+Contact: mailto:security@yoursite.com
+Expires: 2025-12-31T23:59:59.000Z
+Preferred-Languages: en, fr
+Canonical: https://yoursite.com/.well-known/security.txt
+Policy: https://yoursite.com/security-policy

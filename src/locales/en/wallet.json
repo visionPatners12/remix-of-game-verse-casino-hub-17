@@ -1,0 +1,74 @@
+{
+  "title": "Wallet",
+  "balance": "Balance",
+  "availableBalance": "Available Balance",
+  "totalBalance": "Total Balance",
+  "pendingBalance": "Pending",
+  "send": "Send",
+  "receive": "Receive",
+  "deposit": "Deposit",
+  "withdraw": "Withdraw",
+  "swap": "Swap",
+  "buy": "Buy",
+  "sell": "Sell",
+  "copyAddress": "Copy Address",
+  "addressCopied": "Address copied!",
+  "scanQR": "Scan QR Code",
+  "shareAddress": "Share Address",
+  "transactions": {
+    "title": "Transactions",
+    "history": "Transaction History",
+    "pending": "Pending",
+    "completed": "Completed",
+    "failed": "Failed",
+    "noTransactions": "No transactions yet",
+    "viewAll": "View All",
+    "sent": "Sent",
+    "received": "Received",
+    "swapped": "Swapped",
+    "deposited": "Deposited",
+    "withdrawn": "Withdrawn"
+  },
+  "assets": {
+    "title": "Assets",
+    "tokens": "Tokens",
+    "nfts": "NFTs",
+    "noAssets": "No assets found"
+  },
+  "network": {
+    "title": "Network",
+    "polygon": "Polygon",
+    "ethereum": "Ethereum",
+    "switchNetwork": "Switch Network"
+  },
+  "security": {
+    "title": "Security",
+    "backup": "Backup Wallet",
+    "exportKey": "Export Private Key",
+    "warning": "Never share your private key"
+  },
+  "ens": {
+    "domain": "ENS Domain",
+    "fullAddress": "Full Address"
+  },
+  "clipboard": {
+    "copied": "Copied",
+    "addressCopied": "Address copied",
+    "addressCopiedDesc": "Wallet address copied to clipboard",
+    "txHashCopied": "Transaction hash copied to clipboard"
+  },
+  "qr": {
+    "title": "My Crypto Wallet",
+    "copyAddress": "Copy Address",
+    "explorer": "Explorer"
+  },
+  "balance": {
+    "total": "Total Balance",
+    "connect": "Connect your wallet to view balance"
+  },
+  "actions": {
+    "deposit": "Deposit",
+    "send": "Send",
+    "receive": "Receive"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "title": "Notificaciones",
+  "markAllRead": "Marcar todo como leído",
+  "clearAll": "Limpiar todo",
+  "settings": "Ajustes de notificaciones",
+  "empty": {
+    "title": "Sin notificaciones",
+    "description": "¡Estás al día!"
+  },
+  "tabs": {
+    "all": "Todas",
+    "unread": "No leídas",
+    "mentions": "Menciones",
+    "bets": "Apuestas",
+    "social": "Social"
+  },
+  "types": {
+    "betWon": "Apuesta ganada",
+    "betLost": "Apuesta perdida",
+    "betSettled": "Apuesta resuelta",
+    "matchStarting": "Partido iniciando",
+    "matchEnded": "Partido terminado",
+    "newFollower": "Nuevo seguidor",
+    "newLike": "Nuevo me gusta",
+    "newComment": "Nuevo comentario",
+    "newMention": "Te mencionó",
+    "tipsterTip": "Nuevo tip",
+    "deposit": "Depósito confirmado",
+    "withdraw": "Retiro procesado",
+    "promo": "Promoción",
+    "system": "Sistema"
+  },
+  "time": {
+    "now": "Ahora mismo",
+    "minutesAgo": "hace {{count}} min",
+    "hoursAgo": "hace {{count}}h",
+    "daysAgo": "hace {{count}}d",
+    "weeksAgo": "hace {{count}}sem"
+  },
+  "actions": {
+    "view": "Ver",
+    "dismiss": "Descartar",
+    "viewBet": "Ver apuesta",
+    "viewMatch": "Ver partido",
+    "viewProfile": "Ver perfil"
+  },
+  "preferences": {
+    "title": "Preferencias",
+    "push": "Notificaciones push",
+    "email": "Notificaciones por correo",
+    "bets": "Actualizaciones de apuestas",
+    "matches": "Alertas de partidos",
+    "social": "Actividad social",
+    "marketing": "Marketing y promociones"
+  }
+}

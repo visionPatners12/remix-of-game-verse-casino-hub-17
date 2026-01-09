@@ -1,0 +1,106 @@
+{
+  "page": {
+    "title": "Dépôt",
+    "subtitle": "Ajoutez des fonds à votre compte"
+  },
+  "steps": {
+    "method": "Méthode",
+    "details": "Détails",
+    "confirmation": "Confirmation"
+  },
+  "methods": {
+    "title": "Choisir une méthode de dépôt",
+    "crypto": {
+      "title": "Cryptomonnaie",
+      "description": "USDT Polygon uniquement"
+    },
+    "coinbase": {
+      "title": "Coinbase Pay",
+      "description": "Achetez directement avec Coinbase"
+    },
+    "mobileMoney": {
+      "title": "Mobile Money",
+      "description": "Bientôt disponible"
+    },
+    "bankTransfer": {
+      "title": "Virement bancaire",
+      "description": "Bientôt disponible"
+    },
+    "applePay": {
+      "title": "Apple Pay",
+      "description": "Dépôt instantané via Apple Pay"
+    },
+    "comingSoon": "Bientôt",
+    "processing": "En cours...",
+    "recommended": "Populaire"
+  },
+  "crypto": {
+    "title": "USDT Polygon",
+    "subtitle": "Votre adresse de dépôt personnelle",
+    "loading": "Récupération de votre adresse de dépôt...",
+    "error": "Impossible de générer l'adresse. Veuillez réessayer.",
+    "retry": "Réessayer",
+    "qrTitle": "Scanner pour déposer",
+    "qrDescription": "Scannez ce QR code avec votre portefeuille pour envoyer {{symbol}}",
+    "copyTitle": "Adresse de dépôt {{symbol}}",
+    "copyDescription": "Utilisez cette adresse pour vos dépôts",
+    "copied": "Copié !",
+    "copyAddress": "Copier l'adresse",
+    "addressCopied": "Adresse de dépôt copiée dans le presse-papiers"
+  },
+  "mobileMoney": {
+    "title": "Mobile Money",
+    "serviceTitle": "Service en développement",
+    "serviceDescription": "Le dépôt Mobile Money sera bientôt disponible",
+    "chooseAnother": "Choisir une autre méthode"
+  },
+  "instructions": {
+    "title": "Comment déposer",
+    "step1Title": "Copiez l'adresse",
+    "step1Desc": "Copiez l'adresse de dépôt ou scannez le QR code",
+    "step2Title": "Ouvrez votre portefeuille",
+    "step2Desc": "Utilisez votre application de portefeuille crypto",
+    "step3Title": "Envoyez vos fonds",
+    "step3Desc": "Envoyez uniquement {{name}} ({{symbol}}) à cette adresse",
+    "step4Title": "Attendez la confirmation",
+    "step4Desc": "1-3 confirmations réseau requises"
+  },
+  "reminders": {
+    "title": "Rappels importants",
+    "onlySend": "Envoyez uniquement {{name}} ({{symbol}}) à cette adresse",
+    "verifyAddress": "Vérifiez toujours l'adresse avant d'envoyer",
+    "minimum": "Montant minimum : 0.001 {{symbol}}",
+    "confirmation": "Fonds crédités après confirmation réseau"
+  },
+  "confirmation": {
+    "title": "Confirmation",
+    "applePayTitle": "Dépôt effectué",
+    "applePayDesc": "Votre dépôt via Apple Pay a été traité avec succès.",
+    "cryptoTitle": "Dépôt configuré",
+    "cryptoDesc": "Votre adresse USDT Polygon a été générée. Vous pouvez maintenant effectuer votre dépôt.",
+    "viewWallet": "Voir mon portefeuille",
+    "newDeposit": "Nouveau dépôt"
+  },
+  "processing": {
+    "title": "Temps de traitement",
+    "network": "Réseau",
+    "confirmations": "Confirmations",
+    "blocks": "1-3 blocs",
+    "estimatedTime": "Temps estimé",
+    "time": "2-5 minutes"
+  },
+  "security": {
+    "title": "Sécurité & Confidentialité",
+    "description": "Cette adresse a été générée spécifiquement pour vous. Envoyez uniquement de l'USDT sur le réseau Polygon."
+  },
+  "coinbase": {
+    "title": "Rechargez votre compte avec Coinbase Pay",
+    "selectMethod": "Sélectionnez votre méthode de paiement préférée",
+    "securedBy": "Sécurisé par Coinbase",
+    "securityNote": "Votre dépôt est sécurisé et traité directement par Coinbase"
+  },
+  "buttons": {
+    "back": "Retour",
+    "continue": "Continuer"
+  }
+}

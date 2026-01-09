@@ -1,0 +1,59 @@
+{
+  "header": {
+    "followers": "Seguidores",
+    "following": "Siguiendo",
+    "editProfile": "Editar perfil",
+    "follow": "Seguir",
+    "unfollow": "Dejar de seguir"
+  },
+  "tabs": {
+    "posts": "Publicaciones",
+    "bets": "Apuestas",
+    "predictions": "Predicciones"
+  },
+  "settings": {
+    "title": "Ajustes de perfil",
+    "username": "Nombre de usuario",
+    "email": "Correo electrónico",
+    "phone": "Número de teléfono",
+    "verifyPhone": "Verificar",
+    "oddsFormat": "Formato de cuotas",
+    "language": "Idioma"
+  },
+  "errors": {
+    "loadError": "No se pudo cargar el perfil",
+    "userNotFound": "Usuario no encontrado",
+    "updateError": "No se pudo actualizar el perfil",
+    "error": "Error",
+    "profileNotAccessible": "Este usuario no existe o su perfil no es accesible."
+  },
+  "empty": {
+    "noPosts": "Aún no hay publicaciones",
+    "noBets": "Aún no hay apuestas",
+    "noPredictions": "Aún no hay predicciones"
+  },
+  "edit": {
+    "title": "Editar perfil",
+    "avatarHint": "Toca el avatar para cambiar tu foto de perfil",
+    "firstName": "Nombre",
+    "firstNamePlaceholder": "Tu nombre",
+    "lastName": "Apellido",
+    "lastNamePlaceholder": "Tu apellido",
+    "bio": "Biografía",
+    "bioPlaceholder": "Cuéntanos sobre ti...",
+    "characters": "caracteres",
+    "favoriteSports": "Deportes favoritos",
+    "selected": "seleccionados",
+    "sportsLimitReached": "Límite de 5 deportes alcanzado",
+    "saving": "Guardando...",
+    "saveChanges": "Guardar cambios",
+    "cancel": "Cancelar",
+    "successMessage": "¡Perfil actualizado correctamente!",
+    "errorMessage": "Error al actualizar el perfil",
+    "sportAdded": "añadido a favoritos",
+    "sportRemoved": "eliminado de favoritos",
+    "sportAddError": "Error al añadir deporte",
+    "sportRemoveError": "Error al eliminar deporte",
+    "maxSportsError": "Solo puedes seleccionar hasta 5 deportes"
+  }
+}

@@ -1,0 +1,203 @@
+{
+  "meta": {
+    "title": "Le réseau social des passionnés de sport",
+    "description": "Rejoins la communauté. Suis les meilleurs pronostiqueurs, partage tes analyses, vis chaque match intensément."
+  },
+  "nav": {
+    "features": "Fonctionnalités",
+    "games": "Jeux",
+    "community": "Communauté",
+    "login": "Connexion",
+    "signup": "S'inscrire",
+    "getStarted": "Commencer"
+  },
+  "hero": {
+    "tagline": "Le réseau social des passionnés de sport",
+    "title": "Partage ta passion.",
+    "titleHighlight": "Rejoins la communauté.",
+    "subtitle": "Suis les meilleurs pronostiqueurs, débats avec ta communauté, et vis chaque match intensément.",
+    "cta": "Commencer gratuitement",
+    "secondaryCta": "Découvrir",
+    "stats": {
+      "users": "Membres actifs",
+      "predictions": "Analyses partagées",
+      "paid": "Discussions"
+    }
+  },
+  "features": {
+    "title": "Tout pour vivre le sport autrement",
+    "subtitle": "Une plateforme pensée pour les vrais fans",
+    "social": {
+      "title": "Ton fil d'actualité sport",
+      "description": "Suis les équipes et joueurs qui comptent pour toi. Commentaires, analyses, débats en temps réel."
+    },
+    "crypto": {
+      "title": "Les meilleurs pronostiqueurs",
+      "description": "Découvre les tipsters avec les meilleurs track records. Copie leurs analyses ou crée les tiennes."
+    },
+    "live": {
+      "title": "Chaque match en direct",
+      "description": "Stats live, compositions, cotes en temps réel. Tout ce qu'il faut pour suivre l'action."
+    },
+    "games": {
+      "title": "Joue avec tes amis",
+      "description": "Défie tes potes sur Ludo et d'autres jeux. Stakes en crypto, résultats instantanés."
+    },
+    "leaderboard": {
+      "title": "Classements",
+      "description": "Grimpe dans les rangs grâce à tes analyses gagnantes"
+    },
+    "tipsters": {
+      "title": "Tipsters vérifiés",
+      "description": "Suis des experts avec des track records transparents"
+    }
+  },
+  "games": {
+    "title": "Jeux",
+    "subtitle": "Défie tes amis et gagne",
+    "viewAll": "Voir tous les jeux"
+  },
+  "community": {
+    "title": "Rejoins la communauté",
+    "subtitle": "Des milliers de fans de sport t'attendent",
+    "discord": "Discord",
+    "telegram": "Telegram",
+    "twitter": "X"
+  },
+  "cta": {
+    "title": "Prêt à rejoindre la communauté ?",
+    "subtitle": "Télécharge l'app et commence à partager tes analyses dès aujourd'hui.",
+    "button": "Créer mon compte"
+  },
+  "footer": {
+    "product": "Produit",
+    "company": "Entreprise",
+    "legal": "Légal",
+    "about": "À propos",
+    "careers": "Carrières",
+    "press": "Presse",
+    "terms": "Conditions",
+    "privacy": "Confidentialité",
+    "cookies": "Cookies",
+    "responsible": "Jeu responsable",
+    "copyright": "© {{year}} Tous droits réservés"
+  },
+  "discover": {
+    "backToHome": "Retour à l'accueil",
+    "feed": {
+      "badge": "SOCIAL",
+      "title": "Feed Social + Sport",
+      "description": "Un feed unique qui combine contenu social et sport. Suis les tipsters, partage tes pronostics, réagis aux événements live, et construis ta communauté sportive.",
+      "bestOfBothWorlds": {
+        "badge": "UNIQUE",
+        "title": "Le meilleur des deux mondes",
+        "description": "Les réseaux sociaux rencontrent les paris sportifs de façon révolutionnaire"
+      },
+      "socialContent": {
+        "title": "Contenu social",
+        "description": "Posts, pronostics, réactions de la communauté"
+      },
+      "liveHighlights": {
+        "title": "Highlights en direct",
+        "description": "Les meilleurs moments des matchs en temps réel"
+      },
+      "communityPredictions": {
+        "title": "Pronostics communauté",
+        "description": "Ce que la communauté prédit, insights agrégés"
+      },
+      "postTypes": {
+        "badge": "CONTENU",
+        "title": "6 Types de Posts",
+        "description": "Exprime-toi de plusieurs façons",
+        "simplePost": { "title": "Post Simple", "description": "Partage tes pensées sur le sport" },
+        "prediction": { "title": "Pronostic", "description": "Prédit des résultats avec confiance" },
+        "opinion": { "title": "Opinion", "description": "Débats sur les matchs et joueurs" },
+        "bet": { "title": "Pari", "description": "Partage tes paris on-chain" },
+        "highlight": { "title": "Highlight", "description": "Réagis aux meilleurs moments" },
+        "liveEvent": { "title": "Événement Live", "description": "Commente en temps réel" }
+      },
+      "screenshots": { "title": "Vois-le en action" },
+      "cta": {
+        "title": "Prêt à rejoindre le feed ?",
+        "description": "Crée ton compte et commence à partager tes pronostics sportifs dès aujourd'hui.",
+        "button": "Rejoindre le Feed"
+      }
+    },
+    "sports": {
+      "badge": "COMPLET",
+      "title": "Pages Sports",
+      "description": "Pages dédiées pour les ligues, équipes, matchs et joueurs. Toutes les données sportives dont tu as besoin, organisées et toujours à jour.",
+      "pageTypes": {
+        "league": {
+          "title": "Page Ligue",
+          "description": "Vue complète de la ligue avec classements, calendriers et statistiques.",
+          "standings": "Classement en temps réel",
+          "schedule": "Calendrier des matchs",
+          "stats": "Statistiques de ligue",
+          "scorers": "Meilleurs buteurs"
+        },
+        "team": {
+          "title": "Page Équipe",
+          "description": "Tout sur ton équipe favorite au même endroit.",
+          "squad": "Effectif complet",
+          "stats": "Stats d'équipe",
+          "upcoming": "Matchs à venir",
+          "history": "Historique des résultats"
+        },
+        "match": {
+          "title": "Page Match",
+          "description": "Centre de match live avec toutes les données.",
+          "liveScore": "Score et événements live",
+          "odds": "Cotes mises à jour",
+          "stats": "Statistiques du match",
+          "bets": "Paris disponibles"
+        },
+        "player": {
+          "title": "Page Joueur",
+          "description": "Profils détaillés des joueurs et données de performance.",
+          "bio": "Bio et carrière",
+          "stats": "Statistiques détaillées",
+          "value": "Valeur marchande",
+          "transfers": "Historique des transferts"
+        }
+      },
+      "supported": {
+        "title": "Sports Supportés",
+        "description": "Tous les sports majeurs couverts"
+      },
+      "cta": {
+        "title": "Explorer les Sports",
+        "description": "Crée ton compte et commence à explorer les ligues, équipes et joueurs.",
+        "button": "Explorer les Sports"
+      }
+    },
+    "gaming": {
+      "badge": "ACTIF",
+      "title": "Jeux On-Chain",
+      "description": "Joue à des jeux classiques sur la blockchain. Équitable, transparent et fun. Mise en crypto et affronte des joueurs du monde entier.",
+      "ludo": {
+        "title": "Ludo",
+        "subtitle": "Le jeu de plateau classique, réinventé",
+        "players": "2-4 Joueurs",
+        "bets": "Mises On-Chain",
+        "leaderboard": "Classement",
+        "realtime": "Temps réel",
+        "play": "Jouer au Ludo"
+      },
+      "upcoming": {
+        "badge": "BIENTÔT",
+        "title": "Jeux à venir",
+        "description": "D'autres jeux arrivent bientôt",
+        "checkers": { "title": "Dames", "description": "Jeu de stratégie classique" },
+        "cards": { "title": "Cartes", "description": "Poker & plus" },
+        "quiz": { "title": "Quiz Sport", "description": "Teste tes connaissances" },
+        "dice": { "title": "Dés", "description": "Lancers chanceux" }
+      },
+      "cta": {
+        "title": "Prêt à jouer ?",
+        "description": "Commence à jouer au Ludo maintenant et gagne des prix en crypto.",
+        "button": "Commencer à jouer"
+      }
+    }
+  }
+}

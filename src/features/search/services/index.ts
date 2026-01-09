@@ -1,0 +1,1 @@
+export { TrendingService } from './trendingService';

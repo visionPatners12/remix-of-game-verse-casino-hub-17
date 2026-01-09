@@ -1,0 +1,107 @@
+{
+  "league": {
+    "tabs": {
+      "standings": "Standings",
+      "matches": "Matches",
+      "social": "Social",
+      "highlights": "Highlights"
+    },
+    "header": {
+      "upcoming": "Upcoming",
+      "teams": "Teams",
+      "followers": "Followers",
+      "follow": "Follow",
+      "unfollow": "Unfollow"
+    },
+    "matches": {
+      "live": "Live",
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "noMatches": "No matches available"
+    },
+    "feed": {
+      "loading": "Loading highlights...",
+      "error": "Error loading highlights",
+      "empty": "No highlights available yet",
+      "allLoaded": "All highlights loaded"
+    },
+    "social": {
+      "empty": "No predictions or bets for this league yet"
+    }
+  },
+  "team": {
+    "tabs": {
+      "standings": "Standings",
+      "matches": "Matches",
+      "social": "Social",
+      "highlights": "Highlights"
+    },
+    "header": {
+      "posts": "Posts",
+      "followers": "Followers",
+      "rank": "Rank",
+      "points": "Points",
+      "follow": "Follow",
+      "unfollow": "Unfollow",
+      "staff": "Staff"
+    },
+    "matches": {
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "noMatches": "No matches available"
+    },
+    "staff": {
+      "title": "Staff",
+      "headCoach": "Head Coach",
+      "attacker": "Attacker",
+      "midfielder": "Midfielder",
+      "defender": "Defender",
+      "goalkeeper": "Goalkeeper",
+      "unknown": "Unknown",
+      "noPlayers": "No players found"
+    },
+    "form": {
+      "title": "Form (last 5 matches)",
+      "goalsFor": "Goals for",
+      "goalsAgainst": "Goals against",
+      "difference": "Difference",
+      "noData": "No form data available",
+      "win": "W",
+      "draw": "D",
+      "loss": "L"
+    },
+    "standings": {
+      "loading": "Loading standings...",
+      "error": "Error loading standings",
+      "empty": "No standings available"
+    },
+    "social": {
+      "empty": "No predictions or bets for this team yet"
+    },
+    "stories": {
+      "highlights": "Highlights",
+      "squad": "Squad",
+      "nextMatch": "Next",
+      "trophies": "Trophies"
+    }
+  },
+  "match": {
+    "lineups": {
+      "title": "Lineups",
+      "starters": "Starting XI",
+      "startersFive": "Starting Five",
+      "bench": "Bench",
+      "substitutes": "Substitutes",
+      "loading": "Loading lineups...",
+      "comingSoon": "Coming soon",
+      "availableSoon": "Lineup will be available closer to kickoff",
+      "noData": "No lineup data available"
+    }
+  },
+  "common": {
+    "back": "Back",
+    "vs": "VS",
+    "notFound": "Not found",
+    "error": "An error occurred"
+  }
+}

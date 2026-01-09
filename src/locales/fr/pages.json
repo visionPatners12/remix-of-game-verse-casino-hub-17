@@ -1,0 +1,107 @@
+{
+  "league": {
+    "tabs": {
+      "standings": "Classement",
+      "matches": "Matchs",
+      "social": "Social",
+      "highlights": "Résumés"
+    },
+    "header": {
+      "upcoming": "À venir",
+      "teams": "Équipes",
+      "followers": "Abonnés",
+      "follow": "Suivre",
+      "unfollow": "Ne plus suivre"
+    },
+    "matches": {
+      "live": "En direct",
+      "upcoming": "À venir",
+      "past": "Passés",
+      "noMatches": "Aucun match disponible"
+    },
+    "feed": {
+      "loading": "Chargement des résumés...",
+      "error": "Erreur de chargement",
+      "empty": "Aucun résumé disponible",
+      "allLoaded": "Tous les résumés chargés"
+    },
+    "social": {
+      "empty": "Aucun pronostic ou pari pour cette ligue"
+    }
+  },
+  "team": {
+    "tabs": {
+      "standings": "Classement",
+      "matches": "Matchs",
+      "social": "Social",
+      "highlights": "Résumés"
+    },
+    "header": {
+      "posts": "Posts",
+      "followers": "Abonnés",
+      "rank": "Rang",
+      "points": "Points",
+      "follow": "Suivre",
+      "unfollow": "Ne plus suivre",
+      "staff": "Effectif"
+    },
+    "matches": {
+      "upcoming": "À venir",
+      "past": "Passés",
+      "noMatches": "Aucun match disponible"
+    },
+    "staff": {
+      "title": "Effectif",
+      "headCoach": "Entraîneur principal",
+      "attacker": "Attaquant",
+      "midfielder": "Milieu",
+      "defender": "Défenseur",
+      "goalkeeper": "Gardien",
+      "unknown": "Inconnu",
+      "noPlayers": "Aucun joueur trouvé"
+    },
+    "form": {
+      "title": "Forme (5 derniers matchs)",
+      "goalsFor": "Buts marqués",
+      "goalsAgainst": "Buts encaissés",
+      "difference": "Différence",
+      "noData": "Aucune donnée de forme",
+      "win": "V",
+      "draw": "N",
+      "loss": "D"
+    },
+    "standings": {
+      "loading": "Chargement du classement...",
+      "error": "Erreur de chargement",
+      "empty": "Aucun classement disponible"
+    },
+    "social": {
+      "empty": "Aucun pronostic ou pari pour cette équipe"
+    },
+    "stories": {
+      "highlights": "Résumés",
+      "squad": "Effectif",
+      "nextMatch": "Prochain",
+      "trophies": "Trophées"
+    }
+  },
+  "match": {
+    "lineups": {
+      "title": "Compositions",
+      "starters": "Titulaires",
+      "startersFive": "Cinq majeur",
+      "bench": "Banc",
+      "substitutes": "Remplaçants",
+      "loading": "Chargement des compositions...",
+      "comingSoon": "Bientôt disponible",
+      "availableSoon": "La composition sera disponible avant le coup d'envoi",
+      "noData": "Aucune donnée de composition disponible"
+    }
+  },
+  "common": {
+    "back": "Retour",
+    "vs": "VS",
+    "notFound": "Non trouvé",
+    "error": "Une erreur est survenue"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "title": "Colecciones NFT",
+  "myNFTs": "Mis NFTs",
+  "explore": "Explorar",
+  "create": "Crear",
+  "collection": {
+    "title": "Colección",
+    "items": "items",
+    "owners": "propietarios",
+    "floorPrice": "Precio mínimo",
+    "volume": "Volumen",
+    "description": "Descripción",
+    "viewAll": "Ver todo"
+  },
+  "item": {
+    "owner": "Propietario",
+    "creator": "Creador",
+    "price": "Precio",
+    "lastSale": "Última venta",
+    "rarity": "Rareza",
+    "traits": "Atributos",
+    "history": "Historial",
+    "buy": "Comprar ahora",
+    "makeOffer": "Hacer oferta",
+    "transfer": "Transferir",
+    "sell": "Vender",
+    "burn": "Quemar"
+  },
+  "mint": {
+    "title": "Crear NFT",
+    "upload": "Subir archivo",
+    "dragDrop": "Arrastra y suelta o haz clic para subir",
+    "formats": "PNG, JPG, GIF, MP4 (Máx. 50MB)",
+    "name": "Nombre",
+    "description": "Descripción",
+    "collection": "Colección",
+    "properties": "Propiedades",
+    "addProperty": "Añadir propiedad",
+    "supply": "Cantidad",
+    "royalties": "Regalías",
+    "mint": "Crear",
+    "minting": "Creando..."
+  },
+  "transfer": {
+    "title": "Transferir NFT",
+    "recipient": "Dirección del destinatario",
+    "confirm": "Confirmar transferencia",
+    "warning": "Esta acción es irreversible"
+  },
+  "filters": {
+    "title": "Filtros",
+    "priceRange": "Rango de precio",
+    "rarity": "Rareza",
+    "traits": "Atributos",
+    "status": "Estado",
+    "forSale": "En venta",
+    "hasOffers": "Con ofertas"
+  },
+  "sort": {
+    "title": "Ordenar por",
+    "priceAsc": "Precio: menor a mayor",
+    "priceDesc": "Precio: mayor a menor",
+    "recent": "Listados recientemente",
+    "oldest": "Más antiguos"
+  },
+  "empty": {
+    "noItems": "No se encontraron NFTs",
+    "noCollections": "No se encontraron colecciones",
+    "startCollecting": "Empieza a coleccionar NFTs"
+  }
+}

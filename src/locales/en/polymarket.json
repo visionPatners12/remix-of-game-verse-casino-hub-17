@@ -1,0 +1,39 @@
+{
+  "event": {
+    "back": "Back",
+    "pause": "Paused",
+    "noMarkets": "No markets available for this event"
+  },
+  "prediction": {
+    "toggle": "Make a prediction",
+    "cancel": "Cancel prediction mode",
+    "predictYes": "Predict Yes",
+    "predictNo": "Predict No",
+    "predict": "Predict"
+  },
+  "opinion": {
+    "title": "Event opinion",
+    "comingSoon": "Coming soon - share your opinion"
+  },
+  "auth": {
+    "loginRequired": "Login required",
+    "loginToPredict": "Sign in to make a prediction"
+  },
+  "createPrediction": {
+    "title": "Create prediction",
+    "noMarketSelected": "No market selected. Please return to the event page.",
+    "return": "Back",
+    "yourPrediction": "Your prediction",
+    "odds": "Odds",
+    "impliedProbability": "Implied probability",
+    "analysis": "Analysis (optional)",
+    "analysisPlaceholder": "Share your analysis and reasons for this prediction...",
+    "confidenceLevel": "Confidence level",
+    "confidenceLabels": ["Very low", "Low", "Moderate", "High", "Very high"],
+    "premiumTip": "Premium Tip",
+    "premiumDescription": "Visible only to your subscribers",
+    "publishing": "Publishing...",
+    "loading": "Loading...",
+    "publish": "Publish my prediction"
+  }
+}

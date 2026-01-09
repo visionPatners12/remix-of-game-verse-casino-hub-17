@@ -1,0 +1,186 @@
+/* Futuristic Ludo Board Styles */
+
+/* Cosmic gradient animation */
+@keyframes cosmic-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes rotate-halo {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes energy-wave {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes levitate {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0;
+  }
+}
+
+@keyframes forcefield-pulse {
+  0%, 100% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 20;
+  }
+}
+
+@keyframes portal-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes neon-flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.8;
+  }
+  94% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0.9;
+  }
+  97% {
+    opacity: 1;
+  }
+}
+
+/* Futuristic board container */
+.ludo-board-futuristic {
+  position: relative;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 25%, #0a1a1a 50%, #1a1a0a 75%, #0a0a1a 100%);
+  background-size: 400% 400%;
+  animation: cosmic-shift 20s ease infinite;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Scanline overlay */
+.ludo-board-futuristic::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 255, 0.03) 2px,
+    rgba(0, 255, 255, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* CRT effect overlay */
+.ludo-board-futuristic::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Orbitron font for game labels */
+.ludo-label {
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Neon text glow effect */
+.neon-text-red {
+  color: #ff1a4d;
+  text-shadow: 0 0 5px #ff1a4d, 0 0 10px #ff1a4d, 0 0 20px #ff1a4d;
+}
+
+.neon-text-green {
+  color: #00ff88;
+  text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88, 0 0 20px #00ff88;
+}
+
+.neon-text-yellow {
+  color: #ffea00;
+  text-shadow: 0 0 5px #ffea00, 0 0 10px #ffea00, 0 0 20px #ffea00;
+}
+
+.neon-text-blue {
+  color: #00d4ff;
+  text-shadow: 0 0 5px #00d4ff, 0 0 10px #00d4ff, 0 0 20px #00d4ff;
+}

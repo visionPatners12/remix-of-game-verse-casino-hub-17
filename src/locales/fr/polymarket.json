@@ -1,0 +1,39 @@
+{
+  "event": {
+    "back": "Retour",
+    "pause": "En pause",
+    "noMarkets": "Aucun marché disponible pour cet événement"
+  },
+  "prediction": {
+    "toggle": "Faire une prédiction",
+    "cancel": "Annuler le mode prédiction",
+    "predictYes": "Prédire Oui",
+    "predictNo": "Prédire Non",
+    "predict": "Prédire"
+  },
+  "opinion": {
+    "title": "Avis sur l'événement",
+    "comingSoon": "Bientôt disponible - partagez votre avis"
+  },
+  "auth": {
+    "loginRequired": "Connexion requise",
+    "loginToPredict": "Connectez-vous pour faire une prédiction"
+  },
+  "createPrediction": {
+    "title": "Créer une prédiction",
+    "noMarketSelected": "Aucun marché sélectionné. Veuillez retourner à la page de l'événement.",
+    "return": "Retour",
+    "yourPrediction": "Votre prédiction",
+    "odds": "Cote",
+    "impliedProbability": "Probabilité implicite",
+    "analysis": "Analyse (optionnel)",
+    "analysisPlaceholder": "Partagez votre analyse et vos raisons pour cette prédiction...",
+    "confidenceLevel": "Niveau de confiance",
+    "confidenceLabels": ["Très faible", "Faible", "Modéré", "Élevé", "Très élevé"],
+    "premiumTip": "Tip Premium",
+    "premiumDescription": "Visible uniquement par vos abonnés",
+    "publishing": "Publication...",
+    "loading": "Chargement...",
+    "publish": "Publier ma prédiction"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "league": {
+    "tabs": {
+      "standings": "Clasificación",
+      "matches": "Partidos",
+      "social": "Social",
+      "highlights": "Destacados"
+    },
+    "header": {
+      "upcoming": "Próximos",
+      "teams": "Equipos",
+      "followers": "Seguidores",
+      "follow": "Seguir",
+      "unfollow": "Dejar de seguir"
+    },
+    "matches": {
+      "live": "En vivo",
+      "upcoming": "Próximos",
+      "past": "Anteriores",
+      "noMatches": "No hay partidos disponibles"
+    },
+    "feed": {
+      "loading": "Cargando destacados...",
+      "error": "Error al cargar destacados",
+      "empty": "Aún no hay destacados disponibles",
+      "allLoaded": "Todos los destacados cargados"
+    },
+    "social": {
+      "empty": "Aún no hay predicciones ni apuestas para esta liga"
+    }
+  },
+  "team": {
+    "tabs": {
+      "standings": "Clasificación",
+      "matches": "Partidos",
+      "social": "Social",
+      "highlights": "Destacados"
+    },
+    "header": {
+      "posts": "Publicaciones",
+      "followers": "Seguidores",
+      "rank": "Posición",
+      "points": "Puntos",
+      "follow": "Seguir",
+      "unfollow": "Dejar de seguir",
+      "staff": "Staff"
+    },
+    "matches": {
+      "upcoming": "Próximos",
+      "past": "Anteriores",
+      "noMatches": "No hay partidos disponibles"
+    },
+    "staff": {
+      "title": "Staff",
+      "headCoach": "Entrenador",
+      "attacker": "Delantero",
+      "midfielder": "Centrocampista",
+      "defender": "Defensa",
+      "goalkeeper": "Portero",
+      "unknown": "Desconocido",
+      "noPlayers": "No se encontraron jugadores"
+    },
+    "form": {
+      "title": "Forma (últimos 5 partidos)",
+      "goalsFor": "Goles a favor",
+      "goalsAgainst": "Goles en contra",
+      "difference": "Diferencia",
+      "noData": "Sin datos de forma disponibles",
+      "win": "V",
+      "draw": "E",
+      "loss": "D"
+    },
+    "standings": {
+      "loading": "Cargando clasificación...",
+      "error": "Error al cargar clasificación",
+      "empty": "No hay clasificación disponible"
+    },
+    "social": {
+      "empty": "Aún no hay predicciones ni apuestas para este equipo"
+    },
+    "stories": {
+      "highlights": "Destacados",
+      "squad": "Plantilla",
+      "nextMatch": "Próximo",
+      "trophies": "Trofeos"
+    }
+  },
+  "match": {
+    "lineups": {
+      "title": "Alineaciones",
+      "starters": "Once inicial",
+      "startersFive": "Cinco inicial",
+      "bench": "Banquillo",
+      "substitutes": "Suplentes",
+      "loading": "Cargando alineaciones...",
+      "comingSoon": "Próximamente",
+      "availableSoon": "La alineación estará disponible cerca del inicio",
+      "noData": "Sin datos de alineación disponibles"
+    }
+  },
+  "common": {
+    "back": "Atrás",
+    "vs": "VS",
+    "notFound": "No encontrado",
+    "error": "Ha ocurrido un error"
+  }
+}

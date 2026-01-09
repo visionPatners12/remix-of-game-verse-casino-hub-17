@@ -1,0 +1,90 @@
+{
+  "title": "Live Streams",
+  "goLive": "Go Live",
+  "watching": "watching",
+  "viewers": "viewers",
+  "live": "LIVE",
+  "ended": "Ended",
+  "upcoming": "Upcoming",
+  "create": {
+    "title": "Start Streaming",
+    "streamTitle": "Stream Title",
+    "streamTitlePlaceholder": "Enter stream title",
+    "description": "Description",
+    "descriptionPlaceholder": "What's your stream about?",
+    "category": "Category",
+    "selectCategory": "Select category",
+    "tags": "Tags",
+    "addTag": "Add tag",
+    "match": "Link to Match",
+    "selectMatch": "Select a match (optional)",
+    "visibility": "Visibility",
+    "public": "Public",
+    "private": "Private",
+    "startStream": "Start Stream",
+    "preparing": "Preparing stream..."
+  },
+  "player": {
+    "play": "Play",
+    "pause": "Pause",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "fullscreen": "Fullscreen",
+    "exitFullscreen": "Exit Fullscreen",
+    "quality": "Quality",
+    "settings": "Settings",
+    "pip": "Picture in Picture",
+    "theater": "Theater Mode",
+    "streamEnded": "Stream has ended",
+    "streamOffline": "Stream is offline"
+  },
+  "chat": {
+    "title": "Live Chat",
+    "sendMessage": "Send a message",
+    "placeholder": "Type a message...",
+    "emotes": "Emotes",
+    "slowMode": "Slow mode enabled",
+    "subscribersOnly": "Subscribers only",
+    "chatDisabled": "Chat is disabled",
+    "banned": "You are banned from this chat"
+  },
+  "controls": {
+    "endStream": "End Stream",
+    "confirmEnd": "Are you sure you want to end the stream?",
+    "muteAudio": "Mute Audio",
+    "muteVideo": "Mute Video",
+    "shareScreen": "Share Screen",
+    "stopSharing": "Stop Sharing",
+    "settings": "Stream Settings"
+  },
+  "stats": {
+    "title": "Stream Stats",
+    "peakViewers": "Peak Viewers",
+    "averageViewers": "Average Viewers",
+    "duration": "Duration",
+    "messages": "Chat Messages"
+  },
+  "categories": {
+    "sports": "Sports",
+    "gaming": "Gaming",
+    "talkShow": "Talk Show",
+    "analysis": "Analysis",
+    "other": "Other"
+  },
+  "empty": {
+    "noStreams": "No live streams",
+    "checkBackLater": "Check back later for live content"
+  },
+  "analytics": {
+    "realtimeViewers": "Realtime Viewers",
+    "live": "Live",
+    "current": "Current",
+    "max": "Max",
+    "avg": "Avg",
+    "noData": "No data available",
+    "dataAppears": "Data will appear once the stream starts",
+    "timeAgo1h": "-1h",
+    "timeAgo30m": "-30m",
+    "now": "now"
+  }
+}

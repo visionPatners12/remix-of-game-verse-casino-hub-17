@@ -1,0 +1,52 @@
+{
+  "title": "Withdraw",
+  "subtitle": "Withdraw your funds",
+  "amount": "Amount",
+  "enterAmount": "Enter amount",
+  "availableBalance": "Available: {{balance}}",
+  "max": "Max",
+  "destination": "Destination",
+  "destinationAddress": "Destination Address",
+  "enterAddress": "Enter wallet address",
+  "pasteAddress": "Paste",
+  "scanQR": "Scan QR",
+  "methods": {
+    "title": "Withdrawal Method",
+    "crypto": "Crypto Wallet",
+    "bank": "Bank Transfer",
+    "card": "Debit Card"
+  },
+  "network": {
+    "title": "Network",
+    "selectNetwork": "Select network",
+    "fee": "Network Fee",
+    "estimatedTime": "Estimated Time"
+  },
+  "confirmation": {
+    "title": "Confirm Withdrawal",
+    "amount": "Amount",
+    "fee": "Fee",
+    "total": "You will receive",
+    "destination": "To",
+    "confirm": "Confirm Withdrawal",
+    "processing": "Processing..."
+  },
+  "success": {
+    "title": "Withdrawal Submitted",
+    "message": "Your withdrawal is being processed",
+    "txHash": "Transaction Hash",
+    "viewTransaction": "View Transaction",
+    "done": "Done"
+  },
+  "errors": {
+    "insufficientBalance": "Insufficient balance",
+    "invalidAddress": "Invalid address",
+    "minAmount": "Minimum amount is {{min}}",
+    "maxAmount": "Maximum amount is {{max}}",
+    "networkError": "Network error, please try again"
+  },
+  "warnings": {
+    "checkAddress": "Please double-check the destination address",
+    "irreversible": "Withdrawals are irreversible"
+  }
+}

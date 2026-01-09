@@ -1,0 +1,81 @@
+{
+  "navigation": {
+    "forYou": "For You",
+    "betsHub": "Bets Hub",
+    "bets": "Bets",
+    "predictions": "Predictions",
+    "highlights": "Highlights",
+    "trending": "Trending",
+    "hot": "Hot",
+    "liveNow": "Live Now",
+    "live": "Live",
+    "liveBadge": "LIVE"
+  },
+  "loading": {
+    "initStream": "Initializing Stream...",
+    "feed": "Loading feed...",
+    "socialFeed": "Loading social feed...",
+    "bets": "Loading bets...",
+    "predictions": "Loading predictions...",
+    "trendingTopics": "Loading trending topics...",
+    "more": "Loading more...",
+    "generic": "Loading..."
+  },
+  "empty": {
+    "noPosts": "No posts available at the moment.",
+    "noBets": "No bets available at the moment.",
+    "noPredictions": "No predictions available at the moment.",
+    "noTrending": "No trending topics right now",
+    "noMatchPredictions": "No predictions or bets for this match yet",
+    "predictionsWillAppear": "Predictions and bets will appear here",
+    "noComments": "No comments yet",
+    "beFirst": "Be the first to comment!"
+  },
+  "end": {
+    "allPosts": "You've seen all posts",
+    "allBets": "You've seen all bets",
+    "allPredictions": "You've seen all predictions",
+    "allLoaded": "All posts loaded"
+  },
+  "error": {
+    "unableToLoad": "Unable to load feed",
+    "somethingWrong": "Something went wrong while loading your feed. Please try again.",
+    "tryAgain": "Try again"
+  },
+  "focus": {
+    "post": "Post",
+    "highlight": "Highlight",
+    "match": "Match",
+    "comments": "Comments",
+    "goToMatch": "Go to match"
+  },
+  "live": {
+    "title": "Live",
+    "liveCount": "{{count}} live",
+    "createLive": "Create a Live",
+    "upcoming": "Upcoming"
+  },
+  "trending": {
+    "title": "Trending",
+    "hashtags": "Trending Hashtags",
+    "popularPosts": "Popular Posts",
+    "disabledMessage": "Trending posts temporarily disabled during refactoring"
+  },
+  "tipsters": {
+    "title": "Top Tipsters",
+    "top4": "Top 4",
+    "seeAll": "See all",
+    "viewRankings": "View rankings",
+    "tips": "tips",
+    "winRate": "Win Rate",
+    "avgOdds": "Avg Odds",
+    "form": "Form",
+    "open": "Open"
+  },
+  "ticket": {
+    "bet": "Bet",
+    "prediction": "Prediction",
+    "parlay": "Parlay",
+    "single": "Single"
+  }
+}

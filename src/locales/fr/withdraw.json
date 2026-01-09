@@ -1,0 +1,52 @@
+{
+  "title": "Retrait",
+  "subtitle": "Retirer vos fonds",
+  "amount": "Montant",
+  "enterAmount": "Entrer le montant",
+  "availableBalance": "Disponible : {{balance}}",
+  "max": "Max",
+  "destination": "Destination",
+  "destinationAddress": "Adresse de destination",
+  "enterAddress": "Entrer l'adresse du wallet",
+  "pasteAddress": "Coller",
+  "scanQR": "Scanner QR",
+  "methods": {
+    "title": "Méthode de retrait",
+    "crypto": "Wallet Crypto",
+    "bank": "Virement bancaire",
+    "card": "Carte bancaire"
+  },
+  "network": {
+    "title": "Réseau",
+    "selectNetwork": "Sélectionner le réseau",
+    "fee": "Frais de réseau",
+    "estimatedTime": "Temps estimé"
+  },
+  "confirmation": {
+    "title": "Confirmer le retrait",
+    "amount": "Montant",
+    "fee": "Frais",
+    "total": "Tu recevras",
+    "destination": "Vers",
+    "confirm": "Confirmer le retrait",
+    "processing": "Traitement..."
+  },
+  "success": {
+    "title": "Retrait soumis",
+    "message": "Ton retrait est en cours de traitement",
+    "txHash": "Hash de transaction",
+    "viewTransaction": "Voir la transaction",
+    "done": "Terminé"
+  },
+  "errors": {
+    "insufficientBalance": "Solde insuffisant",
+    "invalidAddress": "Adresse invalide",
+    "minAmount": "Montant minimum : {{min}}",
+    "maxAmount": "Montant maximum : {{max}}",
+    "networkError": "Erreur réseau, réessaie"
+  },
+  "warnings": {
+    "checkAddress": "Vérifie bien l'adresse de destination",
+    "irreversible": "Les retraits sont irréversibles"
+  }
+}

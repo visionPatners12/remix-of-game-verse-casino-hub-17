@@ -1,0 +1,59 @@
+{
+  "header": {
+    "followers": "Followers",
+    "following": "Following",
+    "editProfile": "Edit Profile",
+    "follow": "Follow",
+    "unfollow": "Unfollow"
+  },
+  "tabs": {
+    "posts": "Posts",
+    "bets": "Bets",
+    "predictions": "Predictions"
+  },
+  "settings": {
+    "title": "Profile Settings",
+    "username": "Username",
+    "email": "Email",
+    "phone": "Phone Number",
+    "verifyPhone": "Verify",
+    "oddsFormat": "Odds Format",
+    "language": "Language"
+  },
+  "errors": {
+    "loadError": "Unable to load profile",
+    "userNotFound": "User not found",
+    "updateError": "Unable to update profile",
+    "error": "Error",
+    "profileNotAccessible": "This user doesn't exist or their profile is not accessible."
+  },
+  "empty": {
+    "noPosts": "No posts yet",
+    "noBets": "No bets yet",
+    "noPredictions": "No predictions yet"
+  },
+  "edit": {
+    "title": "Edit Profile",
+    "avatarHint": "Tap the avatar to change your profile picture",
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Your first name",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Your last name",
+    "bio": "Bio",
+    "bioPlaceholder": "Tell us about yourself...",
+    "characters": "characters",
+    "favoriteSports": "Favorite sports",
+    "selected": "selected",
+    "sportsLimitReached": "5 sports limit reached",
+    "saving": "Saving...",
+    "saveChanges": "Save changes",
+    "cancel": "Cancel",
+    "successMessage": "Profile updated successfully!",
+    "errorMessage": "Error updating profile",
+    "sportAdded": "added to favorites",
+    "sportRemoved": "removed from favorites",
+    "sportAddError": "Error adding sport",
+    "sportRemoveError": "Error removing sport",
+    "maxSportsError": "You can only select up to 5 sports"
+  }
+}

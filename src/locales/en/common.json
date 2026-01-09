@@ -1,0 +1,112 @@
+{
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "back": "Back",
+    "next": "Next",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "retry": "Retry",
+    "loading": "Loading...",
+    "saveChanges": "Save Changes",
+    "copy": "Copy",
+    "share": "Share"
+  },
+  "tabs": {
+    "posts": "Posts",
+    "bets": "Bets",
+    "predictions": "Predictions"
+  },
+  "errors": {
+    "generic": "An error occurred",
+    "notFound": "Not found",
+    "unauthorized": "Unauthorized",
+    "networkError": "Network error",
+    "loadingError": "Loading error",
+    "checkConnection": "Please check your connection and try again.",
+    "tryAgain": "Please try again",
+    "refresh": "Refresh"
+  },
+  "status": {
+    "online": "Online",
+    "offline": "Offline",
+    "loading": "Loading",
+    "success": "Success",
+    "error": "Error"
+  },
+  "settings": {
+    "username": "Username",
+    "noUsername": "No username",
+    "email": "Email",
+    "noEmail": "No email configured",
+    "emailHint": "Email cannot be modified from this interface",
+    "phone": "Phone Number",
+    "phonePlaceholder": "+33 6 12 34 56 78",
+    "phoneHint": "Used for verification and account security",
+    "verify": "Verify",
+    "oddsFormat": "Odds Format",
+    "oddsFormatHint": "How betting odds are displayed across the app",
+    "decimal": "Decimal",
+    "american": "American",
+    "fractional": "Fractional",
+    "language": "Language",
+    "languageHint": "Choose your preferred language",
+    "english": "English",
+    "french": "French",
+    "spanish": "Spanish",
+    "portuguese": "Portuguese",
+    "german": "German",
+    "italian": "Italian",
+    "turkish": "Turkish",
+    "updating": "Updating...",
+    "profileUpdated": "Profile updated",
+    "profileUpdatedDesc": "Your information has been saved successfully.",
+    "errorTitle": "Error",
+    "usernameTaken": "This username is already taken",
+    "errorUpdating": "Error updating profile"
+  },
+  "referral": {
+    "linkCopied": "Link copied!",
+    "shareTitle": "Join PRYZEN!",
+    "shareText": "Sign up on PRYZEN with my link and get $10 bonus!",
+    "yourReferralCode": "Your Referral Code",
+    "uniqueCode": "Your unique code",
+    "peopleReferred": "people referred"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "tipster": {
+      "title": "Tipster Premium",
+      "description": "Monetize your sports picks",
+      "benefits": {
+        "revenue": "Recurring revenue",
+        "subscribers": "Paying subscribers",
+        "visibility": "Increased visibility",
+        "analytics": "Detailed analytics"
+      },
+      "statusActive": "Profile active",
+      "statusInactive": "Profile inactive",
+      "goToDashboard": "Go to Tipster Dashboard",
+      "becomeTipster": "Become Premium Tipster"
+    },
+    "mlm": {
+      "title": "Referral Program",
+      "description": "Earn commissions by referring friends",
+      "benefits": {
+        "referral": "Refer your friends",
+        "commission": "Earn commissions",
+        "network": "Multi-level network"
+      }
+    }
+  },
+  "stats": {
+    "yourStats": "Your Stats",
+    "referrals": "Referrals",
+    "networkMargin": "Margin",
+    "totalEarnings": "Earnings",
+    "pending": "Pending"
+  }
+}

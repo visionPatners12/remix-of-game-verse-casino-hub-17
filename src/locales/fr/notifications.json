@@ -1,0 +1,56 @@
+{
+  "title": "Notifications",
+  "markAllRead": "Tout marquer comme lu",
+  "clearAll": "Tout effacer",
+  "settings": "Paramètres de notifications",
+  "empty": {
+    "title": "Aucune notification",
+    "description": "Tu es à jour !"
+  },
+  "tabs": {
+    "all": "Toutes",
+    "unread": "Non lues",
+    "mentions": "Mentions",
+    "bets": "Paris",
+    "social": "Social"
+  },
+  "types": {
+    "betWon": "Pari gagné",
+    "betLost": "Pari perdu",
+    "betSettled": "Pari réglé",
+    "matchStarting": "Match qui commence",
+    "matchEnded": "Match terminé",
+    "newFollower": "Nouvel abonné",
+    "newLike": "Nouveau like",
+    "newComment": "Nouveau commentaire",
+    "newMention": "T'a mentionné",
+    "tipsterTip": "Nouveau pronostic",
+    "deposit": "Dépôt confirmé",
+    "withdraw": "Retrait traité",
+    "promo": "Promotion",
+    "system": "Système"
+  },
+  "time": {
+    "now": "À l'instant",
+    "minutesAgo": "Il y a {{count}} min",
+    "hoursAgo": "Il y a {{count}}h",
+    "daysAgo": "Il y a {{count}}j",
+    "weeksAgo": "Il y a {{count}} sem"
+  },
+  "actions": {
+    "view": "Voir",
+    "dismiss": "Ignorer",
+    "viewBet": "Voir le pari",
+    "viewMatch": "Voir le match",
+    "viewProfile": "Voir le profil"
+  },
+  "preferences": {
+    "title": "Préférences",
+    "push": "Notifications push",
+    "email": "Notifications par email",
+    "bets": "Mises à jour des paris",
+    "matches": "Alertes matchs",
+    "social": "Activité sociale",
+    "marketing": "Marketing & Promotions"
+  }
+}

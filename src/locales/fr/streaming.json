@@ -1,0 +1,90 @@
+{
+  "title": "Lives",
+  "goLive": "Démarrer un live",
+  "watching": "en train de regarder",
+  "viewers": "spectateurs",
+  "live": "EN DIRECT",
+  "ended": "Terminé",
+  "upcoming": "À venir",
+  "create": {
+    "title": "Lancer un stream",
+    "streamTitle": "Titre du stream",
+    "streamTitlePlaceholder": "Entrer le titre du stream",
+    "description": "Description",
+    "descriptionPlaceholder": "De quoi parle ton stream ?",
+    "category": "Catégorie",
+    "selectCategory": "Choisir une catégorie",
+    "tags": "Tags",
+    "addTag": "Ajouter un tag",
+    "match": "Lier à un match",
+    "selectMatch": "Sélectionner un match (optionnel)",
+    "visibility": "Visibilité",
+    "public": "Public",
+    "private": "Privé",
+    "startStream": "Démarrer le stream",
+    "preparing": "Préparation du stream..."
+  },
+  "player": {
+    "play": "Lecture",
+    "pause": "Pause",
+    "mute": "Couper le son",
+    "unmute": "Activer le son",
+    "fullscreen": "Plein écran",
+    "exitFullscreen": "Quitter le plein écran",
+    "quality": "Qualité",
+    "settings": "Paramètres",
+    "pip": "Image dans l'image",
+    "theater": "Mode cinéma",
+    "streamEnded": "Le stream est terminé",
+    "streamOffline": "Le stream est hors ligne"
+  },
+  "chat": {
+    "title": "Chat en direct",
+    "sendMessage": "Envoyer un message",
+    "placeholder": "Écris un message...",
+    "emotes": "Émotes",
+    "slowMode": "Mode lent activé",
+    "subscribersOnly": "Abonnés uniquement",
+    "chatDisabled": "Chat désactivé",
+    "banned": "Tu es banni de ce chat"
+  },
+  "controls": {
+    "endStream": "Terminer le stream",
+    "confirmEnd": "Es-tu sûr de vouloir terminer le stream ?",
+    "muteAudio": "Couper l'audio",
+    "muteVideo": "Couper la vidéo",
+    "shareScreen": "Partager l'écran",
+    "stopSharing": "Arrêter le partage",
+    "settings": "Paramètres du stream"
+  },
+  "stats": {
+    "title": "Stats du stream",
+    "peakViewers": "Pic de spectateurs",
+    "averageViewers": "Spectateurs moyens",
+    "duration": "Durée",
+    "messages": "Messages du chat"
+  },
+  "categories": {
+    "sports": "Sports",
+    "gaming": "Gaming",
+    "talkShow": "Talk Show",
+    "analysis": "Analyse",
+    "other": "Autre"
+  },
+  "empty": {
+    "noStreams": "Aucun live en cours",
+    "checkBackLater": "Reviens plus tard pour du contenu live"
+  },
+  "analytics": {
+    "realtimeViewers": "Spectateurs en temps réel",
+    "live": "En direct",
+    "current": "Actuel",
+    "max": "Max",
+    "avg": "Moy",
+    "noData": "Aucune donnée disponible",
+    "dataAppears": "Les données apparaîtront une fois le stream démarré",
+    "timeAgo1h": "-1h",
+    "timeAgo30m": "-30m",
+    "now": "maintenant"
+  }
+}

@@ -1,0 +1,38 @@
+/* === VENDOR/THIRD-PARTY FIXES === */
+/* Fixes for third-party libraries like Coinbase OnchainKit */
+
+/* === COINBASE ONCHAINKIT DROPDOWN FIXES === */
+[data-testid*="dropdown"], 
+[class*="dropdown"], 
+[class*="popover"],
+.ock-fund-dropdown,
+.ock-select-dropdown,
+div[role="listbox"],
+div[role="menu"] {
+  background-color: hsl(var(--popover)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  box-shadow: 0 10px 15px -3px hsl(var(--shadow) / 0.1), 0 4px 6px -2px hsl(var(--shadow) / 0.05) !important;
+  z-index: 50 !important;
+}
+
+/* Fix dropdown menu items */
+[data-testid*="dropdown"] > *,
+[class*="dropdown"] > *,
+[class*="popover"] > *,
+.ock-fund-dropdown > *,
+.ock-select-dropdown > *,
+div[role="listbox"] > *,
+div[role="menu"] > * {
+  color: hsl(var(--popover-foreground)) !important;
+}
+
+/* Fix dropdown item hover states */
+[data-testid*="dropdown"] > *:hover,
+[class*="dropdown"] > *:hover,
+[class*="popover"] > *:hover,
+.ock-fund-dropdown > *:hover,
+.ock-select-dropdown > *:hover,
+div[role="listbox"] > *:hover,
+div[role="menu"] > *:hover {
+  background-color: hsl(var(--muted)) !important;
+}

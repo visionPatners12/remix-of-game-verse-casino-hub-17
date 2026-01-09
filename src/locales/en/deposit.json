@@ -1,0 +1,106 @@
+{
+  "page": {
+    "title": "Deposit",
+    "subtitle": "Add funds to your account"
+  },
+  "steps": {
+    "method": "Method",
+    "details": "Details",
+    "confirmation": "Confirmation"
+  },
+  "methods": {
+    "title": "Choose Deposit Method",
+    "crypto": {
+      "title": "Cryptocurrency",
+      "description": "USDT Polygon only"
+    },
+    "coinbase": {
+      "title": "Coinbase Pay",
+      "description": "Buy directly with Coinbase"
+    },
+    "mobileMoney": {
+      "title": "Mobile Money",
+      "description": "Coming soon"
+    },
+    "bankTransfer": {
+      "title": "Bank Transfer",
+      "description": "Coming soon"
+    },
+    "applePay": {
+      "title": "Apple Pay",
+      "description": "Instant deposit via Apple Pay"
+    },
+    "comingSoon": "Coming soon",
+    "processing": "Processing...",
+    "recommended": "Popular"
+  },
+  "crypto": {
+    "title": "USDT Polygon",
+    "subtitle": "Your personal deposit address",
+    "loading": "Retrieving your deposit address...",
+    "error": "Unable to generate address. Please try again.",
+    "retry": "Retry",
+    "qrTitle": "Scan to Deposit",
+    "qrDescription": "Scan this QR code with your wallet to send {{symbol}}",
+    "copyTitle": "{{symbol}} Deposit Address",
+    "copyDescription": "Use this address for your deposits",
+    "copied": "Copied!",
+    "copyAddress": "Copy Address",
+    "addressCopied": "Deposit address copied to clipboard"
+  },
+  "mobileMoney": {
+    "title": "Mobile Money",
+    "serviceTitle": "Service under development",
+    "serviceDescription": "Mobile Money deposit will be available soon",
+    "chooseAnother": "Choose another method"
+  },
+  "instructions": {
+    "title": "How to deposit",
+    "step1Title": "Copy the address",
+    "step1Desc": "Copy the deposit address or scan the QR code",
+    "step2Title": "Open your wallet",
+    "step2Desc": "Use your preferred crypto wallet app",
+    "step3Title": "Send your funds",
+    "step3Desc": "Only send {{name}} ({{symbol}}) to this address",
+    "step4Title": "Wait for confirmation",
+    "step4Desc": "1-3 network confirmations required"
+  },
+  "reminders": {
+    "title": "Important reminders",
+    "onlySend": "Only send {{name}} ({{symbol}}) to this address",
+    "verifyAddress": "Always verify the address before sending",
+    "minimum": "Minimum amount: 0.001 {{symbol}}",
+    "confirmation": "Funds credited after network confirmation"
+  },
+  "confirmation": {
+    "title": "Confirmation",
+    "applePayTitle": "Deposit Completed",
+    "applePayDesc": "Your Apple Pay deposit was processed successfully.",
+    "cryptoTitle": "Deposit Configured",
+    "cryptoDesc": "Your USDT Polygon address has been generated. You can now make your deposit.",
+    "viewWallet": "View My Wallet",
+    "newDeposit": "New Deposit"
+  },
+  "processing": {
+    "title": "Processing Time",
+    "network": "Network",
+    "confirmations": "Confirmations",
+    "blocks": "1-3 blocks",
+    "estimatedTime": "Estimated time",
+    "time": "2-5 minutes"
+  },
+  "security": {
+    "title": "Security & Privacy",
+    "description": "This address was generated specifically for you. Only send USDT on the Polygon network."
+  },
+  "coinbase": {
+    "title": "Fund your account with Coinbase Pay",
+    "selectMethod": "Select your preferred payment method",
+    "securedBy": "Secured by Coinbase",
+    "securityNote": "Your deposit is secure and processed directly by Coinbase"
+  },
+  "buttons": {
+    "back": "Back",
+    "continue": "Continue"
+  }
+}

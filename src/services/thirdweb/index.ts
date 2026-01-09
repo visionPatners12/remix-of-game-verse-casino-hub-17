@@ -1,0 +1,1 @@
+export { deployTipsterSplitContract } from './splitContractService';

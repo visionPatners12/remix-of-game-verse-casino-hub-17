@@ -1,0 +1,66 @@
+{
+  "title": "Support",
+  "subtitle": "How can we help you?",
+  "contactUs": "Contact Us",
+  "email": "Email",
+  "socialMedia": "Social Media",
+  "helpCenter": "Help Center",
+  "faq": "FAQ",
+  "guides": "Guides",
+  "tickets": {
+    "title": "My Tickets",
+    "create": "Create Ticket",
+    "noTickets": "No tickets yet",
+    "viewAll": "View All Tickets",
+    "subject": "Subject",
+    "subjectPlaceholder": "Brief description of your issue",
+    "message": "Message",
+    "messagePlaceholder": "Describe your issue in detail...",
+    "category": "Category",
+    "priority": "Priority",
+    "submit": "Submit Ticket",
+    "submitting": "Submitting..."
+  },
+  "categories": {
+    "technical": "Technical Issue",
+    "billing": "Billing & Payments",
+    "behavior": "Report User",
+    "other": "Other"
+  },
+  "priority": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "urgent": "Urgent"
+  },
+  "status": {
+    "open": "Open",
+    "inProgress": "In Progress",
+    "resolved": "Resolved",
+    "closed": "Closed"
+  },
+  "chat": {
+    "title": "Ticket Conversation",
+    "reply": "Reply",
+    "replyPlaceholder": "Type your reply...",
+    "send": "Send",
+    "fromSupport": "Support Team",
+    "attachFile": "Attach File"
+  },
+  "howToAddFunds": {
+    "title": "How to Add Funds",
+    "step1": "Connect your wallet",
+    "step2": "Go to Deposit",
+    "step3": "Choose your method",
+    "step4": "Confirm transaction"
+  },
+  "success": {
+    "ticketCreated": "Ticket created successfully",
+    "messageSent": "Message sent"
+  },
+  "errors": {
+    "subjectRequired": "Subject is required",
+    "messageRequired": "Message is required",
+    "submitFailed": "Failed to submit ticket"
+  }
+}

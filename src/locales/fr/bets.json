@@ -1,0 +1,53 @@
+{
+  "page": {
+  "title": "Mes Paris",
+  "subtitle": "Suis tes performances"
+  },
+"wallet": {
+  "connect": "Connecte ton Wallet",
+  "connectMessage": "Connecte ton wallet pour voir l'historique de tes paris",
+  "connecting": "Connexion...",
+  "connectingMessage": "Connexion à ton wallet"
+  },
+  "empty": {
+  "title": "Aucun pari",
+  "message": "Ton historique apparaîtra ici après ton premier pari"
+  },
+  "stats": {
+    "winRate": "Taux de réussite",
+    "wagered": "Misé",
+    "profit": "Profit",
+    "bets": "Paris"
+  },
+  "bet": {
+    "single": "Pari Simple",
+    "parlay": "Combiné",
+    "stake": "Mise",
+    "odds": "Cote",
+    "payout": "Gain",
+    "potentialWin": "Gain potentiel"
+  },
+  "status": {
+    "won": "Gagné",
+    "lost": "Perdu",
+    "pending": "En cours",
+    "cashedOut": "Encaissé",
+    "canceled": "Annulé"
+  },
+  "actions": {
+    "redeem": "Récupérer les gains",
+    "redeeming": "Récupération...",
+    "cashout": "Cashout",
+    "cashingOut": "Encaissement...",
+    "loadMore": "Charger plus",
+    "loading": "Chargement..."
+  },
+  "cashout": {
+    "available": "Cashout disponible",
+    "unavailable": "Cashout non disponible",
+    "processing": "Traitement...",
+    "success": "Cashout réussi !",
+    "error": "Échec du cashout",
+    "approving": "Approbation..."
+  }
+}

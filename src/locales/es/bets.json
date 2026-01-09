@@ -1,0 +1,53 @@
+{
+  "page": {
+    "title": "Mis apuestas",
+    "subtitle": "Sigue tu rendimiento"
+  },
+  "wallet": {
+    "connect": "Conecta tu billetera",
+    "connectMessage": "Conecta tu billetera para ver tu historial de apuestas",
+    "connecting": "Conectando...",
+    "connectingMessage": "Conectando a tu billetera"
+  },
+  "empty": {
+    "title": "Aún no hay apuestas",
+    "message": "Tu historial aparecerá aquí después de tu primera apuesta"
+  },
+  "stats": {
+    "winRate": "Tasa de aciertos",
+    "wagered": "Apostado",
+    "profit": "Beneficio",
+    "bets": "Apuestas"
+  },
+  "bet": {
+    "single": "Apuesta simple",
+    "parlay": "Combinada",
+    "stake": "Cantidad",
+    "odds": "Cuota",
+    "payout": "Pago",
+    "potentialWin": "Ganancia potencial"
+  },
+  "status": {
+    "won": "Ganada",
+    "lost": "Perdida",
+    "pending": "Pendiente",
+    "cashedOut": "Cobrada",
+    "canceled": "Cancelada"
+  },
+  "actions": {
+    "redeem": "Cobrar ganancias",
+    "redeeming": "Cobrando...",
+    "cashout": "Cobrar",
+    "cashingOut": "Cobrando...",
+    "loadMore": "Cargar más",
+    "loading": "Cargando..."
+  },
+  "cashout": {
+    "available": "Cobro disponible",
+    "unavailable": "Cobro no disponible",
+    "processing": "Procesando...",
+    "success": "¡Cobro exitoso!",
+    "error": "Error al cobrar",
+    "approving": "Aprobando..."
+  }
+}

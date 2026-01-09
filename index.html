@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/pryzen-logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta http-equiv="Permissions-Policy" content="fullscreen=(self https://auth.privy.io)" />
+  
+  <!-- PWA iOS Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="PRYZEN" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  
+  <!-- iOS Splash Screens -->
+  <!-- iPhone 14 Pro Max, 15 Pro Max (1290x2796) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-1284x2778.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)" />
+  <!-- iPhone 14 Pro, 15 Pro (1179x2556) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-1170x2532.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)" />
+  <!-- iPhone 14, 13, 12 Pro (1170x2532) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)" />
+  <!-- iPhone 14 Plus, 13 Pro Max, 12 Pro Max (1284x2778) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)" />
+  <!-- iPhone 13 mini, 12 mini (1125x2436) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" />
+  <!-- iPhone 11 Pro, X, XS (1125x2436) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" />
+  <!-- iPhone 11, XR (828x1792) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-750x1334.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" />
+  <!-- iPhone 8, 7, 6s, 6 (750x1334) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" />
+  <!-- iPhone 8 Plus, 7 Plus, 6s Plus (1242x2208) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-1170x2532.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)" />
+  <!-- iPad Pro 12.9" (2048x2732) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" />
+  <!-- iPad Pro 11" (1668x2388) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-1668x2388.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" />
+  <!-- iPad Air, iPad 10.2" (1620x2160) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-1668x2388.png" media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2)" />
+  <!-- iPad mini (1536x2048) -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-2048x2732.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" />
+  
+  <!-- Google Fonts - Typographie complète -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- SEO Meta Tags -->
+  <title>PRYZEN - Follow Your Teams, Share Your Passion</title>
+  <meta name="description" content="The social network for sports fans. Follow your favorite leagues and teams, share your best predictions, and connect with a passionate community." />
+  <meta name="keywords" content="sports social network, follow teams, follow leagues, sports predictions, share analysis, tipsters community, sports fans, football, basketball, tennis" />
+  <meta name="author" content="PRYZEN" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pryzen.io/" />
+  <meta property="og:title" content="PRYZEN - Follow Your Teams, Share Your Passion" />
+  <meta property="og:description" content="Follow leagues and teams you love. Share predictions. Join thousands of sports fans." />
+  <meta property="og:image" content="https://pryzen.io/pryzen-logo.png" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://pryzen.io/" />
+  <meta property="twitter:title" content="PRYZEN - Follow Your Teams, Share Your Passion" />
+  <meta property="twitter:description" content="Follow leagues and teams you love. Share predictions. Join thousands of sports fans." />
+  <meta property="twitter:image" content="https://pryzen.io/pryzen-logo.png" />
+  
+  <!-- Additional Meta Tags -->
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f0f1a" />
+  <link rel="canonical" href="https://pryzen.io/" />
+  
+  <style>
+    /* Ensure immediate dark theme application */
+    html, body {
+      background-color: #0f0f1a !important;
+      color: #fafafa !important;
+    }
+    /* CSS custom properties for safe areas - used by Tailwind */
+    :root {
+      --safe-area-inset-top: env(safe-area-inset-top, 0px);
+      --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-area-inset-left: env(safe-area-inset-left, 0px);
+      --safe-area-inset-right: env(safe-area-inset-right, 0px);
+      /* Navigation heights for consistent positioning */
+      --nav-height: calc(3.5rem + var(--safe-area-inset-top));
+    }
+  </style>
+</head>
+<body class="dark">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

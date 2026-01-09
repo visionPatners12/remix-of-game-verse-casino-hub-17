@@ -1,0 +1,53 @@
+{
+  "page": {
+    "title": "My Bets",
+    "subtitle": "Track your performance"
+  },
+  "wallet": {
+    "connect": "Connect Your Wallet",
+    "connectMessage": "Connect your wallet to view your bet history",
+    "connecting": "Connecting...",
+    "connectingMessage": "Connecting to your wallet"
+  },
+  "empty": {
+    "title": "No bets yet",
+    "message": "Your history will appear here after your first bet"
+  },
+  "stats": {
+    "winRate": "Win Rate",
+    "wagered": "Wagered",
+    "profit": "Profit",
+    "bets": "Bets"
+  },
+  "bet": {
+    "single": "Single Bet",
+    "parlay": "Parlay",
+    "stake": "Stake",
+    "odds": "Odds",
+    "payout": "Payout",
+    "potentialWin": "Potential Win"
+  },
+  "status": {
+    "won": "Won",
+    "lost": "Lost",
+    "pending": "Pending",
+    "cashedOut": "Cashed Out",
+    "canceled": "Canceled"
+  },
+  "actions": {
+    "redeem": "Redeem Winnings",
+    "redeeming": "Redeeming...",
+    "cashout": "Cashout",
+    "cashingOut": "Cashing out...",
+    "loadMore": "Load More",
+    "loading": "Loading..."
+  },
+  "cashout": {
+    "available": "Cashout available",
+    "unavailable": "Cashout unavailable",
+    "processing": "Processing...",
+    "success": "Cashout successful!",
+    "error": "Cashout failed",
+    "approving": "Approving..."
+  }
+}

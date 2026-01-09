@@ -1,0 +1,97 @@
+===== KNIP CLEAN REPORT =====
+Date: Jeu 14 aoû 2025 11:11:43 WAT
+
+### Unused files (0)
+(none)
+
+### Unused dependencies (0)
+(none)
+
+### Unused devDependencies (0)
+(none)
+
+### Unused exports & exported types (80) — review manuel
+src/providers/index.ts: OptimalProvider
+src/types/tip.ts	calculatePotentialWin	formatCurrency	TipSelection	TipMatch	TipUser
+src/types.ts	AuthError	isAuthenticatedUser	isAppError	ErrorMessages	BaseEntity	ApiResponse	PaginatedResponse	LoadingState	AsyncState	RequestConfig	ApiError	AppUser	UserProfile	UserStats	UserMetadata	AuthState	AuthActions	DatabaseEntity	Wallet	GameSession	GamePlayer	Transaction	LiveStreamStatus	LiveStream	BaseError	ErrorCode	StrictAsyncState	FormState	GameMarkets	Condition	Selection	UserType	WalletState	UnifiedWalletHook	DropdownOption	SelectOption	ComponentSize	ComponentVariant
+src/ui/index.ts	Accordion	AccordionContent	AccordionItem	AccordionTrigger	AlertDialog	AlertDialogAction	AlertDialogCancel	AlertDialogContent	AlertDialogDescription	AlertDialogHeader	AlertDialogTitle	AlertDialogTrigger	Alert	AlertTitle	AlertDescription	buttonVariants	DialogTrigger	Select	SelectContent	SelectItem	SelectTrigger	SelectValue	Skeleton	SheetTrigger	Slider	Toast	ToastClose	ToastDescription	ToastProvider	ToastTitle	ToastViewport	Toaster	useToast	UnifiedModal	ConditionStateBadge	CountryFlag	FloatingActionButton	Form	FormControl	FormField	FormItem	FormLabel	FormDescription	FormMessage	SectionLoadingFallback	LoadingOverlay	LogoLoading	VideoControls	VideoPlayer	VideoPlayerAdvanced	VariantProps
+src/config/wagmi.ts: supportedChains
+src/utils/logout.ts: clearAuthArtifacts
+src/hooks/base/index.ts	useFormState	useModalState	AsyncState	AsyncActions	UseAsyncStateOptions	FormState	FormActions	UseFormStateOptions	ModalState	ModalActions	UseModalStateOptions	PersistedState	PersistedActions	UsePersistedStateOptions	StorageType
+src/hooks/useStreamClient.ts: useStreamClient
+src/hooks/useDebounce.ts: useDebounce
+src/hooks/useMediaQuery.ts: useMediaQuery
+src/hooks/useWalletTokens.ts: useWalletTokens
+src/hooks/useMarketData.ts: useMarketData
+src/hooks/useIntersectionObserver.ts: useIntersectionObserver
+src/hooks/useWindowSize.ts: useWindowSize
+src/hooks/useMobileAppBanner.ts: useMobileAppBanner
+src/hooks/index.ts	useAuth	useUnifiedWallet	useStreamClient	useDebounce	useLocalStorage	useMediaQuery	useClipboard	useFollow	useMobileMenu	useTickets	useTicketMessages	usePostActions	usePostNavigation	useReferralStats	useReferralHistory	useValidateReferralCode	useDirectMessages	useFollowRequests	useStreamCreation	useUserSearch	useWalletTokens	useMarketData	useToast	toast	useResponsive	useUserContent	useVideoPlayer	useIntersectionObserver	useWindowSize	useMobileAppBanner
+src/utils/simpleTypes.ts	CHAIN_NAMES	getChainName	SimpleUser	SimpleSession	AuthContextType	SignUpData	SimpleWalletState	SimpleWalletUser	SimpleComment	VideoContent	OpinionContent	HighlightContent	PhotoContent	SimpleStreamClient	SimpleChatClient	SimpleError	SimpleErrorHandler	GameData	ParticipantData	TeamData	JsonRpcParams	TransactionData	ProviderRequest	ChatClientLike
+src/services/getstream/reactionService.ts	getActivityReactions	clearReactionClient
+src/hooks/useSubscription.ts: useUserSubscriptions
+src/hooks/useTeam.ts: useTeamStandings
+src/services/database/queries.ts	userQueries	gameQueries	liveStreamQueries
+src/hooks/useTipsterProfile.ts: useTipsterProfile
+src/lib/sportsMapping.ts: getSportBySlug
+src/services/database/index.ts	supabase	socialClient	liveStreamQueries	liveStreamMutations
+src/components/match-details/index.ts	TennisScoreBoard	SoccerScoreBoard	BasketballScoreBoard
+src/features/deposit/index.ts	DepositPage	useDeposit	useWithdraw	FEE_RATES	CryptoType	WithdrawalMethod	MobileProvider	WithdrawalRequest
+src/services/thirdweb/index.ts	thirdwebClient	DeployTipsterSplitContractParams
+src/utils/helpers.ts	generateBetCode	sleep	debounce	clamp
+src/components/ui/alert.tsx: AlertTitle
+src/components/ui/dropdown-menu.tsx	DropdownMenuCheckboxItem	DropdownMenuRadioItem	DropdownMenuShortcut	DropdownMenuGroup	DropdownMenuPortal	DropdownMenuSub	DropdownMenuSubContent	DropdownMenuSubTrigger	DropdownMenuRadioGroup
+src/components/ui/skeleton.tsx: Skeleton
+src/components/ui/sheet.tsx	SheetTrigger	SheetClose	SheetPortal	SheetOverlay	SheetFooter
+src/components/unified/index.ts	UnifiedModal	UnifiedButtonProps	UnifiedModalProps	UnifiedCardProps
+src/components/ui/condition-state-badge.tsx: ConditionStateBadge
+src/components/ui/form.tsx: FormDescription
+src/components/ui/loading-fallback.tsx: SectionLoadingFallback
+src/components/ui/loading-overlay.tsx: LoadingOverlay
+src/components/ui/VideoPlayer.tsx: VideoPlayer
+src/components/ui/VideoPlayerAdvanced.tsx: VideoPlayerAdvanced
+src/utils/azuroDateFormatters.ts	isValidAzuroTimestamp	formatAzuroDateShort	formatAzuroDateTime	AzuroTimestamp	AzuroDateOptions
+src/utils/constants.ts	APP_CONFIG	API_ENDPOINTS	GAME_TYPES	SESSION_STATUS	CURRENCY	MOBILE_PROVIDERS	VALIDATION_RULES	DEFAULT_PAGINATION
+src/services/getstream/feedClient.ts	getStreamClient	clearFeedClient
+src/utils/formatters.ts	formatCurrency	formatDate	truncateText
+src/utils/validators.ts	validateEmail	validatePhone	validateRequired	validateMinLength	validateMaxLength	validateNumeric	validatePositiveNumber	validateUrl
+src/components/ticket-slip/constants/betslip-messages.ts: BETSLIP_DISABLE_REASONS
+src/services/database/predictionService.ts	getUserPredictions	updatePredictionResult	Prediction
+src/features/deposit/components.ts	MobileDepositFlow	DepositQRCode	DepositInstructions	DepositPage
+src/features/deposit/hooks.ts	useDeposit	useWithdraw
+src/features/deposit/utils.ts: FEE_RATES
+src/features/deposit/config/fees.ts: FEE_RATES
+src/integrations/supabase/types.ts	Constants	Json	Tables	TablesInsert	TablesUpdate	Enums	CompositeTypes
+src/hooks/base/useFormState.ts	useFormState	FormState	FormActions	UseFormStateOptions
+src/hooks/base/useModalState.ts	useModalState	ModalState	ModalActions	UseModalStateOptions
+src/services/database/mutations.ts: liveStreamMutations
+src/config/protectedRoutes.ts: ProtectedRoute
+src/types/tipster.ts	UpdateTipsterData	TipsterLeaderboardProps
+src/hooks/sports/useLiveStats.ts: LiveStatsData
+src/hooks/useUserContent.ts	StreamPrediction	StreamSimplePost	FeedFilter
+src/types/league.ts	MatchState	Country	Team	League	State	Score
+src/types/bet.ts	BetSelection	BetMatch	BetUser
+src/services/getstream/userPostsService.ts: UserPostsResponse
+src/types/profile.ts	ProfileFormData	ProfileState	ProfileActions
+src/services/postMediaService.ts: MediaUploadResult
+src/types/base.ts	BaseEntity	BaseProps	BaseComponentProps	BaseFormData	BaseFormProps	BaseModalProps	BaseAsyncState	BaseUserData	BaseWalletData	BaseOption	BaseSelectOption	BaseNavItem	BaseModalState	BaseFormState	BaseUnifiedButtonProps	BaseUnifiedModalProps	BaseUnifiedCardProps	BaseApiResponse	BaseApiError	BasePaginationData	BasePaginatedResponse
+src/types/sports.ts	SportsTeamInfo	ParticipantInfo	SportInfo	CountryInfo	MatchData	LeagueInfo	MatchOdds	MarketData	OutcomeData	TeamInfo
+src/types/wallet.ts	ExternalWalletState	WalletState	WalletActions	Transaction
+src/utils/conditionHelpers.ts: ConditionStateInfo
+src/utils/types.ts	StreamUser	StreamClient	StreamCall	ChatClient	TeamInfo	SqlRow	ErrorWithMessage	SimplePost	CommonObject
+src/utils/signupValidation.ts: ValidationResult
+src/components/unified/UnifiedButton.tsx: UnifiedButtonProps
+src/components/social-feed/layouts/MobileFeedLayout.tsx: FeedFilter
+src/components/social-feed/layouts/DesktopFeedLayout.tsx: FeedFilter
+src/components/unified/UnifiedCard.tsx: UnifiedCardProps
+src/components/unified/UnifiedModal.tsx: UnifiedModalProps
+src/integrations/supabase/payments.types.ts	Wallet	CryptoPayment	WithdrawalRequest	UseWalletOptions	WalletQueryResult
+src/hooks/base/useAsyncState.ts	AsyncState	AsyncActions	UseAsyncStateOptions
+src/hooks/base/usePersistedState.ts	StorageType	PersistedState	PersistedActions	UsePersistedStateOptions
+src/services/thirdweb/splitContractService.ts: DeployTipsterSplitContractParams
+src/components/social-feed/components/FeedContent.tsx: FeedFilter
+src/components/social-feed/components/MainNavigation.tsx: FeedFilter
+
+### Unlisted (utilisés mais non listés)
+(none)
+

@@ -1,0 +1,112 @@
+{
+  "buttons": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "submit": "Enviar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "retry": "Reintentar",
+    "loading": "Cargando...",
+    "saveChanges": "Guardar cambios",
+    "copy": "Copiar",
+    "share": "Compartir"
+  },
+  "tabs": {
+    "posts": "Publicaciones",
+    "bets": "Apuestas",
+    "predictions": "Predicciones"
+  },
+  "errors": {
+    "generic": "Ha ocurrido un error",
+    "notFound": "No encontrado",
+    "unauthorized": "No autorizado",
+    "networkError": "Error de red",
+    "loadingError": "Error de carga",
+    "checkConnection": "Por favor, verifica tu conexión e intenta de nuevo.",
+    "tryAgain": "Por favor, intenta de nuevo",
+    "refresh": "Actualizar"
+  },
+  "status": {
+    "online": "En línea",
+    "offline": "Desconectado",
+    "loading": "Cargando",
+    "success": "Éxito",
+    "error": "Error"
+  },
+  "settings": {
+    "username": "Nombre de usuario",
+    "noUsername": "Sin nombre de usuario",
+    "email": "Correo electrónico",
+    "noEmail": "Sin correo configurado",
+    "emailHint": "El correo no puede modificarse desde esta interfaz",
+    "phone": "Número de teléfono",
+    "phonePlaceholder": "+34 6 12 34 56 78",
+    "phoneHint": "Usado para verificación y seguridad de la cuenta",
+    "verify": "Verificar",
+    "oddsFormat": "Formato de cuotas",
+    "oddsFormatHint": "Cómo se muestran las cuotas en la app",
+    "decimal": "Decimal",
+    "american": "Americano",
+    "fractional": "Fraccional",
+    "language": "Idioma",
+    "languageHint": "Elige tu idioma preferido",
+    "english": "Inglés",
+    "french": "Francés",
+    "spanish": "Español",
+    "portuguese": "Portugués",
+    "german": "Alemán",
+    "italian": "Italiano",
+    "turkish": "Turco",
+    "updating": "Actualizando...",
+    "profileUpdated": "Perfil actualizado",
+    "profileUpdatedDesc": "Tu información se ha guardado correctamente.",
+    "errorTitle": "Error",
+    "usernameTaken": "Este nombre de usuario ya está en uso",
+    "errorUpdating": "Error al actualizar el perfil"
+  },
+  "referral": {
+    "linkCopied": "¡Enlace copiado!",
+    "shareTitle": "¡Únete a PRYZEN!",
+    "shareText": "¡Regístrate en PRYZEN con mi enlace y obtén $10 de bonificación!",
+    "yourReferralCode": "Tu código de referido",
+    "uniqueCode": "Tu código único",
+    "peopleReferred": "personas referidas"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "tipster": {
+      "title": "Tipster Premium",
+      "description": "Monetiza tus pronósticos deportivos",
+      "benefits": {
+        "revenue": "Ingresos recurrentes",
+        "subscribers": "Suscriptores de pago",
+        "visibility": "Mayor visibilidad",
+        "analytics": "Análisis detallados"
+      },
+      "statusActive": "Perfil activo",
+      "statusInactive": "Perfil inactivo",
+      "goToDashboard": "Ir al Panel de Tipster",
+      "becomeTipster": "Convertirse en Tipster Premium"
+    },
+    "mlm": {
+      "title": "Programa de referidos",
+      "description": "Gana comisiones refiriendo amigos",
+      "benefits": {
+        "referral": "Refiere a tus amigos",
+        "commission": "Gana comisiones",
+        "network": "Red multinivel"
+      }
+    }
+  },
+  "stats": {
+    "yourStats": "Tus estadísticas",
+    "referrals": "Referidos",
+    "networkMargin": "Margen",
+    "totalEarnings": "Ganancias",
+    "pending": "Pendiente"
+  }
+}

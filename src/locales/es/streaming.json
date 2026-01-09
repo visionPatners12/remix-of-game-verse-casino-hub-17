@@ -1,0 +1,90 @@
+{
+  "title": "Transmisiones en vivo",
+  "goLive": "Ir en vivo",
+  "watching": "viendo",
+  "viewers": "espectadores",
+  "live": "EN VIVO",
+  "ended": "Terminado",
+  "upcoming": "Próximo",
+  "create": {
+    "title": "Iniciar transmisión",
+    "streamTitle": "Título de la transmisión",
+    "streamTitlePlaceholder": "Introduce el título de la transmisión",
+    "description": "Descripción",
+    "descriptionPlaceholder": "¿De qué trata tu transmisión?",
+    "category": "Categoría",
+    "selectCategory": "Seleccionar categoría",
+    "tags": "Etiquetas",
+    "addTag": "Añadir etiqueta",
+    "match": "Vincular a partido",
+    "selectMatch": "Seleccionar un partido (opcional)",
+    "visibility": "Visibilidad",
+    "public": "Público",
+    "private": "Privado",
+    "startStream": "Iniciar transmisión",
+    "preparing": "Preparando transmisión..."
+  },
+  "player": {
+    "play": "Reproducir",
+    "pause": "Pausar",
+    "mute": "Silenciar",
+    "unmute": "Activar sonido",
+    "fullscreen": "Pantalla completa",
+    "exitFullscreen": "Salir de pantalla completa",
+    "quality": "Calidad",
+    "settings": "Ajustes",
+    "pip": "Imagen en imagen",
+    "theater": "Modo teatro",
+    "streamEnded": "La transmisión ha terminado",
+    "streamOffline": "La transmisión está offline"
+  },
+  "chat": {
+    "title": "Chat en vivo",
+    "sendMessage": "Enviar un mensaje",
+    "placeholder": "Escribe un mensaje...",
+    "emotes": "Emotes",
+    "slowMode": "Modo lento activado",
+    "subscribersOnly": "Solo suscriptores",
+    "chatDisabled": "El chat está desactivado",
+    "banned": "Estás baneado de este chat"
+  },
+  "controls": {
+    "endStream": "Terminar transmisión",
+    "confirmEnd": "¿Seguro que quieres terminar la transmisión?",
+    "muteAudio": "Silenciar audio",
+    "muteVideo": "Silenciar video",
+    "shareScreen": "Compartir pantalla",
+    "stopSharing": "Dejar de compartir",
+    "settings": "Ajustes de transmisión"
+  },
+  "stats": {
+    "title": "Estadísticas de transmisión",
+    "peakViewers": "Pico de espectadores",
+    "averageViewers": "Promedio de espectadores",
+    "duration": "Duración",
+    "messages": "Mensajes del chat"
+  },
+  "categories": {
+    "sports": "Deportes",
+    "gaming": "Gaming",
+    "talkShow": "Talk Show",
+    "analysis": "Análisis",
+    "other": "Otro"
+  },
+  "empty": {
+    "noStreams": "Sin transmisiones en vivo",
+    "checkBackLater": "Vuelve más tarde para contenido en vivo"
+  },
+  "analytics": {
+    "realtimeViewers": "Espectadores en tiempo real",
+    "live": "En vivo",
+    "current": "Actual",
+    "max": "Máx",
+    "avg": "Prom",
+    "noData": "Sin datos disponibles",
+    "dataAppears": "Los datos aparecerán cuando inicie la transmisión",
+    "timeAgo1h": "-1h",
+    "timeAgo30m": "-30m",
+    "now": "ahora"
+  }
+}

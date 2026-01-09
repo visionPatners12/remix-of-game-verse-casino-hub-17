@@ -1,0 +1,39 @@
+{
+  "menu": {
+    "home": "Accueil",
+    "dashboard": "Tableau de bord",
+    "feed": "Fil",
+    "sport": "Sport",
+    "polymarket": "Polymarket",
+    "game": "Jeux",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "search": "Recherche",
+    "notifications": "Notifications",
+    "messages": "Messages",
+    "wallet": "Portefeuille",
+    "history": "Historique",
+    "achievements": "Succès",
+    "logout": "Déconnexion",
+    "back": "Retour",
+    "userMenu": "Menu utilisateur"
+  },
+  "quickActions": {
+    "title": "Actions rapides",
+    "bet": "Parier",
+    "wallet": "Portefeuille",
+    "messages": "Messages",
+    "performance": "Performance"
+  },
+  "links": {
+    "myProfile": "Mon Profil",
+    "history": "Historique",
+    "achievements": "Succès",
+    "notifications": "Notifications",
+    "settings": "Paramètres"
+  },
+  "badges": {
+    "new": "Nouveau",
+    "soon": "Bientôt"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "page": {
+    "title": "Depósito",
+    "subtitle": "Añade fondos a tu cuenta"
+  },
+  "steps": {
+    "method": "Método",
+    "details": "Detalles",
+    "confirmation": "Confirmación"
+  },
+  "methods": {
+    "title": "Elige el método de depósito",
+    "crypto": {
+      "title": "Criptomoneda",
+      "description": "Solo USDT Polygon"
+    },
+    "coinbase": {
+      "title": "Coinbase Pay",
+      "description": "Compra directamente con Coinbase"
+    },
+    "mobileMoney": {
+      "title": "Mobile Money",
+      "description": "Próximamente"
+    },
+    "bankTransfer": {
+      "title": "Transferencia bancaria",
+      "description": "Próximamente"
+    },
+    "applePay": {
+      "title": "Apple Pay",
+      "description": "Depósito instantáneo vía Apple Pay"
+    },
+    "comingSoon": "Próximamente",
+    "processing": "Procesando...",
+    "recommended": "Popular"
+  },
+  "crypto": {
+    "title": "USDT Polygon",
+    "subtitle": "Tu dirección de depósito personal",
+    "loading": "Obteniendo tu dirección de depósito...",
+    "error": "No se pudo generar la dirección. Por favor, intenta de nuevo.",
+    "retry": "Reintentar",
+    "qrTitle": "Escanea para depositar",
+    "qrDescription": "Escanea este código QR con tu billetera para enviar {{symbol}}",
+    "copyTitle": "Dirección de depósito {{symbol}}",
+    "copyDescription": "Usa esta dirección para tus depósitos",
+    "copied": "¡Copiado!",
+    "copyAddress": "Copiar dirección",
+    "addressCopied": "Dirección de depósito copiada al portapapeles"
+  },
+  "mobileMoney": {
+    "title": "Mobile Money",
+    "serviceTitle": "Servicio en desarrollo",
+    "serviceDescription": "El depósito por Mobile Money estará disponible pronto",
+    "chooseAnother": "Elige otro método"
+  },
+  "instructions": {
+    "title": "Cómo depositar",
+    "step1Title": "Copia la dirección",
+    "step1Desc": "Copia la dirección de depósito o escanea el código QR",
+    "step2Title": "Abre tu billetera",
+    "step2Desc": "Usa tu aplicación de billetera crypto",
+    "step3Title": "Envía tus fondos",
+    "step3Desc": "Envía solo {{name}} ({{symbol}}) a esta dirección",
+    "step4Title": "Espera la confirmación",
+    "step4Desc": "Se requieren 1-3 confirmaciones de red"
+  },
+  "reminders": {
+    "title": "Recordatorios importantes",
+    "onlySend": "Envía solo {{name}} ({{symbol}}) a esta dirección",
+    "verifyAddress": "Siempre verifica la dirección antes de enviar",
+    "minimum": "Cantidad mínima: 0.001 {{symbol}}",
+    "confirmation": "Fondos acreditados después de la confirmación de red"
+  },
+  "confirmation": {
+    "title": "Confirmación",
+    "applePayTitle": "Depósito completado",
+    "applePayDesc": "Tu depósito via Apple Pay se procesó correctamente.",
+    "cryptoTitle": "Depósito configurado",
+    "cryptoDesc": "Tu dirección USDT Polygon ha sido generada. Ahora puedes realizar tu depósito.",
+    "viewWallet": "Ver mi billetera",
+    "newDeposit": "Nuevo depósito"
+  },
+  "processing": {
+    "title": "Tiempo de procesamiento",
+    "network": "Red",
+    "confirmations": "Confirmaciones",
+    "blocks": "1-3 bloques",
+    "estimatedTime": "Tiempo estimado",
+    "time": "2-5 minutos"
+  },
+  "security": {
+    "title": "Seguridad y privacidad",
+    "description": "Esta dirección fue generada específicamente para ti. Envía solo USDT en la red Polygon."
+  },
+  "coinbase": {
+    "title": "Recarga tu cuenta con Coinbase Pay",
+    "selectMethod": "Selecciona tu método de pago preferido",
+    "securedBy": "Asegurado por Coinbase",
+    "securityNote": "Tu depósito es seguro y procesado directamente por Coinbase"
+  },
+  "buttons": {
+    "back": "Atrás",
+    "continue": "Continuar"
+  }
+}
