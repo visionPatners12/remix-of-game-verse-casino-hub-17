@@ -30,12 +30,6 @@ export function MobileMenuActions({
           variant="mobile"
         />
         <MenuAction 
-          icon={Wallet} 
-          label="Wallet" 
-          onClick={() => onNavigate('/wallet')}
-          variant="mobile"
-        />
-        <MenuAction 
           icon={Images} 
           label="My Pryze" 
           onClick={() => onNavigate('/pryzen-card')}
