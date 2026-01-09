@@ -48,7 +48,7 @@ const DepositFlow = () => {
       titleKey: 'methods.coinbase.title',
       descriptionKey: 'methods.coinbase.description',
       iconType: 'coinbase',
-      available: false
+      available: true
     },
     {
       id: 'mobile-money',
