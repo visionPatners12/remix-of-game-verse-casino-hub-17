@@ -17,8 +17,8 @@ export const CoinbaseProvider: React.FC<CoinbaseProviderProps> = ({ children }) 
         appearance: {
           name: 'Azuro Betting Platform',
           logo: 'https://onchainkit.xyz/favicon/48x48.png?v4-19-24',
-          mode: 'dark',
-          theme: 'base',
+          mode: 'auto',
+          theme: 'default',
         },
       }}
       chain={polygon}
