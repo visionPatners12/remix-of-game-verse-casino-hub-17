@@ -18,7 +18,7 @@ interface AppShellProps {
 }
 
 // Routes statiques où on cache toujours la navigation (desktop + mobile)
-const ALWAYS_HIDDEN_NAV_ROUTES = ['/auth', '/onboarding', '/stream/', '/discover', '/roadmap'];
+const ALWAYS_HIDDEN_NAV_ROUTES = ['/auth', '/onboarding', '/stream/', '/discover', '/roadmap', '/games/ludo'];
 
 // Routes où on cache la navigation UNIQUEMENT sur mobile/PWA (pages avec leur propre header)
 const MOBILE_ONLY_HIDDEN_NAV_ROUTES = [
