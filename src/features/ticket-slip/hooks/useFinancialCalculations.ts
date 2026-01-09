@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import type { BetMode, FinancialCalculations } from '../types';
+import { useCasinoCommission } from '@/hooks/useCasinoCommission';
 
 interface UseFinancialCalculationsProps {
   stake: number;
@@ -10,6 +11,8 @@ interface UseFinancialCalculationsProps {
 }
 
 export function useFinancialCalculations({ stake, totalOdds, mode, maxBet, minBet }: UseFinancialCalculationsProps): FinancialCalculations {
+  const { commissionDecimal } = useCasinoCommission();
+  
   return useMemo(() => {
     const potentialPayout = stake * totalOdds;
     const xpEarned = Math.floor(stake * 0.1);
@@ -24,8 +27,8 @@ export function useFinancialCalculations({ stake, totalOdds, mode, maxBet, minBe
     };
 
     if (mode === 'AGAINST_PLAYER') {
-      const houseCommission = potentialPayout * 0.05;
-      const netPayout = potentialPayout * 0.95;
+      const houseCommission = potentialPayout * commissionDecimal;
+      const netPayout = potentialPayout * (1 - commissionDecimal);
       const netProfit = netPayout - stake;
 
       return {
@@ -37,5 +40,5 @@ export function useFinancialCalculations({ stake, totalOdds, mode, maxBet, minBe
     }
 
     return baseCalculations;
-  }, [stake, totalOdds, mode, maxBet, minBet]);
+  }, [stake, totalOdds, mode, maxBet, minBet, commissionDecimal]);
 }
