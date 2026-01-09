@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
         manifest: {
           name: 'PRYZEN - Gaming Evolved',
           short_name: 'PRYZEN',
-          description: 'Play, Compete, Win - La plateforme de paris sportifs nouvelle génération',
+          description: 'Jouez au Ludo avec des mises en USDT - La plateforme de jeux on-chain',
           theme_color: '#0f0f1a',
           background_color: '#0f0f1a',
           display: 'standalone',
@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
           scope: '/',
           start_url: '/',
           lang: 'fr',
-          categories: ['games', 'sports', 'entertainment'],
+          categories: ['games', 'entertainment'],
           icons: [
             {
               src: '/icons/icon-72x72.png',
@@ -82,9 +82,9 @@ export default defineConfig(({ mode }) => {
           ],
           shortcuts: [
             {
-              name: 'Matches Live',
-              short_name: 'Live',
-              url: '/matches?tab=live',
+              name: 'Jouer au Ludo',
+              short_name: 'Ludo',
+              url: '/games/ludo/create',
               icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }]
             },
             {
