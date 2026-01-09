@@ -6,10 +6,10 @@ export const privyConfig: PrivyConfig = {
   walletConnectCloudProjectId: WALLETCONNECT_PROJECT_ID,
   supportedChains: [polygon],
   defaultChain: polygon,
-  loginMethods: ['email', 'wallet', 'sms'],
+  loginMethods: ['sms', 'email', 'wallet'],
   appearance: {
     theme: 'dark',
-    showWalletLoginFirst: true, // Wallet first for mobile UX
+    showWalletLoginFirst: false, // SMS/WhatsApp first
     walletList: ['metamask', 'coinbase_wallet', 'wallet_connect', 'rainbow'],
     walletChainType: 'ethereum-only',
   },
