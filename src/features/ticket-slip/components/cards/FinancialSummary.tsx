@@ -1,6 +1,7 @@
 import React from 'react';
 import { useMaxBet } from '@azuro-org/sdk';
 import type { BetMode } from '../../types';
+import { useCasinoCommission } from '@/hooks/useCasinoCommission';
 
 interface FinancialSummaryProps {
   selections: AzuroSDK.BetslipItem[];
@@ -14,6 +15,8 @@ interface FinancialSummaryProps {
 }
 
 export function FinancialSummary({ selections, stake, totalOdds, potentialWin, currency, mode, maxBet, isMaxBetFetching }: FinancialSummaryProps) {
+  const { commissionDecimal, commissionPercent } = useCasinoCommission();
+  
   const calculateValues = () => {
     if (selections.length === 0 || stake === 0) {
       return {
@@ -36,8 +39,8 @@ export function FinancialSummary({ selections, stake, totalOdds, potentialWin, c
   const values = calculateValues();
 
   if (mode === 'AGAINST_PLAYER') {
-    const houseCommission = values.potentialPayout * 0.05;
-    const netPayout = values.potentialPayout * 0.95;
+    const houseCommission = values.potentialPayout * commissionDecimal;
+    const netPayout = values.potentialPayout * (1 - commissionDecimal);
     const netProfit = netPayout - values.totalToPay;
     const betOpponent = values.potentialPayout - values.totalToPay; // payout - stake
 
@@ -57,7 +60,7 @@ export function FinancialSummary({ selections, stake, totalOdds, potentialWin, c
           </span>
         </div>
         <div className="flex justify-between items-center h-6">
-          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">HOUSE COMMISSION (5%)</span>
+          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">HOUSE COMMISSION ({commissionPercent}%)</span>
           <span className="text-sm font-semibold text-orange-600 min-w-[90px] text-right">
             -{houseCommission.toFixed(2)} USDT
           </span>
