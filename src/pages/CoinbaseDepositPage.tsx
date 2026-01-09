@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   FundCard,
@@ -12,9 +11,9 @@ import {
 import { CoinbaseProvider } from '@/features/deposit/providers/CoinbaseProvider';
 import { MobilePageHeader } from '@/components/shared/MobilePageHeader';
 import { Shield } from 'lucide-react';
+import coinbaseLogo from '@/assets/coinbase-logo.png';
 
 const CoinbaseDepositPage = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation('deposit');
 
   return (
@@ -24,47 +23,59 @@ const CoinbaseDepositPage = () => {
 
         {/* Content */}
         <div className="px-4 py-6">
-          <div className="max-w-md mx-auto">
-            <FundCard
-              assetSymbol="USDT"
-              country="US"
-              currency="USD"
-            >
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold text-center text-foreground">
-                  {t('coinbase.title')}
-                </h2>
-              </div>
-              
-              <FundCardAmountInput />
-              <FundCardAmountInputTypeSwitch />
-              <FundCardPresetAmountInputList />
-              
-              <div className="my-4 p-4 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg">
-                <p className="text-xs font-medium text-foreground text-center">
-                  {t('coinbase.selectMethod')}
-                </p>
-              </div>
-              
-              <FundCardPaymentMethodDropdown />
-              <FundCardSubmitButton />
-              
-              <div className="mt-12 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/20 border border-blue-200/50 dark:border-blue-800/50 rounded-xl">
-                <div className="flex items-start space-x-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center flex-shrink-0">
-                    <Shield className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-1 text-sm">
-                      {t('coinbase.securedBy')}
-                    </h4>
-                    <p className="text-xs text-blue-700 dark:text-blue-300">
-                      {t('coinbase.securityNote')}
+          <div className="max-w-md mx-auto coinbase-theme">
+            {/* Coinbase Header */}
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <img 
+                src={coinbaseLogo} 
+                alt="Coinbase" 
+                className="h-8 w-auto"
+              />
+              <h2 className="text-xl font-semibold text-foreground">
+                {t('coinbase.title')}
+              </h2>
+            </div>
+
+            {/* Fund Card */}
+            <div className="bg-card border border-border rounded-2xl p-6 shadow-lg">
+              <FundCard
+                assetSymbol="USDT"
+                country="US"
+                currency="USD"
+              >
+                <div className="space-y-4">
+                  <FundCardAmountInput />
+                  <FundCardAmountInputTypeSwitch />
+                  <FundCardPresetAmountInputList />
+                  
+                  <div className="py-3 px-4 bg-primary/10 border border-primary/20 rounded-xl">
+                    <p className="text-xs font-medium text-foreground text-center">
+                      {t('coinbase.selectMethod')}
                     </p>
                   </div>
+                  
+                  <FundCardPaymentMethodDropdown />
+                  <FundCardSubmitButton />
+                </div>
+              </FundCard>
+            </div>
+
+            {/* Security Notice */}
+            <div className="mt-6 p-4 bg-primary/5 border border-primary/20 rounded-xl">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center flex-shrink-0">
+                  <Shield className="h-5 w-5 text-primary-foreground" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground mb-1 text-sm">
+                    {t('coinbase.securedBy')}
+                  </h4>
+                  <p className="text-xs text-muted-foreground">
+                    {t('coinbase.securityNote')}
+                  </p>
                 </div>
               </div>
-            </FundCard>
+            </div>
           </div>
         </div>
       </div>
