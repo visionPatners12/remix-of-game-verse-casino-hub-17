@@ -22,7 +22,17 @@ export const useJoinGameByCode = () => {
         .eq('room_code', roomCode.toUpperCase())
         .maybeSingle();
 
-      if (error || !gameData) {
+      if (error) {
+        // Handle specific error: player already in active game
+        if (error.message?.includes('ALREADY_IN_GAME')) {
+          toast.error("You are already in an active game. Finish or leave it first.");
+          return false;
+        }
+        toast.error("No game found with this code");
+        return false;
+      }
+      
+      if (!gameData) {
         toast.error("No game found with this code");
         return false;
       }

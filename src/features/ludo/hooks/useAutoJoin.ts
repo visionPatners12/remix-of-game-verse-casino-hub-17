@@ -27,6 +27,16 @@ export const useAutoJoin = (gameId: string) => {
 
         if (invokeError) {
           console.error('Error joining game:', invokeError);
+          // Handle specific error: player already in active game
+          if (invokeError.message?.includes('ALREADY_IN_GAME')) {
+            toast({
+              title: "Already in a game",
+              description: "Finish or leave your current game before joining another.",
+              variant: "destructive",
+            });
+            navigate('/games/ludo');
+            return;
+          }
           toast({
             title: "Error",
             description: "Failed to join the game.",
