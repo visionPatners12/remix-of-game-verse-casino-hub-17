@@ -84,34 +84,43 @@ export function PrisonLayer({
           />
         );
       } else {
-        // Elegant empty slot
+        // Futuristic forcefield empty slot
         return (
           <Group key={`prison-slot-${prisonColor}-${displayIndex}`}>
-            {/* Soft background circle */}
+            {/* Outer energy field */}
             <Circle
               x={position.x}
               y={position.y}
-              radius={radius * 1.1}
-              fill={`${colorHex}08`}
+              radius={radius * 1.4}
+              fillRadialGradientStartPoint={{ x: 0, y: 0 }}
+              fillRadialGradientStartRadius={0}
+              fillRadialGradientEndPoint={{ x: 0, y: 0 }}
+              fillRadialGradientEndRadius={radius * 1.4}
+              fillRadialGradientColorStops={[
+                0, `${glowColor}22`,
+                0.7, `${glowColor}11`,
+                1, 'transparent'
+              ]}
             />
-            {/* Simple ring */}
+            {/* Forcefield ring */}
             <Ring
               x={position.x}
               y={position.y}
-              innerRadius={radius * 0.75}
+              innerRadius={radius * 0.7}
               outerRadius={radius}
-              fill={`${colorHex}10`}
+              fill={`${colorHex}11`}
               stroke={glowColor}
-              strokeWidth={1}
-              opacity={0.5}
+              strokeWidth={1.5}
+              dash={[4, 3]}
+              opacity={0.7}
             />
-            {/* Center dot */}
+            {/* Center energy core */}
             <Circle
               x={position.x}
               y={position.y}
-              radius={radius * 0.2}
+              radius={radius * 0.3}
               fill={glowColor}
-              opacity={0.3}
+              opacity={0.2}
             />
           </Group>
         );

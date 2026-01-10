@@ -1,49 +1,131 @@
-/* Classic Elegant Ludo Board Styles */
+/* Futuristic Ludo Board Styles */
 
-/* Gentle floating animation */
-@keyframes gentle-float {
+/* Cosmic gradient animation */
+@keyframes cosmic-shift {
   0%, 100% {
-    transform: translateY(0);
+    background-position: 0% 50%;
   }
   50% {
-    transform: translateY(-2px);
+    background-position: 100% 50%;
   }
 }
 
-/* Soft pulse for selections */
-@keyframes soft-pulse {
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes pulse-glow {
   0%, 100% {
-    opacity: 0.7;
+    opacity: 0.6;
     transform: scale(1);
   }
   50% {
     opacity: 1;
-    transform: scale(1.02);
+    transform: scale(1.05);
   }
 }
 
-/* Subtle glow animation */
-@keyframes subtle-glow {
+@keyframes rotate-halo {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes energy-wave {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes levitate {
   0%, 100% {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transform: translateY(0);
   }
   50% {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
   }
 }
 
-/* Classic board container */
-.ludo-board-futuristic {
-  position: relative;
-  background: linear-gradient(135deg, #F5F0E8 0%, #EDE6DC 50%, #F5F0E8 100%);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0;
+  }
 }
 
-/* Subtle texture overlay */
+@keyframes forcefield-pulse {
+  0%, 100% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 20;
+  }
+}
+
+@keyframes portal-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes neon-flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.8;
+  }
+  94% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0.9;
+  }
+  97% {
+    opacity: 1;
+  }
+}
+
+/* Futuristic board container */
+.ludo-board-futuristic {
+  position: relative;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 25%, #0a1a1a 50%, #1a1a0a 75%, #0a0a1a 100%);
+  background-size: 400% 400%;
+  animation: cosmic-shift 20s ease infinite;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Scanline overlay */
 .ludo-board-futuristic::before {
   content: '';
   position: absolute;
@@ -51,14 +133,18 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.02) 0%, transparent 50%);
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 255, 0.03) 2px,
+    rgba(0, 255, 255, 0.03) 4px
+  );
   pointer-events: none;
   z-index: 1;
 }
 
-/* Soft vignette */
+/* CRT effect overlay */
 .ludo-board-futuristic::after {
   content: '';
   position: absolute;
@@ -66,35 +152,35 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.05) 100%);
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
   pointer-events: none;
   z-index: 2;
 }
 
-/* Classic font styling */
+/* Orbitron font for game labels */
 .ludo-label {
-  font-family: 'Inter', 'Georgia', serif;
-  letter-spacing: 0.5px;
-  font-weight: 500;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-/* Elegant text colors */
+/* Neon text glow effect */
 .neon-text-red {
-  color: #E25B5B;
-  text-shadow: 0 1px 2px rgba(226, 91, 91, 0.2);
+  color: #ff1a4d;
+  text-shadow: 0 0 5px #ff1a4d, 0 0 10px #ff1a4d, 0 0 20px #ff1a4d;
 }
 
 .neon-text-green {
-  color: #4CAF7A;
-  text-shadow: 0 1px 2px rgba(76, 175, 122, 0.2);
+  color: #00ff88;
+  text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88, 0 0 20px #00ff88;
 }
 
 .neon-text-yellow {
-  color: #C4A83A;
-  text-shadow: 0 1px 2px rgba(232, 197, 71, 0.2);
+  color: #ffea00;
+  text-shadow: 0 0 5px #ffea00, 0 0 10px #ffea00, 0 0 20px #ffea00;
 }
 
 .neon-text-blue {
-  color: #5B8EC2;
-  text-shadow: 0 1px 2px rgba(91, 142, 194, 0.2);
+  color: #00d4ff;
+  text-shadow: 0 0 5px #00d4ff, 0 0 10px #00d4ff, 0 0 20px #00d4ff;
 }

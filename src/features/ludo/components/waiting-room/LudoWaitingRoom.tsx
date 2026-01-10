@@ -33,7 +33,64 @@ interface LudoWaitingRoomProps {
   isStartingGame?: boolean;
 }
 
-// Floating dice decoration
+// Countdown component
+const CountdownOverlay: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
+  const [count, setCount] = useState(3);
+  const [showGo, setShowGo] = useState(false);
+  const hasCalledComplete = React.useRef(false);
+
+  useEffect(() => {
+    if (count > 0) {
+      const timer = setTimeout(() => setCount(count - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (count === 0 && !showGo) {
+      // Show GO! for 800ms before calling onComplete
+      setShowGo(true);
+      const goTimer = setTimeout(() => {
+        if (!hasCalledComplete.current) {
+          hasCalledComplete.current = true;
+          onComplete();
+        }
+      }, 800);
+      return () => clearTimeout(goTimer);
+    }
+  }, [count, showGo, onComplete]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-sm"
+    >
+      <AnimatePresence mode="wait">
+        {count > 0 ? (
+          <motion.div
+            key={count}
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 2, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-8xl font-bold text-primary animated-gradient-text"
+          >
+            {count}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="go"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1.2, opacity: 1 }}
+            exit={{ scale: 2, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-6xl font-bold text-primary animated-gradient-text"
+          >
+            GO!
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
 
 // Floating dice decoration
 const FloatingDice: React.FC = () => (
@@ -73,7 +130,7 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
   isStartingGame = false,
 }) => {
   const [showShareModal, setShowShareModal] = useState(false);
-  
+  const [showCountdown, setShowCountdown] = useState(false);
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -124,6 +181,9 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
     }
   };
 
+  const handleStartWithCountdown = () => {
+    setShowCountdown(true);
+  };
 
   // Auto-start when all 4 players are confirmed
   useEffect(() => {
@@ -131,15 +191,21 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
       players.every(p => p.deposit_status === 'confirmed' || p.deposit_status === 'free');
     
     if (allFourConfirmed && !isStartingGame) {
-      onStartGame();
+      handleStartWithCountdown();
     }
-  }, [players, isStartingGame, onStartGame]);
+  }, [players, isStartingGame]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col relative ludo-pattern-bg">
       {/* Floating decorations */}
       <FloatingDice />
 
+      {/* Countdown overlay */}
+      <AnimatePresence>
+        {showCountdown && (
+          <CountdownOverlay onComplete={onStartGame} />
+        )}
+      </AnimatePresence>
 
       <WaitingRoomHeader
         gameId={gameId}
@@ -248,7 +314,7 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
               transition={{ delay: 0.4 }}
             >
               <Button
-                onClick={onStartGame}
+                onClick={handleStartWithCountdown}
                 disabled={!allPlayersReady || isStartingGame || players.length < 2}
                 className="w-full h-12 text-base font-semibold gap-2"
               >

@@ -21,21 +21,22 @@ interface InteractivePawnProps {
   cellSize: number;
 }
 
-// Elegant soft style configuration
-const ELEGANT_STYLES = {
-  ACCENT_COLORS: {
+// Futuristic neon style configuration
+const FUTURISTIC_STYLES = {
+  GLOW_COLORS: {
     R: NEON_GLOW.RED,
     G: NEON_GLOW.GREEN, 
     Y: NEON_GLOW.YELLOW,
     B: NEON_GLOW.BLUE,
   },
-  HIGHLIGHT_COLORS: {
-    R: '#F5A5A5',
-    G: '#A5D4B5',
-    Y: '#F5E0A5',
-    B: '#A5C5E5',
+  HOLOGRAM_COLORS: {
+    R: '#ff99aa',
+    G: '#99ffcc',
+    Y: '#ffff99',
+    B: '#99eeff',
   },
-  CORE_HIGHLIGHT: '#ffffff',
+  CORE_GLOW: '#ffffff',
+  ENERGY_RING: 'rgba(255, 255, 255, 0.3)',
 } as const;
 
 const COLOR_MAP = {
@@ -66,79 +67,96 @@ export const InteractivePawn: React.FC<InteractivePawnProps> = ({
   const pawnRadius = cellSize * 0.45 * stackedScale;
   
   const fillColor = COLOR_MAP[color];
-  const accentColor = ELEGANT_STYLES.ACCENT_COLORS[color];
-  const highlightColor = ELEGANT_STYLES.HIGHLIGHT_COLORS[color];
+  const glowColor = FUTURISTIC_STYLES.GLOW_COLORS[color];
+  const hologramColor = FUTURISTIC_STYLES.HOLOGRAM_COLORS[color];
   
-  // Subtle visual states
-  const scale = isPressed ? 1.15 : isHovered ? 1.1 : isSelected ? 1.08 : 1;
-  const strokeWidth = isSelected ? 2.5 : isClickable ? 2 : 1.5;
+  // Enhanced visual states
+  const scale = isPressed ? 1.25 : isHovered ? 1.18 : isSelected ? 1.12 : 1;
+  const glowIntensity = isPressed ? 0.9 : isSelected ? 0.7 : isHovered ? 0.5 : isClickable ? 0.3 : 0.15;
+  const strokeWidth = isSelected ? 3 : isClickable ? 2.5 : 2;
 
   return (
     <Group>
-      {/* Soft selection indicator */}
-      {(isClickable || isSelected) && (
+      {/* Outer energy field - largest glow layer */}
+      {(isClickable || isSelected || isHovered || isPressed) && (
         <Circle
           x={x}
           y={y}
-          radius={pawnRadius * 1.6}
+          radius={pawnRadius * 2.2}
           fillRadialGradientStartPoint={{ x: 0, y: 0 }}
           fillRadialGradientStartRadius={0}
           fillRadialGradientEndPoint={{ x: 0, y: 0 }}
-          fillRadialGradientEndRadius={pawnRadius * 1.6}
+          fillRadialGradientEndRadius={pawnRadius * 2.2}
           fillRadialGradientColorStops={[
-            0, `${fillColor}30`,
-            0.6, `${fillColor}15`,
+            0, `${glowColor}`,
+            0.3, `${glowColor}88`,
+            0.6, `${glowColor}44`,
             1, 'transparent'
           ]}
+          opacity={glowIntensity * 0.5}
           scaleX={scale}
           scaleY={scale}
         />
       )}
 
-      {/* Selection ring for clickable pawns */}
+      {/* Rotating energy ring for selected/clickable */}
       {(isSelected || (isClickable && !isStacked)) && (
         <Ring
           x={x}
           y={y}
-          innerRadius={pawnRadius * 1.2}
-          outerRadius={pawnRadius * 1.35}
-          fill={`${accentColor}25`}
-          stroke={accentColor}
-          strokeWidth={1.5}
-          opacity={isSelected ? 0.8 : 0.5}
+          innerRadius={pawnRadius * 1.4}
+          outerRadius={pawnRadius * 1.6}
+          fill={`${glowColor}44`}
+          stroke={glowColor}
+          strokeWidth={1}
+          opacity={isSelected ? 0.8 : 0.4}
+          dash={[8, 4]}
           scaleX={scale}
           scaleY={scale}
         />
       )}
 
-      {/* Soft shadow */}
+      {/* Middle glow layer */}
       <Circle
-        x={x + 1}
-        y={y + 2}
-        radius={pawnRadius}
-        fill="rgba(0, 0, 0, 0.15)"
+        x={x}
+        y={y}
+        radius={pawnRadius * 1.5}
+        fillRadialGradientStartPoint={{ x: 0, y: 0 }}
+        fillRadialGradientStartRadius={0}
+        fillRadialGradientEndPoint={{ x: 0, y: 0 }}
+        fillRadialGradientEndRadius={pawnRadius * 1.5}
+        fillRadialGradientColorStops={[
+          0, fillColor,
+          0.5, `${fillColor}88`,
+          1, 'transparent'
+        ]}
+        opacity={glowIntensity}
         scaleX={scale}
         scaleY={scale}
       />
 
-      {/* Main pawn body */}
+      {/* Main pawn body with gradient */}
       <Circle
         x={x}
         y={y}
         radius={pawnRadius}
         fillRadialGradientStartPoint={{ x: -pawnRadius * 0.3, y: -pawnRadius * 0.3 }}
         fillRadialGradientStartRadius={0}
-        fillRadialGradientEndPoint={{ x: pawnRadius * 0.4, y: pawnRadius * 0.4 }}
-        fillRadialGradientEndRadius={pawnRadius * 1.2}
+        fillRadialGradientEndPoint={{ x: pawnRadius * 0.3, y: pawnRadius * 0.3 }}
+        fillRadialGradientEndRadius={pawnRadius * 1.5}
         fillRadialGradientColorStops={[
-          0, highlightColor,
-          0.4, fillColor,
-          1, fillColor
+          0, hologramColor,
+          0.3, fillColor,
+          0.8, fillColor,
+          1, `${fillColor}88`
         ]}
-        stroke={accentColor}
+        stroke={glowColor}
         strokeWidth={strokeWidth}
         scaleX={scale}
         scaleY={scale}
+        shadowColor={fillColor}
+        shadowBlur={isClickable ? 15 : 8}
+        shadowOpacity={0.8}
         onClick={onClick}
         onTap={onClick}
         onMouseEnter={onMouseEnter}
@@ -148,27 +166,101 @@ export const InteractivePawn: React.FC<InteractivePawnProps> = ({
         listening={isClickable}
       />
 
-      {/* Top highlight */}
+      {/* Inner core glow */}
       <Circle
-        x={x - pawnRadius * 0.25}
-        y={y - pawnRadius * 0.3}
-        radius={pawnRadius * 0.25}
-        fill="white"
+        x={x}
+        y={y}
+        radius={pawnRadius * 0.6}
+        fillRadialGradientStartPoint={{ x: 0, y: 0 }}
+        fillRadialGradientStartRadius={0}
+        fillRadialGradientEndPoint={{ x: 0, y: 0 }}
+        fillRadialGradientEndRadius={pawnRadius * 0.6}
+        fillRadialGradientColorStops={[
+          0, FUTURISTIC_STYLES.CORE_GLOW,
+          0.4, `${hologramColor}cc`,
+          1, 'transparent'
+        ]}
         opacity={0.6}
         scaleX={scale}
         scaleY={scale}
       />
-
-      {/* Small secondary highlight */}
+      
+      {/* Top highlight reflection */}
       <Circle
-        x={x + pawnRadius * 0.1}
-        y={y - pawnRadius * 0.15}
-        radius={pawnRadius * 0.1}
+        x={x - pawnRadius * 0.25}
+        y={y - pawnRadius * 0.3}
+        radius={pawnRadius * 0.2}
         fill="white"
-        opacity={0.3}
+        opacity={0.7}
         scaleX={scale}
         scaleY={scale}
       />
+
+      {/* Secondary highlight */}
+      <Circle
+        x={x + pawnRadius * 0.15}
+        y={y - pawnRadius * 0.15}
+        radius={pawnRadius * 0.1}
+        fill="white"
+        opacity={0.4}
+        scaleX={scale}
+        scaleY={scale}
+      />
+      
+      {/* Animated pulse ring for selected */}
+      {isSelected && (
+        <>
+          <Ring
+            x={x}
+            y={y}
+            innerRadius={pawnRadius * 1.8}
+            outerRadius={pawnRadius * 1.9}
+            stroke={glowColor}
+            strokeWidth={2}
+            opacity={0.6}
+            dash={[12, 6]}
+            scaleX={scale}
+            scaleY={scale}
+          />
+          <Circle
+            x={x}
+            y={y}
+            radius={pawnRadius * 2.2}
+            stroke={glowColor}
+            strokeWidth={1}
+            opacity={0.3}
+            scaleX={scale}
+            scaleY={scale}
+          />
+        </>
+      )}
+
+      {/* Particle trail effect indicators for clickable pawns */}
+      {isClickable && !isStacked && (
+        <>
+          <Circle
+            x={x - pawnRadius * 0.8}
+            y={y + pawnRadius * 0.6}
+            radius={2}
+            fill={glowColor}
+            opacity={0.6}
+          />
+          <Circle
+            x={x + pawnRadius * 0.7}
+            y={y + pawnRadius * 0.5}
+            radius={1.5}
+            fill={glowColor}
+            opacity={0.4}
+          />
+          <Circle
+            x={x}
+            y={y + pawnRadius}
+            radius={1}
+            fill={glowColor}
+            opacity={0.3}
+          />
+        </>
+      )}
     </Group>
   );
 };

@@ -7,39 +7,38 @@ export const BOARD_CONFIG = {
   COLUMNS: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] as const,
 } as const;
 
-// Classic elegant colors - soft and warm
 export const LUDO_COLORS = {
-  RED: '#E25B5B',      // Soft coral red
-  GREEN: '#4CAF7A',    // Sage green
-  YELLOW: '#E8C547',   // Warm gold
-  BLUE: '#5B8EC2',     // Soft sky blue
-  WHITE: '#FAF8F5',    // Warm white
-  BLACK: '#2D2D2D',    // Soft black
+  RED: '#ff1a4d',
+  GREEN: '#00ff88', 
+  YELLOW: '#ffea00',
+  BLUE: '#00d4ff',
+  WHITE: '#ffffff',
+  BLACK: '#000000',
 } as const;
 
-// Subtle accent colors for highlights
+// Neon glow colors for futuristic effects
 export const NEON_GLOW = {
-  RED: '#F08080',      // Light coral
-  GREEN: '#7BC99A',    // Light sage
-  YELLOW: '#F0D878',   // Light gold
-  BLUE: '#87AECE',     // Light sky
+  RED: '#ff6b8a',
+  GREEN: '#4dffb3',
+  YELLOW: '#fff566',
+  BLUE: '#66e0ff',
 } as const;
 
-// Soft tinted backgrounds
+// Dark tinted versions for backgrounds
 export const TINTED_COLORS = {
-  RED: 'rgba(226, 91, 91, 0.12)',
-  GREEN: 'rgba(76, 175, 122, 0.12)',
-  YELLOW: 'rgba(232, 197, 71, 0.12)',
-  BLUE: 'rgba(91, 142, 194, 0.12)',
+  RED: 'rgba(255, 26, 77, 0.15)',
+  GREEN: 'rgba(0, 255, 136, 0.15)',
+  YELLOW: 'rgba(255, 234, 0, 0.15)',
+  BLUE: 'rgba(0, 212, 255, 0.15)',
 } as const;
 
-// Warm board colors - classic wood/cream aesthetic
+// Futuristic board colors
 export const BOARD_COLORS = {
-  BACKGROUND: '#F5F0E8',      // Warm cream
-  GRID_LINE: '#D4C8B8',       // Soft tan
-  GRID_GLOW: '#C4B8A8',       // Muted warm
-  NEBULA_1: '#EDE6DC',        // Light cream
-  NEBULA_2: '#E8E2D8',        // Soft ivory
+  BACKGROUND: '#0a0a1a',
+  GRID_LINE: '#1a3a4a',
+  GRID_GLOW: '#00ffff',
+  NEBULA_1: '#1a0a2e',
+  NEBULA_2: '#0a1a1a',
 } as const;
 
 export const HOME_AREAS = {
