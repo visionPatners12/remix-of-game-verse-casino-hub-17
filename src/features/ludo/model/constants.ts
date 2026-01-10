@@ -157,10 +157,10 @@ export const PRISON_SLOTS = {
 
 // Goal slots for finished pawns (position 999) - on same border as prison
 export const GOAL_SLOTS = {
-  RED: ['E1', 'D1', 'C1', 'B1'],      // End of RED border (after prison)
-  GREEN: ['E10', 'D10', 'C10', 'B10'], // End of GREEN border
-  YELLOW: ['N10', 'M10', 'L10', 'K10'], // End of YELLOW border
-  BLUE: ['N1', 'M1', 'L1', 'K1'],      // End of BLUE border
+  RED: ['E1', 'D1', 'C1', 'B1'],         // Left side (RED home area)
+  GREEN: ['E15', 'D15', 'C15', 'B15'],   // Right side (GREEN home area)
+  YELLOW: ['N15', 'M15', 'L15', 'K15'], // Right side (YELLOW home area)
+  BLUE: ['N1', 'M1', 'L1', 'K1'],        // Left side (BLUE home area)
 } as const;
 
 export const DEFAULT_PROPS = {
