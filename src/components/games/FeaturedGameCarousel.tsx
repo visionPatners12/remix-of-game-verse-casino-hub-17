@@ -3,15 +3,15 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Users, Flame, Play, Trophy } from 'lucide-react';
+import { Users, Flame, Play } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useActivePlayers } from '@/hooks/useActivePlayers';
 
 interface FeaturedGame {
   id: string;
   name: string;
   description: string;
   image: string;
-  playersOnline: number;
   isHot: boolean;
   route: string;
 }
@@ -22,7 +22,6 @@ const FEATURED_GAMES: FeaturedGame[] = [
     name: 'Ludo',
     description: 'The classic board game, now on-chain. Bet & win crypto!',
     image: 'https://images.unsplash.com/photo-1611891487122-207579d67d98?w=800&h=400&fit=crop',
-    playersOnline: 127,
     isHot: true,
     route: '/games/ludo',
   },
@@ -30,6 +29,7 @@ const FEATURED_GAMES: FeaturedGame[] = [
 
 export const FeaturedGameCarousel: React.FC = () => {
   const navigate = useNavigate();
+  const { data: playersData } = useActivePlayers();
 
   return (
     <div className="relative">
@@ -81,17 +81,10 @@ export const FeaturedGameCarousel: React.FC = () => {
 
             {/* Stats & CTA */}
             <div className="flex items-center justify-between gap-4 mt-2">
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-1.5 text-primary">
-                  <Users className="w-4 h-4" />
-                  <span className="font-semibold">{game.playersOnline}</span>
-                  <span className="text-muted-foreground">playing</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-amber-500">
-                  <Trophy className="w-4 h-4" />
-                  <span className="font-semibold">$2,450</span>
-                  <span className="text-muted-foreground">won today</span>
-                </div>
+              <div className="flex items-center gap-1.5 text-sm text-primary">
+                <Users className="w-4 h-4" />
+                <span className="font-semibold">{playersData?.ludoPlayers ?? 0}</span>
+                <span className="text-muted-foreground">playing</span>
               </div>
 
               <Button
