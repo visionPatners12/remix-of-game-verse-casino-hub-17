@@ -364,7 +364,7 @@ export function PrivyLoginScreen({ logoUrl = "/pryzen-logo.png" }: PrivyLoginScr
           transition={{ delay: 0.3, duration: 0.5 }}
           className="text-sm text-muted-foreground tracking-widest uppercase mb-6"
         >
-          {t('onboarding.login.tagline', 'Bet. Win. Flex.')}
+          Play. Bet. Win.
         </motion.p>
 
         {/* Title */}
@@ -375,11 +375,11 @@ export function PrivyLoginScreen({ logoUrl = "/pryzen-logo.png" }: PrivyLoginScr
           className="text-center mb-8"
         >
           <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight mb-2">
-            {t('onboarding.login.title', 'Welcome to')}{' '}
-            <AnimatedGradientText>{t('onboarding.login.titleHighlight', 'PRYZEN')}</AnimatedGradientText>
+            Welcome to{' '}
+            <AnimatedGradientText>PRYZEN Games</AnimatedGradientText>
           </h1>
           <p className="text-sm text-muted-foreground max-w-xs mx-auto">
-            {t('onboarding.login.subtitle', 'Sign in to continue')}
+            Connect to start playing
           </p>
         </motion.div>
 

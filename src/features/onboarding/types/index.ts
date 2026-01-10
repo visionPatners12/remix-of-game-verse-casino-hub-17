@@ -21,9 +21,6 @@ export type OnboardingStepId =
   | 'welcome' 
   | 'profile' 
   | 'pin-setup' 
-  | 'favorite-sport' 
-  | 'favorite-leagues'
-  | 'favorite-team'
   | 'deposit'
   | 'complete';
 
