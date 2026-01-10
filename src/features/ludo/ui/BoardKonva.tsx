@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Stage, Layer, Rect, Line, Circle, Group } from 'react-konva';
+import { Stage, Layer, Rect, Line, Circle, Group, Image as KonvaImage } from 'react-konva';
 import { PawnLayer } from './PawnLayer';
 import { PrisonLayer } from './PrisonLayer';
 import { GoalLayer } from './GoalLayer';
@@ -19,6 +19,7 @@ import {
   generateGridLines
 } from '../model/utils';
 import '../styles/ludo-futuristic.css';
+import pryzenLogoSrc from '@/assets/pryzen-logo.png';
 
 interface Player {
   id: string;
@@ -97,6 +98,15 @@ export const BoardKonva: React.FC<BoardKonvaProps> = ({
   }, []);
 
   const { verticalLines, horizontalLines } = generateGridLines(cellSize, padding, false);
+
+  // Load Pryzen logo for center
+  const [pryzenLogo, setPryzenLogo] = useState<HTMLImageElement | null>(null);
+  
+  useEffect(() => {
+    const img = new window.Image();
+    img.src = pryzenLogoSrc;
+    img.onload = () => setPryzenLogo(img);
+  }, []);
 
   // Generate corner glow positions
   const cornerGlows = [
@@ -276,7 +286,7 @@ export const BoardKonva: React.FC<BoardKonvaProps> = ({
                   opacity={0.4}
                   cornerRadius={2}
                 />
-                {/* Main white square */}
+                {/* Main square with themed gradient (violet/gold) */}
                 <Rect
                   x={rect.x}
                   y={rect.y}
@@ -285,11 +295,11 @@ export const BoardKonva: React.FC<BoardKonvaProps> = ({
                   fillLinearGradientStartPoint={{ x: 0, y: 0 }}
                   fillLinearGradientEndPoint={{ x: rect.width, y: rect.height }}
                   fillLinearGradientColorStops={[
-                    0, '#ffffff',
-                    0.5, '#f8f8f8',
-                    1, '#e8e8e8'
+                    0, 'hsl(262, 83%, 58%)',
+                    0.5, 'hsl(262, 70%, 45%)',
+                    1, 'hsl(45, 93%, 47%)'
                   ]}
-                  stroke={LUDO_COLORS.BLACK}
+                  stroke={'hsl(45, 93%, 47%)'}
                   strokeWidth={1.5}
                   cornerRadius={1}
                   shadowColor={glowColor}
@@ -336,22 +346,36 @@ export const BoardKonva: React.FC<BoardKonvaProps> = ({
             animatingPawn={animatingPawn}
           />
 
-          {/* Center board decoration */}
+          {/* Center board decoration with Pryzen logo */}
           <Group>
+            {/* Violet/Gold glow behind logo */}
             <Circle
               x={boardWidth / 2}
               y={boardHeight / 2}
-              radius={cellSize * 1.2}
+              radius={cellSize * 1.8}
               fillRadialGradientStartPoint={{ x: 0, y: 0 }}
               fillRadialGradientStartRadius={0}
               fillRadialGradientEndPoint={{ x: 0, y: 0 }}
-              fillRadialGradientEndRadius={cellSize * 1.2}
+              fillRadialGradientEndRadius={cellSize * 1.8}
               fillRadialGradientColorStops={[
-                0, 'rgba(0, 255, 255, 0.15)',
-                0.7, 'rgba(0, 255, 255, 0.05)',
+                0, 'hsla(262, 83%, 58%, 0.4)',
+                0.5, 'hsla(45, 93%, 47%, 0.2)',
                 1, 'transparent'
               ]}
             />
+            {/* Pryzen Logo */}
+            {pryzenLogo && (
+              <KonvaImage
+                image={pryzenLogo}
+                x={boardWidth / 2 - cellSize * 1.2}
+                y={boardHeight / 2 - cellSize * 1.2}
+                width={cellSize * 2.4}
+                height={cellSize * 2.4}
+                shadowColor="hsl(45, 93%, 47%)"
+                shadowBlur={15}
+                shadowOpacity={0.6}
+              />
+            )}
           </Group>
         </Layer>
       </Stage>
