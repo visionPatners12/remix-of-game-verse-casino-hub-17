@@ -54,6 +54,8 @@ const StreamHostPage = lazyWithRetry(() => import('@/features/live/components/ho
 const StreamViewerPage = lazyWithRetry(() => import('@/features/live/components/viewer/StreamViewerPage'));
 const LudoKonva = lazyWithRetry(() => import('@/features/ludo').then(m => ({ default: m.LudoKonva })));
 const LudoCreateGamePage = lazyWithRetry(() => import('@/features/ludo').then(m => ({ default: m.LudoCreateGamePage })));
+const ActiveGameGuard = lazyWithRetry(() => import('@/features/ludo/components/ActiveGameGuard').then(m => ({ default: m.ActiveGameGuard })));
+const LudoKonvaWithGuard = lazyWithRetry(() => import('@/features/ludo/components/ActiveGameGuard').then(m => ({ default: m.LudoKonvaWithGuard })));
 const LeaguePage = lazyWithRetry(() => import('@/pages/LeaguePage').then(m => ({ default: m.LeaguePage })));
 const Polymarket = lazyWithRetry(() => import('@/pages/Polymarket'));
 const PolymarketEventDetail = lazyWithRetry(() => import('@/pages/PolymarketEventDetail'));
@@ -129,9 +131,17 @@ export function AppRoutes() {
         <Route path="/ludo-konva" element={<LudoKonva />} />
         <Route path="/swap" element={<SwapPage />} />
         
-        {/* Game routes */}
-        <Route path="/games/ludo/create" element={<LudoCreateGamePage />} />
-        <Route path="/games/ludo/play/:gameId" element={<LudoKonva />} />
+        {/* Game routes - protected by ActiveGameGuard */}
+        <Route path="/games/ludo/create" element={
+          <ActiveGameGuard>
+            <LudoCreateGamePage />
+          </ActiveGameGuard>
+        } />
+        <Route path="/games/ludo/play/:gameId" element={
+          <LudoKonvaWithGuard>
+            <LudoKonva />
+          </LudoKonvaWithGuard>
+        } />
         
         {/* NFT Detail route */}
         <Route path="/nft-details" element={<NFTDetailPage />} />

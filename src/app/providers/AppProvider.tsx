@@ -5,7 +5,6 @@ import { useAuthPersistence } from '@/hooks/useAuthPersistence';
 import { FullscreenProvider } from '@/contexts/FullscreenContext';
 import { OddsFormatProvider } from '@/contexts/OddsFormatContext';
 import { PrivyReconnectPrompt } from '@/components/wallet/PrivyReconnectPrompt';
-import { ActiveGamePopup } from '@/features/ludo';
 
 const ErrorFallback = ({ error }: { error: Error }) => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -28,7 +27,6 @@ const AuthInitializer = memo(({ children }: { children: React.ReactNode }) => {
     <>
       {children}
       <PrivyReconnectPrompt />
-      <ActiveGamePopup />
     </>
   );
 });

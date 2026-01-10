@@ -6,7 +6,7 @@ export { default as LudoGamesPage } from './ui/LudoGamesPage';
 export { default as LudoCreateGamePage } from './ui/LudoCreateGamePage';
 export { LudoGameHeader } from './ui/LudoGameHeader';
 export { LudoGameControls } from './ui/LudoGameControls';
-export { ActiveGamePopup } from './components/ActiveGamePopup';
+export { ActiveGameGuard, LudoKonvaWithGuard } from './components/ActiveGameGuard';
 
 // Model exports
 export * from './model/constants';
