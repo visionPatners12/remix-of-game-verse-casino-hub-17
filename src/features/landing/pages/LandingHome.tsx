@@ -28,40 +28,40 @@ const highlights = [
   {
     icon: Gamepad2,
     title: "Ludo On-Chain",
-    description: "Le jeu de société classique revisité. Misez en USDT et affrontez jusqu'à 4 joueurs en temps réel."
+    description: "The classic board game reimagined. Bet in USDT and challenge up to 4 players in real-time."
   },
   {
     icon: Wallet,
-    title: "Wallet Intégré",
-    description: "Déposez et retirez en USDT sur Polygon. Transactions rapides et frais minimes."
+    title: "Integrated Wallet",
+    description: "Deposit and withdraw in USDT on Polygon. Fast transactions and minimal fees."
   },
   {
     icon: Users,
-    title: "Parties Privées",
-    description: "Créez des parties privées et invitez vos amis. Choisissez le montant de la mise."
+    title: "Private Games",
+    description: "Create private games and invite your friends. Choose your own bet amount."
   },
   {
     icon: Zap,
-    title: "Gains Instantanés",
-    description: "Victoire = gains directs dans votre wallet. Pas d'attente, pas d'intermédiaire."
+    title: "Instant Wins",
+    description: "Victory = direct gains to your wallet. No waiting, no middleman."
   }
 ];
 
 const steps = [
   {
     icon: UserPlus,
-    title: "Connectez-vous",
-    description: "Email ou wallet crypto en quelques secondes"
+    title: "Sign Up",
+    description: "Email or crypto wallet in seconds"
   },
   {
     icon: DollarSign,
-    title: "Déposez des USDT",
-    description: "Minimum 5 USDT sur Polygon pour commencer"
+    title: "Deposit USDT",
+    description: "Minimum 5 USDT on Polygon to start"
   },
   {
     icon: Trophy,
-    title: "Jouez et gagnez",
-    description: "Rejoignez une partie ou créez la vôtre"
+    title: "Play & Win",
+    description: "Join a game or create your own"
   }
 ];
 
@@ -69,28 +69,28 @@ const features = [
   {
     icon: Gamepad2,
     title: "Ludo Multiplayer",
-    description: "Affrontez jusqu'à 4 joueurs en temps réel. Mises flexibles de 1 à 100 USDT. Le gagnant remporte la mise totale.",
+    description: "Challenge up to 4 players in real-time. Flexible bets from 1 to 100 USDT. Winner takes all.",
     mockupLabel: "Ludo Game",
     reverse: false
   },
   {
     icon: Wallet,
-    title: "Wallet Crypto",
-    description: "Gérez vos USDT facilement. Dépôts et retraits rapides sur Polygon. Historique complet de vos transactions.",
+    title: "Crypto Wallet",
+    description: "Manage your USDT easily. Fast deposits and withdrawals on Polygon. Complete transaction history.",
     mockupLabel: "Wallet",
     reverse: true
   },
   {
     icon: Trophy,
-    title: "Historique & Stats",
-    description: "Suivez toutes vos parties, vos victoires et vos gains. Statistiques détaillées de votre progression.",
+    title: "History & Stats",
+    description: "Track all your games, victories, and winnings. Detailed statistics of your progress.",
     mockupLabel: "Stats",
     reverse: false
   },
   {
     icon: Dices,
-    title: "Plus de jeux bientôt",
-    description: "Crash, Dice, et d'autres jeux classiques arrivent. Même système de mise USDT, même expérience fluide.",
+    title: "More Games Coming",
+    description: "Crash, Dice, and other classic games are coming. Same USDT betting system, same smooth experience.",
     mockupLabel: "Coming Soon",
     reverse: true
   }
@@ -99,15 +99,15 @@ const features = [
 const roadmapPhases = [
   {
     phase: "Phase 1",
-    title: "Lancement",
+    title: "Launch",
     status: "current",
-    items: ["Ludo multiplayer", "Wallet USDT", "Profils joueurs"]
+    items: ["Ludo multiplayer", "USDT Wallet", "Player profiles"]
   },
   {
     phase: "Phase 2",
     title: "Social",
     status: "upcoming",
-    items: ["Tournois", "Leaderboards", "Invitations amis"]
+    items: ["Tournaments", "Leaderboards", "Friend invites"]
   },
   {
     phase: "Phase 3",
@@ -127,17 +127,17 @@ const trustFeatures = [
   {
     icon: Shield,
     title: "100% On-Chain",
-    description: "Toutes les transactions sont vérifiables sur la blockchain Polygon"
+    description: "All transactions are verifiable on Polygon blockchain"
   },
   {
     icon: Clock,
-    title: "Retraits Instantanés",
-    description: "Vos gains sont disponibles immédiatement dans votre wallet"
+    title: "Instant Withdrawals",
+    description: "Your winnings are immediately available in your wallet"
   },
   {
     icon: DollarSign,
-    title: "Frais Minimes",
-    description: "Profitez des frais réduits du réseau Polygon"
+    title: "Minimal Fees",
+    description: "Enjoy reduced fees on the Polygon network"
   }
 ];
 
@@ -168,32 +168,32 @@ export function LandingHome() {
             </Badge>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              Jouez. Misez.
-              <span className="block text-primary">Gagnez.</span>
+              Play. Bet.
+              <span className="block text-primary">Win.</span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-10">
-              Affrontez vos amis sur des jeux classiques. 
-              Mises en USDT sur Polygon. Gains instantanés.
+              Challenge your friends on classic games. 
+              Bet in USDT on Polygon. Instant wins.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
               <Link to="/auth">
                 <Button size="lg" className="w-full sm:w-auto px-8 gap-2">
                   <Gamepad2 className="w-5 h-5" />
-                  Commencer à jouer
+                  Start Playing
                 </Button>
               </Link>
               <Link to="/games">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 gap-2">
-                  Voir les jeux <ArrowRight className="w-4 h-4" />
+                  View Games <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
             </div>
 
             {/* Download Buttons */}
             <div className="pt-6 border-t border-border/30">
-              <p className="text-sm text-muted-foreground mb-4">Téléchargez l'app</p>
+              <p className="text-sm text-muted-foreground mb-4">Download the app</p>
               <DownloadButtons size="lg" className="justify-center" />
             </div>
           </motion.div>
@@ -222,10 +222,10 @@ export function LandingHome() {
         <div className="container px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Le gaming on-chain simplifié
+              On-chain gaming made simple
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              Tout ce qu'il faut pour jouer et gagner en crypto
+              Everything you need to play and win in crypto
             </p>
           </div>
 
@@ -257,10 +257,10 @@ export function LandingHome() {
         <div className="container px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Découvrez l'expérience
+              Discover the experience
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              Une app conçue pour le gaming mobile
+              An app designed for mobile gaming
             </p>
           </div>
 
@@ -299,10 +299,10 @@ export function LandingHome() {
         <div className="container px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Comment ça marche
+              How it works
             </h2>
             <p className="text-muted-foreground">
-              Commencez à jouer en 3 étapes
+              Start playing in 3 steps
             </p>
           </div>
 
@@ -337,10 +337,10 @@ export function LandingHome() {
         <div className="container px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Notre Roadmap
+              Our Roadmap
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              L'évolution de la plateforme gaming
+              The evolution of the gaming platform
             </p>
           </div>
 
@@ -386,7 +386,7 @@ export function LandingHome() {
           <div className="text-center">
             <Link to="/roadmap">
               <Button variant="outline" size="lg" className="gap-2">
-                Voir la roadmap complète <ArrowRight className="w-4 h-4" />
+                View full roadmap <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
           </div>
@@ -403,10 +403,10 @@ export function LandingHome() {
             className="text-center max-w-xl mx-auto"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Prêt à jouer ?
+              Ready to play?
             </h2>
             <p className="text-muted-foreground mb-8">
-              Téléchargez l'app et commencez à gagner dès aujourd'hui.
+              Download the app and start winning today.
             </p>
             <DownloadButtons size="lg" className="justify-center" />
           </motion.div>
