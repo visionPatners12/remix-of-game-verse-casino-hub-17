@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, EffectFade } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
-import { MessageCircle, Target, Wallet, ArrowRight, Sparkles } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { Gamepad2, Trophy, Shield, ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FloatingParticles } from '@/components/ui/FloatingParticles';
 import { ProgressBar } from '@/components/ui/ProgressBar';
@@ -21,32 +20,40 @@ interface IntroSliderProps {
 
 const slideConfig = [
   {
-    key: 'feed',
-    icon: MessageCircle,
+    key: 'play',
+    icon: Gamepad2,
     gradient: "from-violet-500/20 via-transparent to-transparent",
     iconColor: "text-violet-400",
     rippleColor: "bg-violet-400/10",
+    title: "Play &",
+    titleHighlight: "Win",
+    description: "Challenge players worldwide in Ludo and win real crypto",
   },
   {
-    key: 'predict',
-    icon: Target,
+    key: 'earn',
+    icon: Trophy,
     gradient: "from-amber-500/20 via-transparent to-transparent",
     iconColor: "text-amber-400",
     rippleColor: "bg-amber-400/10",
+    title: "Instant",
+    titleHighlight: "Payouts",
+    description: "Win USDT directly to your wallet, no waiting",
   },
   {
-    key: 'wallet',
-    icon: Wallet,
+    key: 'secure',
+    icon: Shield,
     gradient: "from-emerald-500/20 via-transparent to-transparent",
     iconColor: "text-emerald-400",
     rippleColor: "bg-emerald-400/10",
+    title: "100%",
+    titleHighlight: "On-Chain",
+    description: "Your funds are secure on Polygon blockchain",
   },
 ];
 
 export function IntroSlider({ onComplete, onSkip }: IntroSliderProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
-  const { t } = useTranslation('auth');
 
   const handleNext = () => {
     if (activeIndex === slideConfig.length - 1) {
@@ -85,7 +92,7 @@ export function IntroSlider({ onComplete, onSkip }: IntroSliderProps) {
           onClick={onSkip}
           className="text-muted-foreground hover:text-foreground transition-colors"
         >
-          {t('onboarding.skip')}
+          Skip
         </Button>
       </div>
 
@@ -104,7 +111,6 @@ export function IntroSlider({ onComplete, onSkip }: IntroSliderProps) {
             <SlideContent 
               slide={slide} 
               isActive={index === activeIndex}
-              t={t}
             />
           </SwiperSlide>
         ))}
@@ -152,11 +158,11 @@ export function IntroSlider({ onComplete, onSkip }: IntroSliderProps) {
               {activeIndex === slideConfig.length - 1 ? (
                 <>
                   <Sparkles className="h-5 w-5" />
-                  {t('onboarding.getStarted')}
+                  Get Started
                 </>
               ) : (
                 <>
-                  {t('onboarding.next')}
+                  Next
                   <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </>
               )}
@@ -171,14 +177,10 @@ export function IntroSlider({ onComplete, onSkip }: IntroSliderProps) {
 interface SlideContentProps {
   slide: typeof slideConfig[0];
   isActive: boolean;
-  t: (key: string) => string;
 }
 
-function SlideContent({ slide, isActive, t }: SlideContentProps) {
+function SlideContent({ slide, isActive }: SlideContentProps) {
   const Icon = slide.icon;
-  const title = t(`onboarding.slides.${slide.key}.title`);
-  const titleHighlight = t(`onboarding.slides.${slide.key}.titleHighlight`);
-  const description = t(`onboarding.slides.${slide.key}.description`);
 
   return (
     <div className="h-full flex flex-col items-center justify-center px-6 pt-16">
@@ -241,8 +243,8 @@ function SlideContent({ slide, isActive, t }: SlideContentProps) {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="text-4xl md:text-5xl font-bold text-foreground text-center mb-4 tracking-tight"
       >
-        {title}{' '}
-        <AnimatedGradientText>{titleHighlight}</AnimatedGradientText>
+        {slide.title}{' '}
+        <AnimatedGradientText>{slide.titleHighlight}</AnimatedGradientText>
       </motion.h2>
 
       {/* Description */}
@@ -252,7 +254,7 @@ function SlideContent({ slide, isActive, t }: SlideContentProps) {
         transition={{ duration: 0.5, delay: 0.3 }}
         className="text-lg text-muted-foreground text-center max-w-sm leading-relaxed"
       >
-        {description}
+        {slide.description}
       </motion.p>
     </div>
   );

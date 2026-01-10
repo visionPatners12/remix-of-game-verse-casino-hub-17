@@ -10,9 +10,6 @@ import { lazyWithRetry } from '@/utils/lazyWithRetry';
 const WelcomeStep = lazyWithRetry(() => import('../components/steps/WelcomeStep').then(m => ({ default: m.WelcomeStep })));
 const ProfileStep = lazyWithRetry(() => import('../components/steps/ProfileStep').then(m => ({ default: m.ProfileStep })));
 const PinSetupStep = lazyWithRetry(() => import('../components/steps/PinSetupStep').then(m => ({ default: m.PinSetupStep })));
-const FavoriteSportStep = lazyWithRetry(() => import('../components/steps/FavoriteSportStep').then(m => ({ default: m.FavoriteSportStep })));
-const FavoriteLeaguesStep = lazyWithRetry(() => import('../components/steps/FavoriteLeaguesStep').then(m => ({ default: m.FavoriteLeaguesStep })));
-const FavoriteTeamStep = lazyWithRetry(() => import('../components/steps/FavoriteTeamStep').then(m => ({ default: m.FavoriteTeamStep })));
 const DepositStep = lazyWithRetry(() => import('../components/steps/DepositStep').then(m => ({ default: m.DepositStep })));
 const CompleteStep = lazyWithRetry(() => import('../components/steps/CompleteStep').then(m => ({ default: m.CompleteStep })));
 
@@ -60,18 +57,6 @@ export function UnifiedOnboardingRouter() {
         <Route 
           path="/pin-setup" 
           element={<PinSetupStep onNext={handleNext} onBack={handleBack} />} 
-        />
-        <Route 
-          path="/favorite-sport" 
-          element={<FavoriteSportStep onNext={handleNext} onBack={handleBack} />} 
-        />
-        <Route 
-          path="/favorite-leagues" 
-          element={<FavoriteLeaguesStep onNext={handleNext} onBack={handleBack} />} 
-        />
-        <Route 
-          path="/favorite-team" 
-          element={<FavoriteTeamStep onNext={handleNext} onBack={handleBack} />} 
         />
         <Route 
           path="/deposit" 
