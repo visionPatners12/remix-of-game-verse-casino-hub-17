@@ -47,12 +47,12 @@ interface BoardKonvaProps {
   animatingPawn?: AnimatingPawn | null;
 }
 
-// Ambient particle configuration
-const AMBIENT_PARTICLES = Array.from({ length: 30 }, (_, i) => ({
-  x: Math.random(),
-  y: Math.random(),
-  radius: Math.random() * 1.5 + 0.5,
-  opacity: Math.random() * 0.4 + 0.1,
+// Subtle decorative spots (reduced from particles)
+const DECORATIVE_SPOTS = Array.from({ length: 8 }, (_, i) => ({
+  x: 0.15 + (i % 4) * 0.25,
+  y: 0.15 + Math.floor(i / 4) * 0.7,
+  radius: 1.5,
+  opacity: 0.05,
 }));
 
 export const BoardKonva: React.FC<BoardKonvaProps> = ({
@@ -98,12 +98,12 @@ export const BoardKonva: React.FC<BoardKonvaProps> = ({
 
   const { verticalLines, horizontalLines } = generateGridLines(cellSize, padding, false);
 
-  // Generate corner glow positions
-  const cornerGlows = [
-    { x: cellSize * 3, y: cellSize * 3, color: NEON_GLOW.RED },
-    { x: cellSize * 12, y: cellSize * 3, color: NEON_GLOW.GREEN },
-    { x: cellSize * 12, y: cellSize * 12, color: NEON_GLOW.YELLOW },
-    { x: cellSize * 3, y: cellSize * 12, color: NEON_GLOW.BLUE },
+  // Subtle corner accents
+  const cornerAccents = [
+    { x: cellSize * 3, y: cellSize * 3, color: LUDO_COLORS.RED },
+    { x: cellSize * 12, y: cellSize * 3, color: LUDO_COLORS.GREEN },
+    { x: cellSize * 12, y: cellSize * 12, color: LUDO_COLORS.YELLOW },
+    { x: cellSize * 3, y: cellSize * 12, color: LUDO_COLORS.BLUE },
   ];
 
   return (
@@ -123,158 +123,128 @@ export const BoardKonva: React.FC<BoardKonvaProps> = ({
         scaleY={scale}
       >
         <Layer>
-          {/* Deep space background */}
+          {/* Warm cream background */}
           <Rect
             x={0}
             y={0}
             width={boardWidth}
             height={boardHeight}
-            fillLinearGradientStartPoint={{ x: 0, y: 0 }}
-            fillLinearGradientEndPoint={{ x: boardWidth, y: boardHeight }}
-            fillLinearGradientColorStops={[
-              0, BOARD_COLORS.BACKGROUND,
-              0.3, BOARD_COLORS.NEBULA_1,
-              0.5, BOARD_COLORS.BACKGROUND,
-              0.7, BOARD_COLORS.NEBULA_2,
-              1, BOARD_COLORS.BACKGROUND
-            ]}
+            fill={BOARD_COLORS.BACKGROUND}
           />
 
-          {/* Radial vignette overlay */}
+          {/* Subtle gradient overlay for depth */}
           <Circle
             x={boardWidth / 2}
             y={boardHeight / 2}
-            radius={boardWidth * 0.8}
+            radius={boardWidth * 0.7}
             fillRadialGradientStartPoint={{ x: 0, y: 0 }}
             fillRadialGradientStartRadius={0}
             fillRadialGradientEndPoint={{ x: 0, y: 0 }}
-            fillRadialGradientEndRadius={boardWidth * 0.8}
+            fillRadialGradientEndRadius={boardWidth * 0.7}
             fillRadialGradientColorStops={[
-              0, 'transparent',
-              0.6, 'transparent',
-              1, 'rgba(0, 0, 0, 0.4)'
+              0, 'rgba(255, 255, 255, 0.3)',
+              0.5, 'transparent',
+              1, 'rgba(0, 0, 0, 0.03)'
             ]}
           />
 
-          {/* Corner glow effects for each home area */}
-          {cornerGlows.map((glow, index) => (
+          {/* Soft corner color hints */}
+          {cornerAccents.map((accent, index) => (
             <Circle
-              key={`corner-glow-${index}`}
-              x={glow.x}
-              y={glow.y}
-              radius={cellSize * 4}
+              key={`corner-accent-${index}`}
+              x={accent.x}
+              y={accent.y}
+              radius={cellSize * 3}
               fillRadialGradientStartPoint={{ x: 0, y: 0 }}
               fillRadialGradientStartRadius={0}
               fillRadialGradientEndPoint={{ x: 0, y: 0 }}
-              fillRadialGradientEndRadius={cellSize * 4}
+              fillRadialGradientEndRadius={cellSize * 3}
               fillRadialGradientColorStops={[
-                0, `${glow.color}33`,
-                0.5, `${glow.color}11`,
+                0, `${accent.color}15`,
+                0.5, `${accent.color}08`,
                 1, 'transparent'
               ]}
             />
           ))}
 
-          {/* Ambient floating particles */}
-          {AMBIENT_PARTICLES.map((particle, index) => (
+          {/* Subtle decorative spots */}
+          {DECORATIVE_SPOTS.map((spot, index) => (
             <Circle
-              key={`particle-${index}`}
-              x={particle.x * boardWidth}
-              y={particle.y * boardHeight}
-              radius={particle.radius}
-              fill="#00ffff"
-              opacity={particle.opacity}
+              key={`spot-${index}`}
+              x={spot.x * boardWidth}
+              y={spot.y * boardHeight}
+              radius={spot.radius}
+              fill={BOARD_COLORS.GRID_LINE}
+              opacity={spot.opacity}
             />
           ))}
 
-          {/* Neon Grid Lines with glow effect */}
+          {/* Clean grid lines */}
           {verticalLines.map((line, index) => (
-            <Group key={`v-line-group-${index}`}>
-              {/* Glow layer */}
-              <Line
-                points={line.points}
-                stroke={BOARD_COLORS.GRID_GLOW}
-                strokeWidth={3}
-                opacity={0.1}
-              />
-              {/* Main line */}
-              <Line
-                points={line.points}
-                stroke={BOARD_COLORS.GRID_LINE}
-                strokeWidth={1}
-                opacity={0.6}
-              />
-            </Group>
+            <Line
+              key={`v-line-${index}`}
+              points={line.points}
+              stroke={BOARD_COLORS.GRID_LINE}
+              strokeWidth={1}
+              opacity={0.5}
+            />
           ))}
           {horizontalLines.map((line, index) => (
-            <Group key={`h-line-group-${index}`}>
-              {/* Glow layer */}
-              <Line
-                points={line.points}
-                stroke={BOARD_COLORS.GRID_GLOW}
-                strokeWidth={3}
-                opacity={0.1}
-              />
-              {/* Main line */}
-              <Line
-                points={line.points}
-                stroke={BOARD_COLORS.GRID_LINE}
-                strokeWidth={1}
-                opacity={0.6}
-              />
-            </Group>
+            <Line
+              key={`h-line-${index}`}
+              points={line.points}
+              stroke={BOARD_COLORS.GRID_LINE}
+              strokeWidth={1}
+              opacity={0.5}
+            />
           ))}
 
-          {/* Home Areas with neon borders and tinted backgrounds */}
+          {/* Home Areas with soft borders */}
           {Object.entries(HOME_AREAS).map(([colorName, area]) => {
             const tintColor = TINTED_COLORS[colorName as keyof typeof TINTED_COLORS];
-            const glowColor = NEON_GLOW[colorName as keyof typeof NEON_GLOW];
+            const mainColor = LUDO_COLORS[colorName as keyof typeof LUDO_COLORS];
             const rect = cellRect(area.rows, area.cols, cellSize, padding, false);
             return (
               <Group key={`home-${colorName}`}>
-                {/* Outer glow */}
+                {/* Soft shadow */}
                 <Rect
-                  x={rect.x - 4}
-                  y={rect.y - 4}
-                  width={rect.width + 8}
-                  height={rect.height + 8}
-                  stroke={glowColor}
-                  strokeWidth={2}
-                  opacity={0.3}
-                  cornerRadius={4}
+                  x={rect.x + 2}
+                  y={rect.y + 2}
+                  width={rect.width}
+                  height={rect.height}
+                  fill="rgba(0, 0, 0, 0.05)"
+                  cornerRadius={6}
                 />
-                {/* Tinted background */}
+                {/* Main background */}
                 <Rect
                   x={rect.x}
                   y={rect.y}
                   width={rect.width}
                   height={rect.height}
                   fill={tintColor}
-                  stroke={glowColor}
-                  strokeWidth={1.5}
-                  opacity={0.9}
-                  cornerRadius={2}
+                  stroke={mainColor}
+                  strokeWidth={2}
+                  opacity={0.95}
+                  cornerRadius={6}
                 />
               </Group>
             );
           })}
 
-          {/* White Squares with holographic effect */}
+          {/* White Squares with elegant styling */}
           {Object.entries(WHITE_SQUARES).map(([colorName, square]) => {
             const rect = cellRect(square.rows, square.cols, cellSize, padding, false);
-            const glowColor = NEON_GLOW[colorName as keyof typeof NEON_GLOW];
+            const mainColor = LUDO_COLORS[colorName as keyof typeof LUDO_COLORS];
             return (
               <Group key={`white-${colorName}`}>
-                {/* Holographic glow */}
+                {/* Soft shadow */}
                 <Rect
-                  x={rect.x - 2}
-                  y={rect.y - 2}
-                  width={rect.width + 4}
-                  height={rect.height + 4}
-                  stroke={glowColor}
-                  strokeWidth={1}
-                  opacity={0.4}
-                  cornerRadius={2}
+                  x={rect.x + 1}
+                  y={rect.y + 1}
+                  width={rect.width}
+                  height={rect.height}
+                  fill="rgba(0, 0, 0, 0.06)"
+                  cornerRadius={4}
                 />
                 {/* Main white square */}
                 <Rect
@@ -282,19 +252,10 @@ export const BoardKonva: React.FC<BoardKonvaProps> = ({
                   y={rect.y}
                   width={rect.width}
                   height={rect.height}
-                  fillLinearGradientStartPoint={{ x: 0, y: 0 }}
-                  fillLinearGradientEndPoint={{ x: rect.width, y: rect.height }}
-                  fillLinearGradientColorStops={[
-                    0, '#ffffff',
-                    0.5, '#f8f8f8',
-                    1, '#e8e8e8'
-                  ]}
-                  stroke={LUDO_COLORS.BLACK}
+                  fill={LUDO_COLORS.WHITE}
+                  stroke={mainColor}
                   strokeWidth={1.5}
-                  cornerRadius={1}
-                  shadowColor={glowColor}
-                  shadowBlur={8}
-                  shadowOpacity={0.3}
+                  cornerRadius={4}
                 />
               </Group>
             );
