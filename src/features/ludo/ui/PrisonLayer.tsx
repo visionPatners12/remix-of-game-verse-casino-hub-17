@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Circle, Ring } from 'react-konva';
+import { Group, Circle } from 'react-konva';
 import { PRISON_SLOTS, LUDO_COLORS, DEFAULT_PROPS, NEON_GLOW } from '../model/constants';
 import { PRISON_BASE, isInPrison } from '../model/ludoModel';
 import { center } from '../model/utils';
@@ -84,45 +84,18 @@ export function PrisonLayer({
           />
         );
       } else {
-        // Futuristic forcefield empty slot
+        // Simple empty slot indicator
         return (
-          <Group key={`prison-slot-${prisonColor}-${displayIndex}`}>
-            {/* Outer energy field */}
-            <Circle
-              x={position.x}
-              y={position.y}
-              radius={radius * 1.4}
-              fillRadialGradientStartPoint={{ x: 0, y: 0 }}
-              fillRadialGradientStartRadius={0}
-              fillRadialGradientEndPoint={{ x: 0, y: 0 }}
-              fillRadialGradientEndRadius={radius * 1.4}
-              fillRadialGradientColorStops={[
-                0, `${glowColor}22`,
-                0.7, `${glowColor}11`,
-                1, 'transparent'
-              ]}
-            />
-            {/* Forcefield ring */}
-            <Ring
-              x={position.x}
-              y={position.y}
-              innerRadius={radius * 0.7}
-              outerRadius={radius}
-              fill={`${colorHex}11`}
-              stroke={glowColor}
-              strokeWidth={1.5}
-              dash={[4, 3]}
-              opacity={0.7}
-            />
-            {/* Center energy core */}
-            <Circle
-              x={position.x}
-              y={position.y}
-              radius={radius * 0.3}
-              fill={glowColor}
-              opacity={0.2}
-            />
-          </Group>
+          <Circle
+            key={`prison-slot-${prisonColor}-${displayIndex}`}
+            x={position.x}
+            y={position.y}
+            radius={radius * 0.75}
+            fill={`${colorHex}12`}
+            stroke={glowColor}
+            strokeWidth={1}
+            opacity={0.5}
+          />
         );
       }
     });

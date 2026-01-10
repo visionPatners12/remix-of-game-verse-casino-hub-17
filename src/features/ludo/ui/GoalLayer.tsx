@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Circle, Ring, Star } from 'react-konva';
+import { Group, Circle, Star } from 'react-konva';
 import { GOAL_SLOTS, LUDO_COLORS, DEFAULT_PROPS, NEON_GLOW } from '../model/constants';
 import { GOAL } from '../model/ludoModel';
 import { center } from '../model/utils';
@@ -44,79 +44,10 @@ export function GoalLayer({
       const isFinished = index < finishedCount;
 
       if (isFinished) {
-        // Victory pawn with holographic crown effect
+        // Victory pawn with subtle glow
         return (
           <Group key={`goal-pawn-${color}-${index}`}>
-            {/* Outer victory aura */}
-            <Circle
-              x={position.x}
-              y={position.y}
-              radius={radius * 2.5}
-              fillRadialGradientStartPoint={{ x: 0, y: 0 }}
-              fillRadialGradientStartRadius={0}
-              fillRadialGradientEndPoint={{ x: 0, y: 0 }}
-              fillRadialGradientEndRadius={radius * 2.5}
-              fillRadialGradientColorStops={[
-                0, `${glowColor}44`,
-                0.4, `${glowColor}22`,
-                1, 'transparent'
-              ]}
-            />
-            {/* Spinning energy ring */}
-            <Ring
-              x={position.x}
-              y={position.y}
-              innerRadius={radius * 1.5}
-              outerRadius={radius * 1.7}
-              fill={`${glowColor}33`}
-              stroke={glowColor}
-              strokeWidth={1}
-              dash={[6, 3]}
-              opacity={0.6}
-            />
-            {/* Main pawn body */}
-            <Circle
-              x={position.x}
-              y={position.y}
-              radius={radius * 1.3}
-              fillRadialGradientStartPoint={{ x: -radius * 0.3, y: -radius * 0.3 }}
-              fillRadialGradientStartRadius={0}
-              fillRadialGradientEndPoint={{ x: radius * 0.3, y: radius * 0.3 }}
-              fillRadialGradientEndRadius={radius * 1.5}
-              fillRadialGradientColorStops={[
-                0, '#ffffff',
-                0.3, colorHex,
-                0.8, colorHex,
-                1, `${colorHex}88`
-              ]}
-              stroke={glowColor}
-              strokeWidth={2.5}
-              shadowColor={colorHex}
-              shadowBlur={15}
-              shadowOpacity={0.8}
-            />
-            {/* Victory star indicator */}
-            <Star
-              x={position.x}
-              y={position.y}
-              numPoints={5}
-              innerRadius={radius * 0.25}
-              outerRadius={radius * 0.5}
-              fill="#ffffff"
-              stroke={glowColor}
-              strokeWidth={1}
-              opacity={0.9}
-              shadowColor="#ffffff"
-              shadowBlur={5}
-              shadowOpacity={0.5}
-            />
-          </Group>
-        );
-      } else {
-        // Futuristic portal-style empty slot
-        return (
-          <Group key={`goal-slot-${color}-${index}`}>
-            {/* Portal glow */}
+            {/* Subtle aura */}
             <Circle
               x={position.x}
               y={position.y}
@@ -126,32 +57,58 @@ export function GoalLayer({
               fillRadialGradientEndPoint={{ x: 0, y: 0 }}
               fillRadialGradientEndRadius={radius * 1.6}
               fillRadialGradientColorStops={[
-                0, `${glowColor}15`,
-                0.6, `${glowColor}08`,
+                0, `${glowColor}20`,
+                0.5, `${glowColor}08`,
                 1, 'transparent'
               ]}
             />
-            {/* Portal ring */}
-            <Ring
-              x={position.x}
-              y={position.y}
-              innerRadius={radius * 0.6}
-              outerRadius={radius}
-              fill={`${colorHex}08`}
-              stroke={glowColor}
-              strokeWidth={1.5}
-              dash={[5, 4]}
-              opacity={0.5}
-            />
-            {/* Center beacon */}
+            {/* Main pawn body */}
             <Circle
               x={position.x}
               y={position.y}
-              radius={radius * 0.25}
-              fill={glowColor}
-              opacity={0.3}
+              radius={radius * 1.2}
+              fillRadialGradientStartPoint={{ x: -radius * 0.3, y: -radius * 0.3 }}
+              fillRadialGradientStartRadius={0}
+              fillRadialGradientEndPoint={{ x: radius * 0.3, y: radius * 0.3 }}
+              fillRadialGradientEndRadius={radius * 1.4}
+              fillRadialGradientColorStops={[
+                0, '#ffffff',
+                0.3, colorHex,
+                0.85, colorHex,
+                1, `${colorHex}aa`
+              ]}
+              stroke={glowColor}
+              strokeWidth={2}
+              shadowColor={colorHex}
+              shadowBlur={8}
+              shadowOpacity={0.5}
+            />
+            {/* Victory star */}
+            <Star
+              x={position.x}
+              y={position.y}
+              numPoints={5}
+              innerRadius={radius * 0.2}
+              outerRadius={radius * 0.4}
+              fill="#ffffff"
+              opacity={0.85}
             />
           </Group>
+        );
+      } else {
+        // Simple empty slot
+        return (
+          <Circle
+            key={`goal-slot-${color}-${index}`}
+            x={position.x}
+            y={position.y}
+            radius={radius * 0.8}
+            fill={`${colorHex}10`}
+            stroke={glowColor}
+            strokeWidth={1}
+            dash={[3, 3]}
+            opacity={0.4}
+          />
         );
       }
     });
