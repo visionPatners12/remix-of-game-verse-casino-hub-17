@@ -53,6 +53,12 @@ const LudoCreateGamePage: React.FC = () => {
 
       if (!data?.ok) {
         console.error('Backend error:', data?.error);
+        // Handle specific error: player already in active game
+        if (data?.error?.includes('ALREADY_IN_GAME')) {
+          toast.error('You are already in an active game. Finish or leave it first.');
+          navigate('/games/ludo');
+          return;
+        }
         toast.error(data?.error || 'Error creating the game');
         return;
       }
