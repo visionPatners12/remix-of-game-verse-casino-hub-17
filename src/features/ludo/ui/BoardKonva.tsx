@@ -235,78 +235,45 @@ export const BoardKonva: React.FC<BoardKonvaProps> = ({
             </Group>
           ))}
 
-          {/* Home Areas with neon borders and tinted backgrounds */}
+          {/* Home Areas with tinted backgrounds */}
           {Object.entries(HOME_AREAS).map(([colorName, area]) => {
             const tintColor = TINTED_COLORS[colorName as keyof typeof TINTED_COLORS];
-            const glowColor = NEON_GLOW[colorName as keyof typeof NEON_GLOW];
             const rect = cellRect(area.rows, area.cols, cellSize, padding, false);
             return (
-              <Group key={`home-${colorName}`}>
-                {/* Outer glow */}
-                <Rect
-                  x={rect.x - 4}
-                  y={rect.y - 4}
-                  width={rect.width + 8}
-                  height={rect.height + 8}
-                  stroke={glowColor}
-                  strokeWidth={2}
-                  opacity={0.3}
-                  cornerRadius={4}
-                />
-                {/* Tinted background */}
-                <Rect
-                  x={rect.x}
-                  y={rect.y}
-                  width={rect.width}
-                  height={rect.height}
-                  fill={tintColor}
-                  stroke={glowColor}
-                  strokeWidth={1.5}
-                  opacity={0.9}
-                  cornerRadius={2}
-                />
-              </Group>
+              <Rect
+                key={`home-${colorName}`}
+                x={rect.x}
+                y={rect.y}
+                width={rect.width}
+                height={rect.height}
+                fill={tintColor}
+                opacity={0.85}
+                cornerRadius={2}
+              />
             );
           })}
 
-          {/* White Squares with holographic effect */}
+          {/* White Squares with subtle gradient */}
           {Object.entries(WHITE_SQUARES).map(([colorName, square]) => {
             const rect = cellRect(square.rows, square.cols, cellSize, padding, false);
-            const glowColor = NEON_GLOW[colorName as keyof typeof NEON_GLOW];
             return (
-              <Group key={`white-${colorName}`}>
-                {/* Holographic glow */}
-                <Rect
-                  x={rect.x - 2}
-                  y={rect.y - 2}
-                  width={rect.width + 4}
-                  height={rect.height + 4}
-                  stroke={glowColor}
-                  strokeWidth={1}
-                  opacity={0.4}
-                  cornerRadius={2}
-                />
-                {/* Main square with themed gradient (violet/gold) */}
-                <Rect
-                  x={rect.x}
-                  y={rect.y}
-                  width={rect.width}
-                  height={rect.height}
-                  fillLinearGradientStartPoint={{ x: 0, y: 0 }}
-                  fillLinearGradientEndPoint={{ x: rect.width, y: rect.height }}
-                  fillLinearGradientColorStops={[
-                    0, 'hsl(262, 83%, 58%)',
-                    0.5, 'hsl(262, 70%, 45%)',
-                    1, 'hsl(45, 93%, 47%)'
-                  ]}
-                  stroke={'hsl(45, 93%, 47%)'}
-                  strokeWidth={1.5}
-                  cornerRadius={1}
-                  shadowColor={glowColor}
-                  shadowBlur={8}
-                  shadowOpacity={0.3}
-                />
-              </Group>
+              <Rect
+                key={`white-${colorName}`}
+                x={rect.x}
+                y={rect.y}
+                width={rect.width}
+                height={rect.height}
+                fillLinearGradientStartPoint={{ x: 0, y: 0 }}
+                fillLinearGradientEndPoint={{ x: rect.width, y: rect.height }}
+                fillLinearGradientColorStops={[
+                  0, 'hsl(262, 50%, 40%)',
+                  0.6, 'hsl(262, 40%, 32%)',
+                  1, 'hsl(45, 70%, 45%)'
+                ]}
+                stroke={'hsl(45, 60%, 40%)'}
+                strokeWidth={1}
+                cornerRadius={1}
+              />
             );
           })}
 
@@ -348,32 +315,32 @@ export const BoardKonva: React.FC<BoardKonvaProps> = ({
 
           {/* Center board decoration with Pryzen logo */}
           <Group>
-            {/* Violet/Gold glow behind logo */}
+            {/* Subtle glow behind logo */}
             <Circle
               x={boardWidth / 2}
               y={boardHeight / 2}
-              radius={cellSize * 1.8}
+              radius={cellSize * 1.1}
               fillRadialGradientStartPoint={{ x: 0, y: 0 }}
               fillRadialGradientStartRadius={0}
               fillRadialGradientEndPoint={{ x: 0, y: 0 }}
-              fillRadialGradientEndRadius={cellSize * 1.8}
+              fillRadialGradientEndRadius={cellSize * 1.1}
               fillRadialGradientColorStops={[
-                0, 'hsla(262, 83%, 58%, 0.4)',
-                0.5, 'hsla(45, 93%, 47%, 0.2)',
+                0, 'hsla(262, 60%, 50%, 0.2)',
+                0.6, 'hsla(45, 70%, 45%, 0.1)',
                 1, 'transparent'
               ]}
             />
-            {/* Pryzen Logo */}
+            {/* Pryzen Logo - reduced size */}
             {pryzenLogo && (
               <KonvaImage
                 image={pryzenLogo}
-                x={boardWidth / 2 - cellSize * 1.2}
-                y={boardHeight / 2 - cellSize * 1.2}
-                width={cellSize * 2.4}
-                height={cellSize * 2.4}
-                shadowColor="hsl(45, 93%, 47%)"
-                shadowBlur={15}
-                shadowOpacity={0.6}
+                x={boardWidth / 2 - cellSize * 0.8}
+                y={boardHeight / 2 - cellSize * 0.8}
+                width={cellSize * 1.6}
+                height={cellSize * 1.6}
+                shadowColor="hsl(45, 70%, 45%)"
+                shadowBlur={8}
+                shadowOpacity={0.4}
               />
             )}
           </Group>

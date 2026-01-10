@@ -801,6 +801,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_favorite_polymarket_tags: {
+        Row: {
+          created_at: string
+          id: string
+          position: number
+          tag_id: string
+          tag_label: string
+          tag_slug: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          position?: number
+          tag_id: string
+          tag_label: string
+          tag_slug: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          position?: number
+          tag_id?: string
+          tag_label?: string
+          tag_slug?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_pin: {
         Row: {
           created_at: string
