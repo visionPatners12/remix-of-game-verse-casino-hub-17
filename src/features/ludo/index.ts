@@ -19,6 +19,7 @@ export { ludoApi } from './services/ludoApi';
 // Hooks
 export { useLudoGameLogic } from './hooks/useLudoGameLogic';
 export { useLudoGameActions } from './hooks/useLudoGameActions';
+export { useGlobalActiveGameRedirect } from './hooks/useGlobalActiveGameRedirect';
 
 // Types - centralized
 export * from './types';
