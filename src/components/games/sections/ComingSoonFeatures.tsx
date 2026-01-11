@@ -1,6 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Swords, Sparkles } from 'lucide-react';
+import { 
+  Trophy, 
+  Swords, 
+  Sparkles, 
+  Calendar, 
+  DollarSign, 
+  Globe, 
+  Zap,
+  Users,
+  Target,
+  Gamepad2
+} from 'lucide-react';
 import { UpcomingFeatureCard } from '../UpcomingFeatureCard';
 import { useTranslation } from 'react-i18next';
 
@@ -11,28 +22,26 @@ export const ComingSoonFeatures = () => {
     icon: Trophy,
     title: t('upcoming.tournaments.title', 'Tournaments'),
     description: t('upcoming.tournaments.description', 'Compete against players worldwide for real crypto prizes'),
-    features: [
-      t('upcoming.tournaments.feature1', 'Weekly & daily events'),
-      t('upcoming.tournaments.feature2', 'USDT prize pools'),
-      t('upcoming.tournaments.feature3', 'Global leaderboards'),
-      t('upcoming.tournaments.feature4', 'Bracket elimination'),
+    chips: [
+      { icon: Calendar, label: t('upcoming.tournaments.chip1', 'Weekly Events') },
+      { icon: DollarSign, label: t('upcoming.tournaments.chip2', 'USDT Prizes') },
+      { icon: Globe, label: t('upcoming.tournaments.chip3', 'Global Ranking') },
+      { icon: Zap, label: t('upcoming.tournaments.chip4', 'Brackets') },
     ],
-    gradient: 'from-amber-500/20 to-orange-500/10',
-    iconGradient: 'from-amber-500 to-orange-600',
+    accentColor: 'amber' as const,
   };
 
   const playOnline = {
     icon: Swords,
     title: t('upcoming.playOnline.title', 'Play Online'),
     description: t('upcoming.playOnline.description', 'Find opponents instantly and compete in ranked matches'),
-    features: [
-      t('upcoming.playOnline.feature1', 'Instant matchmaking'),
-      t('upcoming.playOnline.feature2', 'Skill-based ranking'),
-      t('upcoming.playOnline.feature3', 'Play with friends'),
-      t('upcoming.playOnline.feature4', 'Stake & compete'),
+    chips: [
+      { icon: Zap, label: t('upcoming.playOnline.chip1', 'Instant Match') },
+      { icon: Target, label: t('upcoming.playOnline.chip2', 'Ranked') },
+      { icon: Users, label: t('upcoming.playOnline.chip3', 'With Friends') },
+      { icon: Gamepad2, label: t('upcoming.playOnline.chip4', 'Stake & Play') },
     ],
-    gradient: 'from-violet-500/20 to-purple-500/10',
-    iconGradient: 'from-violet-500 to-purple-600',
+    accentColor: 'violet' as const,
   };
 
   return (
@@ -43,7 +52,10 @@ export const ComingSoonFeatures = () => {
         animate={{ opacity: 1, y: 0 }}
         className="flex items-center gap-2"
       >
-        <Sparkles className="w-5 h-5 text-primary" />
+        <div className="relative">
+          <Sparkles className="w-5 h-5 text-primary" />
+          <div className="absolute inset-0 blur-md bg-primary/50" />
+        </div>
         <h2 className="text-lg font-bold text-foreground">
           {t('upcoming.title', 'Coming Soon')}
         </h2>
