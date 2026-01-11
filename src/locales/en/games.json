@@ -6,9 +6,30 @@
     "casino": "Casino",
     "sports": "Sports"
   },
-  "soon": "Coming Soon",
+  "soon": "SOON",
   "play": "Play Now",
   "players": "players",
+  "notifyMe": "Notify me",
+  "notifySuccess": "You'll be notified when available!",
+  "upcoming": {
+    "title": "Coming Soon",
+    "tournaments": {
+      "title": "Tournaments",
+      "description": "Compete against players worldwide for real crypto prizes",
+      "feature1": "Weekly & daily events",
+      "feature2": "USDT prize pools",
+      "feature3": "Global leaderboards",
+      "feature4": "Bracket elimination"
+    },
+    "playOnline": {
+      "title": "Play Online",
+      "description": "Find opponents instantly and compete in ranked matches",
+      "feature1": "Instant matchmaking",
+      "feature2": "Skill-based ranking",
+      "feature3": "Play with friends",
+      "feature4": "Stake & compete"
+    }
+  },
   "ludo": {
     "title": "Ludo",
     "createGame": "Create Game",

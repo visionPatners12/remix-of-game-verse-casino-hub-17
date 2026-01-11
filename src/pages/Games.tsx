@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { FeaturedGameCarousel } from '@/components/games/FeaturedGameCarousel';
 import { HotBadge } from '@/components/games/HotBadge';
 import { LivePlayersCount } from '@/components/games/LivePlayersCount';
+import { ComingSoonFeatures } from '@/components/games/sections/ComingSoonFeatures';
 
 // Types
 type GameCategory = 'popular' | 'multiplayer' | 'slots' | 'table' | 'instant';
@@ -169,6 +170,9 @@ export default function Games() {
       <div className="container mx-auto px-3 py-4 max-w-6xl space-y-5">
         {/* Featured Carousel */}
         <FeaturedGameCarousel />
+
+        {/* Coming Soon Features */}
+        <ComingSoonFeatures />
 
         {/* Categories Pills */}
         <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar -mx-3 px-3">
