@@ -1,19 +1,21 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { LucideIcon, Check, Bell } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { LucideIcon, Bell } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
+
+interface FeatureChip {
+  icon: LucideIcon;
+  label: string;
+}
 
 interface UpcomingFeatureCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
-  features: string[];
-  gradient: string;
-  iconGradient?: string;
+  chips: FeatureChip[];
+  accentColor: 'amber' | 'violet';
   onNotifyMe?: () => void;
   showNotify?: boolean;
 }
@@ -22,87 +24,166 @@ export const UpcomingFeatureCard = ({
   icon: Icon,
   title,
   description,
-  features,
-  gradient,
-  iconGradient = "from-primary to-primary/70",
+  chips,
+  accentColor = 'amber',
   showNotify = true,
 }: UpcomingFeatureCardProps) => {
   const { t } = useTranslation('games');
 
   const handleNotifyMe = () => {
-    toast.success(t('notifySuccess', 'You\'ll be notified when available!'), {
+    toast.success(t('notifySuccess', "You'll be notified when available!"), {
       description: title,
     });
   };
 
+  const isAmber = accentColor === 'amber';
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
       whileHover={{ scale: 1.02, y: -4 }}
+      transition={{ type: 'spring', stiffness: 120, damping: 14 }}
       className={cn(
-        "relative overflow-hidden rounded-2xl p-5",
-        "bg-gradient-to-br border border-white/10",
-        "transition-shadow duration-300",
-        "hover:shadow-xl hover:shadow-primary/10",
-        gradient
+        'relative overflow-hidden rounded-2xl p-5',
+        'bg-card/50 backdrop-blur-xl',
+        'border border-white/10',
+        'transition-shadow duration-500',
+        isAmber 
+          ? 'hover:shadow-[0_20px_60px_-15px_rgba(245,158,11,0.3)]' 
+          : 'hover:shadow-[0_20px_60px_-15px_rgba(139,92,246,0.3)]'
       )}
     >
-      {/* SOON Badge */}
-      <Badge 
-        className="absolute top-3 right-3 text-[10px] px-2 py-0.5 font-bold bg-primary text-primary-foreground border-0 animate-pulse"
-      >
-        {t('soon')}
-      </Badge>
-
-      {/* Icon */}
-      <motion.div
-        whileHover={{ rotate: [0, -10, 10, 0] }}
-        transition={{ duration: 0.4 }}
+      {/* Gradient Background */}
+      <div
         className={cn(
-          "w-14 h-14 rounded-xl flex items-center justify-center mb-4",
-          "bg-gradient-to-br shadow-lg",
-          iconGradient
+          'absolute inset-0 opacity-60',
+          isAmber
+            ? 'bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-transparent'
+            : 'bg-gradient-to-br from-violet-500/20 via-purple-500/10 to-transparent'
         )}
-      >
-        <Icon className="w-7 h-7 text-white" />
-      </motion.div>
+      />
 
-      {/* Title & Description */}
-      <h3 className="text-lg font-bold text-foreground mb-1">{title}</h3>
-      <p className="text-sm text-muted-foreground mb-4">{description}</p>
+      {/* Shine Sweep Animation */}
+      <motion.div
+        animate={{ x: ['-100%', '200%'] }}
+        transition={{ duration: 4, repeat: Infinity, repeatDelay: 3, ease: 'easeInOut' }}
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent -skew-x-12 pointer-events-none"
+      />
 
-      {/* Features List */}
-      <ul className="space-y-2 mb-4">
-        {features.map((feature, index) => (
-          <motion.li
-            key={index}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 + index * 0.05 }}
-            className="flex items-center gap-2 text-sm text-foreground/80"
+      {/* Glow Orbs */}
+      <div
+        className={cn(
+          'absolute -top-12 -right-12 w-28 h-28 rounded-full blur-3xl pointer-events-none',
+          isAmber ? 'bg-amber-500/25' : 'bg-violet-500/25'
+        )}
+      />
+      <div
+        className={cn(
+          'absolute -bottom-10 -left-10 w-24 h-24 rounded-full blur-2xl pointer-events-none animate-pulse',
+          isAmber ? 'bg-orange-500/20' : 'bg-purple-500/20'
+        )}
+      />
+
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Header: Icon + Badge */}
+        <div className="flex items-start justify-between mb-4">
+          {/* Icon with Glow */}
+          <motion.div
+            whileHover={{ rotate: [0, -8, 8, -4, 4, 0] }}
+            transition={{ duration: 0.5 }}
+            className="relative"
           >
-            <Check className="w-4 h-4 text-primary flex-shrink-0" />
-            <span>{feature}</span>
-          </motion.li>
-        ))}
-      </ul>
+            <div
+              className={cn(
+                'absolute inset-0 blur-xl opacity-60',
+                isAmber ? 'bg-amber-500' : 'bg-violet-500'
+              )}
+            />
+            <div
+              className={cn(
+                'relative w-14 h-14 rounded-xl flex items-center justify-center',
+                'bg-gradient-to-br shadow-xl',
+                isAmber
+                  ? 'from-amber-400 to-orange-600 shadow-amber-500/30'
+                  : 'from-violet-400 to-purple-600 shadow-violet-500/30'
+              )}
+            >
+              <Icon className="w-7 h-7 text-white drop-shadow-md" />
+            </div>
+          </motion.div>
 
-      {/* Notify Button */}
-      {showNotify && (
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleNotifyMe}
-          className="w-full gap-2 bg-background/50 hover:bg-background/80 border-white/20"
-        >
-          <Bell className="w-4 h-4" />
-          {t('notifyMe', 'Notify me')}
-        </Button>
-      )}
+          {/* Premium Badge */}
+          <motion.div
+            animate={{ 
+              boxShadow: [
+                '0 0 10px rgba(139,92,246,0.3)',
+                '0 0 20px rgba(245,158,11,0.4)',
+                '0 0 10px rgba(139,92,246,0.3)'
+              ]
+            }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className={cn(
+              'px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider',
+              'bg-gradient-to-r from-violet-500 via-primary to-amber-500 bg-[length:200%_100%]',
+              'text-white border border-white/20',
+              'animate-[gradient-x_3s_ease_infinite]'
+            )}
+          >
+            {t('soon', 'Coming Soon')}
+          </motion.div>
+        </div>
 
-      {/* Decorative glow */}
-      <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
+        {/* Title & Description */}
+        <h3 className="text-lg font-bold text-foreground mb-1">{title}</h3>
+        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{description}</p>
+
+        {/* Feature Chips */}
+        <div className="flex flex-wrap gap-2 mb-5">
+          {chips.map((chip, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 + index * 0.08 }}
+              className={cn(
+                'flex items-center gap-1.5 px-2.5 py-1 rounded-full',
+                'bg-white/5 border border-white/10',
+                'text-xs text-foreground/80'
+              )}
+            >
+              <chip.icon className={cn(
+                'w-3 h-3',
+                isAmber ? 'text-amber-400' : 'text-violet-400'
+              )} />
+              <span>{chip.label}</span>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Notify Button */}
+        {showNotify && (
+          <motion.button
+            onClick={handleNotifyMe}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className={cn(
+              'w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl',
+              'bg-white/5 border border-white/15',
+              'text-sm font-medium text-foreground',
+              'transition-all duration-300',
+              'hover:bg-white/10 hover:border-white/25',
+              isAmber
+                ? 'hover:shadow-lg hover:shadow-amber-500/15'
+                : 'hover:shadow-lg hover:shadow-violet-500/15'
+            )}
+          >
+            <Bell className="w-4 h-4" />
+            {t('notifyMe', 'Get Notified')}
+          </motion.button>
+        )}
+      </div>
     </motion.div>
   );
 };
