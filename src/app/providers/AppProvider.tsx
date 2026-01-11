@@ -5,6 +5,7 @@ import { useAuthPersistence } from '@/hooks/useAuthPersistence';
 import { FullscreenProvider } from '@/contexts/FullscreenContext';
 import { OddsFormatProvider } from '@/contexts/OddsFormatContext';
 import { PrivyReconnectPrompt } from '@/components/wallet/PrivyReconnectPrompt';
+import { useGlobalActiveGameRedirect } from '@/features/ludo/hooks/useGlobalActiveGameRedirect';
 
 const ErrorFallback = ({ error }: { error: Error }) => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -23,6 +24,8 @@ const ErrorFallback = ({ error }: { error: Error }) => (
 
 const AuthInitializer = memo(({ children }: { children: React.ReactNode }) => {
   useAuthPersistence();
+  useGlobalActiveGameRedirect();
+  
   return (
     <>
       {children}
