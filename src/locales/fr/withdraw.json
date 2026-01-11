@@ -1,52 +1,76 @@
 {
-  "title": "Retrait",
-  "subtitle": "Retirer vos fonds",
-  "amount": "Montant",
-  "enterAmount": "Entrer le montant",
-  "availableBalance": "Disponible : {{balance}}",
-  "max": "Max",
-  "destination": "Destination",
-  "destinationAddress": "Adresse de destination",
-  "enterAddress": "Entrer l'adresse du wallet",
-  "pasteAddress": "Coller",
-  "scanQR": "Scanner QR",
-  "methods": {
-    "title": "Méthode de retrait",
-    "crypto": "Wallet Crypto",
-    "bank": "Virement bancaire",
-    "card": "Carte bancaire"
+  "title": "Envoyer",
+  "subtitle": "Envoyer vos fonds",
+  "modes": {
+    "title": "Comment voulez-vous envoyer ?",
+    "address": {
+      "title": "Vers une adresse",
+      "description": "Entrer l'adresse manuellement"
+    },
+    "user": {
+      "title": "Vers un utilisateur",
+      "description": "Rechercher des utilisateurs"
+    }
   },
-  "network": {
-    "title": "Réseau",
-    "selectNetwork": "Sélectionner le réseau",
-    "fee": "Frais de réseau",
-    "estimatedTime": "Temps estimé"
+  "userSearch": {
+    "title": "Envoyer à un utilisateur",
+    "placeholder": "Rechercher par nom ou pseudo...",
+    "hint": "Entrez au moins 2 caractères",
+    "noResults": "Aucun utilisateur trouvé",
+    "noWallet": "Pas de wallet connecté"
+  },
+  "token": {
+    "title": "Sélectionner un token",
+    "select": "Sélectionner un token",
+    "connectWallet": "Connectez votre wallet pour voir vos tokens",
+    "noTokens": "Aucun token disponible"
+  },
+  "details": {
+    "title": "Détails",
+    "network": "Réseau"
+  },
+  "amount": "Montant",
+  "max": "MAX",
+  "availableBalance": "Disponible",
+  "destination": {
+    "to": "À",
+    "address": "Adresse de destination",
+    "verified": "Vérifié",
+    "validAddress": "Adresse valide",
+    "invalidAddress": "Format d'adresse invalide",
+    "recent": "Destinataires récents"
   },
   "confirmation": {
-    "title": "Confirmer le retrait",
-    "amount": "Montant",
-    "fee": "Frais",
-    "total": "Tu recevras",
-    "destination": "Vers",
-    "confirm": "Confirmer le retrait",
-    "processing": "Traitement..."
+    "title": "Confirmer la transaction",
+    "processing": "Traitement...",
+    "completed": "Terminé",
+    "confirm": "Vérifier et envoyer"
   },
-  "success": {
-    "title": "Retrait soumis",
-    "message": "Ton retrait est en cours de traitement",
-    "txHash": "Hash de transaction",
-    "viewTransaction": "Voir la transaction",
-    "done": "Terminé"
+  "summary": {
+    "amount": "Montant",
+    "to": "À",
+    "network": "Réseau",
+    "fee": "Frais estimés",
+    "txSent": "Transaction envoyée",
+    "hashCopied": "Hash copié",
+    "warningTitle": "Vérifiez tout",
+    "warningText": "Cette transaction est irréversible. Assurez-vous que l'adresse est correcte."
+  },
+  "pinVerification": {
+    "title": "Vérifier le PIN",
+    "description": "Entrez votre PIN pour confirmer"
+  },
+  "pinVerified": "PIN vérifié, traitement en cours...",
+  "buttons": {
+    "back": "Retour",
+    "continue": "Continuer",
+    "change": "Changer"
   },
   "errors": {
     "insufficientBalance": "Solde insuffisant",
     "invalidAddress": "Adresse invalide",
-    "minAmount": "Montant minimum : {{min}}",
-    "maxAmount": "Montant maximum : {{max}}",
-    "networkError": "Erreur réseau, réessaie"
-  },
-  "warnings": {
-    "checkAddress": "Vérifie bien l'adresse de destination",
-    "irreversible": "Les retraits sont irréversibles"
+    "pinRequired": "Un code PIN est requis pour les retraits",
+    "pinRequiredTitle": "PIN requis",
+    "pinRequiredDesc": "Un code PIN est requis pour les retraits. Redirection vers les paramètres..."
   }
 }

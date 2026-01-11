@@ -1,52 +1,76 @@
 {
-  "title": "Retiro",
-  "subtitle": "Retira tus fondos",
-  "amount": "Cantidad",
-  "enterAmount": "Introduce la cantidad",
-  "availableBalance": "Disponible: {{balance}}",
-  "max": "Máx",
-  "destination": "Destino",
-  "destinationAddress": "Dirección de destino",
-  "enterAddress": "Introduce la dirección de la billetera",
-  "pasteAddress": "Pegar",
-  "scanQR": "Escanear QR",
-  "methods": {
-    "title": "Método de retiro",
-    "crypto": "Billetera crypto",
-    "bank": "Transferencia bancaria",
-    "card": "Tarjeta de débito"
+  "title": "Enviar",
+  "subtitle": "Envía tus fondos",
+  "modes": {
+    "title": "¿Cómo quieres enviar?",
+    "address": {
+      "title": "A una dirección",
+      "description": "Introduce la dirección manualmente"
+    },
+    "user": {
+      "title": "A un usuario",
+      "description": "Buscar usuarios de la plataforma"
+    }
   },
-  "network": {
-    "title": "Red",
-    "selectNetwork": "Seleccionar red",
-    "fee": "Comisión de red",
-    "estimatedTime": "Tiempo estimado"
+  "userSearch": {
+    "title": "Enviar a usuario",
+    "placeholder": "Buscar por nombre o usuario...",
+    "hint": "Introduce al menos 2 caracteres",
+    "noResults": "No se encontraron usuarios",
+    "noWallet": "Sin wallet conectada"
+  },
+  "token": {
+    "title": "Seleccionar Token",
+    "select": "Seleccionar Token",
+    "connectWallet": "Conecta tu wallet para ver tokens",
+    "noTokens": "No hay tokens disponibles"
+  },
+  "details": {
+    "title": "Detalles",
+    "network": "Red"
+  },
+  "amount": "Cantidad",
+  "max": "MÁX",
+  "availableBalance": "Disponible",
+  "destination": {
+    "to": "A",
+    "address": "Dirección de destino",
+    "verified": "Verificado",
+    "validAddress": "Dirección válida",
+    "invalidAddress": "Formato de dirección inválido",
+    "recent": "Destinatarios recientes"
   },
   "confirmation": {
-    "title": "Confirmar retiro",
-    "amount": "Cantidad",
-    "fee": "Comisión",
-    "total": "Recibirás",
-    "destination": "A",
-    "confirm": "Confirmar retiro",
-    "processing": "Procesando..."
+    "title": "Confirmar transacción",
+    "processing": "Procesando...",
+    "completed": "Completado",
+    "confirm": "Verificar y enviar"
   },
-  "success": {
-    "title": "Retiro enviado",
-    "message": "Tu retiro está siendo procesado",
-    "txHash": "Hash de transacción",
-    "viewTransaction": "Ver transacción",
-    "done": "Listo"
+  "summary": {
+    "amount": "Cantidad",
+    "to": "A",
+    "network": "Red",
+    "fee": "Comisión estimada",
+    "txSent": "Transacción enviada",
+    "hashCopied": "Hash copiado",
+    "warningTitle": "Verifica todo",
+    "warningText": "Esta transacción es irreversible. Asegúrate de que la dirección sea correcta."
+  },
+  "pinVerification": {
+    "title": "Verificar PIN",
+    "description": "Introduce tu PIN para confirmar"
+  },
+  "pinVerified": "PIN verificado, procesando...",
+  "buttons": {
+    "back": "Atrás",
+    "continue": "Continuar",
+    "change": "Cambiar"
   },
   "errors": {
     "insufficientBalance": "Saldo insuficiente",
     "invalidAddress": "Dirección inválida",
-    "minAmount": "Cantidad mínima: {{min}}",
-    "maxAmount": "Cantidad máxima: {{max}}",
-    "networkError": "Error de red, intenta de nuevo"
-  },
-  "warnings": {
-    "checkAddress": "Verifica bien la dirección de destino",
-    "irreversible": "Los retiros son irreversibles"
+    "pinRequired": "Se requiere un código PIN para retiros",
+    "pinRequiredTitle": "PIN requerido",
+    "pinRequiredDesc": "Se requiere un código PIN para retiros. Redirigiendo a configuración..."
   }
 }

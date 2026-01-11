@@ -1,52 +1,76 @@
 {
-  "title": "Withdraw",
-  "subtitle": "Withdraw your funds",
-  "amount": "Amount",
-  "enterAmount": "Enter amount",
-  "availableBalance": "Available: {{balance}}",
-  "max": "Max",
-  "destination": "Destination",
-  "destinationAddress": "Destination Address",
-  "enterAddress": "Enter wallet address",
-  "pasteAddress": "Paste",
-  "scanQR": "Scan QR",
-  "methods": {
-    "title": "Withdrawal Method",
-    "crypto": "Crypto Wallet",
-    "bank": "Bank Transfer",
-    "card": "Debit Card"
+  "title": "Send",
+  "subtitle": "Send your funds",
+  "modes": {
+    "title": "How do you want to send?",
+    "address": {
+      "title": "To an Address",
+      "description": "Enter wallet address manually"
+    },
+    "user": {
+      "title": "To a User",
+      "description": "Search platform users"
+    }
   },
-  "network": {
-    "title": "Network",
-    "selectNetwork": "Select network",
-    "fee": "Network Fee",
-    "estimatedTime": "Estimated Time"
+  "userSearch": {
+    "title": "Send to User",
+    "placeholder": "Search by username or name...",
+    "hint": "Enter at least 2 characters to search",
+    "noResults": "No users found",
+    "noWallet": "No wallet connected"
+  },
+  "token": {
+    "title": "Select Token",
+    "select": "Select Token",
+    "connectWallet": "Connect your wallet to see tokens",
+    "noTokens": "No tokens available"
+  },
+  "details": {
+    "title": "Enter Details",
+    "network": "Network"
+  },
+  "amount": "Amount",
+  "max": "MAX",
+  "availableBalance": "Available",
+  "destination": {
+    "to": "To",
+    "address": "Destination Address",
+    "verified": "Verified",
+    "validAddress": "Valid address",
+    "invalidAddress": "Invalid address format",
+    "recent": "Recent recipients"
   },
   "confirmation": {
-    "title": "Confirm Withdrawal",
-    "amount": "Amount",
-    "fee": "Fee",
-    "total": "You will receive",
-    "destination": "To",
-    "confirm": "Confirm Withdrawal",
-    "processing": "Processing..."
+    "title": "Confirm Transaction",
+    "processing": "Processing...",
+    "completed": "Completed",
+    "confirm": "Verify & Send"
   },
-  "success": {
-    "title": "Withdrawal Submitted",
-    "message": "Your withdrawal is being processed",
-    "txHash": "Transaction Hash",
-    "viewTransaction": "View Transaction",
-    "done": "Done"
+  "summary": {
+    "amount": "Amount",
+    "to": "To",
+    "network": "Network",
+    "fee": "Estimated Fee",
+    "txSent": "Transaction Sent",
+    "hashCopied": "Transaction hash copied",
+    "warningTitle": "Double-check everything",
+    "warningText": "This transaction cannot be reversed. Make sure the address is correct."
+  },
+  "pinVerification": {
+    "title": "Verify PIN",
+    "description": "Enter your PIN to confirm the withdrawal"
+  },
+  "pinVerified": "PIN verified, processing...",
+  "buttons": {
+    "back": "Back",
+    "continue": "Continue",
+    "change": "Change"
   },
   "errors": {
     "insufficientBalance": "Insufficient balance",
     "invalidAddress": "Invalid address",
-    "minAmount": "Minimum amount is {{min}}",
-    "maxAmount": "Maximum amount is {{max}}",
-    "networkError": "Network error, please try again"
-  },
-  "warnings": {
-    "checkAddress": "Please double-check the destination address",
-    "irreversible": "Withdrawals are irreversible"
+    "pinRequired": "A PIN code is required for withdrawals",
+    "pinRequiredTitle": "PIN Required",
+    "pinRequiredDesc": "A PIN code is required for withdrawals. Redirecting to settings..."
   }
 }

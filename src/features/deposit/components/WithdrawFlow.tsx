@@ -1,88 +1,121 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Check, Copy, AlertCircle, Loader2, Wallet } from 'lucide-react';
-import { Button, Input, Label, Card, CardContent, Skeleton } from '@/ui';
-import { StepProgressIndicator } from '@/components/shared/StepProgressIndicator';
+import { Check, Copy, AlertCircle, Loader2, ArrowLeft, Lock } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { PinVerification } from '@/features/security';
 import { useWithdraw } from '../hooks/useWithdraw';
 import { usePinManagement } from '@/features/security';
-import { useResponsive } from '@/hooks/useResponsive';
+import { useRecentRecipients } from '../hooks/useRecentRecipients';
 import { logger } from '@/utils/logger';
-import { isAddress, formatUnits } from 'viem';
-import { toast } from '@/hooks/use-toast';
+import { isAddress } from 'viem';
+import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { useWalletTokensThirdWeb } from '@/features/wallet/hooks/tokens/useWalletTokensThirdWeb';
-import { MobilePageHeader } from '@/components/shared/MobilePageHeader';
-import { TokenIcon } from '@web3icons/react/dynamic';
-import { WalletToken } from '@/features/wallet/types';
+import { useTranslation } from 'react-i18next';
 
-// Token icon component with fallback
-const WithdrawTokenIcon = ({ token, size = 'md' }: { token: WalletToken | null; size?: 'sm' | 'md' | 'lg' }) => {
-  const sizeClasses = {
-    sm: 'h-4 w-4',
-    md: 'h-5 w-5',
-    lg: 'h-8 w-8'
-  };
-  
-  if (!token?.symbol) {
-    return (
-      <div className={cn(sizeClasses[size], "rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center")}>
-        <span className="text-xs font-medium text-primary">?</span>
-      </div>
-    );
-  }
-  
-  return (
-    <TokenIcon
-      symbol={token.symbol}
-      className={sizeClasses[size]}
-      variant="branded"
-    />
-  );
-};
+// Import new components
+import { SendModeSelector, SendMode } from './SendModeSelector';
+import { UserSearchSend } from './UserSearchSend';
+import { TokenQuickSelect } from './TokenQuickSelect';
+import { AmountInputCard } from './AmountInputCard';
+import { DestinationCard } from './DestinationCard';
+import { TransactionSummaryCard } from './TransactionSummaryCard';
+import { SearchedUser } from '../hooks/useUserWalletLookup';
+
+type WithdrawStep = 'mode' | 'user-search' | 'token' | 'details' | 'confirm';
 
 const WithdrawFlow = () => {
   const navigate = useNavigate();
-  const { isMobile, isDesktop } = useResponsive();
+  const { t } = useTranslation('withdraw');
   const {
-    currentStep,
     selectedToken,
     setSelectedToken,
     amount,
     cryptoAddress,
     selectedCrypto,
-    isLoading,
     isSubmitting,
     txHash,
-    walletBalance,
     address,
     setAmount,
     setCryptoAddress,
-    handleNextStep,
-    handlePrevStep,
     executeBlockchainWithdraw,
   } = useWithdraw();
 
-  // Fetch wallet tokens for Step 0
-  const { tokens, isLoading: isLoadingTokens, error: tokensError, isConnected } = useWalletTokensThirdWeb();
+  // Fetch wallet tokens
+  const { tokens, isLoading: isLoadingTokens, isConnected } = useWalletTokensThirdWeb();
 
-  const { pinStatus, verifyPin, isVerifying } = usePinManagement();
+  const { pinStatus, verifyPin } = usePinManagement();
+  const { recipients, addRecipient } = useRecentRecipients();
 
-  // PIN verification required on load
+  // Flow state
+  const [currentStep, setCurrentStep] = useState<WithdrawStep>('mode');
+  const [sendMode, setSendMode] = useState<SendMode | null>(null);
+  const [selectedUser, setSelectedUser] = useState<SearchedUser | null>(null);
+  const [showPinVerification, setShowPinVerification] = useState(false);
+  const [isPinVerified, setIsPinVerified] = useState(false);
+
+  // PIN check on load
   useEffect(() => {
     if (pinStatus && (!pinStatus.hasPin || !pinStatus.isEnabled)) {
-      toast({
-        title: "PIN Required",
-        description: "A PIN code is required for withdrawals. You will be redirected to settings.",
-        variant: "destructive"
-      });
+      toast.error(t('errors.pinRequired', 'A PIN code is required for withdrawals'));
       setTimeout(() => navigate('/settings/pin?from=withdraw'), 2000);
     }
-  }, [pinStatus, navigate]);
+  }, [pinStatus, navigate, t]);
 
-  // PIN verification state
-  const [isPinVerified, setIsPinVerified] = React.useState(false);
-  const [showPinVerification, setShowPinVerification] = React.useState(false);
+  // Handlers
+  const handleModeSelect = (mode: SendMode) => {
+    setSendMode(mode);
+    if (mode === 'user') {
+      setCurrentStep('user-search');
+    } else {
+      setCurrentStep('token');
+    }
+  };
+
+  const handleUserSelect = (user: SearchedUser) => {
+    setSelectedUser(user);
+    if (user.wallet_address) {
+      setCryptoAddress(user.wallet_address);
+    }
+    setCurrentStep('token');
+  };
+
+  const handleTokenSelect = (token: typeof selectedToken) => {
+    setSelectedToken(token);
+    setCurrentStep('details');
+  };
+
+  const handleBack = () => {
+    switch (currentStep) {
+      case 'mode':
+        navigate(-1);
+        break;
+      case 'user-search':
+        setCurrentStep('mode');
+        setSendMode(null);
+        break;
+      case 'token':
+        if (sendMode === 'user') {
+          setCurrentStep('user-search');
+        } else {
+          setCurrentStep('mode');
+          setSendMode(null);
+        }
+        break;
+      case 'details':
+        setCurrentStep('token');
+        break;
+      case 'confirm':
+        setCurrentStep('details');
+        break;
+    }
+  };
+
+  const handleProceedToConfirm = () => {
+    if (!canProceed) return;
+    setCurrentStep('confirm');
+  };
 
   const handlePinVerification = async (pin: string) => {
     try {
@@ -90,21 +123,26 @@ const WithdrawFlow = () => {
       if (isValid) {
         setIsPinVerified(true);
         setShowPinVerification(false);
-        toast({
-          title: "PIN Verified",
-          description: "Processing your withdrawal...",
-        });
+        toast.success(t('pinVerified', 'PIN verified, processing...'));
         
-        // Auto-trigger transaction after PIN verification
+        // Execute transaction
         try {
           const hash = await executeBlockchainWithdraw();
           if (hash) {
+            // Add to recent recipients
+            addRecipient({
+              type: selectedUser ? 'user' : 'address',
+              address: cryptoAddress,
+              label: selectedUser ? (selectedUser.first_name || selectedUser.username || undefined) : undefined,
+              username: selectedUser?.username || undefined,
+              avatar_url: selectedUser?.avatar_url || undefined,
+              ens_subdomain: selectedUser?.ens_subdomain || undefined
+            });
             setTimeout(() => navigate('/wallet'), 3000);
           }
         } catch (txError) {
           logger.error('Withdrawal error:', txError);
         }
-        
         return true;
       } else {
         throw new Error('Incorrect PIN');
@@ -114,29 +152,26 @@ const WithdrawFlow = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    // Verify PIN before proceeding
+  const handleSubmit = () => {
     if (!isPinVerified) {
       setShowPinVerification(true);
       return;
     }
-
-    try {
-        const hash = await executeBlockchainWithdraw();
-      if (hash) {
-        // Navigate after success
-        setTimeout(() => navigate('/wallet'), 3000);
-      }
-    } catch (error) {
-      // Error already handled in executeBlockchainWithdraw
-      logger.error('Withdrawal error:', error);
-    }
+    executeBlockchainWithdraw();
   };
 
-  const stepLabels = ['Token', 'Details', 'Confirm'];
+  const handleClearUser = () => {
+    setSelectedUser(null);
+    setCryptoAddress('');
+    setCurrentStep('user-search');
+  };
 
-  // Check if can proceed to next step
-  const canProceedFromDetails = 
+  const handleSelectRecent = (recipient: typeof recipients[0]) => {
+    setCryptoAddress(recipient.address);
+  };
+
+  // Validation
+  const canProceed = 
     amount && 
     parseFloat(amount) > 0 && 
     isAddress(cryptoAddress) && 
@@ -144,15 +179,38 @@ const WithdrawFlow = () => {
     selectedToken &&
     parseFloat(amount) <= parseFloat(selectedToken.balance);
 
+  const amountError = amount && selectedToken && parseFloat(amount) > parseFloat(selectedToken.balance)
+    ? t('errors.insufficientBalance', 'Insufficient balance')
+    : undefined;
+
+  // Show PIN requirement error
+  if (pinStatus && (!pinStatus.hasPin || !pinStatus.isEnabled)) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
+          <CardContent className="p-6 text-center space-y-4">
+            <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
+              <AlertCircle className="h-8 w-8 text-destructive" />
+            </div>
+            <h2 className="text-xl font-semibold">{t('errors.pinRequiredTitle', 'PIN Required')}</h2>
+            <p className="text-muted-foreground">
+              {t('errors.pinRequiredDesc', 'A PIN code is required for withdrawals. Redirecting to settings...')}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* PIN Verification Modal */}
       {showPinVerification && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-background rounded-lg max-w-md w-full">
+          <div className="bg-background rounded-2xl max-w-md w-full overflow-hidden">
             <PinVerification
-              title="PIN Verification Required"
-              description="Enter your PIN code to confirm the withdrawal"
+              title={t('pinVerification.title', 'Verify PIN')}
+              description={t('pinVerification.description', 'Enter your PIN to confirm the withdrawal')}
               onVerify={handlePinVerification}
               onCancel={() => setShowPinVerification(false)}
               maxAttempts={3}
@@ -162,388 +220,184 @@ const WithdrawFlow = () => {
         </div>
       )}
 
-      {/* Don't show main content if PIN not configured */}
-      {pinStatus && (!pinStatus.hasPin || !pinStatus.isEnabled) ? (
-        <div className="flex items-center justify-center min-h-screen p-4">
-          <Card className="max-w-md">
-            <CardContent className="p-6 text-center space-y-4">
-              <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
-                <AlertCircle className="h-8 w-8 text-destructive" />
-              </div>
-              <h2 className="text-xl font-semibold">PIN Required</h2>
-              <p className="text-muted-foreground">
-                A PIN code is required for withdrawals. You will be redirected to settings.
-              </p>
-            </CardContent>
-          </Card>
+      {/* Header */}
+      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border/50">
+        <div className="flex items-center h-14 px-4">
+          <button
+            onClick={handleBack}
+            className="w-10 h-10 -ml-2 flex items-center justify-center rounded-full active:bg-muted transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <h1 className="flex-1 text-center font-semibold text-lg pr-8">
+            {t('title', 'Send')}
+          </h1>
         </div>
-      ) : (
-        <>
-          <MobilePageHeader title="Withdraw Funds" />
+      </div>
 
-          {/* Progress Indicator */}
-          <div className={cn(
-            isMobile ? "px-4" : "max-w-4xl mx-auto px-6"
-          )}>
-            <StepProgressIndicator
-              currentStep={currentStep}
-              totalSteps={3}
-              stepLabels={stepLabels}
+      {/* Content */}
+      <div className="flex-1 px-4 py-6">
+        {/* Step: Mode Selection */}
+        {currentStep === 'mode' && (
+          <SendModeSelector onSelectMode={handleModeSelect} />
+        )}
+
+        {/* Step: User Search */}
+        {currentStep === 'user-search' && (
+          <UserSearchSend
+            onSelectUser={handleUserSelect}
+            onBack={handleBack}
+          />
+        )}
+
+        {/* Step: Token Selection */}
+        {currentStep === 'token' && (
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-center">
+              {t('token.title', 'Select Token')}
+            </h2>
+            
+            <TokenQuickSelect
+              tokens={tokens}
+              selectedToken={selectedToken}
+              onSelectToken={handleTokenSelect}
+              isLoading={isLoadingTokens}
+              isConnected={isConnected}
             />
+
+            <Button
+              variant="outline"
+              onClick={handleBack}
+              className="w-full h-12"
+            >
+              {t('buttons.back', 'Back')}
+            </Button>
           </div>
+        )}
 
-          {/* Content */}
-          <div className={cn(
-            "pb-20",
-            isMobile ? "px-4" : "max-w-4xl mx-auto px-6"
-          )}>
-            {/* Step 0: Token Selection */}
-            {currentStep === 0 && (
-              <div className="space-y-4">
-                <h2 className={cn(
-                  "font-semibold mb-4",
-                  isMobile ? "text-xl" : "text-2xl text-center"
-                )}>Select Token</h2>
+        {/* Step: Amount & Destination */}
+        {currentStep === 'details' && selectedToken && (
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-center">
+              {t('details.title', 'Enter Details')}
+            </h2>
 
-                {!isConnected ? (
-                  <Card>
-                    <CardContent className="p-8 text-center">
-                      <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Wallet className="h-8 w-8 text-muted-foreground" />
-                      </div>
-                      <h3 className="text-lg font-medium mb-2">Connect Your Wallet</h3>
-                      <p className="text-muted-foreground">
-                        Please connect your wallet to see your available tokens
-                      </p>
-                    </CardContent>
-                  </Card>
-                ) : isLoadingTokens ? (
-                  <div className="space-y-3">
-                    {[1, 2, 3].map((i) => (
-                      <Card key={i}>
-                        <CardContent className="p-4">
-                          <div className="flex items-center space-x-4">
-                            <Skeleton className="h-10 w-10 rounded-full" />
-                            <div className="flex-1 space-y-2">
-                              <Skeleton className="h-4 w-24" />
-                              <Skeleton className="h-3 w-16" />
-                            </div>
-                            <div className="text-right space-y-2">
-                              <Skeleton className="h-4 w-20" />
-                              <Skeleton className="h-3 w-16" />
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                ) : tokensError ? (
-                  <Card>
-                    <CardContent className="p-8 text-center">
-                      <p className="text-destructive">Error loading tokens</p>
-                    </CardContent>
-                  </Card>
-                ) : tokens.length === 0 ? (
-                  <Card>
-                    <CardContent className="p-8 text-center">
-                      <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Wallet className="h-8 w-8 text-muted-foreground" />
-                      </div>
-                      <h3 className="text-lg font-medium mb-2">No Tokens Available</h3>
-                      <p className="text-muted-foreground">
-                        Your wallet doesn't contain any tokens at the moment
-                      </p>
-                    </CardContent>
-                  </Card>
+            {/* Selected token display */}
+            <div className="p-3 rounded-xl bg-primary/5 border border-primary/20 flex items-center gap-3">
+              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                <span className="text-sm font-bold">{selectedToken.symbol[0]}</span>
+              </div>
+              <div className="flex-1">
+                <div className="font-medium">{selectedToken.symbol}</div>
+                <div className="text-sm text-muted-foreground">{selectedToken.name}</div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setCurrentStep('token')}
+                className="text-primary"
+              >
+                {t('buttons.change', 'Change')}
+              </Button>
+            </div>
+
+            {/* Amount input */}
+            <AmountInputCard
+              amount={amount}
+              onAmountChange={setAmount}
+              selectedToken={selectedToken}
+              error={amountError}
+            />
+
+            {/* Destination */}
+            <DestinationCard
+              mode={sendMode || 'address'}
+              address={cryptoAddress}
+              onAddressChange={setCryptoAddress}
+              selectedUser={selectedUser}
+              onClearUser={handleClearUser}
+              recentRecipients={recipients}
+              onSelectRecent={handleSelectRecent}
+            />
+
+            {/* Network info */}
+            <div className="p-3 rounded-xl bg-muted/30 flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">{t('details.network', 'Network')}</span>
+              <span className="font-medium">{selectedCrypto.network}</span>
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-3 pt-2">
+              <Button
+                variant="outline"
+                onClick={handleBack}
+                className="flex-1 h-12"
+              >
+                {t('buttons.back', 'Back')}
+              </Button>
+              <Button
+                onClick={handleProceedToConfirm}
+                disabled={!canProceed}
+                className="flex-1 h-12"
+              >
+                {t('buttons.continue', 'Continue')}
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Step: Confirmation */}
+        {currentStep === 'confirm' && selectedToken && (
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-center">
+              {t('confirmation.title', 'Confirm Transaction')}
+            </h2>
+
+            <TransactionSummaryCard
+              amount={amount}
+              selectedToken={selectedToken}
+              destinationAddress={cryptoAddress}
+              selectedUser={selectedUser}
+              network={selectedCrypto.network}
+              txHash={txHash}
+            />
+
+            {/* Actions */}
+            <div className="flex gap-3 pt-2">
+              <Button
+                variant="outline"
+                onClick={handleBack}
+                disabled={isSubmitting}
+                className="flex-1 h-12"
+              >
+                {t('buttons.back', 'Back')}
+              </Button>
+              <Button
+                onClick={handleSubmit}
+                disabled={isSubmitting || !!txHash}
+                className="flex-1 h-12 gap-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    {t('confirmation.processing', 'Processing...')}
+                  </>
+                ) : txHash ? (
+                  <>
+                    <Check className="h-4 w-4" />
+                    {t('confirmation.completed', 'Completed')}
+                  </>
                 ) : (
-                  <div className="space-y-3">
-                    {tokens.map((token) => (
-                      <Card
-                        key={token.contractAddress}
-                        className={cn(
-                          "cursor-pointer transition-all hover:bg-muted/50 hover:scale-[1.01]",
-                          selectedToken?.contractAddress === token.contractAddress && "border-primary bg-primary/5"
-                        )}
-                        onClick={() => {
-                          setSelectedToken(token);
-                          handleNextStep();
-                        }}
-                      >
-                        <CardContent className="p-4">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-3">
-                              <div className="relative">
-                                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                                  <WithdrawTokenIcon token={token} size="md" />
-                                </div>
-                                {token.type && (
-                                  <div className="absolute -bottom-1 -right-1 bg-background border border-border rounded-full px-1 text-[9px] font-medium">
-                                    {token.type === 'Native' ? 'N' : token.type === 'BEP-20' ? 'B' : 'E'}
-                                  </div>
-                                )}
-                              </div>
-                              <div>
-                                <div className="font-medium">{token.name}</div>
-                                <div className="text-sm text-muted-foreground">{token.symbol}</div>
-                              </div>
-                            </div>
-                            <div className="text-right">
-                              <div className="font-medium">{parseFloat(token.balance).toFixed(4)}</div>
-                              <div className="text-sm text-muted-foreground">
-                                ${token.quote.toFixed(2)}
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
+                  <>
+                    <Lock className="h-4 w-4" />
+                    {t('confirmation.confirm', 'Verify & Send')}
+                  </>
                 )}
-
-                <div className={cn(
-                  isMobile ? "mt-6" : "flex justify-center"
-                )}>
-                  <Button
-                    variant="outline"
-                    onClick={() => navigate(-1)}
-                    className={cn(
-                      isMobile ? "w-full" : "px-8"
-                    )}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 1: Amount & Destination Address */}
-            {currentStep === 1 && selectedToken && (
-              <div className={cn(
-                "space-y-6",
-                isDesktop && "max-w-md mx-auto"
-              )}>
-                <div className="text-center space-y-3">
-                  <h2 className={cn(
-                    "font-semibold mb-2",
-                    isMobile ? "text-xl" : "text-2xl"
-                  )}>Withdrawal Details</h2>
-                </div>
-
-                {/* Selected Token Display */}
-                <Card className="bg-primary/5 border-primary/20">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                          <WithdrawTokenIcon token={selectedToken} size="md" />
-                        </div>
-                        <div>
-                          <div className="font-medium">{selectedToken.symbol}</div>
-                          <div className="text-sm text-muted-foreground">{selectedToken.name}</div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm text-muted-foreground">Available Balance</div>
-                        <div className="font-medium">{parseFloat(selectedToken.balance).toFixed(4)} {selectedToken.symbol}</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Amount Input */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <Label htmlFor="amount">Amount</Label>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setAmount(selectedToken.balance)}
-                      className="text-xs text-primary hover:text-primary/80 h-auto py-1"
-                    >
-                      MAX
-                    </Button>
-                  </div>
-                  <div className="relative">
-                    <Input
-                      id="amount"
-                      type="number"
-                      placeholder="0.00"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      className={cn(
-                        "text-lg pr-16",
-                        amount && parseFloat(amount) > parseFloat(selectedToken.balance) && "border-destructive"
-                      )}
-                    />
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm font-medium">
-                      {selectedToken.symbol}
-                    </div>
-                  </div>
-                  {amount && parseFloat(amount) > parseFloat(selectedToken.balance) && (
-                    <p className="text-xs text-destructive flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3" />
-                      Insufficient balance
-                    </p>
-                  )}
-                </div>
-
-                {/* Destination Address */}
-                <div className="space-y-2">
-                  <Label htmlFor="crypto-address">Destination Address</Label>
-                  <Input
-                    id="crypto-address"
-                    placeholder="0x..."
-                    value={cryptoAddress}
-                    onChange={(e) => setCryptoAddress(e.target.value)}
-                    className={cn(
-                      "font-mono text-sm",
-                      cryptoAddress && !isAddress(cryptoAddress) && "border-destructive"
-                    )}
-                  />
-                  {cryptoAddress && !isAddress(cryptoAddress) && (
-                    <p className="text-xs text-destructive flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3" />
-                      Invalid address format
-                    </p>
-                  )}
-                  {cryptoAddress && isAddress(cryptoAddress) && (
-                    <p className="text-xs text-green-600 flex items-center gap-1">
-                      <Check className="h-3 w-3" />
-                      Valid address
-                    </p>
-                  )}
-                </div>
-
-                {/* Network Info */}
-                <Card className="bg-muted/50">
-                  <CardContent className="p-3">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">Network</span>
-                      <span className="font-medium">{selectedCrypto.network}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <div className="flex gap-3 pt-4">
-                  <Button variant="outline" onClick={handlePrevStep} className="flex-1">
-                    Back
-                  </Button>
-                  <Button
-                    onClick={handleNextStep}
-                    disabled={!canProceedFromDetails || isLoading}
-                    className="flex-1"
-                  >
-                    {isLoading ? "Verifying..." : "Continue"}
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 2: Confirmation */}
-            {currentStep === 2 && selectedToken && (
-              <div className={cn(
-                "space-y-6",
-                isDesktop && "max-w-md mx-auto"
-              )}>
-                <div className="text-center space-y-3">
-                  <h2 className={cn(
-                    "font-semibold mb-2",
-                    isMobile ? "text-xl" : "text-2xl"
-                  )}>Confirm Withdrawal</h2>
-                  <p className="text-muted-foreground">
-                    Review your transaction details
-                  </p>
-                </div>
-
-                {/* Transaction Summary */}
-                <Card>
-                  <CardContent className="p-4 space-y-4">
-                    <div className="flex justify-between items-center pb-3 border-b border-border">
-                      <span className="text-muted-foreground">Token</span>
-                      <div className="flex items-center gap-2">
-                        <WithdrawTokenIcon token={selectedToken} size="sm" />
-                        <span className="font-medium">{selectedToken.symbol}</span>
-                      </div>
-                    </div>
-                    <div className="flex justify-between items-center pb-3 border-b border-border">
-                      <span className="text-muted-foreground">Amount</span>
-                      <span className="font-medium text-lg">{amount} {selectedToken.symbol}</span>
-                    </div>
-                    <div className="flex justify-between items-center pb-3 border-b border-border">
-                      <span className="text-muted-foreground">Destination</span>
-                      <span className="font-mono text-sm">{cryptoAddress.slice(0, 8)}...{cryptoAddress.slice(-6)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Network</span>
-                      <span className="font-medium">{selectedCrypto.network}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Transaction Hash if available */}
-                {txHash && (
-                  <Card className="bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800">
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Check className="h-5 w-5 text-green-600" />
-                        <span className="font-medium text-green-800 dark:text-green-200">
-                          Transaction Sent
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-muted-foreground">Hash:</span>
-                        <code className="text-xs bg-muted px-2 py-1 rounded flex-1 truncate">{txHash}</code>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => {
-                            navigator.clipboard.writeText(txHash);
-                            toast({ title: "Copied", description: "Transaction hash copied to clipboard" });
-                          }}
-                        >
-                          <Copy className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-
-                {/* Warning */}
-                <Card className="bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-800">
-                  <CardContent className="p-3">
-                    <p className="text-sm text-amber-800 dark:text-amber-200">
-                      Please verify the destination address carefully. Transactions cannot be reversed.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <div className="flex gap-3 pt-4">
-                  <Button variant="outline" onClick={handlePrevStep} className="flex-1" disabled={isSubmitting}>
-                    Back
-                  </Button>
-                  <Button
-                    onClick={handleSubmit}
-                    disabled={isSubmitting || !address || !isAddress(cryptoAddress) || !!txHash}
-                    className="flex-1"
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center gap-2">
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        Processing...
-                      </span>
-                    ) : txHash ? (
-                      "Completed"
-                    ) : (
-                      "Confirm Withdrawal"
-                    )}
-                  </Button>
-                </div>
-              </div>
-            )}
+              </Button>
+            </div>
           </div>
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 };
