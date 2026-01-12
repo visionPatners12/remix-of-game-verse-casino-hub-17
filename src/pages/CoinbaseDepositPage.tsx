@@ -30,7 +30,7 @@ const CoinbaseDepositPage = () => {
         <div className="px-4 py-6">
           <div className="max-w-md mx-auto">
             {/* Network Badge */}
-            <div className="flex items-center justify-center gap-2 mb-4 p-3 bg-[#0052FF]/10 border border-[#0052FF]/20 rounded-xl">
+            <div className="flex items-center justify-center gap-2 mb-4 p-3 bg-muted/50 border border-border/30 rounded-xl">
               <ChainIcon chainId={8453} size={28} />
               <div className="text-center">
                 <span className="text-sm font-semibold text-foreground">USDC</span>
@@ -53,7 +53,7 @@ const CoinbaseDepositPage = () => {
               <FundCardAmountInputTypeSwitch />
               <FundCardPresetAmountInputList />
               
-              <div className="my-4 p-4 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg">
+              <div className="my-4 p-4 bg-muted/50 border border-border/30 rounded-lg">
                 <p className="text-xs font-medium text-foreground text-center">
                   {t('coinbase.selectMethod')}
                 </p>
@@ -62,10 +62,10 @@ const CoinbaseDepositPage = () => {
               <FundCardPaymentMethodDropdown />
               <FundCardSubmitButton />
               
-              <div className="mt-12 p-4 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-xl">
+              <div className="mt-12 p-4 bg-muted/50 border border-border/30 rounded-xl">
                 <div className="flex items-start space-x-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0">
-                    <Shield className="h-5 w-5 text-primary-foreground" />
+                  <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <Shield className="h-5 w-5 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground mb-1 text-sm">
