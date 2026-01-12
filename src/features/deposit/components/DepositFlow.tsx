@@ -225,7 +225,7 @@ const DepositFlow = () => {
       <div className="px-4 py-6 space-y-6">
         {/* QR Code section */}
         <div className="flex flex-col items-center">
-          <div className="bg-white p-4 rounded-2xl shadow-sm">
+          <div className="bg-card p-4 rounded-2xl shadow-sm border border-border/30">
             <QRCode
               value={selectedCrypto.address}
               size={180}
