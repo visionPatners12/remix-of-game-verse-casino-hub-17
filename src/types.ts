@@ -2,7 +2,6 @@
 // Essential types only
 
 import { User, Session } from '@supabase/supabase-js';
-import type { GamesQuery, Market, MarketOutcome } from '@azuro-org/toolkit';
 
 // ===== AUTH TYPES =====
 export interface AuthUser extends User {
@@ -19,7 +18,7 @@ export interface UserMetadata {
   country?: string;
   date_of_birth?: string;
   auth_method?: 'email' | 'wallet' | 'privy';
-  privy_id?: string; // New: Privy DID for identification
+  privy_id?: string;
   wallet_address?: string;
   avatar_url?: string;
 }
@@ -57,8 +56,6 @@ export interface AuthState {
   session: AuthSession | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  
-  // User type information (consolidated from hooks)
   userType: 'privy' | 'supabase' | 'none';
   isEmailPasswordUser: boolean;
   isWalletUser: boolean;
@@ -130,10 +127,23 @@ export enum ConditionState {
   Stopped = 'Stopped'
 }
 
+// Simple Market types (no Azuro dependency)
+export interface SimpleMarketOutcome {
+  outcomeId: string;
+  selectionName: string;
+  odds: number;
+}
+
+export interface SimpleMarket {
+  marketId: string;
+  marketName: string;
+  outcomes: SimpleMarketOutcome[];
+}
+
 export interface PredictionSelection {
   matchId: string;
-  selectedOutcome: MarketOutcome;
-  market: Market;
+  selectedOutcome: SimpleMarketOutcome;
+  market: SimpleMarket;
   prediction: {
     matchTitle: string;
     predictionText: string;
@@ -141,7 +151,6 @@ export interface PredictionSelection {
     sport: string;
     league: string;
   };
-  // Native Azuro data (no wrapper object)
   gameId: string;
   conditionId: string;
   outcomeId: string;
@@ -163,18 +172,17 @@ export interface PredictionPreview {
     name: string;
     image?: string | null;
   }>;
-  // Native Azuro data
   gameId: string;
   conditionId: string;
   outcomeId: string;
   startsAt: string;
-  market: Market;
-  selectedOutcome: MarketOutcome;
+  market: SimpleMarket;
+  selectedOutcome: SimpleMarketOutcome;
 }
 
 export interface MarketData {
-  game: GamesQuery['games'][0] | null;
-  markets: Market[];
+  game: Record<string, unknown> | null;
+  markets: SimpleMarket[];
   isLoading: boolean;
   error: Error | null;
   refetch: () => void;

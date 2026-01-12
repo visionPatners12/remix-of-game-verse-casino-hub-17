@@ -278,7 +278,6 @@ export default defineConfig(({ mode }) => {
             'react-vendor': ['react', 'react-dom'],
             'web3-vendor': ['wagmi', 'viem', 'ethers'],
             'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-toast'],
-            'azuro-vendor': ['@azuro-org/sdk', '@azuro-org/toolkit', '@azuro-org/dictionaries'],
             'icons-vendor': ['lucide-react']
           }
         }
@@ -293,9 +292,6 @@ export default defineConfig(({ mode }) => {
         'viem',
       ],
       exclude: [
-        '@azuro-org/sdk',
-        '@azuro-org/toolkit',
-        '@azuro-org/dictionaries',
         '@web3icons/react',
       ],
     },

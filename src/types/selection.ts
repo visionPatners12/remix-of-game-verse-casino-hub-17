@@ -3,13 +3,11 @@
 // Single source of truth for all selection-related types
 // ============================================
 
-import type { Selection as AzuroSelection } from '@azuro-org/toolkit';
-
 /**
- * Base selection for Azuro SDK betting operations
+ * Base selection for betting operations
  * Minimum required fields for placing a bet
  */
-export interface AzuroBettingSelection {
+export interface BettingSelection {
   conditionId: string;
   outcomeId: string;
 }
@@ -18,7 +16,7 @@ export interface AzuroBettingSelection {
  * Selection with display data for UI rendering
  * Extends base betting selection with odds and market info
  */
-export interface DisplaySelection extends AzuroBettingSelection {
+export interface DisplaySelection extends BettingSelection {
   odds: number;
   marketType: string;
   pick: string;
@@ -61,3 +59,6 @@ export interface TicketSelectionInput {
   marketType?: string;
   pick?: string;
 }
+
+// Legacy alias for backwards compatibility
+export type AzuroBettingSelection = BettingSelection;
