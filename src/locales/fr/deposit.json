@@ -11,8 +11,8 @@
   "methods": {
     "title": "Choisir une méthode de dépôt",
     "crypto": {
-      "title": "Cryptomonnaie",
-      "description": "Dépôt en USDC"
+      "title": "Crypto",
+      "description": "Dépôt crypto"
     },
     "coinbase": {
       "title": "Coinbase Pay",
@@ -35,7 +35,7 @@
     "recommended": "Populaire"
   },
   "crypto": {
-    "title": "USDC",
+    "title": "Crypto",
     "subtitle": "Votre adresse de dépôt personnelle",
     "loading": "Récupération de votre adresse de dépôt...",
     "error": "Impossible de générer l'adresse. Veuillez réessayer.",

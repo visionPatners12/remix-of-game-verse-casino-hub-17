@@ -18,7 +18,7 @@ interface DepositMethodOption {
   id: DepositMethod;
   titleKey: string;
   descriptionKey: string;
-  iconType: 'usdt' | 'coinbase' | 'smartphone' | 'bank';
+  iconType: 'usdc' | 'coinbase' | 'smartphone' | 'bank';
   available: boolean;
   recommended?: boolean;
 }
@@ -39,7 +39,7 @@ const DepositFlow = () => {
       id: 'crypto',
       titleKey: 'methods.crypto.title',
       descriptionKey: 'methods.crypto.description',
-      iconType: 'usdt',
+      iconType: 'usdc',
       available: true,
       recommended: true
     },
@@ -70,11 +70,11 @@ const DepositFlow = () => {
     const iconClass = cn("h-5 w-5", available ? "text-primary" : "text-muted-foreground");
     
     switch (iconType) {
-      case 'usdt':
+      case 'usdc':
         return (
           <img 
-            src="https://cryptologos.cc/logos/tether-usdt-logo.svg" 
-            alt="USDT" 
+            src="https://cryptologos.cc/logos/usd-coin-usdc-logo.svg" 
+            alt="USDC" 
             className="h-6 w-6"
           />
         );
@@ -145,7 +145,7 @@ const DepositFlow = () => {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <h1 className="flex-1 text-center font-semibold text-lg pr-8">
-          {currentStep === 1 ? t('page.title') : selectedMethod === 'crypto' ? t('crypto.title') : t('page.title')}
+          {currentStep === 1 ? t('page.title') : t('page.title')}
         </h1>
       </div>
     </div>
@@ -276,7 +276,7 @@ const DepositFlow = () => {
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium">{t('processing.network')}</p>
-              <p className="text-xs text-muted-foreground">Polygon (MATIC)</p>
+              <p className="text-xs text-muted-foreground">Polygon</p>
             </div>
           </div>
 

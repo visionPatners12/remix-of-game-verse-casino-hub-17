@@ -11,8 +11,8 @@
   "methods": {
     "title": "Choose Deposit Method",
     "crypto": {
-      "title": "Cryptocurrency",
-      "description": "Deposit with USDC"
+      "title": "Crypto",
+      "description": "Crypto deposit"
     },
     "coinbase": {
       "title": "Coinbase Pay",
@@ -35,7 +35,7 @@
     "recommended": "Popular"
   },
   "crypto": {
-    "title": "USDC Polygon",
+    "title": "Crypto",
     "subtitle": "Your personal deposit address",
     "loading": "Retrieving your deposit address...",
     "error": "Unable to generate address. Please try again.",

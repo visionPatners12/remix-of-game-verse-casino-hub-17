@@ -11,8 +11,8 @@
   "methods": {
     "title": "Elige el método de depósito",
     "crypto": {
-      "title": "Criptomoneda",
-      "description": "Deposita con USDT"
+      "title": "Crypto",
+      "description": "Depósito crypto"
     },
     "coinbase": {
       "title": "Coinbase Pay",
@@ -35,7 +35,7 @@
     "recommended": "Popular"
   },
   "crypto": {
-    "title": "USDT Polygon",
+    "title": "Crypto",
     "subtitle": "Tu dirección de depósito personal",
     "loading": "Obteniendo tu dirección de depósito...",
     "error": "No se pudo generar la dirección. Por favor, intenta de nuevo.",
