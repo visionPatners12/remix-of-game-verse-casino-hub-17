@@ -32,7 +32,7 @@ export const DepositQRCode = ({ address, cryptoSymbol }: DepositQRCodeProps) => 
             {/* Animated pulsing border */}
             <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary rounded-2xl animate-pulse opacity-50" />
             
-            <div className="relative bg-white p-5 rounded-xl shadow-lg">
+            <div className="relative bg-card p-5 rounded-xl shadow-lg border border-border/30">
               <QRCode
                 value={address}
                 size={180}

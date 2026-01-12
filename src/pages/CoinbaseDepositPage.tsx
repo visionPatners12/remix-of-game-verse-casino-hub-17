@@ -62,16 +62,16 @@ const CoinbaseDepositPage = () => {
               <FundCardPaymentMethodDropdown />
               <FundCardSubmitButton />
               
-              <div className="mt-12 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/20 border border-blue-200/50 dark:border-blue-800/50 rounded-xl">
+              <div className="mt-12 p-4 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-xl">
                 <div className="flex items-start space-x-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center flex-shrink-0">
-                    <Shield className="h-5 w-5 text-white" />
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0">
+                    <Shield className="h-5 w-5 text-primary-foreground" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-1 text-sm">
+                    <h4 className="font-semibold text-foreground mb-1 text-sm">
                       {t('coinbase.securedBy')}
                     </h4>
-                    <p className="text-xs text-blue-700 dark:text-blue-300">
+                    <p className="text-xs text-muted-foreground">
                       {t('coinbase.securityNote')}
                     </p>
                   </div>
