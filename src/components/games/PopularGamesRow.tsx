@@ -9,14 +9,15 @@ import { useNavigate } from 'react-router-dom';
 interface PopularGame {
   id: string;
   name: string;
-  emoji: string;
+  emoji?: string;
+  image?: string;
   gradient: string;
   playersOnline?: number;
   isLive?: boolean;
 }
 
 const POPULAR_GAMES: PopularGame[] = [
-  { id: 'ludo', name: 'Ludo', emoji: '🎲', gradient: 'from-emerald-500 to-teal-600', playersOnline: 127, isLive: true },
+  { id: 'ludo', name: 'Ludo', emoji: '', gradient: 'from-emerald-500 to-teal-600', playersOnline: 127, isLive: true, image: '/ludo-logo.png' },
   { id: 'crash', name: 'Crash', emoji: '📈', gradient: 'from-orange-500 to-red-600', playersOnline: 89 },
   { id: 'dice', name: 'Dice', emoji: '🎯', gradient: 'from-violet-500 to-purple-600', playersOnline: 45 },
   { id: 'plinko', name: 'Plinko', emoji: '🔮', gradient: 'from-pink-500 to-rose-600', playersOnline: 34 },
@@ -76,15 +77,25 @@ export const PopularGamesRow: React.FC = () => {
               {game.isLive ? 'LIVE' : 'SOON'}
             </Badge>
 
-            {/* Emoji */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <motion.span
-                className="text-3xl sm:text-4xl drop-shadow-lg"
-                whileHover={{ scale: 1.2, rotate: [0, -5, 5, 0] }}
-                transition={{ duration: 0.3 }}
-              >
-                {game.emoji}
-              </motion.span>
+            {/* Image or Emoji */}
+            <div className="absolute inset-0 flex items-center justify-center p-2">
+              {game.image ? (
+                <motion.img
+                  src={game.image}
+                  alt={game.name}
+                  className="w-full h-full object-contain drop-shadow-lg"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              ) : (
+                <motion.span
+                  className="text-3xl sm:text-4xl drop-shadow-lg"
+                  whileHover={{ scale: 1.2, rotate: [0, -5, 5, 0] }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {game.emoji}
+                </motion.span>
+              )}
             </div>
 
             {/* Shine effect */}

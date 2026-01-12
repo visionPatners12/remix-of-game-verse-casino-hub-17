@@ -30,7 +30,7 @@ interface MockGame {
 // All games data (excluding featured and popular which have their own sections)
 const ALL_GAMES: MockGame[] = [
   // Real Ludo - shown in hero
-  { id: 'ludo', name: 'Ludo', category: ['popular', 'multiplayer'], image: 'https://images.unsplash.com/photo-1611891487122-207579d67d98?w=400&h=400&fit=crop', gradient: 'from-emerald-500 to-cyan-500', isMock: false, isHot: true, playersOnline: 127 },
+  { id: 'ludo', name: 'Ludo', category: ['popular', 'multiplayer'], image: '/ludo-logo.png', gradient: 'from-emerald-500 to-cyan-500', isMock: false, isHot: true, playersOnline: 127 },
   
   // Slots
   { id: 'diamond-rush', name: 'Diamond Rush', category: ['slots'], emoji: '💎', gradient: 'from-cyan-400 to-blue-600', isMock: true },
