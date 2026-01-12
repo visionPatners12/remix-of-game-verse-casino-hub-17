@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { WithdrawalMethod, MobileProvider, WithdrawalRequest, CryptoOption, CryptoType } from '@/types/wallet';
 import { WalletToken } from '@/features/wallet/types';
@@ -6,13 +5,20 @@ import { cryptoOptions } from '../config/crypto';
 import { toast } from '@/hooks/use-toast';
 import { logger } from '@/utils/logger';
 import { isAddress, erc20Abi, parseUnits, encodeFunctionData } from 'viem';
-import { useBalance, usePublicClient } from 'wagmi';
-import { useAccount } from '@azuro-org/sdk-social-aa-connector';
-import { useChain } from "@azuro-org/sdk";
+import { useBalance, usePublicClient, useAccount } from 'wagmi';
 import { useSendTransaction, useWallets, usePrivy } from '@privy-io/react-auth';
+import { polygon } from 'viem/chains';
+
+// Default chain config (Polygon)
+const DEFAULT_CHAIN = polygon;
+const DEFAULT_TOKEN = {
+  address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F' as `0x${string}`, // USDT on Polygon
+  symbol: 'USDT',
+  decimals: 6,
+};
 
 export const useWithdraw = () => {
-  const [currentStep, setCurrentStep] = useState(0); // Start at 0 for token selection
+  const [currentStep, setCurrentStep] = useState(0);
   const [selectedToken, setSelectedToken] = useState<WalletToken | null>(null);
   const [selectedMethod, setSelectedMethod] = useState<WithdrawalMethod | null>(null);
   const [amount, setAmount] = useState('');
@@ -25,21 +31,29 @@ export const useWithdraw = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [txHash, setTxHash] = useState<`0x${string}` | undefined>();
 
-  const account = useAccount();
-  const chain = useChain();
+  const { address } = useAccount();
   const publicClient = usePublicClient();
   const { sendTransaction } = useSendTransaction();
   const { wallets } = useWallets();
   const { ready, authenticated } = usePrivy();
   
-  const address = account.address;
-  const appChain = chain.appChain;
-  const betToken = chain.betToken;
+  // Use selectedToken's chain/token info or fallback to defaults
+  const appChain = selectedToken?.chainId 
+    ? { id: selectedToken.chainId, name: selectedToken.chainName || 'Polygon' } 
+    : { id: DEFAULT_CHAIN.id, name: DEFAULT_CHAIN.name };
+  
+  const betToken = selectedToken 
+    ? { 
+        address: selectedToken.contractAddress as `0x${string}`,
+        symbol: selectedToken.symbol, 
+        decimals: selectedToken.decimals 
+      } 
+    : DEFAULT_TOKEN;
   
   const balance = useBalance({
-    chainId: appChain?.id,
+    chainId: appChain.id,
     address,
-    token: betToken?.address,
+    token: betToken.address,
   });
   
   const walletBalance = balance.data;

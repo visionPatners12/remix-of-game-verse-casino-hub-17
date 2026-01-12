@@ -2,7 +2,6 @@
 // KISS: Use specific types instead of 'any' everywhere
 
 import type { User, Session } from '@supabase/supabase-js';
-import type { Game } from '@azuro-org/toolkit';
 
 // Auth types
 export interface SimpleUser extends User {}
@@ -40,7 +39,6 @@ export interface SimpleWalletState {
   chainId: number | null;
   networkName: string | null;
 }
-
 
 export interface SimpleWalletUser {
   id: string;

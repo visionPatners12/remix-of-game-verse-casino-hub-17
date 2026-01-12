@@ -1,10 +1,7 @@
 /**
- * GetStream Activity Types
- * Types for activities received from GetStream before transformation to FeedPost
+ * Stream Activity Types
+ * Types for activities in social feeds
  */
-
-// Re-export client types
-export * from './stream-client';
 
 // ============================================
 // Type Definitions
