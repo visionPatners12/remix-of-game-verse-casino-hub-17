@@ -19,7 +19,6 @@ import ReactDOM from 'react-dom/client'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import App from './app/App.tsx'
 import './index.css'
-import '@stream-io/video-react-sdk/dist/css/styles.css'
 import { logger } from './utils/logger'
 
 logger.info('Application starting');

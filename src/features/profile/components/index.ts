@@ -1,5 +1,4 @@
 export * from './CountrySelect';
-export * from './EnhancedUserFeed';
 export * from './ProfileAvatar';
 export * from './ProfileHeader';
 export * from './SportSelect';
@@ -10,6 +9,4 @@ export * from './SubscriptionManagementCard';
 export * from './ProfileSettings';
 export * from './WalletDisplay';
 export * from './WalletQRModal';
-export * from './UserBetsTab';
-export * from './UserPredictionsTab';
 export * from './ProfileTabs';

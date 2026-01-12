@@ -1,12 +1,8 @@
 import React, { memo } from 'react';
 import { PrivyProvider } from '@azuro-org/sdk-social-aa-connector';
 import { SmartWalletsProvider } from '@privy-io/react-auth/smart-wallets';
-import { AzuroSDKProvider } from '@azuro-org/sdk';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { AuthProvider } from '@/features/auth';
-import { StreamProvider } from '@/contexts/StreamProvider';
-import { TradingProvider } from '@/features/polymarket/providers/TradingProvider';
-import { BuyModal } from '@/features/polymarket/components/modals/BuyModal';
 import { queryClient } from '@/lib/queryClient';
 import { queryPersister } from '@/lib/queryPersister';
 import { privyConfig, wagmiConfig } from './config';
@@ -19,11 +15,11 @@ interface ExternalProvidersProps {
 }
 
 // Queries importantes à persister même en cas d'erreur partielle
-const IMPORTANT_QUERY_KEYS = ['timeline-feed', 'user-profile', 'navigation', 'wallet-balance'];
+const IMPORTANT_QUERY_KEYS = ['ludo-games', 'user-profile', 'wallet-balance'];
 
 /**
- * External service providers (ThirdWeb, Privy, Azuro, GetStream)
- * Clean separation of third-party integrations
+ * External service providers (Privy wallet integration)
+ * Optimized for Ludo gaming application
  */
 export const ExternalProviders = memo(({ children }: ExternalProvidersProps) => (
   <AuthProvider>
@@ -31,14 +27,12 @@ export const ExternalProviders = memo(({ children }: ExternalProvidersProps) => 
       client={queryClient}
       persistOptions={{
         persister: queryPersister,
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 jours (amélioré pour offline)
-        buster: 'v2', // Incrémenté pour invalider l'ancien cache
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 jours
+        buster: 'v3', // Incrémenté pour invalider l'ancien cache
         dehydrateOptions: {
           shouldDehydrateQuery: (query) => {
-            // Toujours persister les queries réussies
             if (query.state.status === 'success') return true;
             
-            // Persister aussi les queries importantes même si en erreur
             const queryKey = query.queryKey;
             const isImportant = IMPORTANT_QUERY_KEYS.some(key => 
               queryKey.includes(key) || queryKey[0] === key
@@ -48,22 +42,15 @@ export const ExternalProviders = memo(({ children }: ExternalProvidersProps) => 
         },
       }}
     >
-      <StreamProvider>
-        <PrivyProvider
-          appId="cme85bkid00p4js0bgmdigg64"
-          privyConfig={privyConfig}
-          wagmiConfig={wagmiConfig}
-        >
-          <SmartWalletsProvider>
-            <AzuroSDKProvider initialChainId={137}>
-              <TradingProvider>
-                {children}
-                <BuyModal />
-              </TradingProvider>
-            </AzuroSDKProvider>
-          </SmartWalletsProvider>
-        </PrivyProvider>
-      </StreamProvider>
+      <PrivyProvider
+        appId="cme85bkid00p4js0bgmdigg64"
+        privyConfig={privyConfig}
+        wagmiConfig={wagmiConfig}
+      >
+        <SmartWalletsProvider>
+          {children}
+        </SmartWalletsProvider>
+      </PrivyProvider>
     </PersistQueryClientProvider>
   </AuthProvider>
 ));
