@@ -38,14 +38,12 @@ export const HeroFeaturedGame: React.FC = () => {
       />
 
       {/* Game image */}
-      <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-white/10 bg-background/50 p-2">
+      <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-white/10 bg-background/50">
         <img
           src="/ludo-logo.png"
           alt="Ludo"
-          className="w-full h-full object-contain"
+          className="w-full h-full object-cover"
         />
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
       </div>
 
       {/* Content */}
