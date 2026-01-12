@@ -1,24 +1,61 @@
 /* === VENDOR/THIRD-PARTY FIXES === */
 /* Fixes for third-party libraries like Coinbase OnchainKit */
 
+/* === COINBASE ONCHAINKIT THEME OVERRIDES === */
+/* Override OnchainKit CSS variables to match app theme */
+.default-light,
+.default-dark,
+[data-theme="default-light"],
+[data-theme="default-dark"],
+[class*="ock-"] {
+  --ock-bg-default: hsl(var(--card)) !important;
+  --ock-bg-default-hover: hsl(var(--muted)) !important;
+  --ock-bg-default-active: hsl(var(--muted)) !important;
+  --ock-bg-alternate: hsl(var(--muted)) !important;
+  --ock-bg-inverse: hsl(var(--foreground)) !important;
+  --ock-line-default: hsl(var(--border) / 0.25) !important;
+  --ock-line-heavy: hsl(var(--border) / 0.35) !important;
+  --ock-text-foreground: hsl(var(--foreground)) !important;
+  --ock-text-foreground-muted: hsl(var(--muted-foreground)) !important;
+  --ock-text-inverse: hsl(var(--background)) !important;
+  --ock-font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+/* Force OnchainKit border colors */
+.ock-border-line-default {
+  border-color: hsl(var(--border) / 0.25) !important;
+}
+
+.ock-border-line-heavy {
+  border-color: hsl(var(--border) / 0.35) !important;
+}
+
+/* Force all OnchainKit borders to be subtle */
+[class*="ock-"][class*="border"] {
+  border-color: hsl(var(--border) / 0.25) !important;
+}
+
+/* === COINBASE ONCHAINKIT FUNDCARD FIXES === */
+[data-testid*="ockFundCard"],
+[data-testid*="ockFundCardPaymentMethod"] {
+  background-color: hsl(var(--card)) !important;
+  border-color: hsl(var(--border) / 0.25) !important;
+}
+
 /* === COINBASE ONCHAINKIT DROPDOWN FIXES === */
-[data-testid*="dropdown"], 
-[class*="dropdown"], 
-[class*="popover"],
+[data-testid*="ockFundCardPaymentMethodDropdown"],
 .ock-fund-dropdown,
 .ock-select-dropdown,
 div[role="listbox"],
 div[role="menu"] {
   background-color: hsl(var(--popover)) !important;
-  border: 1px solid hsl(var(--border)) !important;
+  border: 1px solid hsl(var(--border) / 0.25) !important;
   box-shadow: 0 10px 15px -3px hsl(var(--shadow) / 0.1), 0 4px 6px -2px hsl(var(--shadow) / 0.05) !important;
   z-index: 50 !important;
 }
 
 /* Fix dropdown menu items */
-[data-testid*="dropdown"] > *,
-[class*="dropdown"] > *,
-[class*="popover"] > *,
+[data-testid*="ockFundCardPaymentMethodDropdown"] > *,
 .ock-fund-dropdown > *,
 .ock-select-dropdown > *,
 div[role="listbox"] > *,
@@ -27,9 +64,7 @@ div[role="menu"] > * {
 }
 
 /* Fix dropdown item hover states */
-[data-testid*="dropdown"] > *:hover,
-[class*="dropdown"] > *:hover,
-[class*="popover"] > *:hover,
+[data-testid*="ockFundCardPaymentMethodDropdown"] > *:hover,
 .ock-fund-dropdown > *:hover,
 .ock-select-dropdown > *:hover,
 div[role="listbox"] > *:hover,
