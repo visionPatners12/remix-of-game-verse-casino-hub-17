@@ -60,7 +60,7 @@ export const WaitingRoomHeader: React.FC<WaitingRoomHeaderProps> = ({
             <Copy className="w-3.5 h-3.5 text-muted-foreground" />
           </button>
           <span className="text-[10px] text-muted-foreground">
-            {isFreeGame ? 'Free Game' : `${betAmount} USDT`}
+            {isFreeGame ? 'Free Game' : `${betAmount} USDC`}
           </span>
         </div>
 

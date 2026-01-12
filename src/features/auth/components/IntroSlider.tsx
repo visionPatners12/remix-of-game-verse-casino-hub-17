@@ -37,7 +37,7 @@ const slideConfig = [
     rippleColor: "bg-amber-400/10",
     title: "Instant",
     titleHighlight: "Payouts",
-    description: "Win USDT directly to your wallet, no waiting",
+    description: "Win USDC directly to your wallet, no waiting",
   },
   {
     key: 'secure',

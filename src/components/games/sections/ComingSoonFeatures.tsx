@@ -24,7 +24,7 @@ export const ComingSoonFeatures = () => {
     description: t('upcoming.tournaments.description', 'Compete against players worldwide for real crypto prizes'),
     chips: [
       { icon: Calendar, label: t('upcoming.tournaments.chip1', 'Weekly Events') },
-      { icon: DollarSign, label: t('upcoming.tournaments.chip2', 'USDT Prizes') },
+      { icon: DollarSign, label: t('upcoming.tournaments.chip2', 'USDC Prizes') },
       { icon: Globe, label: t('upcoming.tournaments.chip3', 'Global Ranking') },
       { icon: Zap, label: t('upcoming.tournaments.chip4', 'Brackets') },
     ],

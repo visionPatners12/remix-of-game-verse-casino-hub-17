@@ -130,7 +130,7 @@ export function VideoViewer({
         {/* Loading spinner */}
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white" />
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground" />
           </div>
         )}
 

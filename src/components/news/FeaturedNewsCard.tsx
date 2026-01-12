@@ -42,7 +42,7 @@ export const FeaturedNewsCard = ({ article }: FeaturedNewsCardProps) => {
               {article.category && (
                 <Badge 
                   variant="outline" 
-                  className="absolute top-3 right-3 bg-black/20 text-white border-white/30"
+                  className="absolute top-3 right-3 bg-black/20 text-foreground border-border/50"
                 >
                   {article.category.name}
                 </Badge>

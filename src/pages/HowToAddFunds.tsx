@@ -10,8 +10,8 @@ export default function HowToAddFunds() {
   const depositMethods = [
     {
       icon: <Wallet className="h-6 w-6 text-primary" />,
-      title: "Cryptocurrency (USDT)",
-      description: "Network: Polygon",
+      title: "Cryptocurrency (USDC)",
+      description: "Network: Polygon / Base",
       time: "2-5 minutes",
       fees: "Free",
       available: true,
@@ -19,8 +19,8 @@ export default function HowToAddFunds() {
         "Go to your Wallet",
         "Click 'Deposit' button",
         "Select 'Cryptocurrency'",
-        "Copy your unique USDT Polygon address",
-        "Send USDT from your external wallet",
+        "Copy your unique USDC address",
+        "Send USDC from your external wallet",
         "Wait 2-5 minutes for confirmation"
       ]
     },

@@ -49,7 +49,7 @@ export const PrizePoolBadge: React.FC<PrizePoolBadgeProps> = ({
     >
       <Trophy className="w-3 h-3 text-amber-400" />
       <span className="font-orbitron tracking-wider">
-        {displayPot} USDT
+        {displayPot} USDC
       </span>
     </div>
   );

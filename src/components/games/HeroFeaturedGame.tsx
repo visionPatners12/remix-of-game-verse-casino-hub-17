@@ -21,7 +21,7 @@ export const HeroFeaturedGame: React.FC = () => {
       className={cn(
         "relative flex gap-4 p-4 rounded-2xl overflow-hidden cursor-pointer",
         "bg-card/60 backdrop-blur-xl",
-        "border border-white/10",
+        "border border-border/30",
         "hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10",
         "transition-all duration-300"
       )}
