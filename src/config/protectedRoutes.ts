@@ -11,7 +11,7 @@ import SearchPage from '@/pages/SearchPage';
 import UserProfile from '@/pages/UserProfile';
 import SmsVerification from '@/pages/SmsVerificationPage';
 import SettingsSmsVerificationPage from '@/pages/SettingsSmsVerificationPage';
-import { PinSettingsPage } from '@/features/security';
+import { PinSettingsPage, PinChallengePage } from '@/features/security';
 import UnifiedDepositPage from '@/pages/UnifiedDepositPage';
 import UnifiedWithdrawPage from '@/pages/UnifiedWithdrawPage';
 import Wallet from '@/pages/Wallet';
@@ -37,6 +37,7 @@ export const protectedRoutes: ProtectedRoute[] = [
   // Settings
   { path: '/settings', component: Settings },
   { path: '/settings/pin', component: PinSettingsPage },
+  { path: '/security/verify', component: PinChallengePage },
   { path: '/settings/sms-verification', component: SettingsSmsVerificationPage },
   { path: '/sms-verification', component: SmsVerification },
   
