@@ -78,16 +78,16 @@ export const PopularGamesRow: React.FC = () => {
             </Badge>
 
             {/* Image or Emoji */}
-            <div className="absolute inset-0 flex items-center justify-center p-2">
-              {game.image ? (
-                <motion.img
-                  src={game.image}
-                  alt={game.name}
-                  className="w-full h-full object-contain drop-shadow-lg"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              ) : (
+            {game.image ? (
+              <motion.img
+                src={game.image}
+                alt={game.name}
+                className="absolute inset-0 w-full h-full object-cover"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.3 }}
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
                 <motion.span
                   className="text-3xl sm:text-4xl drop-shadow-lg"
                   whileHover={{ scale: 1.2, rotate: [0, -5, 5, 0] }}
@@ -95,8 +95,8 @@ export const PopularGamesRow: React.FC = () => {
                 >
                   {game.emoji}
                 </motion.span>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* Shine effect */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none" />
