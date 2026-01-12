@@ -8,13 +8,13 @@
 [data-theme="default-light"],
 [data-theme="default-dark"],
 [class*="ock-"] {
-  --ock-bg-default: hsl(var(--card)) !important;
+  --ock-bg-default: hsl(var(--background)) !important;
   --ock-bg-default-hover: hsl(var(--muted)) !important;
   --ock-bg-default-active: hsl(var(--muted)) !important;
   --ock-bg-alternate: hsl(var(--muted)) !important;
   --ock-bg-inverse: hsl(var(--foreground)) !important;
-  --ock-line-default: hsl(var(--border) / 0.25) !important;
-  --ock-line-heavy: hsl(var(--border) / 0.35) !important;
+  --ock-line-default: transparent !important;
+  --ock-line-heavy: hsl(var(--border) / 0.2) !important;
   --ock-text-foreground: hsl(var(--foreground)) !important;
   --ock-text-foreground-muted: hsl(var(--muted-foreground)) !important;
   --ock-text-inverse: hsl(var(--background)) !important;
@@ -23,23 +23,23 @@
 
 /* Force OnchainKit border colors */
 .ock-border-line-default {
-  border-color: hsl(var(--border) / 0.25) !important;
+  border-color: transparent !important;
 }
 
 .ock-border-line-heavy {
   border-color: hsl(var(--border) / 0.35) !important;
 }
 
-/* Force all OnchainKit borders to be subtle */
+/* Force all OnchainKit borders to be transparent */
 [class*="ock-"][class*="border"] {
-  border-color: hsl(var(--border) / 0.25) !important;
+  border-color: transparent !important;
 }
 
 /* === COINBASE ONCHAINKIT FUNDCARD FIXES === */
 [data-testid*="ockFundCard"],
 [data-testid*="ockFundCardPaymentMethod"] {
-  background-color: hsl(var(--card)) !important;
-  border-color: hsl(var(--border) / 0.25) !important;
+  background-color: hsl(var(--background)) !important;
+  border-color: transparent !important;
 }
 
 /* === COINBASE ONCHAINKIT DROPDOWN FIXES === */
