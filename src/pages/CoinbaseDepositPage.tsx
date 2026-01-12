@@ -11,6 +11,7 @@ import {
 } from '@coinbase/onchainkit/fund';
 import { CoinbaseProvider } from '@/features/deposit/providers/CoinbaseProvider';
 import { MobilePageHeader } from '@/components/shared/MobilePageHeader';
+import { ChainIcon } from '@/components/ui/chain-icon';
 import { Shield } from 'lucide-react';
 
 const CoinbaseDepositPage = () => {
@@ -20,11 +21,23 @@ const CoinbaseDepositPage = () => {
   return (
     <CoinbaseProvider>
       <div className="min-h-screen bg-background">
-        <MobilePageHeader title="Coinbase Pay" />
+        <MobilePageHeader 
+          title="Coinbase Pay" 
+          rightContent={<ChainIcon chainId={8453} size={24} showName />}
+        />
 
         {/* Content */}
         <div className="px-4 py-6">
           <div className="max-w-md mx-auto">
+            {/* Network Badge */}
+            <div className="flex items-center justify-center gap-2 mb-4 p-3 bg-[#0052FF]/10 border border-[#0052FF]/20 rounded-xl">
+              <ChainIcon chainId={8453} size={28} />
+              <div className="text-center">
+                <span className="text-sm font-semibold text-foreground">USDC</span>
+                <span className="text-xs text-muted-foreground ml-1">on Base Network</span>
+              </div>
+            </div>
+            
             <FundCard
               assetSymbol="USDC"
               country="US"
