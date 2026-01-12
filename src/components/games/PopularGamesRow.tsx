@@ -4,6 +4,7 @@ import { Flame } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 interface PopularGame {
   id: string;
@@ -11,20 +12,27 @@ interface PopularGame {
   emoji: string;
   gradient: string;
   playersOnline?: number;
+  isLive?: boolean;
 }
 
 const POPULAR_GAMES: PopularGame[] = [
+  { id: 'ludo', name: 'Ludo', emoji: '🎲', gradient: 'from-emerald-500 to-teal-600', playersOnline: 127, isLive: true },
   { id: 'crash', name: 'Crash', emoji: '📈', gradient: 'from-orange-500 to-red-600', playersOnline: 89 },
   { id: 'dice', name: 'Dice', emoji: '🎯', gradient: 'from-violet-500 to-purple-600', playersOnline: 45 },
   { id: 'plinko', name: 'Plinko', emoji: '🔮', gradient: 'from-pink-500 to-rose-600', playersOnline: 34 },
-  { id: 'fortune', name: 'Fortune', emoji: '🎡', gradient: 'from-amber-400 to-orange-500', playersOnline: 56 },
 ];
 
 export const PopularGamesRow: React.FC = () => {
+  const navigate = useNavigate();
+
   const handleGameClick = (game: PopularGame) => {
-    toast.info(`${game.name} coming soon!`, {
-      description: 'This game will be available soon.',
-    });
+    if (game.id === 'ludo') {
+      navigate('/games/ludo');
+    } else {
+      toast.info(`${game.name} coming soon!`, {
+        description: 'This game will be available soon.',
+      });
+    }
   };
 
   return (
@@ -58,9 +66,14 @@ export const PopularGamesRow: React.FC = () => {
             {/* Dark overlay */}
             <div className="absolute inset-0 bg-black/40" />
 
-            {/* SOON Badge */}
-            <Badge className="absolute top-1.5 right-1.5 text-[8px] px-1.5 py-0 h-4 font-bold bg-black/70 text-white border-0">
-              SOON
+            {/* Badge */}
+            <Badge className={cn(
+              "absolute top-1.5 right-1.5 text-[8px] px-1.5 py-0 h-4 font-bold border-0",
+              game.isLive 
+                ? "bg-emerald-500 text-white animate-pulse" 
+                : "bg-black/70 text-white"
+            )}>
+              {game.isLive ? 'LIVE' : 'SOON'}
             </Badge>
 
             {/* Emoji */}
