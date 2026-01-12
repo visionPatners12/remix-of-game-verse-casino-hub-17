@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -10,13 +9,8 @@ import { useWalletTokensThirdWeb } from "@/features/wallet/hooks/tokens/useWalle
 import { useUserProfile } from "@/features/profile";
 import { useDirectMessages } from "@/hooks/useDirectMessages";
 import { useAuth } from "@/features/auth";
-
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useBaseBetslip } from '@azuro-org/sdk';
-
-// Icônes Lucide React
-import { Dice5, Gamepad2, Wallet } from "lucide-react";
-import { FaBasketballBall } from "react-icons/fa";
+import { Gamepad2, Wallet } from "lucide-react";
 
 interface NavigationContentProps {
   disableNavigation?: boolean;
@@ -28,10 +22,8 @@ export const NavigationContent = ({ disableNavigation = false }: NavigationConte
   
   const location = useLocation();
   const { session, signOut } = useAuth();
-  const { address, isLoading } = useUnifiedWallet();
+  const { isLoading } = useUnifiedWallet();
   const { totalUnreadMessages } = useDirectMessages();
-  const baseBetslip = useBaseBetslip();
-  const { items: selections = [] } = baseBetslip || {};
   const isMobile = useIsMobile();
   const { totalValue: usdtBalance } = useWalletTokensThirdWeb();
   
@@ -45,7 +37,6 @@ export const NavigationContent = ({ disableNavigation = false }: NavigationConte
       bonus: 0
     }
   };
-  
   const authenticatedNavItems: NavItem[] = [
     { 
       label: t('menu.game'), 
