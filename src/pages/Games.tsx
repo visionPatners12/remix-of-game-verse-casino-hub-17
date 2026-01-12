@@ -59,13 +59,11 @@ export default function Games() {
   const { t } = useTranslation('games');
   const [activeCategory, setActiveCategory] = useState('all');
 
-  // Filter games by category (exclude ludo as it's in hero, and popular 4 as they have their section)
-  const popularGameIds = ['crash', 'dice', 'plinko', 'fortune'];
+  // Filter games by category
+  const popularGameIds = ['ludo', 'crash', 'dice', 'plinko'];
   const gridGames = ALL_GAMES.filter(game => {
-    // Skip popular games that are shown in their own row
-    if (popularGameIds.includes(game.id)) return false;
-    // Skip ludo as it's in hero
-    if (game.id === 'ludo') return false;
+    // Skip popular games that are shown in their own row (except ludo which stays in All Games)
+    if (popularGameIds.includes(game.id) && game.id !== 'ludo') return false;
     
     if (activeCategory === 'all') return true;
     return game.category.includes(activeCategory as GameCategory);
