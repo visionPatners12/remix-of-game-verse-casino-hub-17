@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useFundWallet } from '@privy-io/react-auth';
-import { polygon } from 'viem/chains';
+import { base } from 'viem/chains';
 import { Button } from '@/components/ui/button';
 import { Wallet, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -29,8 +29,8 @@ export const FundWalletButton: React.FC<FundWalletButtonProps> = ({ className })
     setIsLoading(true);
     try {
       await fundWallet(address, {
-        chain: polygon,                          // Polygon mainnet
-        asset: { erc20: '0xc2132D05D31c914A87C6611C10748AEb04B58e8F' }, // USDT (Polygon)
+        chain: base,                              // Base mainnet
+        asset: { erc20: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' }, // USDC (Base)
         amount: '50',
         defaultFundingMethod: 'card',
         card: { preferredProvider: 'coinbase' }

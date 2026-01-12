@@ -33,6 +33,16 @@ export const cryptoOptions: CryptoOption[] = [
     logoUrl: '/images/crypto/usdc.png'
   },
   {
+    id: 'usdc-base',
+    name: 'USDC',
+    symbol: 'USDC',
+    network: 'Base',
+    decimals: 6,
+    address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+    contractAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+    logoUrl: '/images/crypto/usdc.png'
+  },
+  {
     id: 'bitcoin',
     name: 'Bitcoin',
     symbol: 'BTC',

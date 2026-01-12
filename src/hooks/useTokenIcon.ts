@@ -39,6 +39,10 @@ export function useTokenIcon(config: TokenIconConfig) {
         usdc: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
         matic: 'native'
       },
+      base: {
+        usdc: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
+        eth: 'native'
+      },
       bsc: {
         usdt: '0x55d398326f99059ff775485246999027b3197955',
         usdc: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',

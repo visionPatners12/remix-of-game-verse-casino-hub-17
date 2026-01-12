@@ -26,7 +26,7 @@ const CoinbaseDepositPage = () => {
         <div className="px-4 py-6">
           <div className="max-w-md mx-auto">
             <FundCard
-              assetSymbol="USDT"
+              assetSymbol="USDC"
               country="US"
               currency="USD"
             >
