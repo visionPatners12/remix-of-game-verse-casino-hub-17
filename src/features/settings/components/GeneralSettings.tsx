@@ -4,8 +4,6 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { GeneralSettings as SettingsType } from '../types';
-import { useOddsFormat } from '@/contexts/OddsFormatContext';
-import type { OddsFormat } from '@/types/oddsFormat';
 
 interface GeneralSettingsProps {
   settings: SettingsType;
@@ -14,8 +12,6 @@ interface GeneralSettingsProps {
 }
 
 export function GeneralSettings({ settings, onUpdate, isUpdating = false }: GeneralSettingsProps) {
-  const { format: oddsFormat, setFormat: setOddsFormat } = useOddsFormat();
-
   return (
     <div className="space-y-6">
       {/* Appearance */}
@@ -70,28 +66,6 @@ export function GeneralSettings({ settings, onUpdate, isUpdating = false }: Gene
               <SelectContent>
                 <SelectItem value="fr">Français</SelectItem>
                 <SelectItem value="en">English</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label>Odds Format</Label>
-              <p className="text-sm text-muted-foreground">
-                How betting odds are displayed
-              </p>
-            </div>
-            <Select
-              value={oddsFormat}
-              onValueChange={(value: OddsFormat) => setOddsFormat(value)}
-            >
-              <SelectTrigger className="w-[160px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="decimal">Decimal (1.50)</SelectItem>
-                <SelectItem value="american">American (+150)</SelectItem>
-                <SelectItem value="fractional">Fractional (1/2)</SelectItem>
               </SelectContent>
             </Select>
           </div>

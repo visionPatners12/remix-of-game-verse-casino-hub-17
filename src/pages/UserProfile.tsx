@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Layout } from "@/components/Layout";
-import { ProfileHeader, EnhancedUserFeed, ProfileTabs, type TabType } from "@/features/profile";
+import { ProfileHeader, ProfileTabs, type TabType } from "@/features/profile";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -158,9 +158,9 @@ export default function UserProfile() {
         {/* Sticky Navigation Tabs */}
         <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab} isMobile={isMobile} />
 
-        {/* Main content - Feed */}
-        <div>
-          <EnhancedUserFeed userId={profile.id} activeFilter={activeTab} />
+        {/* Main content - Placeholder */}
+        <div className="p-4">
+          <p className="text-muted-foreground text-center">No content yet</p>
         </div>
       </div>
     </Layout>

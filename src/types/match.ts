@@ -60,5 +60,29 @@ export interface TicketMatchData {
   date?: string;
 }
 
-// Re-export existing detailed match types
-export type { MatchData, LeagueInfo, SportInfo } from '@/features/sports/types';
+// Sport-related types (previously from features/sports)
+export interface MatchData {
+  id: string;
+  gameId?: string;
+  homeName: string;
+  awayName: string;
+  homeScore?: number;
+  awayScore?: number;
+  startsAt?: string;
+  status?: string;
+  league?: LeagueInfo;
+  sport?: SportInfo;
+}
+
+export interface LeagueInfo {
+  id?: string;
+  name: string;
+  slug?: string;
+  logo?: string;
+}
+
+export interface SportInfo {
+  id?: string;
+  name: string;
+  slug: string;
+}

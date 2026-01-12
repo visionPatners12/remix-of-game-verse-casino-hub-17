@@ -61,6 +61,3 @@ export interface TicketSelectionInput {
   marketType?: string;
   pick?: string;
 }
-
-// Re-export the full ticket-slip Selection type
-export type { Selection as TicketSelection } from '@/features/ticket-slip/types';

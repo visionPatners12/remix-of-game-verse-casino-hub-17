@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Layout } from "@/components/Layout";
-import { ProfileHeader, EnhancedUserFeed, useUserProfile, ProfileTabs, type TabType } from "@/features/profile";
+import { ProfileHeader, useUserProfile, ProfileTabs, type TabType } from "@/features/profile";
 import { useAuth } from "@/features/auth";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -77,9 +77,9 @@ export default function Profile() {
         {/* Sticky Navigation Tabs */}
         <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab} isMobile={isMobile} />
 
-        {/* Contenu principal - Feed */}
-        <div>
-          <EnhancedUserFeed userId={profile.id} activeFilter={activeTab} />
+        {/* Contenu principal - Placeholder */}
+        <div className="p-4">
+          <p className="text-muted-foreground text-center">No content yet</p>
         </div>
       </div>
     </Layout>

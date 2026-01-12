@@ -6,7 +6,7 @@ export * from './MultipleSportSelect';
 export * from './TeamSelect';
 export * from './FavoriteTeamsDisplay';
 export * from './SubscriptionManagementCard';
-export * from './ProfileSettings';
+export { default as ProfileSettings } from './ProfileSettings';
 export * from './WalletDisplay';
 export * from './WalletQRModal';
 export * from './ProfileTabs';
