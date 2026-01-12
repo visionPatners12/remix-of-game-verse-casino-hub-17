@@ -8,7 +8,7 @@
       "active": "Active",
       "inactive": "Inactive"
     },
-    "perMonth": "USDT/month",
+    "perMonth": "USDC/month",
     "stats": {
       "winRate": "Win Rate",
       "won": "won",

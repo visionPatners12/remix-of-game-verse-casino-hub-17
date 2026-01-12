@@ -12,7 +12,7 @@
     "title": "Choose Deposit Method",
     "crypto": {
       "title": "Cryptocurrency",
-      "description": "Deposit with USDT"
+      "description": "Deposit with USDC"
     },
     "coinbase": {
       "title": "Coinbase Pay",
@@ -35,7 +35,7 @@
     "recommended": "Popular"
   },
   "crypto": {
-    "title": "USDT Polygon",
+    "title": "USDC Polygon",
     "subtitle": "Your personal deposit address",
     "loading": "Retrieving your deposit address...",
     "error": "Unable to generate address. Please try again.",
@@ -77,7 +77,7 @@
     "applePayTitle": "Deposit Completed",
     "applePayDesc": "Your Apple Pay deposit was processed successfully.",
     "cryptoTitle": "Deposit Configured",
-    "cryptoDesc": "Your USDT Polygon address has been generated. You can now make your deposit.",
+    "cryptoDesc": "Your USDC address has been generated. You can now make your deposit.",
     "viewWallet": "View My Wallet",
     "newDeposit": "New Deposit"
   },
@@ -91,7 +91,7 @@
   },
   "security": {
     "title": "Security & Privacy",
-    "description": "This address was generated specifically for you. Only send USDT on the Polygon network."
+    "description": "This address was generated specifically for you. Only send USDC on the supported network."
   },
   "coinbase": {
     "title": "Buy USDC on Base with Coinbase Pay",

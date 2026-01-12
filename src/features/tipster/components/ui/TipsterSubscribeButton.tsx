@@ -136,7 +136,7 @@ export function TipsterSubscribeButton({
       return { text: "Renew Subscription", variant: "default" as const, disabled: false };
     }
     
-    return { text: `Subscribe ${monthlyPrice} USDT/month`, variant: "default" as const, disabled: false };
+    return { text: `Subscribe ${monthlyPrice} USDC/month`, variant: "default" as const, disabled: false };
   };
 
   const buttonState = getButtonState();
@@ -196,7 +196,7 @@ export function TipsterSubscribeButton({
         isOpen={showPinModal}
         onClose={() => setShowPinModal(false)}
         title="Security Verification"
-        description={`Enter your PIN to confirm subscription (${monthlyPrice} USDT/month)`}
+        description={`Enter your PIN to confirm subscription (${monthlyPrice} USDC/month)`}
         size="sm"
       >
         <PinVerification

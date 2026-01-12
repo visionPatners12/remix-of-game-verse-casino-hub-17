@@ -60,7 +60,7 @@ export const ProfileMenu = ({ user, onLogout }: ProfileMenuProps) => {
             size="icon" 
             className="rounded-full relative group"
           >
-            <Avatar className="border-2 border-white/20 group-hover:border-primary/50 transition-all duration-300 shadow-lg shadow-black/20">
+            <Avatar className="border-2 border-border/30 group-hover:border-primary/50 transition-all duration-300 shadow-lg shadow-black/20">
               <AvatarImage src={profile?.avatar_url} alt={`${profile?.first_name} ${profile?.last_name}`} />
               <AvatarFallback className="bg-gradient-to-br from-primary/80 to-primary/40 text-white">
                 {profile?.first_name?.slice(0, 1).toUpperCase()}{profile?.last_name?.slice(0, 1).toUpperCase() || 'US'}

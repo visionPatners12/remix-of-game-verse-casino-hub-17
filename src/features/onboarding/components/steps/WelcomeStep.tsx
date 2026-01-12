@@ -31,7 +31,7 @@ export function WelcomeStep({ onNext }: OnboardingStepProps) {
     {
       icon: Trophy,
       title: 'Start Playing',
-      description: 'Join games and win USDT rewards',
+      description: 'Join games and win USDC rewards',
       gradient: 'from-emerald-500 to-emerald-600'
     }
   ];
@@ -104,7 +104,7 @@ export function WelcomeStep({ onNext }: OnboardingStepProps) {
             <p className="text-muted-foreground text-base leading-relaxed">
               {isWalletUser 
                 ? 'Your wallet is ready. Let\'s set up your gaming profile.'
-                : 'Play Ludo, win USDT. Real games, real rewards, instant payouts.'
+                : 'Play Ludo, win USDC. Real games, real rewards, instant payouts.'
               }
             </p>
 
@@ -187,7 +187,7 @@ export function WelcomeStep({ onNext }: OnboardingStepProps) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
           >
-            {['100% On-Chain', 'Instant Payouts', 'USDT Rewards'].map((badge, i) => (
+            {['100% On-Chain', 'Instant Payouts', 'USDC Rewards'].map((badge, i) => (
               <span 
                 key={i}
                 className="px-3 py-1.5 text-xs font-medium bg-muted/50 text-muted-foreground rounded-full border border-border/30"

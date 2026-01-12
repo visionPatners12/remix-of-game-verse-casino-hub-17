@@ -36,8 +36,8 @@ export const CompactUpcomingCard = ({
       className={cn(
         'relative flex items-center gap-3 p-3 rounded-xl overflow-hidden',
         'bg-card/40 backdrop-blur-lg',
-        'border border-white/10',
-        'hover:border-white/20 hover:shadow-lg transition-all duration-300',
+        'border border-border/30',
+        'hover:border-border/50 hover:shadow-lg transition-all duration-300',
         isAmber ? 'hover:shadow-amber-500/10' : 'hover:shadow-violet-500/10'
       )}
     >
@@ -102,7 +102,7 @@ export const CompactUpcomingCard = ({
                 key={i}
                 className={cn(
                   'w-6 h-6 rounded-md flex items-center justify-center',
-                  'bg-white/5 border border-white/10',
+                  'bg-muted/30 border border-border/30',
                   isAmber ? 'text-amber-400' : 'text-violet-400'
                 )}
               >

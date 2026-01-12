@@ -47,7 +47,7 @@ export const UpcomingFeatureCard = ({
       className={cn(
         'relative overflow-hidden rounded-2xl p-5',
         'bg-card/50 backdrop-blur-xl',
-        'border border-white/10',
+        'border border-border/30',
         'transition-shadow duration-500',
         isAmber 
           ? 'hover:shadow-[0_20px_60px_-15px_rgba(245,158,11,0.3)]' 
@@ -127,7 +127,7 @@ export const UpcomingFeatureCard = ({
             className={cn(
               'px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider',
               'bg-gradient-to-r from-violet-500 via-primary to-amber-500 bg-[length:200%_100%]',
-              'text-white border border-white/20',
+              'text-white border border-border/30',
               'animate-[gradient-x_3s_ease_infinite]'
             )}
           >
@@ -148,9 +148,9 @@ export const UpcomingFeatureCard = ({
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 + index * 0.08 }}
               className={cn(
-                'flex items-center gap-1.5 px-2.5 py-1 rounded-full',
-                'bg-white/5 border border-white/10',
-                'text-xs text-foreground/80'
+              'flex items-center gap-1.5 px-2.5 py-1 rounded-full',
+              'bg-muted/30 border border-border/30',
+              'text-xs text-foreground/80'
               )}
             >
               <chip.icon className={cn(
@@ -170,10 +170,10 @@ export const UpcomingFeatureCard = ({
             whileTap={{ scale: 0.98 }}
             className={cn(
               'w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl',
-              'bg-white/5 border border-white/15',
+              'bg-muted/30 border border-border/30',
               'text-sm font-medium text-foreground',
               'transition-all duration-300',
-              'hover:bg-white/10 hover:border-white/25',
+              'hover:bg-muted/50 hover:border-border/50',
               isAmber
                 ? 'hover:shadow-lg hover:shadow-amber-500/15'
                 : 'hover:shadow-lg hover:shadow-violet-500/15'

@@ -106,7 +106,7 @@ export function VideoPlayerAdvanced({
       {/* Loading spinner */}
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-          <div className="w-12 h-12 border-3 border-white/30 border-t-white rounded-full animate-spin" />
+          <div className="w-12 h-12 border-3 border-muted/30 border-t-foreground rounded-full animate-spin" />
         </div>
       )}
 

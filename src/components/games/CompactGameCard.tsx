@@ -37,7 +37,7 @@ export const CompactGameCard: React.FC<CompactGameCardProps> = ({ game, index, o
         'hover:shadow-xl hover:shadow-primary/20',
         'bg-gradient-to-br',
         game.gradient,
-        'border border-white/10'
+        'border border-border/30'
       )}
     >
       {/* HOT Badge */}

@@ -58,7 +58,7 @@ export const PopularGamesRow: React.FC = () => {
               'relative aspect-square rounded-xl overflow-hidden cursor-pointer',
               'bg-gradient-to-br',
               game.gradient,
-              'border border-white/10',
+              'border border-border/30',
               'hover:shadow-xl hover:shadow-primary/20 transition-shadow duration-300',
               'group'
             )}

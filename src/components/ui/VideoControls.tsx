@@ -136,7 +136,7 @@ export function VideoControls({
               disabled={isLoading}
             >
               {isLoading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-muted/30 border-t-foreground rounded-full animate-spin" />
               ) : isPlaying ? (
                 <Pause className="w-5 h-5" />
               ) : (

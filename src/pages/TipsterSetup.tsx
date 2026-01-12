@@ -66,10 +66,10 @@ export default function TipsterSetup() {
   }, [user]);
 
   const predefinedPrices = [
-    { value: "9.99", label: "9.99 USDT", description: "Beginner" },
-    { value: "19.99", label: "19.99 USDT", description: "Intermediate" },
-    { value: "29.99", label: "29.99 USDT", description: "Expert" },
-    { value: "49.99", label: "49.99 USDT", description: "Pro" }
+    { value: "9.99", label: "9.99 USDC", description: "Beginner" },
+    { value: "19.99", label: "19.99 USDC", description: "Intermediate" },
+    { value: "29.99", label: "29.99 USDC", description: "Expert" },
+    { value: "49.99", label: "49.99 USDC", description: "Pro" }
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
