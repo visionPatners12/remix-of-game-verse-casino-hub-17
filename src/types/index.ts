@@ -6,7 +6,7 @@
 // This is the main entry point - feed/index.ts re-exports core types
 export * from './feed';
 
-// Selection types (for betting)
+// Selection types (for betting) - basic types only
 export type {
   AzuroBettingSelection,
   DisplaySelection,
@@ -21,13 +21,6 @@ export type {
   FeedMatch,
   TicketMatchData,
 } from './match';
-
-// Re-export sports types
-export type {
-  MatchData,
-  LeagueInfo,
-  SportInfo,
-} from '@/features/sports/types';
 
 // Base types
 export * from './base';

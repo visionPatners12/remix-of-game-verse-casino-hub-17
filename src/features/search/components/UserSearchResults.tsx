@@ -4,8 +4,8 @@ import { Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { SearchUser } from '../types';
 import { cn } from '@/lib/utils';
-import { FollowButton } from '@/components/social/FollowButton';
 import { useUserProfile } from '@/features/profile';
+import { Button } from '@/components/ui/button';
 
 interface UserSearchResultsProps {
   results: SearchUser[];
@@ -102,7 +102,9 @@ export const UserSearchResults = React.memo<UserSearchResultsProps>(({
                 )}
               </div>
               
-              <FollowButton targetUserId={user.id} size="sm" className="flex-shrink-0" />
+              <Button variant="outline" size="sm" className="flex-shrink-0">
+                View
+              </Button>
             </button>
           ))
         ) : !isLoading && showEmpty && query ? (

@@ -18,7 +18,6 @@ import Wallet from '@/pages/Wallet';
 import { LudoGamesPage } from '@/features/ludo';
 import MessagesPage from '@/pages/MessagesPage';
 import { PryzenCardPage } from '@/features/nft';
-import UserDashboard from '@/pages/UserDashboard';
 
 export interface ProtectedRoute {
   path: string;
@@ -61,7 +60,4 @@ export const protectedRoutes: ProtectedRoute[] = [
   
   // NFT
   { path: '/pryzen-card', component: PryzenCardPage },
-  
-  // Dashboard
-  { path: '/user-dashboard', component: UserDashboard },
 ];

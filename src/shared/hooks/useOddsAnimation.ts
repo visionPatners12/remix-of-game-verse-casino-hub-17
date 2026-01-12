@@ -1,7 +1,14 @@
 // ===== ODDS ANIMATION HOOK =====
 
 import { useState, useEffect, useCallback } from 'react';
-import type { AnimationType, OddsAnimationHook } from '@/shared/ui/buttons/types';
+
+type AnimationType = 'up' | 'down' | null;
+
+interface OddsAnimationHook {
+  animation: AnimationType;
+  previousOdds: number | null;
+  triggerAnimation: (currentOdds: number) => void;
+}
 
 interface UseOddsAnimationOptions {
   currentOdds: number;
