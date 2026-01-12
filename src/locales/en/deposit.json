@@ -16,7 +16,7 @@
     },
     "coinbase": {
       "title": "Coinbase Pay",
-      "description": "Buy directly with Coinbase"
+      "description": "Buy USDC on Base"
     },
     "mobileMoney": {
       "title": "Mobile Money",
@@ -94,10 +94,10 @@
     "description": "This address was generated specifically for you. Only send USDT on the Polygon network."
   },
   "coinbase": {
-    "title": "Fund your account with Coinbase Pay",
+    "title": "Buy USDC on Base with Coinbase Pay",
     "selectMethod": "Select your preferred payment method",
     "securedBy": "Secured by Coinbase",
-    "securityNote": "Your deposit is secure and processed directly by Coinbase"
+    "securityNote": "Your deposit is secure and processed directly by Coinbase on the Base network"
   },
   "buttons": {
     "back": "Back",

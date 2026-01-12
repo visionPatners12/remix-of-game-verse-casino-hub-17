@@ -1,6 +1,6 @@
 import React from 'react';
 import { OnchainKitProvider } from '@coinbase/onchainkit';
-import { polygon } from 'wagmi/chains';
+import { base } from 'wagmi/chains';
 
 interface CoinbaseProviderProps {
   children: React.ReactNode;
@@ -21,7 +21,7 @@ export const CoinbaseProvider: React.FC<CoinbaseProviderProps> = ({ children }) 
           theme: 'default',
         },
       }}
-      chain={polygon}
+      chain={base}
       apiKey="W0lNgoVAMtfoPOXNZaOnHAneo8oYC1IX"
       projectId="cc348ae5-5cea-4d01-b3ae-106d367715c1"
     >
