@@ -3,7 +3,6 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { ExternalProviders } from './ExternalProviders';
 import { useAuthPersistence } from '@/hooks/useAuthPersistence';
 import { FullscreenProvider } from '@/contexts/FullscreenContext';
-import { OddsFormatProvider } from '@/contexts/OddsFormatContext';
 import { PrivyReconnectPrompt } from '@/components/wallet/PrivyReconnectPrompt';
 import { useGlobalActiveGameRedirect } from '@/features/ludo/hooks/useGlobalActiveGameRedirect';
 
@@ -39,19 +38,17 @@ interface AppProviderProps {
 }
 
 /**
- * Main application provider with simplified architecture
+ * Main application provider - Optimized for Ludo gaming
  * Handles error boundaries, external providers, and app initialization
  */
 export const AppProvider = memo(({ children }: AppProviderProps) => (
   <ErrorBoundary FallbackComponent={ErrorFallback}>
     <ExternalProviders>
-      <OddsFormatProvider>
-        <FullscreenProvider>
-          <AuthInitializer>
-            {children}
-          </AuthInitializer>
-        </FullscreenProvider>
-      </OddsFormatProvider>
+      <FullscreenProvider>
+        <AuthInitializer>
+          {children}
+        </AuthInitializer>
+      </FullscreenProvider>
     </ExternalProviders>
   </ErrorBoundary>
 ));
