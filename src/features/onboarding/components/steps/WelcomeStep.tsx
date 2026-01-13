@@ -1,15 +1,12 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Gamepad2, Wallet, Trophy, Zap } from 'lucide-react';
+import { ArrowRight, Gamepad2, Shield, Wallet, Zap, Star } from 'lucide-react';
 import { useAuth } from '@/features/auth';
 import { motion } from 'framer-motion';
-
 import { useOnboarding } from '../../hooks';
 import { OnboardingStepProps } from '../../types';
 
 export function WelcomeStep({ onNext }: OnboardingStepProps) {
-  const { t } = useTranslation('auth');
   const { user } = useAuth();
   const { setOnboardingProgress } = useOnboarding();
   
@@ -18,25 +15,23 @@ export function WelcomeStep({ onNext }: OnboardingStepProps) {
   const steps = [
     {
       icon: Gamepad2,
-      title: 'Create Your Profile',
+      title: 'Create Profile',
       description: 'Set up your gaming identity',
-      gradient: 'from-primary to-primary/70'
+      color: 'from-violet-500 to-purple-600'
+    },
+    {
+      icon: Shield,
+      title: 'Secure Account',
+      description: 'Create your transaction PIN',
+      color: 'from-amber-500 to-orange-600'
     },
     {
       icon: Wallet,
-      title: 'Secure Your Account',
-      description: 'Set up your PIN for instant transactions',
-      gradient: 'from-accent to-accent/70'
-    },
-    {
-      icon: Trophy,
-      title: 'Start Playing',
-      description: 'Join games and win USDC rewards',
-      gradient: 'from-emerald-500 to-emerald-600'
+      title: 'Fund & Play',
+      description: 'Deposit USDC and start winning',
+      color: 'from-emerald-500 to-green-600'
     }
   ];
-
-  const logoUrl = "/pryzen-logo.png";
 
   const handleNext = () => {
     setOnboardingProgress('profile');
@@ -44,155 +39,204 @@ export function WelcomeStep({ onNext }: OnboardingStepProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 flex flex-col relative safe-area-top overflow-hidden">
-      {/* Animated background elements */}
+    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
+      {/* Premium animated background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Gradient orbs */}
         <motion.div 
-          className="absolute top-20 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"
+          className="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-br from-primary/30 to-primary/5 rounded-full blur-3xl"
           animate={{ 
             scale: [1, 1.2, 1],
+            rotate: [0, 90, 0],
             opacity: [0.3, 0.5, 0.3]
           }}
-          transition={{ duration: 4, repeat: Infinity }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          className="absolute bottom-40 -right-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl"
+          className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-gradient-to-br from-accent/20 to-accent/5 rounded-full blur-3xl"
           animate={{ 
             scale: [1.2, 1, 1.2],
+            rotate: [90, 0, 90],
             opacity: [0.2, 0.4, 0.2]
           }}
-          transition={{ duration: 5, repeat: Infinity }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.03)_1px,transparent_1px)] bg-[size:32px_32px]" />
+        
+        {/* Floating particles */}
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-primary/20 rounded-full"
+            style={{
+              left: `${15 + i * 15}%`,
+              top: `${20 + (i % 3) * 25}%`,
+            }}
+            animate={{
+              y: [-20, 20, -20],
+              opacity: [0.3, 0.7, 0.3],
+            }}
+            transition={{
+              duration: 3 + i * 0.5,
+              repeat: Infinity,
+              delay: i * 0.3,
+            }}
+          />
+        ))}
       </div>
 
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/20">
-        <div className="flex items-center justify-center px-4 py-4">
-          <motion.div 
-            className="flex items-center gap-3"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <img 
-              src={logoUrl} 
-              alt="PRYZEN" 
-              className="h-10 object-contain" 
-            />
-          </motion.div>
-        </div>
-      </header>
-
       {/* Main Content */}
-      <main className="flex-1 px-4 py-8 pb-safe overflow-y-auto relative z-10">
-        <div className="max-w-sm mx-auto space-y-8">
-          {/* Hero Section */}
+      <main className="flex-1 px-5 py-8 pb-safe overflow-y-auto relative z-10 flex flex-col justify-center">
+        <div className="max-w-md mx-auto space-y-8 w-full">
+          {/* Logo & Hero */}
           <motion.div 
-            className="text-center space-y-4"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-center space-y-6"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20">
+            {/* Logo with glow */}
+            <motion.div
+              className="relative inline-block"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            >
+              <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full scale-150" />
+              <img 
+                src="/pryzen-logo.png" 
+                alt="PRYZEN" 
+                className="h-16 object-contain relative z-10" 
+              />
+            </motion.div>
+            
+            {/* Badge */}
+            <motion.div 
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20 backdrop-blur-sm"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+            >
               <Zap className="w-4 h-4 text-accent" />
-              <span className="text-sm font-medium text-primary">On-Chain Gaming</span>
-            </div>
+              <span className="text-sm font-semibold text-primary">On-Chain Gaming</span>
+            </motion.div>
             
-            <h1 className="text-3xl font-bold text-foreground leading-tight">
-              {isWalletUser ? 'Wallet Connected!' : 'Welcome to PRYZEN'}
-            </h1>
-            
-            <p className="text-muted-foreground text-base leading-relaxed">
-              {isWalletUser 
-                ? 'Your wallet is ready. Let\'s set up your gaming profile.'
-                : 'Play Ludo, win USDC. Real games, real rewards, instant payouts.'
-              }
-            </p>
+            {/* Title */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <h1 className="text-4xl font-bold text-foreground leading-tight mb-3">
+                {isWalletUser ? (
+                  <>Wallet <span className="text-primary">Connected!</span></>
+                ) : (
+                  <>Welcome to <span className="text-primary">PRYZEN</span></>
+                )}
+              </h1>
+              
+              <p className="text-muted-foreground text-lg leading-relaxed max-w-xs mx-auto">
+                {isWalletUser 
+                  ? "Your wallet is ready. Let's complete your profile."
+                  : "Play Ludo, win USDC. Real games, real rewards."
+                }
+              </p>
+            </motion.div>
 
+            {/* Wallet connected badge */}
             {isWalletUser && (
               <motion.div 
-                className="flex items-center justify-center gap-2 mt-4 p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20"
+                className="flex items-center justify-center gap-2 p-3 bg-emerald-500/10 rounded-2xl border border-emerald-500/20"
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.5, type: "spring" }}
               >
-                <Wallet className="w-4 h-4 text-emerald-500" />
-                <span className="text-sm text-emerald-500 font-medium">Wallet Successfully Connected</span>
+                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                <span className="text-sm text-emerald-500 font-semibold">Wallet Successfully Connected</span>
               </motion.div>
             )}
           </motion.div>
 
-          {/* Steps Section */}
+          {/* Steps Cards */}
           <motion.div 
-            className="space-y-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            className="space-y-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
           >
-            <div className="text-center mb-6">
-              <h2 className="text-lg font-semibold text-foreground">Quick Setup</h2>
-              <p className="text-muted-foreground text-sm">3 simple steps to start playing</p>
-            </div>
-
-            <div className="space-y-3">
-              {steps.map((step, index) => (
-                <motion.div 
-                  key={index}
-                  className="bg-card/50 backdrop-blur-sm rounded-2xl p-4 border border-border/30 hover:border-primary/30 transition-colors"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className={`flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${step.gradient} text-white shadow-lg`}>
-                      <step.icon className="w-6 h-6" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-foreground font-semibold text-base">{step.title}</h3>
-                      <p className="text-muted-foreground text-sm">{step.description}</p>
-                    </div>
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-sm">
-                      {index + 1}
-                    </div>
+            {steps.map((step, index) => (
+              <motion.div 
+                key={index}
+                className="group relative bg-card/60 backdrop-blur-xl rounded-2xl p-4 border border-border/50 overflow-hidden"
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 + index * 0.1 }}
+                whileHover={{ scale: 1.02, borderColor: 'hsl(var(--primary) / 0.3)' }}
+              >
+                {/* Subtle gradient on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                
+                <div className="flex items-center gap-4 relative z-10">
+                  {/* Icon with gradient */}
+                  <div className={`flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${step.color} text-white shadow-lg`}>
+                    <step.icon className="w-6 h-6" />
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                  
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-foreground font-semibold text-base">{step.title}</h3>
+                    <p className="text-muted-foreground text-sm">{step.description}</p>
+                  </div>
+                  
+                  {/* Step number */}
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-muted text-muted-foreground font-bold text-sm border border-border">
+                    {index + 1}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
 
-          {/* CTA Button */}
+          {/* CTA Section */}
           <motion.div 
-            className="pt-4"
+            className="space-y-4 pt-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
+            transition={{ delay: 0.9 }}
           >
             <Button
               onClick={handleNext}
-              className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold py-6 rounded-2xl text-lg transition-all duration-200 shadow-lg shadow-primary/25"
+              className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold py-6 rounded-2xl text-lg shadow-xl shadow-primary/25 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-0.5"
             >
-              Let's Go
+              Let's Get Started
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
             
-            <p className="text-center text-xs text-muted-foreground mt-4">
-              Takes less than 2 minutes
+            <p className="text-center text-sm text-muted-foreground">
+              ⚡ Takes less than 2 minutes
             </p>
           </motion.div>
 
-          {/* Features badges */}
+          {/* Feature badges */}
           <motion.div 
-            className="flex flex-wrap justify-center gap-2 pt-4"
+            className="flex flex-wrap justify-center gap-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 1 }}
           >
-            {['100% On-Chain', 'Instant Payouts', 'USDC Rewards'].map((badge, i) => (
+            {[
+              { icon: Star, label: '100% On-Chain' },
+              { icon: Zap, label: 'Instant Payouts' },
+              { icon: Wallet, label: 'USDC Rewards' }
+            ].map((badge, i) => (
               <span 
                 key={i}
-                className="px-3 py-1.5 text-xs font-medium bg-muted/50 text-muted-foreground rounded-full border border-border/30"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-muted/50 text-muted-foreground rounded-full border border-border/50"
               >
-                {badge}
+                <badge.icon className="w-3 h-3" />
+                {badge.label}
               </span>
             ))}
           </motion.div>
