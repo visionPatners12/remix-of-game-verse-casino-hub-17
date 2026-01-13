@@ -118,7 +118,10 @@ export default defineConfig(({ mode }) => {
             '**/*.{html,css,ico,woff2,woff,ttf}',
             '**/react-vendor*.js',
             '**/ui-vendor*.js',
-            '**/icons-vendor*.js'
+            '**/icons-vendor*.js',
+            // Assets critiques pour le jeu
+            'ludo-logo.png',
+            'pryzen-logo.png',
           ],
           globIgnores: [
             '**/Token*.js',
@@ -161,40 +164,72 @@ export default defineConfig(({ mode }) => {
                 }
               }
             },
-            // Images statiques
+            // Images statiques - cache augmenté
             {
               urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|avif)$/i,
               handler: 'CacheFirst',
               options: {
                 cacheName: 'images-cache',
                 expiration: {
-                  maxEntries: 100,
-                  maxAgeSeconds: 60 * 60 * 24 * 30
+                  maxEntries: 200, // Augmenté de 100
+                  maxAgeSeconds: 60 * 60 * 24 * 60 // 60 jours (était 30)
                 }
               }
             },
-            // Supabase REST API
+            // Supabase REST API - StaleWhileRevalidate pour économiser data
             {
-              urlPattern: /^https:\/\/.*\.supabase\.co\/rest\/.*/i,
-              handler: 'NetworkFirst',
+              urlPattern: /^https:\/\/.*\.supabase\.co\/rest\/v1\/(?!rpc\/).*/i,
+              handler: 'StaleWhileRevalidate', // Était NetworkFirst
               options: {
                 cacheName: 'supabase-api-cache',
                 expiration: {
-                  maxEntries: 50,
-                  maxAgeSeconds: 60 * 5
+                  maxEntries: 100, // Augmenté de 50
+                  maxAgeSeconds: 60 * 10 // 10 minutes (était 5)
                 },
-                networkTimeoutSeconds: 10
+                cacheableResponse: {
+                  statuses: [0, 200]
+                }
               }
             },
-            // Supabase Storage
+            // Supabase données statiques (leagues, teams, sports) - CacheFirst
+            {
+              urlPattern: /^https:\/\/.*\.supabase\.co\/rest\/v1\/(leagues|teams|sports|countries)/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'supabase-static-cache',
+                expiration: {
+                  maxEntries: 200,
+                  maxAgeSeconds: 60 * 60 * 24 // 24 heures
+                },
+                cacheableResponse: {
+                  statuses: [0, 200]
+                }
+              }
+            },
+            // Supabase RPC functions - cache court
+            {
+              urlPattern: /^https:\/\/.*\.supabase\.co\/rest\/v1\/rpc\/.*/i,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'supabase-rpc-cache',
+                expiration: {
+                  maxEntries: 50,
+                  maxAgeSeconds: 60 * 5 // 5 minutes
+                },
+                cacheableResponse: {
+                  statuses: [0, 200]
+                }
+              }
+            },
+            // Supabase Storage - cache long
             {
               urlPattern: /^https:\/\/.*\.supabase\.co\/storage\/.*/i,
               handler: 'CacheFirst',
               options: {
                 cacheName: 'supabase-storage-cache',
                 expiration: {
-                  maxEntries: 100,
-                  maxAgeSeconds: 60 * 60 * 24 * 7
+                  maxEntries: 200, // Augmenté de 100
+                  maxAgeSeconds: 60 * 60 * 24 * 30 // 30 jours (était 7)
                 }
               }
             },
@@ -278,7 +313,11 @@ export default defineConfig(({ mode }) => {
             'react-vendor': ['react', 'react-dom'],
             'web3-vendor': ['wagmi', 'viem', 'ethers'],
             'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-toast'],
-            'icons-vendor': ['lucide-react']
+            'icons-vendor': ['lucide-react'],
+            // Nouveaux chunks pour optimisation
+            'animation-vendor': ['framer-motion'],
+            'game-vendor': ['konva', 'react-konva'],
+            'query-vendor': ['@tanstack/react-query'],
           }
         }
       },
