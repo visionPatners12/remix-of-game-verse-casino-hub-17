@@ -28,12 +28,12 @@ const highlights = [
   {
     icon: Gamepad2,
     title: "Ludo On-Chain",
-    description: "The classic board game reimagined. Bet in USDT and challenge up to 4 players in real-time."
+    description: "The classic board game reimagined. Bet in USDC on Base and challenge up to 4 players in real-time."
   },
   {
     icon: Wallet,
     title: "Integrated Wallet",
-    description: "Deposit and withdraw in USDT on Polygon. Fast transactions and minimal fees."
+    description: "Deposit and withdraw in USDC on Base. Fast transactions and minimal fees."
   },
   {
     icon: Users,
@@ -55,8 +55,8 @@ const steps = [
   },
   {
     icon: DollarSign,
-    title: "Deposit USDT",
-    description: "Minimum 5 USDT on Polygon to start"
+    title: "Deposit USDC",
+    description: "Minimum 5 USDC on Base to start"
   },
   {
     icon: Trophy,
@@ -69,30 +69,23 @@ const features = [
   {
     icon: Gamepad2,
     title: "Ludo Multiplayer",
-    description: "Challenge up to 4 players in real-time. Flexible bets from 1 to 100 USDT. Winner takes all.",
+    description: "Challenge up to 4 players in real-time. Flexible bets from 1 to 100 USDC. Winner takes all.",
     mockupLabel: "Ludo Game",
     reverse: false
   },
   {
     icon: Wallet,
     title: "Crypto Wallet",
-    description: "Manage your USDT easily. Fast deposits and withdrawals on Polygon. Complete transaction history.",
+    description: "Manage your USDC easily. Fast deposits and withdrawals on Base. Complete transaction history.",
     mockupLabel: "Wallet",
     reverse: true
   },
   {
-    icon: Trophy,
-    title: "History & Stats",
-    description: "Track all your games, victories, and winnings. Detailed statistics of your progress.",
-    mockupLabel: "Stats",
-    reverse: false
-  },
-  {
     icon: Dices,
     title: "More Games Coming",
-    description: "Crash, Dice, and other classic games are coming. Same USDT betting system, same smooth experience.",
+    description: "Crash, Dice, and other classic games are coming. Same USDC betting system, same smooth experience.",
     mockupLabel: "Coming Soon",
-    reverse: true
+    reverse: false
   }
 ];
 
@@ -127,7 +120,7 @@ const trustFeatures = [
   {
     icon: Shield,
     title: "100% On-Chain",
-    description: "All transactions are verifiable on Polygon blockchain"
+    description: "All transactions are verifiable on Base blockchain"
   },
   {
     icon: Clock,
@@ -137,7 +130,7 @@ const trustFeatures = [
   {
     icon: DollarSign,
     title: "Minimal Fees",
-    description: "Enjoy reduced fees on the Polygon network"
+    description: "Enjoy reduced fees on the Base network"
   }
 ];
 
@@ -164,7 +157,7 @@ export function LandingHome() {
             className="text-center max-w-3xl mx-auto"
           >
             <Badge variant="outline" className="mb-6 border-primary/50 text-primary gap-1.5">
-              <Zap className="w-3 h-3" /> Powered by Polygon
+              <Zap className="w-3 h-3" /> Powered by Base
             </Badge>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
@@ -174,19 +167,14 @@ export function LandingHome() {
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-10">
               Challenge your friends on classic games. 
-              Bet in USDT on Polygon. Instant wins.
+              Bet in USDC on Base. Instant wins.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
               <Link to="/auth">
                 <Button size="lg" className="w-full sm:w-auto px-8 gap-2">
                   <Gamepad2 className="w-5 h-5" />
-                  Start Playing
-                </Button>
-              </Link>
-              <Link to="/games">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 gap-2">
-                  View Games <ArrowRight className="w-4 h-4" />
+                  Get Started
                 </Button>
               </Link>
             </div>

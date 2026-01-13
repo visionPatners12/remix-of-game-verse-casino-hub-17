@@ -173,11 +173,12 @@ export function DiscoverGaming() {
           <Gamepad2 className="w-12 h-12 text-primary mx-auto mb-4" />
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to play?</h2>
           <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-            Start playing Ludo now and compete for crypto prizes.
+            Create a game and compete for USDC prizes on Base.
           </p>
           <Link to="/games/ludo/create">
-            <Button size="lg" className="px-8">
-              Start Playing
+            <Button size="lg" className="px-8 gap-2">
+              <Gamepad2 className="w-5 h-5" />
+              Play Ludo
             </Button>
           </Link>
         </div>
