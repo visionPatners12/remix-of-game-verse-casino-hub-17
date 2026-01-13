@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Smartphone, Building2, ChevronRight, Check, Copy, Shield, Clock, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Smartphone, Building2, ChevronRight, Check, Copy, Shield, Clock, AlertCircle, CreditCard, Apple } from 'lucide-react';
 import { useDeposit } from '../hooks/useDeposit';
 import { useUnifiedWallet } from '@/features/wallet';
 import { useFundWallet } from '@privy-io/react-auth';
@@ -83,8 +83,17 @@ const DepositFlow = () => {
           </div>
         );
       case 'coinbase':
-        // Coinbase logo only, no network badge
-        return <img src={coinbaseLogo} alt="Coinbase" className="h-7 w-7" />;
+        // Coinbase logo with payment method icons (Debit Card, Apple Pay, Bank)
+        return (
+          <div className="flex items-center gap-1">
+            <img src={coinbaseLogo} alt="Coinbase" className="h-6 w-6" />
+            <div className="flex items-center gap-0.5 text-muted-foreground">
+              <CreditCard className="h-4 w-4" />
+              <Apple className="h-4 w-4" />
+              <Building2 className="h-4 w-4" />
+            </div>
+          </div>
+        );
       case 'smartphone':
         return <Smartphone className={iconClass} />;
       case 'bank':
