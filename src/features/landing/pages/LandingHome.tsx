@@ -11,6 +11,10 @@ import landingLudoGame from "@/assets/landing-ludo-game.png";
 import landingWallet from "@/assets/landing-wallet.png";
 import landingGames from "@/assets/landing-games.png";
 import heroBgIllustration from "@/assets/hero-bg-illustration.png";
+import featuresBgIllustration from "@/assets/features-bg-illustration.png";
+import howtoBgIllustration from "@/assets/howto-bg-illustration.png";
+import roadmapBgIllustration from "@/assets/roadmap-bg-illustration.png";
+import ctaBgIllustration from "@/assets/cta-bg-illustration.png";
 import { 
   Gamepad2,
   UserPlus,
@@ -156,7 +160,7 @@ export function LandingHome() {
           <img 
             src={heroBgIllustration} 
             alt=""
-            className="w-full max-w-5xl opacity-50 object-contain"
+            className="w-full max-w-5xl opacity-75 object-contain"
           />
         </div>
         
@@ -222,8 +226,18 @@ export function LandingHome() {
       </section>
 
       {/* Highlights Section */}
-      <section className="py-20 md:py-28">
-        <div className="container px-4">
+      <section className="py-20 md:py-28 relative overflow-hidden">
+        {/* Background Illustration */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <img 
+            src={featuresBgIllustration} 
+            alt=""
+            className="w-full max-w-6xl opacity-50 object-contain"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
+        
+        <div className="container px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               On-chain gaming made simple
@@ -241,7 +255,7 @@ export function LandingHome() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="p-6 rounded-2xl border border-border/50 bg-card/30 hover:bg-card/50 transition-colors"
+                className="p-6 rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm hover:bg-card/90 transition-colors"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                   <item.icon className="w-6 h-6 text-primary" />
@@ -303,8 +317,18 @@ export function LandingHome() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20">
-        <div className="container px-4">
+      <section className="py-20 relative overflow-hidden">
+        {/* Background Illustration */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <img 
+            src={howtoBgIllustration} 
+            alt=""
+            className="w-full max-w-5xl opacity-40 object-contain"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
+        
+        <div className="container px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               How it works
@@ -325,7 +349,7 @@ export function LandingHome() {
                 className="text-center"
               >
                 <div className="relative inline-flex mb-4">
-                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 backdrop-blur-sm flex items-center justify-center">
                     <step.icon className="w-6 h-6 text-primary" />
                   </div>
                   <span className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-primary text-primary-foreground text-sm font-medium flex items-center justify-center">
@@ -341,8 +365,18 @@ export function LandingHome() {
       </section>
 
       {/* Roadmap Preview Section */}
-      <section className="py-20 md:py-28 bg-accent/20">
-        <div className="container px-4">
+      <section className="py-20 md:py-28 relative overflow-hidden">
+        {/* Background Illustration */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <img 
+            src={roadmapBgIllustration} 
+            alt=""
+            className="w-full max-w-6xl opacity-50 object-contain"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
+        
+        <div className="container px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Our Roadmap
@@ -360,10 +394,10 @@ export function LandingHome() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className={`p-6 rounded-2xl border ${
+                className={`p-6 rounded-2xl border backdrop-blur-sm ${
                   phase.status === 'current' 
-                    ? 'border-primary bg-primary/5' 
-                    : 'border-border/50 bg-card/30'
+                    ? 'border-primary bg-primary/10' 
+                    : 'border-border/50 bg-card/80'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-3">
@@ -402,8 +436,18 @@ export function LandingHome() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 md:py-28 border-t border-border/30">
-        <div className="container px-4">
+      <section className="py-20 md:py-28 relative overflow-hidden">
+        {/* Background Illustration */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <img 
+            src={ctaBgIllustration} 
+            alt=""
+            className="w-full max-w-4xl opacity-60 object-contain"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" />
+        
+        <div className="container px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
