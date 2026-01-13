@@ -138,7 +138,7 @@ export function LandingHome() {
           <img 
             src={heroBgIllustration} 
             alt=""
-            className="w-full max-w-5xl opacity-75 object-contain"
+            className="w-full max-w-5xl opacity-75 object-contain animate-float-subtle"
           />
         </div>
         
@@ -256,7 +256,7 @@ export function LandingHome() {
           <img 
             src={howtoBgIllustration} 
             alt=""
-            className="w-full max-w-5xl opacity-40 object-contain"
+            className="w-full max-w-5xl opacity-50 object-contain animate-float"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
@@ -304,7 +304,7 @@ export function LandingHome() {
           <img 
             src={roadmapBgIllustration} 
             alt=""
-            className="w-full max-w-6xl opacity-50 object-contain"
+            className="w-full max-w-6xl opacity-60 object-contain animate-pulse-slow"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
@@ -375,7 +375,7 @@ export function LandingHome() {
           <img 
             src={ctaBgIllustration} 
             alt=""
-            className="w-full max-w-4xl opacity-60 object-contain"
+            className="w-full max-w-4xl opacity-70 object-contain animate-float"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" />
