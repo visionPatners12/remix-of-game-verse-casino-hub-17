@@ -28,6 +28,7 @@ const MOBILE_ONLY_HIDDEN_NAV_ROUTES = [
   '/notifications',
   '/wallet',
   '/deposit',
+  '/mobile-deposit',
   '/withdrawal',
   '/my-bets',
   '/transactions',
