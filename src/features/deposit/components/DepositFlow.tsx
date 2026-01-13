@@ -73,19 +73,18 @@ const DepositFlow = () => {
     
     switch (iconType) {
       case 'usdc':
+        // USDC with Base network badge overlay (like MetaMask style)
         return (
-          <div className="flex items-center gap-0.5">
-            <TokenUSDC variant="branded" size={24} />
-            <NetworkBase variant="branded" size={16} />
+          <div className="relative">
+            <TokenUSDC variant="branded" size={28} />
+            <div className="absolute -bottom-0.5 -right-0.5 bg-background rounded-full p-0.5">
+              <NetworkBase variant="branded" size={12} />
+            </div>
           </div>
         );
       case 'coinbase':
-        return (
-          <div className="flex items-center gap-0.5">
-            <img src={coinbaseLogo} alt="Coinbase" className="h-6 w-6" />
-            <NetworkBase variant="branded" size={16} />
-          </div>
-        );
+        // Coinbase logo only, no network badge
+        return <img src={coinbaseLogo} alt="Coinbase" className="h-7 w-7" />;
       case 'smartphone':
         return <Smartphone className={iconClass} />;
       case 'bank':
