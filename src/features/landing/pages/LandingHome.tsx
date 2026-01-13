@@ -152,11 +152,11 @@ export function LandingHome() {
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[85vh] flex items-center">
         {/* Background Illustration - Transparent */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none -translate-y-16">
           <img 
             src={heroBgIllustration} 
             alt=""
-            className="w-full max-w-5xl opacity-40 object-contain"
+            className="w-full max-w-5xl opacity-50 object-contain"
           />
         </div>
         
