@@ -15,7 +15,7 @@ import { DiceRoller } from '../components/DiceRoller';
 import { TurnTimer } from '../components/TurnTimer';
 import { WinnerModal } from '../components/WinnerModal';
 import { NetworkIndicator } from '../components/NetworkIndicator';
-import { PrizePoolBadge } from '../components/PrizePoolBadge';
+import { LudoPotBadge } from '../components/shared/LudoPotBadge';
 import { useLeaveGame } from '../hooks/useLeaveGame';
 import { LudoWaitingRoom } from '../components/waiting-room';
 import { useAutoJoin } from '../hooks/useAutoJoin';
@@ -688,11 +688,11 @@ export const LudoKonva: React.FC = () => {
                 triggerRoll={skipRollTrigger}
               />
 
-              {/* Prize Pool */}
-              <PrizePoolBadge
-                betAmount={gameData?.bet_amount || 0}
-                pot={gameData?.pot}
-                playersCount={players.length}
+              {/* Prize Pool - using new styled badge */}
+              <LudoPotBadge
+                amount={gameData?.pot ?? (gameData?.bet_amount || 0) * players.length}
+                size="sm"
+                variant="glow"
               />
             </div>
           </div>

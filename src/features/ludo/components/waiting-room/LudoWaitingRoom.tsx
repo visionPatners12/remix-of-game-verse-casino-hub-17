@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { WaitingRoomHeader } from './WaitingRoomHeader';
 import { DepositButton } from './DepositButton';
 import { WaitingPlayersList } from './WaitingPlayersList';
-import { PotDisplay } from './PotDisplay';
+import { LudoPotBadge } from '../shared/LudoPotBadge';
 import { ShareGameModal } from '../../components/ShareGameModal';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
@@ -145,6 +145,7 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
         userId={user?.id || ''}
         roomCode={roomCode}
         betAmount={betAmount}
+        playerCount={players.length || 4}
         onShare={() => setShowShareModal(true)}
       />
 
@@ -154,20 +155,20 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
           animate={{ opacity: 1, y: 0 }}
           className="space-y-6"
         >
-          {/* Pot Display */}
-          {!isFreeGame && (
-            <motion.div
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.1 }}
-            >
-              <PotDisplay
-                betAmount={betAmount}
-                confirmedPlayers={playersReadyCount}
-                totalPlayers={4}
-              />
-            </motion.div>
-          )}
+          {/* Pot Display - now shows for all games */}
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="flex justify-center"
+          >
+            <LudoPotBadge
+              amount={betAmount * playersReadyCount}
+              size="lg"
+              variant="glow"
+              showTrophy={true}
+            />
+          </motion.div>
 
           {/* Deposit Section - 3 states */}
           {!isFreeGame && !currentPlayerConfirmed && !currentPlayerPending && (
