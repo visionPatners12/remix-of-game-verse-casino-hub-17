@@ -16,7 +16,8 @@
     },
     "coinbase": {
       "title": "Coinbase Pay",
-      "description": "Achetez USDC sur Base"
+      "buyTitle": "Achetez USDC sur Base avec",
+      "description": "Carte bancaire, Apple Pay, Virement"
     },
     "mobileMoney": {
       "title": "Mobile Money",

@@ -16,7 +16,8 @@
     },
     "coinbase": {
       "title": "Coinbase Pay",
-      "description": "Buy USDC on Base"
+      "buyTitle": "Buy USDC on Base with",
+      "description": "Debit Card, Apple Pay, Bank"
     },
     "mobileMoney": {
       "title": "Mobile Money",

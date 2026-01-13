@@ -47,7 +47,7 @@ const DepositFlow = () => {
     },
     {
       id: 'coinbase',
-      titleKey: 'methods.coinbase.title',
+      titleKey: 'methods.coinbase.buyTitle',
       descriptionKey: 'methods.coinbase.description',
       iconType: 'coinbase',
       available: true
@@ -259,7 +259,7 @@ const DepositFlow = () => {
         {/* Address copy section */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">
-            {t('crypto.copyTitle', { symbol: selectedCrypto.symbol })}
+            {t('crypto.copyTitle', { symbol: 'USDT' })}
           </label>
           <button
             onClick={handleCopyAddress}
