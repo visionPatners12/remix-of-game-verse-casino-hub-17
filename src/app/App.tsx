@@ -5,7 +5,7 @@ import { AppRoutes } from './routes';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { AnimatedRoutes } from '@/components/AnimatedRoutes';
 import { AppShell } from '@/components/AppShell';
-import { UpdatePrompt, OfflineIndicator } from '@/components/pwa';
+import { UpdatePrompt, OfflineIndicator, PWAOptimizations } from '@/components/pwa';
 import { useScreenOrientation } from '@/hooks/useScreenOrientation';
 import { OrientationWarning } from '@/components/OrientationWarning';
 import { ChunkErrorBoundary } from '@/components/common/ChunkErrorBoundary';
@@ -23,6 +23,7 @@ function App() {
           <AppProvider>
             <OfflineIndicator />
             <UpdatePrompt />
+            <PWAOptimizations />
             {/* AppShell contient la navigation persistante */}
             <AppShell>
               <AnimatedRoutes>
