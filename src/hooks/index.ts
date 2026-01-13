@@ -15,3 +15,7 @@ export { useEntityFollow } from './useEntityFollow';
 // Game hooks
 export { useGameSounds } from './useGameSounds';
 export { useNetworkStatus } from './useNetworkStatus';
+
+// PWA hooks
+export { useRegisterSW, usePrecacheAssets } from './pwa/useRegisterSW';
+export { usePrefetchRoutes, usePrefetchData, usePrefetchOptimizations } from './usePrefetch';

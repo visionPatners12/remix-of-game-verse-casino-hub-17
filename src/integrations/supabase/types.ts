@@ -918,6 +918,27 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_wallet: {
         Row: {
           created_at: string | null
@@ -1299,6 +1320,13 @@ export type Database = {
           game_id: string
         }[]
       }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
       highlightly_match_and_link_bulk_v1: {
         Args: {
           _cand_limit?: number
@@ -1474,6 +1502,8 @@ export type Database = {
         Args: { p_entity_id: string; p_entity_type: string }
         Returns: undefined
       }
+      is_admin: { Args: never; Returns: boolean }
+      is_super_admin: { Args: never; Returns: boolean }
       is_women_label: {
         Args: { _name: string; _slug: string }
         Returns: boolean
@@ -2006,6 +2036,7 @@ export type Database = {
       validate_referral_code: { Args: { p_code: string }; Returns: Json }
     }
     Enums: {
+      app_role: "super_admin" | "admin" | "user"
       auth_method_enum: "email" | "wallet"
       bet_status_enum: "pending" | "won" | "lost" | "cancelled" | "refunded"
       bet_type_enum: "single" | "parlay" | "system"
@@ -2172,6 +2203,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["super_admin", "admin", "user"],
       auth_method_enum: ["email", "wallet"],
       bet_status_enum: ["pending", "won", "lost", "cancelled", "refunded"],
       bet_type_enum: ["single", "parlay", "system"],
