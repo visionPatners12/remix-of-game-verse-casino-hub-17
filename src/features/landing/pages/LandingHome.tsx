@@ -10,7 +10,7 @@ import { useStandaloneMode } from "@/hooks/useStandaloneMode";
 import landingLudoGame from "@/assets/landing-ludo-game.png";
 import landingWallet from "@/assets/landing-wallet.png";
 import landingGames from "@/assets/landing-games.png";
-import heroIllustration from "@/assets/hero-illustration.png";
+import heroBgIllustration from "@/assets/hero-bg-illustration.png";
 import { 
   Gamepad2,
   UserPlus,
@@ -150,67 +150,57 @@ export function LandingHome() {
   return (
     <LandingLayout>
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
-        <div className="container px-4 py-16 md:py-24 lg:py-32 relative">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-            {/* Left - Content */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="flex-1 text-center lg:text-left"
-            >
-              <Badge variant="outline" className="mb-6 border-primary/50 text-primary gap-1.5">
-                <Zap className="w-3 h-3" /> Powered by Base
-              </Badge>
-              
-              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
-                Play. Bet.
-                <span className="block text-primary">Win.</span>
-              </h1>
-              
-              <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8">
-                Challenge your friends on classic games. 
-                Bet in USDC on Base. Instant wins.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-                <Link to="/auth">
-                  <Button size="lg" className="w-full sm:w-auto px-8 gap-2">
-                    <Gamepad2 className="w-5 h-5" />
-                    Get Started
-                  </Button>
-                </Link>
-              </div>
+      <section className="relative overflow-hidden min-h-[85vh] flex items-center">
+        {/* Background Illustration - Transparent */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <img 
+            src={heroBgIllustration} 
+            alt=""
+            className="w-full max-w-5xl opacity-20 object-contain"
+          />
+        </div>
+        
+        {/* Gradient overlays for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80" />
+        
+        {/* Content */}
+        <div className="container px-4 py-16 md:py-24 lg:py-32 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <Badge variant="outline" className="mb-6 border-primary/50 text-primary gap-1.5">
+              <Zap className="w-3 h-3" /> Powered by Base
+            </Badge>
+            
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-tight">
+              Play. Bet.
+              <span className="block text-primary">Win.</span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-8">
+              Challenge your friends on classic games. 
+              Bet in USDC on Base. Instant wins.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <Link to="/auth">
+                <Button size="lg" className="w-full sm:w-auto px-8 gap-2">
+                  <Gamepad2 className="w-5 h-5" />
+                  Get Started
+                </Button>
+              </Link>
+            </div>
 
-              {/* Download Buttons */}
-              <div className="pt-6 border-t border-border/30">
-                <p className="text-sm text-muted-foreground mb-4">Download the app</p>
-                <DownloadButtons size="lg" className="justify-center lg:justify-start" />
-              </div>
-            </motion.div>
-
-            {/* Right - Illustration */}
-            <motion.div
-              initial={{ opacity: 0, x: 30, scale: 0.95 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="flex-1 relative"
-            >
-              <div className="relative">
-                {/* Glow effect behind illustration */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-amber-500/20 to-primary/20 blur-3xl rounded-full scale-110" />
-                
-                {/* Main illustration */}
-                <img 
-                  src={heroIllustration} 
-                  alt="Crypto gaming with dice and coins"
-                  className="relative w-full max-w-lg mx-auto lg:max-w-none drop-shadow-2xl"
-                />
-              </div>
-            </motion.div>
-          </div>
+            {/* Download Buttons */}
+            <div className="pt-6 border-t border-border/30 inline-block">
+              <p className="text-sm text-muted-foreground mb-4">Download the app</p>
+              <DownloadButtons size="lg" className="justify-center" />
+            </div>
+          </motion.div>
         </div>
       </section>
 
