@@ -39,9 +39,9 @@ const WalletDebug = lazyWithRetry(() => import('@/pages/WalletDebug'));
 const ResetPassword = lazyWithRetry(() => import('@/pages/ResetPassword'));
 const HowToAddFunds = lazyWithRetry(() => import('@/pages/HowToAddFunds'));
 
-// Ludo game pages
-const LudoKonva = lazyWithRetry(() => import('@/features/ludo').then(m => ({ default: m.LudoKonva })));
-const LudoCreateGamePage = lazyWithRetry(() => import('@/features/ludo').then(m => ({ default: m.LudoCreateGamePage })));
+// Ludo game pages - Import directly to avoid loading entire barrel
+const LudoKonva = lazyWithRetry(() => import('@/features/ludo/ui/LudoKonva'));
+const LudoCreateGamePage = lazyWithRetry(() => import('@/features/ludo/ui/LudoCreateGamePage'));
 const ActiveGameGuard = lazyWithRetry(() => import('@/features/ludo/components/ActiveGameGuard').then(m => ({ default: m.ActiveGameGuard })));
 const LudoKonvaWithGuard = lazyWithRetry(() => import('@/features/ludo/components/ActiveGameGuard').then(m => ({ default: m.LudoKonvaWithGuard })));
 
