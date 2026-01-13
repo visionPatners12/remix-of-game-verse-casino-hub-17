@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Shield, Check, Loader2, Lock, Eye, EyeOff, Fingerprint } from 'lucide-react';
+import { ArrowLeft, Shield, Check, Loader2, Lock, Fingerprint } from 'lucide-react';
 import { PinInput } from '@/features/security';
 import { usePinManagement } from '@/features/security';
 import { useOnboarding } from '../../hooks';
@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { logger } from '@/utils/logger';
 import { OnboardingStepProps } from '../../types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { OnboardingLayout } from '../OnboardingLayout';
 
 const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => (
   <div className="flex items-center justify-center gap-1.5">
@@ -92,54 +93,76 @@ export function PinSetupStep({ onNext, onBack }: OnboardingStepProps) {
 
   if (isPinStatusLoading) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center">
-        <motion.div 
-          className="text-center space-y-6"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-        >
-          <div className="relative">
-            <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full" />
-            <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary/60 rounded-2xl flex items-center justify-center mx-auto relative">
-              <Shield className="w-10 h-10 text-primary-foreground" />
+      <OnboardingLayout backgroundVariant="amber">
+        <div className="flex-1 flex items-center justify-center">
+          <motion.div 
+            className="text-center space-y-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full" />
+              <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary/60 rounded-2xl flex items-center justify-center mx-auto relative">
+                <Shield className="w-10 h-10 text-primary-foreground" />
+              </div>
             </div>
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-foreground mb-2">{t('onboarding.steps.pin.verification')}</h2>
-            <p className="text-muted-foreground text-sm">{t('onboarding.steps.pin.verificationSubtitle')}</p>
-          </div>
-          <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto" />
-        </motion.div>
-      </div>
+            <div>
+              <h2 className="text-xl font-bold text-foreground mb-2">{t('onboarding.steps.pin.verification')}</h2>
+              <p className="text-muted-foreground text-sm">{t('onboarding.steps.pin.verificationSubtitle')}</p>
+            </div>
+            <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto" />
+          </motion.div>
+        </div>
+      </OnboardingLayout>
     );
   }
 
-  return (
-    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          className="absolute top-1/4 -left-20 w-80 h-80 bg-gradient-to-br from-amber-500/20 to-orange-500/5 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{ duration: 6, repeat: Infinity }}
-        />
-        <motion.div 
-          className="absolute bottom-1/4 -right-20 w-96 h-96 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2]
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-        />
-      </div>
+  const renderBottomAction = () => {
+    if (step === 'create') {
+      return (
+        <Button
+          onClick={handleCreatePin}
+          disabled={pin.length !== 6}
+          className="w-full py-6 text-base font-semibold rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 shadow-lg shadow-amber-500/25 min-h-[56px] active:scale-[0.98] transition-transform"
+          size="lg"
+        >
+          {t('onboarding.steps.pin.continue')}
+        </Button>
+      );
+    }
 
+    if (step === 'confirm') {
+      return (
+        <Button
+          onClick={handleConfirmPin}
+          disabled={confirmPin.length !== 6 || isLoading}
+          className="w-full py-6 text-base font-semibold rounded-2xl min-h-[56px] active:scale-[0.98] transition-transform"
+          size="lg"
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="w-5 h-5 mr-3 animate-spin" />
+              {t('onboarding.steps.pin.creating')}
+            </>
+          ) : (
+            t('onboarding.steps.pin.confirm')
+          )}
+        </Button>
+      );
+    }
+
+    return null;
+  };
+
+  return (
+    <OnboardingLayout 
+      backgroundVariant="amber"
+      bottomAction={step !== 'success' ? renderBottomAction() : undefined}
+    >
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/20">
         <div className="flex items-center px-4 py-4">
-          <Button variant="ghost" size="icon" onClick={handleBack} className="rounded-xl">
+          <Button variant="ghost" size="icon" onClick={handleBack} className="rounded-xl min-h-[44px] min-w-[44px]">
             <ArrowLeft className="w-5 h-5" />
           </Button>
           
@@ -150,12 +173,12 @@ export function PinSetupStep({ onNext, onBack }: OnboardingStepProps) {
             </div>
           </div>
           
-          <div className="w-10" />
+          <div className="w-11" />
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 px-5 py-8 pb-safe relative z-10">
+      <main className="flex-1 px-5 py-8">
         <div className="max-w-sm mx-auto">
           <AnimatePresence mode="wait">
             {step === 'create' && (
@@ -212,16 +235,6 @@ export function PinSetupStep({ onNext, onBack }: OnboardingStepProps) {
                     ))}
                   </ul>
                 </div>
-
-                {/* Continue Button */}
-                <Button
-                  onClick={handleCreatePin}
-                  disabled={pin.length !== 6}
-                  className="w-full py-6 text-base font-semibold rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 shadow-lg shadow-amber-500/25"
-                  size="lg"
-                >
-                  {t('onboarding.steps.pin.continue')}
-                </Button>
               </motion.div>
             )}
 
@@ -259,23 +272,6 @@ export function PinSetupStep({ onNext, onBack }: OnboardingStepProps) {
                 <div className="py-4">
                   <PinInput value={confirmPin} onChange={setConfirmPin} />
                 </div>
-
-                {/* Confirm Button */}
-                <Button
-                  onClick={handleConfirmPin}
-                  disabled={confirmPin.length !== 6 || isLoading}
-                  className="w-full py-6 text-base font-semibold rounded-2xl"
-                  size="lg"
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="w-5 h-5 mr-3 animate-spin" />
-                      {t('onboarding.steps.pin.creating')}
-                    </>
-                  ) : (
-                    t('onboarding.steps.pin.confirm')
-                  )}
-                </Button>
               </motion.div>
             )}
 
@@ -311,6 +307,6 @@ export function PinSetupStep({ onNext, onBack }: OnboardingStepProps) {
           </AnimatePresence>
         </div>
       </main>
-    </div>
+    </OnboardingLayout>
   );
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Copy, CheckCircle, AlertCircle, CreditCard, Sparkles, Wallet, ArrowRight, QrCode } from 'lucide-react';
+import { ArrowLeft, Copy, CheckCircle, AlertCircle, CreditCard, Sparkles, Wallet, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { OnboardingStepProps } from '../../types';
@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { DepositQRCode } from '@/features/deposit/components/DepositQRCode';
 import { motion, AnimatePresence } from 'framer-motion';
+import { OnboardingLayout } from '../OnboardingLayout';
 
 const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => (
   <div className="flex items-center justify-center gap-1.5">
@@ -113,7 +114,7 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
           <p className="text-muted-foreground mb-6">
             {t('onboarding.steps.deposit.serviceUnavailableSubtitle')}
           </p>
-          <Button onClick={handleSkip} className="rounded-xl">
+          <Button onClick={handleSkip} className="rounded-xl min-h-[44px]">
             {t('onboarding.steps.deposit.skipThisStep')}
           </Button>
         </motion.div>
@@ -168,7 +169,7 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
                     variant="ghost"
                     size="sm"
                     onClick={() => copyToClipboard(ensName!, 'ENS')}
-                    className="shrink-0 rounded-lg"
+                    className="shrink-0 rounded-lg min-h-[44px] min-w-[44px]"
                   >
                     {copied === 'ENS' ? <CheckCircle className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                   </Button>
@@ -198,7 +199,7 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
                   variant="ghost"
                   size="sm"
                   onClick={() => copyToClipboard(address, 'Address')}
-                  className="shrink-0 h-8 rounded-lg"
+                  className="shrink-0 h-11 w-11 rounded-lg"
                 >
                   {copied === 'Address' ? <CheckCircle className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
                 </Button>
@@ -213,7 +214,7 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
             transition={{ delay: 0.4 }}
           >
             <Card 
-              className="border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-blue-600/5 cursor-pointer hover:border-blue-500/50 transition-all" 
+              className="border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-blue-600/5 cursor-pointer hover:border-blue-500/50 transition-all active:scale-[0.98]" 
               onClick={() => navigate('/deposit/coinbase')}
             >
               <CardContent className="p-4">
@@ -232,21 +233,6 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
               </CardContent>
             </Card>
           </motion.div>
-
-          {/* Navigation buttons */}
-          <motion.div 
-            className="flex gap-3 pt-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <Button onClick={handleSkip} variant="outline" className="flex-1 py-6 rounded-xl">
-              {t('onboarding.steps.deposit.skip')}
-            </Button>
-            <Button onClick={onNext} className="flex-1 py-6 rounded-xl bg-gradient-to-r from-primary to-primary/80">
-              {t('onboarding.steps.deposit.continue')}
-            </Button>
-          </motion.div>
         </motion.div>
       );
     }
@@ -254,32 +240,40 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
     return null;
   };
 
-  return (
-    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          className="absolute top-1/3 -left-20 w-80 h-80 bg-gradient-to-br from-emerald-500/20 to-green-500/5 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{ duration: 6, repeat: Infinity }}
-        />
-        <motion.div 
-          className="absolute bottom-1/3 -right-20 w-96 h-96 bg-gradient-to-br from-blue-500/20 to-blue-600/5 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2]
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-        />
-      </div>
+  const renderBottomAction = () => {
+    if (existingENS || (generatedENS && depositAddress)) {
+      return (
+        <div className="flex gap-3">
+          <Button onClick={handleSkip} variant="outline" className="flex-1 py-6 rounded-xl min-h-[56px] active:scale-[0.98] transition-transform">
+            {t('onboarding.steps.deposit.skip')}
+          </Button>
+          <Button onClick={onNext} className="flex-1 py-6 rounded-xl bg-gradient-to-r from-primary to-primary/80 min-h-[56px] active:scale-[0.98] transition-transform">
+            {t('onboarding.steps.deposit.continue')}
+          </Button>
+        </div>
+      );
+    }
 
+    if (!existingENS && !generatedENS && !isLoading) {
+      return (
+        <Button onClick={handleSkip} variant="ghost" className="w-full text-muted-foreground min-h-[44px]">
+          {t('onboarding.steps.deposit.skipThisStep')}
+        </Button>
+      );
+    }
+
+    return null;
+  };
+
+  return (
+    <OnboardingLayout 
+      backgroundVariant="emerald"
+      bottomAction={renderBottomAction()}
+    >
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/20">
         <div className="flex items-center px-4 py-4">
-          <Button variant="ghost" size="icon" onClick={onBack} className="rounded-xl">
+          <Button variant="ghost" size="icon" onClick={onBack} className="rounded-xl min-h-[44px] min-w-[44px]">
             <ArrowLeft className="w-5 h-5" />
           </Button>
           
@@ -292,30 +286,18 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
             </div>
           </div>
           
-          <div className="w-10" />
+          <div className="w-11" />
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 px-5 py-6 relative z-10">
+      <main className="flex-1 px-5 py-6">
         <div className="max-w-md mx-auto">
           <AnimatePresence mode="wait">
             {renderContent()}
           </AnimatePresence>
-
-          {!existingENS && !generatedENS && !isLoading && (
-            <motion.div 
-              className="text-center mt-8"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              <Button onClick={handleSkip} variant="ghost" className="text-muted-foreground">
-                {t('onboarding.steps.deposit.skipThisStep')}
-              </Button>
-            </motion.div>
-          )}
         </div>
       </main>
-    </div>
+    </OnboardingLayout>
   );
 };
