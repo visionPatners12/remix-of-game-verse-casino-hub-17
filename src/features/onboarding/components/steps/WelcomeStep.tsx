@@ -5,6 +5,8 @@ import { useAuth } from '@/features/auth';
 import { motion } from 'framer-motion';
 import { useOnboarding } from '../../hooks';
 import { OnboardingStepProps } from '../../types';
+import { OnboardingLayout } from '../OnboardingLayout';
+import { FloatingUSDCIcons } from '../FloatingUSDCIcons';
 
 export function WelcomeStep({ onNext }: OnboardingStepProps) {
   const { user } = useAuth();
@@ -39,56 +41,28 @@ export function WelcomeStep({ onNext }: OnboardingStepProps) {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
-      {/* Premium animated background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Gradient orbs */}
-        <motion.div 
-          className="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-br from-primary/30 to-primary/5 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 0],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div 
-          className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-gradient-to-br from-accent/20 to-accent/5 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            rotate: [90, 0, 90],
-            opacity: [0.2, 0.4, 0.2]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-        
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.03)_1px,transparent_1px)] bg-[size:32px_32px]" />
-        
-        {/* Floating particles */}
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-primary/20 rounded-full"
-            style={{
-              left: `${15 + i * 15}%`,
-              top: `${20 + (i % 3) * 25}%`,
-            }}
-            animate={{
-              y: [-20, 20, -20],
-              opacity: [0.3, 0.7, 0.3],
-            }}
-            transition={{
-              duration: 3 + i * 0.5,
-              repeat: Infinity,
-              delay: i * 0.3,
-            }}
-          />
-        ))}
-      </div>
+    <OnboardingLayout
+      bottomAction={
+        <div className="space-y-3">
+          <Button
+            onClick={handleNext}
+            className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold py-6 rounded-2xl text-lg shadow-xl shadow-primary/25 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/30 active:scale-[0.98] min-h-[56px]"
+          >
+            Let's Get Started
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
+          
+          <p className="text-center text-sm text-muted-foreground">
+            ⚡ Takes less than 2 minutes
+          </p>
+        </div>
+      }
+    >
+      {/* Floating USDC Icons */}
+      <FloatingUSDCIcons />
 
       {/* Main Content */}
-      <main className="flex-1 px-5 py-8 pb-safe overflow-y-auto relative z-10 flex flex-col justify-center">
+      <main className="flex-1 px-5 py-8 flex flex-col justify-center relative z-10">
         <div className="max-w-md mx-auto space-y-8 w-full">
           {/* Logo & Hero */}
           <motion.div 
@@ -173,7 +147,7 @@ export function WelcomeStep({ onNext }: OnboardingStepProps) {
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6 + index * 0.1 }}
-                whileHover={{ scale: 1.02, borderColor: 'hsl(var(--primary) / 0.3)' }}
+                whileTap={{ scale: 0.98 }}
               >
                 {/* Subtle gradient on hover */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -199,32 +173,12 @@ export function WelcomeStep({ onNext }: OnboardingStepProps) {
             ))}
           </motion.div>
 
-          {/* CTA Section */}
-          <motion.div 
-            className="space-y-4 pt-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9 }}
-          >
-            <Button
-              onClick={handleNext}
-              className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold py-6 rounded-2xl text-lg shadow-xl shadow-primary/25 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-0.5"
-            >
-              Let's Get Started
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-            
-            <p className="text-center text-sm text-muted-foreground">
-              ⚡ Takes less than 2 minutes
-            </p>
-          </motion.div>
-
           {/* Feature badges */}
           <motion.div 
             className="flex flex-wrap justify-center gap-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
+            transition={{ delay: 0.9 }}
           >
             {[
               { icon: Star, label: '100% On-Chain' },
@@ -242,6 +196,6 @@ export function WelcomeStep({ onNext }: OnboardingStepProps) {
           </motion.div>
         </div>
       </main>
-    </div>
+    </OnboardingLayout>
   );
 }

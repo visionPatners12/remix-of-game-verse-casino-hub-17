@@ -430,11 +430,18 @@ export function ProfileStep({ onNext, onBack }: OnboardingStepProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background/80 flex flex-col relative safe-area-top">
+    <div 
+      className="min-h-screen bg-gradient-to-br from-background via-background to-background/80 flex flex-col relative"
+      style={{
+        paddingTop: 'env(safe-area-inset-top, 0px)',
+        paddingLeft: 'env(safe-area-inset-left, 0px)',
+        paddingRight: 'env(safe-area-inset-right, 0px)',
+      }}
+    >
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/20">
         <div className="flex items-center px-4 py-3">
-          <Button variant="ghost" size="lg" onClick={onBack}>
+          <Button variant="ghost" size="icon" onClick={onBack} className="min-h-[44px] min-w-[44px] rounded-xl">
             <ArrowLeft className="w-5 h-5" />
           </Button>
           
@@ -442,22 +449,20 @@ export function ProfileStep({ onNext, onBack }: OnboardingStepProps) {
             <h1 className="text-lg font-semibold text-foreground">
               {profile?.auth_method === 'wallet' ? 'Wallet Profile' : 'Profile'}
             </h1>
-            <div className="flex items-center justify-center gap-2 mt-2">
-              <div className="h-1 w-8 rounded-full bg-primary"></div>
-              <div className="h-1 w-8 rounded-full bg-muted"></div>
-              <div className="h-1 w-8 rounded-full bg-muted"></div>
-              <div className="h-1 w-8 rounded-full bg-muted"></div>
-              <div className="h-1 w-8 rounded-full bg-muted"></div>
+            <div className="flex items-center justify-center gap-1.5 mt-2">
+              <div className="h-1.5 w-8 rounded-full bg-primary"></div>
+              <div className="h-1.5 w-6 rounded-full bg-muted"></div>
+              <div className="h-1.5 w-6 rounded-full bg-muted"></div>
+              <div className="h-1.5 w-6 rounded-full bg-muted"></div>
             </div>
           </div>
           
-          <div className="w-[44px]"></div>
+          <div className="w-11"></div>
         </div>
       </header>
 
-
       {/* Main Content */}
-      <main className="flex-1 px-4 py-8 pb-safe overflow-y-auto">
+      <main className="flex-1 px-4 py-6 overflow-y-auto overscroll-contain">
         <div className="max-w-sm mx-auto space-y-8">
           {/* Profile Picture Section */}
           <div className="space-y-4 text-center">

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, User, Heart, Sparkles, Wallet, Loader2, ArrowLeft, Gamepad2, Trophy, Zap } from 'lucide-react';
+import { CheckCircle, User, Sparkles, Loader2, ArrowLeft, Gamepad2, Trophy, Zap } from 'lucide-react';
 import { useAuth } from '@/features/auth';
 import { useOnboarding } from '../../hooks';
 import { OnboardingStepProps } from '../../types';
 import { supabase } from '@/integrations/supabase/client';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import { OnboardingLayout } from '../OnboardingLayout';
 
 const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => (
   <div className="flex items-center justify-center gap-1.5">
@@ -15,7 +16,7 @@ const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSt
       <motion.div
         key={index}
         className={`h-1.5 rounded-full transition-all duration-300 ${
-          index < currentStep ? 'bg-primary w-8' : 'bg-muted w-6'
+          index <= currentStep ? 'bg-primary w-8' : 'bg-muted w-6'
         }`}
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
@@ -112,27 +113,37 @@ export function CompleteStep({ onNext, onBack }: OnboardingStepProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
-      {/* Celebration background */}
+    <OnboardingLayout
+      backgroundVariant="emerald"
+      bottomAction={
+        <div className="space-y-3">
+          <Button
+            onClick={handleComplete}
+            disabled={isLoading}
+            className="w-full py-6 text-base font-semibold rounded-2xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-xl shadow-primary/25 min-h-[56px] active:scale-[0.98] transition-transform"
+            size="lg"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-3 animate-spin" />
+                {t('onboarding.steps.complete.settingUp')}
+              </>
+            ) : (
+              <>
+                Start Playing
+                <Zap className="w-5 h-5 ml-2" />
+              </>
+            )}
+          </Button>
+          
+          <p className="text-center text-muted-foreground text-xs">
+            Welcome to the future of gaming 🚀
+          </p>
+        </div>
+      }
+    >
+      {/* Floating stars */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-emerald-500/20 to-green-500/5 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1, 1.3, 1],
-            opacity: [0.3, 0.6, 0.3]
-          }}
-          transition={{ duration: 4, repeat: Infinity }}
-        />
-        <motion.div 
-          className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-primary/20 to-accent/10 rounded-full blur-3xl"
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.5, 0.2]
-          }}
-          transition={{ duration: 6, repeat: Infinity }}
-        />
-        
-        {/* Floating stars */}
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
@@ -160,7 +171,7 @@ export function CompleteStep({ onNext, onBack }: OnboardingStepProps) {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/20">
         <div className="flex items-center px-4 py-4">
-          <Button variant="ghost" size="icon" onClick={onBack} className="rounded-xl">
+          <Button variant="ghost" size="icon" onClick={onBack} className="rounded-xl min-h-[44px] min-w-[44px]">
             <ArrowLeft className="w-5 h-5" />
           </Button>
           
@@ -171,12 +182,12 @@ export function CompleteStep({ onNext, onBack }: OnboardingStepProps) {
             </div>
           </div>
           
-          <div className="w-10" />
+          <div className="w-11" />
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 px-5 py-8 pb-32 relative z-10">
+      <main className="flex-1 px-5 py-8 relative z-10">
         <div className="max-w-md mx-auto">
           {/* Success Animation */}
           <motion.div 
@@ -238,7 +249,7 @@ export function CompleteStep({ onNext, onBack }: OnboardingStepProps) {
 
           {/* Features checklist */}
           <motion.div 
-            className="space-y-3 mb-8"
+            className="space-y-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
@@ -266,60 +277,8 @@ export function CompleteStep({ onNext, onBack }: OnboardingStepProps) {
               </motion.div>
             ))}
           </motion.div>
-
-          {/* Stats preview */}
-          <motion.div 
-            className="grid grid-cols-3 gap-3 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9 }}
-          >
-            {[
-              { label: 'Games Available', value: '4+' },
-              { label: 'Active Players', value: '10K+' },
-              { label: 'Paid Out', value: '$500K+' }
-            ].map((stat, i) => (
-              <div key={i} className="bg-card/60 backdrop-blur-xl rounded-xl p-3 text-center border border-border/50">
-                <div className="text-xl font-bold text-primary">{stat.value}</div>
-                <div className="text-xs text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </main>
-
-      {/* Fixed Bottom Button */}
-      <motion.div 
-        className="fixed bottom-0 left-0 right-0 p-5 pb-safe bg-background/80 backdrop-blur-xl border-t border-border/20"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
-      >
-        <div className="max-w-md mx-auto space-y-3">
-          <Button
-            onClick={handleComplete}
-            disabled={isLoading}
-            className="w-full py-6 text-base font-semibold rounded-2xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-xl shadow-primary/25"
-            size="lg"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="w-5 h-5 mr-3 animate-spin" />
-                {t('onboarding.steps.complete.settingUp')}
-              </>
-            ) : (
-              <>
-                Start Playing
-                <Zap className="w-5 h-5 ml-2" />
-              </>
-            )}
-          </Button>
-          
-          <p className="text-center text-muted-foreground text-xs">
-            Welcome to the future of gaming 🚀
-          </p>
-        </div>
-      </motion.div>
-    </div>
+    </OnboardingLayout>
   );
 }
