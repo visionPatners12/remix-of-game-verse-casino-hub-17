@@ -115,11 +115,26 @@ export const useRealtimeGame = (gameId: string): {
         },
         (payload) => {
           if (payload.eventType === 'INSERT') {
-            setPlayers(prev => [...prev, payload.new as PlayerData]);
+            const newPlayer = payload.new as PlayerData;
+            // Ne pas ajouter les joueurs qui ont quitté
+            if (!newPlayer.has_exited) {
+              setPlayers(prev => {
+                // Éviter les doublons
+                const exists = prev.some(p => p.id === newPlayer.id);
+                if (exists) return prev;
+                return [...prev, newPlayer];
+              });
+            }
           } else if (payload.eventType === 'UPDATE') {
-            setPlayers(prev => prev.map(player => 
-              player.id === payload.new.id ? { ...player, ...payload.new } : player
-            ));
+            const updatedPlayer = payload.new as PlayerData;
+            // Si le joueur a quitté, le retirer de la liste
+            if (updatedPlayer.has_exited) {
+              setPlayers(prev => prev.filter(p => p.id !== updatedPlayer.id));
+            } else {
+              setPlayers(prev => prev.map(player => 
+                player.id === updatedPlayer.id ? { ...player, ...updatedPlayer } : player
+              ));
+            }
           } else if (payload.eventType === 'DELETE') {
             setPlayers(prev => prev.filter(player => player.id !== payload.old.id));
           }
@@ -132,6 +147,19 @@ export const useRealtimeGame = (gameId: string): {
       supabase.removeChannel(playersChannel);
     };
   }, [gameId]);
+
+  // Refetch data when tab becomes visible again
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && gameId) {
+        logger.debug('🔄 Tab visible, refetching game data...');
+        loadInitialData();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [gameId, loadInitialData]);
 
   // Heartbeat for connection tracking
   useEffect(() => {

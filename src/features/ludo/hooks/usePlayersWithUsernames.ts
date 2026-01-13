@@ -10,6 +10,9 @@ interface PlayerData {
   turn_order: number;
   is_connected: boolean;
   last_seen_at: string;
+  deposit_status?: string;
+  tx_hash?: string;
+  has_exited?: boolean;
 }
 
 interface PlayerWithUsername extends PlayerData {
