@@ -6,8 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { LandingLayout } from "../components/LandingLayout";
 import { DownloadButtons } from "../components/shared/DownloadButtons";
 import { PhoneMockup } from "../components/shared/PhoneMockup";
-import { ScreenshotPlaceholder } from "../components/shared/ScreenshotPlaceholder";
 import { useStandaloneMode } from "@/hooks/useStandaloneMode";
+import landingLudoGame from "@/assets/landing-ludo-game.png";
+import landingWallet from "@/assets/landing-wallet.png";
+import landingGames from "@/assets/landing-games.png";
 import { 
   Gamepad2,
   UserPlus,
@@ -70,21 +72,21 @@ const features = [
     icon: Gamepad2,
     title: "Ludo Multiplayer",
     description: "Challenge up to 4 players in real-time. Flexible bets from 1 to 100 USDC. Winner takes all.",
-    mockupLabel: "Ludo Game",
+    image: landingLudoGame,
     reverse: false
   },
   {
     icon: Wallet,
     title: "Crypto Wallet",
     description: "Manage your USDC easily. Fast deposits and withdrawals on Base. Complete transaction history.",
-    mockupLabel: "Wallet",
+    image: landingWallet,
     reverse: true
   },
   {
     icon: Dices,
     title: "More Games Coming",
     description: "Crash, Dice, and other classic games are coming. Same USDC betting system, same smooth experience.",
-    mockupLabel: "Coming Soon",
+    image: landingGames,
     reverse: false
   }
 ];
@@ -264,7 +266,11 @@ export function LandingHome() {
               >
                 <div className="flex-1">
                   <PhoneMockup>
-                    <ScreenshotPlaceholder label={feature.mockupLabel} />
+                    <img 
+                      src={feature.image} 
+                      alt={feature.title}
+                      className="w-full h-full object-cover object-top"
+                    />
                   </PhoneMockup>
                 </div>
                 <div className="flex-1 text-center md:text-left">
