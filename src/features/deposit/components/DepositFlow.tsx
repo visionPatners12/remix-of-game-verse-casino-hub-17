@@ -11,6 +11,8 @@ import { cn } from '@/lib/utils';
 import QRCode from 'react-qr-code';
 import { toast } from 'sonner';
 import coinbaseLogo from '@/assets/coinbase-logo.png';
+import { USDCOnBaseBadge } from '@/components/shared/USDCOnBaseBadge';
+import { TokenUSDC, NetworkBase } from '@web3icons/react';
 
 type DepositMethod = 'crypto' | 'coinbase' | 'mobile-money' | 'bank-transfer' | 'apple-pay';
 
@@ -72,14 +74,18 @@ const DepositFlow = () => {
     switch (iconType) {
       case 'usdc':
         return (
-          <img 
-            src="https://cryptologos.cc/logos/usd-coin-usdc-logo.svg" 
-            alt="USDC" 
-            className="h-6 w-6"
-          />
+          <div className="flex items-center gap-0.5">
+            <TokenUSDC variant="branded" size={24} />
+            <NetworkBase variant="branded" size={16} />
+          </div>
         );
       case 'coinbase':
-        return <img src={coinbaseLogo} alt="Coinbase" className="h-6 w-6" />;
+        return (
+          <div className="flex items-center gap-0.5">
+            <img src={coinbaseLogo} alt="Coinbase" className="h-6 w-6" />
+            <NetworkBase variant="branded" size={16} />
+          </div>
+        );
       case 'smartphone':
         return <Smartphone className={iconClass} />;
       case 'bank':
@@ -223,6 +229,9 @@ const DepositFlow = () => {
 
     return (
       <div className="px-4 py-6 space-y-6">
+        {/* USDC on Base Badge */}
+        <USDCOnBaseBadge variant="card" size="lg" />
+
         {/* QR Code section */}
         <div className="flex flex-col items-center">
           <div className="bg-card p-4 rounded-2xl shadow-sm border border-border/30">

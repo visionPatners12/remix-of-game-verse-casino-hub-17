@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@/ui';
 import { SoonOverlay } from '@/ui';
+import { TokenUSDC, NetworkBase } from '@web3icons/react';
 
 interface BalanceCardWebProps {
   balance: string;
@@ -12,7 +13,11 @@ export const BalanceCardWeb = ({ balance, onDeposit, onWithdraw }: BalanceCardWe
   return (
     <div className="p-3 border border-border bg-gradient-to-br from-card/50 to-card/30 rounded-lg backdrop-blur-sm">
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-medium text-muted-foreground">Total Balance</span>
+        <div className="flex items-center gap-1.5">
+          <TokenUSDC variant="branded" size={16} />
+          <span className="text-xs font-medium text-muted-foreground">USDC</span>
+          <NetworkBase variant="branded" size={12} />
+        </div>
         <span className="text-lg font-bold text-foreground">{balance}</span>
       </div>
       <div className="flex gap-2">
