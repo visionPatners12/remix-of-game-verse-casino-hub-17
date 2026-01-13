@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { DollarSign } from 'lucide-react';
+import { TokenUSDC } from '@web3icons/react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 const floatingIcons = [
@@ -30,16 +30,7 @@ export function FloatingUSDCIcons() {
               opacity: icon.opacity,
             }}
           >
-            <div 
-              className="relative rounded-full bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center shadow-lg"
-              style={{ width: icon.size, height: icon.size }}
-            >
-              <div className="absolute inset-1 rounded-full border border-white/30" />
-              <DollarSign 
-                className="text-white drop-shadow-sm" 
-                style={{ width: icon.size * 0.55, height: icon.size * 0.55 }} 
-              />
-            </div>
+            <TokenUSDC variant="branded" size={icon.size} />
           </div>
         ))}
       </div>
@@ -70,20 +61,7 @@ export function FloatingUSDCIcons() {
             rotate: { duration: icon.duration * 1.2, repeat: Infinity, ease: "easeInOut", delay: icon.delay },
           }}
         >
-          {/* USDC-like coin */}
-          <div 
-            className="relative rounded-full bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center shadow-lg"
-            style={{ width: icon.size, height: icon.size }}
-          >
-            {/* Inner ring */}
-            <div 
-              className="absolute inset-1 rounded-full border border-white/30"
-            />
-            <DollarSign 
-              className="text-white drop-shadow-sm" 
-              style={{ width: icon.size * 0.55, height: icon.size * 0.55 }} 
-            />
-          </div>
+          <TokenUSDC variant="branded" size={icon.size} />
         </motion.div>
       ))}
     </div>

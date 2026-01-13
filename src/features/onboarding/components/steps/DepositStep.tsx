@@ -12,6 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { DepositQRCode } from '@/features/deposit/components/DepositQRCode';
 import { motion, AnimatePresence } from 'framer-motion';
 import { OnboardingLayout } from '../OnboardingLayout';
+import { TokenUSDC, NetworkBase } from '@web3icons/react';
 
 const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => (
   <div className="flex items-center justify-center gap-1.5">
@@ -131,6 +132,19 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
+          {/* USDC on Base Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-blue-500/10 to-emerald-500/10 rounded-2xl border border-primary/20"
+          >
+            <TokenUSDC variant="branded" size={32} />
+            <span className="text-lg font-semibold text-foreground">USDC</span>
+            <span className="text-muted-foreground">on</span>
+            <NetworkBase variant="branded" size={32} />
+            <span className="text-lg font-semibold text-foreground">Base</span>
+          </motion.div>
+
           {/* QR Code Section */}
           {address && (
             <motion.div
@@ -138,7 +152,7 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
             >
-              <DepositQRCode address={address} cryptoSymbol="USDT" />
+              <DepositQRCode address={address} cryptoSymbol="USDC" />
             </motion.div>
           )}
 

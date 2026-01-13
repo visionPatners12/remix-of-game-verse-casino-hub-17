@@ -27,9 +27,9 @@ export function UnifiedOnboardingRouter() {
   };
 
   const handleComplete = () => {
-    // Set flag to trigger celebration on dashboard
+    // Set flag to trigger celebration on games page
     sessionStorage.setItem('onboarding_just_completed', 'true');
-    navigate('/dashboard');
+    navigate('/games');
   };
 
   // Wait for auth to fully load before rendering
