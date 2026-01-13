@@ -156,7 +156,7 @@ export function LandingHome() {
           <img 
             src={heroBgIllustration} 
             alt=""
-            className="w-full max-w-5xl opacity-20 object-contain"
+            className="w-full max-w-5xl opacity-40 object-contain"
           />
         </div>
         
