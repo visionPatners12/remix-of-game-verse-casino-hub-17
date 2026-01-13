@@ -1,13 +1,22 @@
-
 /* Animations CSS natives optimisées pour la performance */
 
-/* GPU-accelerated transforms */
-.gpu-accelerated {
-  will-change: transform;
+/* === GPU OPTIMIZATION === */
+/* Active animations get GPU acceleration */
+.gpu-accelerated,
+.animating,
+[data-state="open"],
+[data-motion="true"] {
+  will-change: transform, opacity;
   transform: translateZ(0);
 }
 
-/* Fade animations with GPU acceleration */
+/* Reset will-change after animation completes to free GPU memory */
+.animation-complete,
+[data-state="closed"] {
+  will-change: auto;
+}
+
+/* === FADE ANIMATIONS === */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -30,6 +39,7 @@
   }
 }
 
+/* === SLIDE ANIMATIONS === */
 @keyframes slideInRight {
   from {
     opacity: 0;
@@ -52,6 +62,7 @@
   }
 }
 
+/* === SCALE ANIMATIONS === */
 @keyframes scaleIn {
   from {
     opacity: 0;
@@ -63,7 +74,7 @@
   }
 }
 
-/* Animation utility classes */
+/* === ANIMATION UTILITY CLASSES === */
 .animate-fade-in-up {
   animation: fadeInUp 0.3s ease-out forwards;
   animation-fill-mode: both;
@@ -89,24 +100,16 @@
   animation-fill-mode: both;
 }
 
-/* Staggered animations */
-.animate-staggered-1 {
-  animation-delay: 0.1s;
-}
+/* === STAGGERED ANIMATIONS === */
+.animate-staggered-1 { animation-delay: 0.1s; }
+.animate-staggered-2 { animation-delay: 0.2s; }
+.animate-staggered-3 { animation-delay: 0.3s; }
 
-.animate-staggered-2 {
-  animation-delay: 0.2s;
-}
-
-.animate-staggered-3 {
-  animation-delay: 0.3s;
-}
-
-/* Hover transitions optimisées */
+/* === HOVER TRANSITIONS === */
+/* Optimized with GPU-accelerated transforms */
 .transition-smooth {
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
               opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, opacity;
 }
 
 .hover-lift:hover {
@@ -117,14 +120,10 @@
   transform: scale3d(1.02, 1.02, 1);
 }
 
-/* Loading animations */
+/* === LOADING ANIMATIONS === */
 @keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
 }
 
 .shimmer {
@@ -133,34 +132,23 @@
   animation: shimmer 2s infinite linear;
 }
 
-/* Gradient X animation for premium badges */
+/* === GRADIENT ANIMATIONS === */
 @keyframes gradient-x {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .animate-gradient-x {
   animation: gradient-x 3s ease infinite;
 }
 
-/* Performance optimizations */
-.will-change-transform {
-  will-change: transform;
-}
+/* === WILL-CHANGE UTILITIES === */
+.will-change-transform { will-change: transform; }
+.will-change-opacity { will-change: opacity; }
+.will-change-auto { will-change: auto; }
 
-.will-change-opacity {
-  will-change: opacity;
-}
-
-.will-change-auto {
-  will-change: auto;
-}
-
-/* Reduce motion for accessibility */
+/* === ACCESSIBILITY: REDUCED MOTION === */
+/* Respect user's system preference for reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -168,5 +156,15 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Disable will-change when animations are reduced */
+  .gpu-accelerated,
+  .animating,
+  [data-state="open"],
+  [data-motion="true"],
+  .transition-smooth {
+    will-change: auto !important;
   }
 }

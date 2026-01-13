@@ -47,8 +47,10 @@ export function useLudoReferralStats() {
       return data as LudoReferralStats;
     },
     enabled: !!user?.id,
-    staleTime: 30 * 1000, // 30 seconds
-    refetchOnWindowFocus: true,
+    staleTime: 1000 * 60 * 5, // 5 minutes (optimisé)
+    gcTime: 1000 * 60 * 15, // 15 minutes
+    refetchOnWindowFocus: false, // Économise des requêtes
+    refetchOnMount: false,
   });
 }
 

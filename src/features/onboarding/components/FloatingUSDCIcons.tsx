@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { DollarSign } from 'lucide-react';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 const floatingIcons = [
   { delay: 0, x: 8, y: 15, size: 28, duration: 4.5, opacity: 0.15 },
@@ -13,6 +14,38 @@ const floatingIcons = [
 ];
 
 export function FloatingUSDCIcons() {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  
+  // Don't render floating animations if user prefers reduced motion
+  if (prefersReducedMotion) {
+    return (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {floatingIcons.slice(0, 3).map((icon, i) => (
+          <div
+            key={i}
+            className="absolute"
+            style={{ 
+              left: `${icon.x}%`, 
+              top: `${icon.y}%`,
+              opacity: icon.opacity,
+            }}
+          >
+            <div 
+              className="relative rounded-full bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center shadow-lg"
+              style={{ width: icon.size, height: icon.size }}
+            >
+              <div className="absolute inset-1 rounded-full border border-white/30" />
+              <DollarSign 
+                className="text-white drop-shadow-sm" 
+                style={{ width: icon.size * 0.55, height: icon.size * 0.55 }} 
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {floatingIcons.map((icon, i) => (
