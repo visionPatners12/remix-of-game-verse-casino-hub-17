@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useFundWallet } from '@privy-io/react-auth';
 import { base } from 'viem/chains';
 import { Button } from '@/components/ui/button';
-import { Wallet, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
+import { TokenUSDC, NetworkBase } from '@web3icons/react';
 
 interface FundWalletButtonProps {
   className?: string;
@@ -62,9 +63,12 @@ export const FundWalletButton: React.FC<FundWalletButtonProps> = ({ className })
       {isLoading ? (
         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
       ) : (
-        <Wallet className="h-4 w-4 mr-2" />
+        <div className="flex items-center gap-1 mr-2">
+          <TokenUSDC variant="branded" size={16} />
+          <NetworkBase variant="branded" size={12} />
+        </div>
       )}
-      {isLoading ? 'Adding Funds...' : 'Add Funds'}
+      {isLoading ? 'Adding USDC...' : 'Add USDC'}
     </Button>
   );
 };

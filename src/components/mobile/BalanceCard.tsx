@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Button } from '@/ui';
-import { SoonOverlay } from '@/ui';
 import { ChevronRight } from 'lucide-react';
+import { TokenUSDC, NetworkBase } from '@web3icons/react';
 
 interface BalanceCardProps {
   balance: string;
@@ -19,7 +18,10 @@ export const BalanceCard = ({ balance, isLoading, onDeposit, onWithdraw, onBalan
         className="flex items-center justify-between mb-3 cursor-pointer hover:bg-muted/30 active:bg-muted/40 p-2 -mx-2 rounded-md transition-all duration-200 ease-in-out active:scale-[0.98] hover:shadow-sm"
         onClick={onBalanceClick}
       >
-        <span className="text-sm text-muted-foreground">Total Balance</span>
+        <div className="flex items-center gap-2">
+          <TokenUSDC variant="branded" size={20} />
+          <span className="text-sm text-muted-foreground">USDC Balance</span>
+        </div>
         <div className="flex items-center gap-2">
           <span className="text-xl font-bold">
             {isLoading ? (
@@ -30,7 +32,7 @@ export const BalanceCard = ({ balance, isLoading, onDeposit, onWithdraw, onBalan
           </span>
           {!isLoading && (
             <>
-              <span className="text-sm text-muted-foreground">Wallet</span>
+              <NetworkBase variant="branded" size={16} />
               <ChevronRight className="h-4 w-4 text-muted-foreground" />
             </>
           )}
