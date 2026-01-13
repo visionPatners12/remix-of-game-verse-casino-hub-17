@@ -11,7 +11,7 @@ import landingLudoGame from "@/assets/landing-ludo-game.png";
 import landingWallet from "@/assets/landing-wallet.png";
 import landingGames from "@/assets/landing-games.png";
 import heroBgIllustration from "@/assets/hero-bg-illustration.png";
-import featuresBgIllustration from "@/assets/features-bg-illustration.png";
+
 import howtoBgIllustration from "@/assets/howto-bg-illustration.png";
 import roadmapBgIllustration from "@/assets/roadmap-bg-illustration.png";
 import ctaBgIllustration from "@/assets/cta-bg-illustration.png";
@@ -31,28 +31,6 @@ import {
   Dices
 } from "lucide-react";
 
-const highlights = [
-  {
-    icon: Gamepad2,
-    title: "Ludo On-Chain",
-    description: "The classic board game reimagined. Bet in USDC on Base and challenge up to 4 players in real-time."
-  },
-  {
-    icon: Wallet,
-    title: "Integrated Wallet",
-    description: "Deposit and withdraw in USDC on Base. Fast transactions and minimal fees."
-  },
-  {
-    icon: Users,
-    title: "Private Games",
-    description: "Create private games and invite your friends. Choose your own bet amount."
-  },
-  {
-    icon: Zap,
-    title: "Instant Wins",
-    description: "Victory = direct gains to your wallet. No waiting, no middleman."
-  }
-];
 
 const steps = [
   {
@@ -76,14 +54,14 @@ const features = [
   {
     icon: Gamepad2,
     title: "Ludo Multiplayer",
-    description: "Challenge up to 4 players in real-time. Flexible bets from 1 to 100 USDC. Winner takes all.",
+    description: "Challenge up to 4 players in real-time. Create private games, invite friends, and bet from 1 to 100 USDC. Winner takes all instantly.",
     image: landingLudoGame,
     reverse: false
   },
   {
     icon: Wallet,
     title: "Crypto Wallet",
-    description: "Manage your USDC easily. Fast deposits and withdrawals on Base. Complete transaction history.",
+    description: "Manage your USDC easily. Fast deposits and instant withdrawals on Base. Your winnings go directly to your wallet—no waiting.",
     image: landingWallet,
     reverse: true
   },
@@ -225,60 +203,15 @@ export function LandingHome() {
         </div>
       </section>
 
-      {/* Highlights Section */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
-        {/* Background Illustration */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <img 
-            src={featuresBgIllustration} 
-            alt=""
-            className="w-full max-w-6xl opacity-50 object-contain"
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
-        
-        <div className="container px-4 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              On-chain gaming made simple
-            </h2>
-            <p className="text-muted-foreground max-w-lg mx-auto">
-              Everything you need to play and win in crypto
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {highlights.map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="p-6 rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm hover:bg-card/90 transition-colors"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Features with Phone Mockups */}
       <section className="py-20 border-y border-border/30">
         <div className="container px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Discover the experience
+              Everything you need to win
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              An app designed for mobile gaming
+              On-chain gaming made simple
             </p>
           </div>
 
