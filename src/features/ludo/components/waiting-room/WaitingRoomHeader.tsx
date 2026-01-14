@@ -7,7 +7,7 @@ import { LogOut, Copy, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLeaveGame } from '../../hooks/useLeaveGame';
 import { useClipboard } from '@/hooks/useClipboard';
-import { LudoPotBadge } from '../shared/LudoPotBadge';
+
 import { motion } from 'framer-motion';
 
 interface WaitingRoomHeaderProps {
@@ -60,24 +60,26 @@ export const WaitingRoomHeader: React.FC<WaitingRoomHeaderProps> = ({
           </Button>
         </motion.div>
 
-        {/* Center: Room code + Pot */}
-        <div className="flex flex-col items-center gap-1.5">
-          {/* Room code pill */}
-          <motion.button
-            onClick={handleCopyCode}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="flex items-center gap-2 bg-muted/60 hover:bg-muted/80 border border-border/30 rounded-lg px-3 py-1.5 transition-all group"
+        {/* Center: Premium Room Code Display */}
+        <motion.button
+          onClick={handleCopyCode}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className="flex items-center gap-2.5 px-4 py-2 rounded-xl 
+            bg-gradient-to-br from-amber-500/20 via-yellow-500/15 to-orange-500/20 
+            border border-amber-500/40 hover:border-amber-400/60
+            shadow-[0_0_20px_rgba(251,191,36,0.15)] hover:shadow-[0_0_25px_rgba(251,191,36,0.25)]
+            transition-all duration-300 group"
+        >
+          <span 
+            className="font-mono text-lg tracking-[0.25em] font-black 
+              bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-400 
+              bg-clip-text text-transparent drop-shadow-sm"
           >
-            <span className="font-mono text-sm tracking-[0.2em] font-bold text-foreground">
-              {roomCode}
-            </span>
-            <Copy className="w-3.5 h-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
-          </motion.button>
-          
-          {/* Pot display */}
-          <LudoPotBadge amount={totalPot} size="sm" showTrophy={false} />
-        </div>
+            {roomCode}
+          </span>
+          <Copy className="w-4 h-4 text-amber-400/70 group-hover:text-amber-300 transition-colors" />
+        </motion.button>
 
         {/* Share button */}
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
