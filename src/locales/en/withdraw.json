@@ -10,7 +10,22 @@
     "user": {
       "title": "To a User",
       "description": "Search platform users"
+    },
+    "cashout": {
+      "title": "Cash Out",
+      "description": "Convert to bank via Coinbase"
     }
+  },
+  "cashout": {
+    "title": "Cash Out to USD",
+    "subtitle": "Convert your crypto to cash",
+    "description": "Sell your USDC and receive USD directly in your bank account or Coinbase balance.",
+    "poweredBy": "Powered by Coinbase",
+    "button": "Cash Out with Coinbase",
+    "processing": "Preparing...",
+    "comingSoon": "Coming Soon",
+    "note": "You'll be redirected to Coinbase to complete the transaction.",
+    "securityNote": "Your transaction is secured by Coinbase's institutional-grade security."
   },
   "userSearch": {
     "title": "Send to User",

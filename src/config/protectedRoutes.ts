@@ -5,6 +5,7 @@ import Settings from '@/pages/Settings';
 import SimpleMobileMenuPage from '@/pages/SimpleMobileMenuPage';
 import MobileDepositPage from '@/pages/MobileDepositPage';
 import CoinbaseDepositPage from '@/pages/CoinbaseDepositPage';
+import CoinbaseCashOutPage from '@/pages/CoinbaseCashOutPage';
 import TransactionsPage from '@/pages/TransactionsPage';
 import { NotificationsPage } from '@/features/notifications';
 import SearchPage from '@/pages/SearchPage';
@@ -54,6 +55,7 @@ export const protectedRoutes: ProtectedRoute[] = [
   { path: '/mobile-deposit', component: MobileDepositPage },
   { path: '/deposit/coinbase', component: CoinbaseDepositPage },
   { path: '/withdrawal', component: UnifiedWithdrawPage },
+  { path: '/withdrawal/coinbase-cashout', component: CoinbaseCashOutPage },
   { path: '/transactions', component: TransactionsPage },
   
   // Search

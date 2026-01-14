@@ -10,7 +10,7 @@ import { SearchedUser } from '../hooks/useUserWalletLookup';
 import { RecentRecipient } from '../hooks/useRecentRecipients';
 
 interface DestinationCardProps {
-  mode: 'address' | 'user';
+  mode: 'address' | 'user' | 'cashout';
   address: string;
   onAddressChange: (address: string) => void;
   selectedUser?: SearchedUser | null;

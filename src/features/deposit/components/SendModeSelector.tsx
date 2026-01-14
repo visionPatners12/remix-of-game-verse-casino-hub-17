@@ -1,9 +1,9 @@
 import React from 'react';
-import { MapPin, User, ChevronRight } from 'lucide-react';
+import { MapPin, User, Banknote, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 
-export type SendMode = 'address' | 'user';
+export type SendMode = 'address' | 'user' | 'cashout';
 
 interface SendModeSelectorProps {
   onSelectMode: (mode: SendMode) => void;
@@ -24,6 +24,12 @@ export const SendModeSelector: React.FC<SendModeSelectorProps> = ({ onSelectMode
       icon: User,
       title: t('modes.user.title', 'To a User'),
       description: t('modes.user.description', 'Search platform users')
+    },
+    {
+      id: 'cashout' as SendMode,
+      icon: Banknote,
+      title: t('modes.cashout.title', 'Cash Out'),
+      description: t('modes.cashout.description', 'Convert to bank via Coinbase')
     }
   ];
 
