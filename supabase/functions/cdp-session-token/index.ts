@@ -22,6 +22,11 @@ type SessionTokenRequest = {
   clientIp?: string;
 };
 
+type EdgeFunctionRequest = {
+  endpoint: string;
+  body: SessionTokenRequest;
+};
+
 function json(status: number, body: any) {
   return new Response(JSON.stringify(body), {
     status,
@@ -106,6 +111,27 @@ function validateBody(b: any): SessionTokenRequest {
   return b as SessionTokenRequest;
 }
 
+function validateEdgeFunctionRequest(raw: any): EdgeFunctionRequest {
+  if (!raw || typeof raw !== "object") throw new Error("Invalid JSON body");
+  
+  // Support both new format (endpoint + body) and legacy format (direct addresses)
+  if (raw.endpoint && raw.body) {
+    if (raw.endpoint !== "token") {
+      throw new Error(`Unknown endpoint: ${raw.endpoint}`);
+    }
+    return {
+      endpoint: raw.endpoint,
+      body: validateBody(raw.body),
+    };
+  }
+  
+  // Legacy format: direct addresses in the root
+  return {
+    endpoint: "token",
+    body: validateBody(raw),
+  };
+}
+
 serve(async (req) => {
   try {
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders });
@@ -115,7 +141,10 @@ serve(async (req) => {
       return json(500, { error: "Missing CDP_API_KEY_ID / CDP_API_KEY_SECRET" });
     }
 
-    const body = validateBody(await req.json());
+    const request = validateEdgeFunctionRequest(await req.json());
+    const body = request.body;
+    
+    console.log(`[cdp-session-token] Processing endpoint: ${request.endpoint}`);
 
     const jwt = await generateCdpJwtEd25519({
       keyId: CDP_API_KEY_ID,
