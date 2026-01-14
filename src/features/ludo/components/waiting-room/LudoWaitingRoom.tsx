@@ -214,17 +214,16 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
             </motion.div>
           )}
 
-          {/* Free game message */}
+          {/* Free game indicator - subtle, no deposit UI needed */}
           {isFreeGame && (
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center py-8"
+              className="flex justify-center"
             >
-              <p className="text-lg font-medium">Free game</p>
-              <p className="text-sm text-muted-foreground mt-1">
-                No deposit required
-              </p>
+              <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-green-500/10 text-green-500 border border-green-500/20">
+                Free game
+              </span>
             </motion.div>
           )}
 
