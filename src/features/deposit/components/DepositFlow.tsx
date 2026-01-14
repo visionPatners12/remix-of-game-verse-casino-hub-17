@@ -140,7 +140,10 @@ const DepositFlow = () => {
 
   // Native-style header
   const renderHeader = () => (
-    <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50">
+    <div 
+      className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50"
+      style={{ paddingTop: 'env(safe-area-inset-top)' }}
+    >
       <div className="flex items-center h-14 px-4">
         <button 
           onClick={handleBack}
