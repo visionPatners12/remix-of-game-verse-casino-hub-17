@@ -59,6 +59,27 @@ export const LudoKonva: React.FC = () => {
   const { animatingPawn, startAnimation, clearAnimation, isAnimating } = usePawnAnimation();
   // Move clickTimeoutRef to top with other hooks
   const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Use hook for game actions - MUST be called before any conditional returns (Rules of Hooks)
+  const { startGame, isStartingGame: hookIsStarting } = useLudoGameActions({
+    gameId: gameId || '',
+    gameData,
+    currentPlayer,
+    possibleMoves,
+    waitingForMove,
+    isMoving,
+    isAnimating,
+    setWaitingForMove,
+    setPossibleMoves,
+    setIsMoving,
+    startAnimation,
+    clearAnimation,
+  });
+  
+  // Memoized start game handler - also before conditional returns
+  const handleStartGame = useCallback(() => {
+    startGame(user?.id);
+  }, [startGame, user?.id]);
 
   // Auto-play handler when timer expires
   const handleTimeExpired = useCallback(async () => {
@@ -272,27 +293,6 @@ export const LudoKonva: React.FC = () => {
   // Prioritize width for maximum board size, especially on mobile
   const boardSize = isMobile ? availableWidth : Math.min(availableWidth, availableHeight);
   const cellSize = Math.floor(boardSize / 15); // Use 15 to exclude header space
-
-  // Use hook for game actions
-  const { startGame, isStartingGame: hookIsStarting } = useLudoGameActions({
-    gameId: gameId || '',
-    gameData,
-    currentPlayer,
-    possibleMoves,
-    waitingForMove,
-    isMoving,
-    isAnimating,
-    setWaitingForMove,
-    setPossibleMoves,
-    setIsMoving,
-    startAnimation,
-    clearAnimation,
-  });
-  
-  // Memoized start game handler
-  const handleStartGame = useCallback(() => {
-    startGame(user?.id);
-  }, [startGame, user?.id]);
 
   // Helper for checking if pawn is at home
   const isAtHome = (position: number, color: Color): boolean => {
