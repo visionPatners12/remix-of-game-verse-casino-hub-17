@@ -68,6 +68,8 @@ const WithdrawFlow = () => {
     setSendMode(mode);
     if (mode === 'user') {
       setCurrentStep('user-search');
+    } else if (mode === 'cashout') {
+      navigate('/withdrawal/coinbase-cashout');
     } else {
       setCurrentStep('token');
     }

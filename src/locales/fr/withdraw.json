@@ -10,7 +10,22 @@
     "user": {
       "title": "Vers un utilisateur",
       "description": "Rechercher des utilisateurs"
+    },
+    "cashout": {
+      "title": "Retrait",
+      "description": "Convertir vers banque via Coinbase"
     }
+  },
+  "cashout": {
+    "title": "Retrait en USD",
+    "subtitle": "Convertissez vos crypto en argent",
+    "description": "Vendez vos USDC et recevez des USD directement sur votre compte bancaire ou solde Coinbase.",
+    "poweredBy": "Propulsé par Coinbase",
+    "button": "Retirer avec Coinbase",
+    "processing": "Préparation...",
+    "comingSoon": "Bientôt disponible",
+    "note": "Vous serez redirigé vers Coinbase pour finaliser la transaction.",
+    "securityNote": "Votre transaction est sécurisée par la sécurité institutionnelle de Coinbase."
   },
   "userSearch": {
     "title": "Envoyer à un utilisateur",
