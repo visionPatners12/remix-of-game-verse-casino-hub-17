@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { LogOut, Share, Play, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
@@ -11,11 +10,9 @@ import { BoardKonva } from '@/features/ludo';
 
 import { ShareGameModal } from '../components/ShareGameModal';
 import { PlayerProfileCard } from '../components/PlayerProfileCard';
-import { DiceRoller } from '../components/DiceRoller';
-import { TurnTimer } from '../components/TurnTimer';
 import { WinnerModal } from '../components/WinnerModal';
-import { NetworkIndicator } from '../components/NetworkIndicator';
-import { LudoPotBadge } from '../components/shared/LudoPotBadge';
+import { LudoGameHUD } from './LudoGameHUD';
+import { FloatingGameControls } from '../components/FloatingGameControls';
 import { useLeaveGame } from '../hooks/useLeaveGame';
 import { LudoWaitingRoom } from '../components/waiting-room';
 import { useAutoJoin } from '../hooks/useAutoJoin';
@@ -596,106 +593,41 @@ export const LudoKonva: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
         
         <div className="relative w-full h-full flex flex-col">
-          {/* Mobile-first Header */}
-          <div 
-            className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/20"
-            style={{ paddingTop: 'env(safe-area-inset-top)' }}
+          {/* Premium Gaming HUD */}
+          <LudoGameHUD
+            roomCode={gameData?.room_code}
+            isOnline={isOnline}
+            isSpectator={isSpectator}
+            isLeaving={isLeaving}
+            onExit={() => user && gameId && leaveGame(gameId, user.id)}
+            onBack={() => navigate('/games/ludo')}
+            onShare={() => setShowShareModal(true)}
           >
-            {/* Spectator banner */}
-            {isSpectator && (
-              <div className="bg-muted/80 text-muted-foreground text-center py-1.5 text-xs font-medium border-b border-border/20 flex items-center justify-center gap-1.5">
-                <Eye className="w-3.5 h-3.5" />
-                <span>View Mode</span>
-              </div>
-            )}
-            
-            {/* Row 1: Exit/Back + Game name + Share */}
-            <div className="flex items-center justify-between px-3 py-2">
-              {isSpectator ? (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => navigate('/games/ludo')}
-                  className="gap-1.5 h-8 px-2"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span className="text-xs">Back</span>
-                </Button>
-              ) : (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => user && gameId && leaveGame(gameId, user.id)}
-                  disabled={isLeaving}
-                  className="text-destructive hover:text-destructive hover:bg-destructive/10 gap-1.5 h-8 px-2"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span className="text-xs">Exit</span>
-                </Button>
-              )}
+            {/* Floating Controls - Timer, Dice, Pot */}
+            <FloatingGameControls
+              turnStartedAt={gameData?.turn_started_at}
+              currentTurn={gameData?.turn}
+              isCurrentTurn={isMyTurn}
+              onTimeExpired={handleTimeExpired}
+              gameId={gameId || ''}
+              currentPlayerColor={gameData?.turn}
+              isPlayerTurn={currentPlayer?.color === gameData?.turn}
+              diceValue={gameData?.dice}
+              isGameActive={gameData?.status === 'active'}
+              onDiceRolled={handleDiceRolled}
+              triggerRoll={skipRollTrigger}
+              isSpectator={isSpectator}
+              potAmount={gameData?.pot ?? (gameData?.bet_amount || 0) * players.length}
+            />
+          </LudoGameHUD>
 
-              {/* Game name + Room code */}
-              <div className="flex flex-col items-center">
-                <span className="text-sm font-semibold text-foreground truncate max-w-[150px] sm:max-w-none">
-                  {gameData?.game_name || 'Ludo'}
-                </span>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] text-muted-foreground font-mono">
-                    {gameData?.room_code}
-                  </span>
-                  <NetworkIndicator isOnline={isOnline} />
-                </div>
-              </div>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setShowShareModal(true)}
-                className="w-8 h-8 rounded-full hover:bg-muted"
-              >
-                <Share className="w-4 h-4" />
-              </Button>
-            </div>
-
-            {/* Row 2: Timer + Dice + Players count */}
-            <div className="flex items-center justify-between px-3 pb-2 gap-3">
-              {/* Timer */}
-              <TurnTimer 
-                turnStartedAt={gameData?.turn_started_at}
-                currentTurn={gameData?.turn}
-                turnDuration={30}
-                isCurrentTurn={isMyTurn}
-                onTimeExpired={handleTimeExpired}
-              />
-
-              {/* Dice - centered (disabled for spectators) */}
-              <DiceRoller
-                gameId={gameId || ''}
-                currentTurn={gameData?.turn || ''}
-                currentPlayerColor={gameData?.turn}
-                isPlayerTurn={!isSpectator && currentPlayer?.color === gameData?.turn}
-                diceValue={gameData?.dice}
-                isGameActive={gameData?.status === 'active'}
-                onDiceRolled={handleDiceRolled}
-                triggerRoll={skipRollTrigger}
-              />
-
-              {/* Prize Pool - using new styled badge */}
-              <LudoPotBadge
-                amount={gameData?.pot ?? (gameData?.bet_amount || 0) * players.length}
-                size="sm"
-                variant="glow"
-              />
-            </div>
-          </div>
-
-          {/* Game Board with Profile Cards - adjusted for fixed header */}
+          {/* Game Board with Profile Cards - adjusted for minimal header */}
           <div 
-            className="flex-1 flex items-center justify-center px-0 sm:px-4 pb-4"
-            style={{ paddingTop: 'calc(8rem + env(safe-area-inset-top))' }}
+            className="flex-1 flex items-center justify-center px-0 sm:px-4"
+            style={{ paddingTop: 'calc(4rem + env(safe-area-inset-top))', paddingBottom: 'calc(6rem + env(safe-area-inset-bottom))' }}
           >
             <div className="relative w-full sm:w-auto">
-              {/* Top Profile Cards - aligned with canvas edges */}
+              {/* Top Profile Cards */}
               <div className="absolute -top-8 left-0 right-0 flex justify-between px-1 sm:px-0 z-40">
                 <PlayerProfileCard
                   player={getPlayerByColor('R')}
@@ -710,12 +642,12 @@ export const LudoKonva: React.FC = () => {
                 />
               </div>
 
-              {/* Board Canvas - full width on mobile, adjusted for header */}
+              {/* Board Canvas */}
               <div 
                 className="aspect-square w-full sm:w-auto"
                 style={{
-                  width: 'min(100vw, calc(100vh - 16rem))',
-                  height: 'min(100vw, calc(100vh - 16rem))',
+                  width: 'min(100vw, calc(100vh - 12rem))',
+                  height: 'min(100vw, calc(100vh - 12rem))',
                   maxWidth: '100vw',
                 }}
               >
@@ -733,7 +665,7 @@ export const LudoKonva: React.FC = () => {
                 />
               </div>
 
-              {/* Bottom Profile Cards - aligned with canvas edges */}
+              {/* Bottom Profile Cards */}
               <div className="absolute -bottom-8 left-0 right-0 flex justify-between z-40">
                 <PlayerProfileCard
                   player={getPlayerByColor('B')}
