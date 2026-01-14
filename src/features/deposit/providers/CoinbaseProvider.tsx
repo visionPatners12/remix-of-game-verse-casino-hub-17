@@ -15,10 +15,10 @@ export const CoinbaseProvider: React.FC<CoinbaseProviderProps> = ({ children }) 
     <OnchainKitProvider
       config={{
         appearance: {
-          name: 'Azuro Betting Platform',
+          name: 'Platform',
           logo: 'https://onchainkit.xyz/favicon/48x48.png?v4-19-24',
-          mode: 'auto',
-          theme: 'default',
+          mode: 'dark',
+          theme: 'base',
         },
       }}
       chain={base}

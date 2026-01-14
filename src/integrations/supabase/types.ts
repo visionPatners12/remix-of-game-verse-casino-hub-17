@@ -1973,11 +1973,13 @@ export type Database = {
         Returns: {
           avatar_url: string
           bio: string
+          ens_subdomain: string
           first_name: string
           id: string
           last_name: string
           similarity_score: number
           username: string
+          wallet_address: string
         }[]
       }
       search_users_safe: {
