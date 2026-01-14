@@ -100,7 +100,15 @@ export const useRealtimeGame = (gameId: string): {
           } as GameData : null);
         }
       )
-      .subscribe();
+      .subscribe((status, err) => {
+        if (status === 'SUBSCRIBED') {
+          logger.debug('✅ Game channel subscribed');
+        } else if (status === 'CHANNEL_ERROR') {
+          logger.error('❌ Game channel error:', err);
+        } else if (status === 'TIMED_OUT') {
+          logger.warn('⏱️ Game channel timed out, will retry...');
+        }
+      });
 
     // Subscribe to players changes
     const playersChannel = supabase
@@ -140,7 +148,15 @@ export const useRealtimeGame = (gameId: string): {
           }
         }
       )
-      .subscribe();
+      .subscribe((status, err) => {
+        if (status === 'SUBSCRIBED') {
+          logger.debug('✅ Players channel subscribed');
+        } else if (status === 'CHANNEL_ERROR') {
+          logger.error('❌ Players channel error:', err);
+        } else if (status === 'TIMED_OUT') {
+          logger.warn('⏱️ Players channel timed out, will retry...');
+        }
+      });
 
     return () => {
       supabase.removeChannel(gameChannel);
@@ -166,21 +182,34 @@ export const useRealtimeGame = (gameId: string): {
     if (!user || !gameId) return;
 
     const updateHeartbeat = async () => {
-      const { data: player } = await supabase
-        .from('ludo_game_players')
-        .select('id')
-        .eq('game_id', gameId)
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      if (player) {
-        await supabase
+      try {
+        const { data: player, error: fetchError } = await supabase
           .from('ludo_game_players')
-          .update({
-            last_seen_at: new Date().toISOString(),
-            is_connected: true,
-          })
-          .eq('id', player.id);
+          .select('id')
+          .eq('game_id', gameId)
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (fetchError) {
+          logger.warn('⚠️ Heartbeat fetch error:', fetchError.message);
+          return;
+        }
+
+        if (player) {
+          const { error: updateError } = await supabase
+            .from('ludo_game_players')
+            .update({
+              last_seen_at: new Date().toISOString(),
+              is_connected: true,
+            })
+            .eq('id', player.id);
+          
+          if (updateError) {
+            logger.warn('⚠️ Heartbeat update error:', updateError.message);
+          }
+        }
+      } catch (error) {
+        logger.warn('⚠️ Heartbeat exception:', error);
       }
     };
 

@@ -132,7 +132,7 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
     if (allFourConfirmed && !isStartingGame) {
       onStartGame();
     }
-  }, [players, isStartingGame]);
+  }, [players, isStartingGame, onStartGame]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col relative ludo-pattern-bg">
