@@ -12,7 +12,7 @@ import QRCode from 'react-qr-code';
 import { toast } from 'sonner';
 import coinbaseLogo from '@/assets/coinbase-logo.png';
 import { USDCOnBaseBadge } from '@/components/shared/USDCOnBaseBadge';
-import { TokenUSDC, NetworkBase } from '@web3icons/react';
+import { TokenUSDC, NetworkBase, NetworkPolygon, NetworkEthereum, NetworkArbitrumOne, NetworkOptimism } from '@web3icons/react';
 
 type DepositMethod = 'crypto' | 'coinbase' | 'mobile-money' | 'bank-transfer' | 'apple-pay';
 
@@ -83,17 +83,7 @@ const DepositFlow = () => {
           </div>
         );
       case 'coinbase':
-        // Coinbase logo with payment method icons (Debit Card, Apple Pay, Bank)
-        return (
-          <div className="flex items-center gap-1">
-            <img src={coinbaseLogo} alt="Coinbase" className="h-6 w-6" />
-            <div className="flex items-center gap-0.5 text-muted-foreground">
-              <CreditCard className="h-4 w-4" />
-              <Apple className="h-4 w-4" />
-              <Building2 className="h-4 w-4" />
-            </div>
-          </div>
-        );
+        return <img src={coinbaseLogo} alt="Coinbase" className="h-7 w-7" />;
       case 'smartphone':
         return <Smartphone className={iconClass} />;
       case 'bank':
@@ -252,8 +242,37 @@ const DepositFlow = () => {
             />
           </div>
           <p className="mt-3 text-sm text-muted-foreground text-center">
-            {t('crypto.qrDescription', { symbol: selectedCrypto.symbol })}
+            {t('crypto.qrDescription')}
           </p>
+        </div>
+
+        {/* Supported Chains */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-muted-foreground text-center block">
+            {t('crypto.supportedChains')}
+          </label>
+          <div className="flex flex-wrap gap-2 justify-center">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50">
+              <NetworkPolygon variant="branded" size={16} />
+              <span className="text-xs font-medium">Polygon</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50">
+              <NetworkEthereum variant="branded" size={16} />
+              <span className="text-xs font-medium">Ethereum</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50">
+              <NetworkBase variant="branded" size={16} />
+              <span className="text-xs font-medium">Base</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50">
+              <NetworkArbitrumOne variant="branded" size={16} />
+              <span className="text-xs font-medium">Arbitrum</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50">
+              <NetworkOptimism variant="branded" size={16} />
+              <span className="text-xs font-medium">Optimism</span>
+            </div>
+          </div>
         </div>
 
         {/* Address copy section */}
