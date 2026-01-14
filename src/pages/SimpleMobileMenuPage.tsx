@@ -24,8 +24,9 @@ export default function SimpleMobileMenuPage() {
     handleCopyUserId,
     handleNavigation,
     navigate,
-    formattedBalance,
-    isBalanceLoading
+    isBalanceLoading,
+    totalBalance,
+    usdcToken
   } = useMobileMenu();
 
   const handleLanguageChange = (lang: string) => {
@@ -70,7 +71,9 @@ export default function SimpleMobileMenuPage() {
         <Separator />
         
         <BalanceCard 
-          balance={formattedBalance}
+          totalBalance={totalBalance}
+          usdcBalance={usdcToken?.formattedBalance || null}
+          usdcChainId={usdcToken?.chainId || null}
           isLoading={isBalanceLoading}
           onDeposit={() => handleNavigation('/mobile-deposit')}
           onWithdraw={() => handleNavigation('/withdrawal')}
