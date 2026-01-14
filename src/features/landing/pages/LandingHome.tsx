@@ -172,17 +172,8 @@ export function LandingHome() {
               Bet in USDC on Base. Instant wins.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Link to="/auth">
-                <Button size="lg" className="w-full sm:w-auto px-8 gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold shadow-lg shadow-amber-500/25">
-                  <Gamepad2 className="w-5 h-5" />
-                  Get Started
-                </Button>
-              </Link>
-            </div>
-
             {/* Download Buttons */}
-            <div className="pt-6 border-t border-border/30 inline-block">
+            <div className="pt-6 inline-block">
               <p className="text-sm text-muted-foreground mb-4">Download the app</p>
               <DownloadButtons size="lg" className="justify-center" />
             </div>
