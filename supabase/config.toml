@@ -26,3 +26,6 @@ verify_jwt = false
 
 [functions.indexnow]
 verify_jwt = false
+
+[functions.cdp-session-token]
+verify_jwt = false

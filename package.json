@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@azuro-org/sdk-social-aa-connector": "^1.1.7",
-    "@coinbase/onchainkit": "^0.38.18",
+    "@coinbase/onchainkit": "^1.1.2",
     "@hookform/resolvers": "^3.9.0",
     "@khmyznikov/pwa-install": "^0.6.1",
     "@lifi/sdk": "^3.14.1",
