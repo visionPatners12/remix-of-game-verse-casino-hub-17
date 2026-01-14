@@ -1,7 +1,7 @@
 // Main Swap Widget component - Native design with optimized loading
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowDownUp, Loader2, AlertCircle, CheckCircle2, Wallet } from 'lucide-react';
+import { ArrowDownUp, Loader2, AlertCircle, CheckCircle2, Wallet, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { TokenSelector } from './TokenSelector';
@@ -9,7 +9,7 @@ import { ChainSelector } from './ChainSelector';
 import { SwapAmountInput } from './SwapAmountInput';
 import { RoutePreview } from './RoutePreview';
 import { SwapProgress } from './SwapProgress';
-import { useLifiConfig, useLifiChains, useLifiTokens, useLifiQuote, useLifiExecution } from '../hooks';
+import { useLifiConfig, useLifiChains, useLifiTokens, useLifiQuote, useLifiExecution, useLifiAAExecution } from '../hooks';
 import { formatTokenAmount } from '../utils/formatters';
 import type { SwapToken } from '../types';
 import { DEFAULT_CHAIN_ID } from '@/config/lifi';
@@ -64,7 +64,7 @@ function SwapWidgetSkeleton() {
 }
 
 export function SwapWidget() {
-  const { address, isConnected, connectWallet } = useUnifiedWallet();
+  const { address, isConnected, connectWallet, isAAWallet } = useUnifiedWallet();
   
   // Configure LI.FI SDK with wallet provider
   const { isReady: isLifiReady } = useLifiConfig();
@@ -97,12 +97,24 @@ export function SwapWidget() {
     slippage,
   });
 
-  const { status, steps, error: executionError, execute, reset, isExecuting } = useLifiExecution({
+  // Both execution hooks - we choose based on wallet type
+  const eoaExecution = useLifiExecution({
     onSuccess: () => {
       refetchBalances();
       setFromAmount('');
     },
   });
+
+  const aaExecution = useLifiAAExecution({
+    onSuccess: () => {
+      refetchBalances();
+      setFromAmount('');
+    },
+  });
+
+  // Select active execution based on wallet type
+  const execution = isAAWallet ? aaExecution : eoaExecution;
+  const { status, steps, error: executionError, reset, isExecuting } = execution;
 
   // Get balances for selected tokens
   const fromTokenBalance = tokensWithBalance.find(
@@ -134,9 +146,14 @@ export function SwapWidget() {
 
   // Handle swap execution
   const handleSwap = useCallback(async () => {
-    if (!route) return;
-    await execute(route);
-  }, [route, execute]);
+    if (!route || !address) return;
+    
+    if (isAAWallet) {
+      await aaExecution.execute(route, address);
+    } else {
+      await eoaExecution.execute(route);
+    }
+  }, [route, address, isAAWallet, aaExecution, eoaExecution]);
 
   // Reset on success after delay
   useEffect(() => {
