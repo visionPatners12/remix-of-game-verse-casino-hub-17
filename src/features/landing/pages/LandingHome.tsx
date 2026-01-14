@@ -154,13 +154,13 @@ export function LandingHome() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <Badge variant="outline" className="mb-6 border-primary/50 text-primary gap-1.5">
-              <Zap className="w-3 h-3" /> Powered by Base
+            <Badge variant="outline" className="mb-6 border-amber-500/50 text-amber-400 gap-1.5 bg-amber-500/10">
+              <Zap className="w-3 h-3 text-amber-400" /> Powered by Base
             </Badge>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-tight">
               Play. Bet.
-              <span className="block text-primary">Win.</span>
+              <span className="block bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 bg-clip-text text-transparent">Win.</span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-8">
@@ -170,7 +170,7 @@ export function LandingHome() {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <Link to="/auth">
-                <Button size="lg" className="w-full sm:w-auto px-8 gap-2">
+                <Button size="lg" className="w-full sm:w-auto px-8 gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold shadow-lg shadow-amber-500/25">
                   <Gamepad2 className="w-5 h-5" />
                   Get Started
                 </Button>
@@ -192,7 +192,7 @@ export function LandingHome() {
           <div className="flex flex-wrap justify-center gap-8 md:gap-16">
             {trustFeatures.map((feature) => (
               <div key={feature.title} className="flex items-center gap-3">
-                <feature.icon className="w-5 h-5 text-primary" />
+                <feature.icon className="w-5 h-5 text-amber-400" />
                 <div>
                   <p className="text-sm font-medium">{feature.title}</p>
                   <p className="text-xs text-muted-foreground hidden sm:block">{feature.description}</p>
@@ -235,8 +235,8 @@ export function LandingHome() {
                   </PhoneMockup>
                 </div>
                 <div className="flex-1 text-center md:text-left">
-                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 mx-auto md:mx-0">
-                    <feature.icon className="w-7 h-7 text-primary" />
+                  <div className="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-6 mx-auto md:mx-0 group-hover:bg-amber-500/20 transition-colors">
+                    <feature.icon className="w-7 h-7 text-amber-400" />
                   </div>
                   <h3 className="text-2xl md:text-3xl font-bold mb-4">{feature.title}</h3>
                   <p className="text-lg text-muted-foreground leading-relaxed max-w-md mx-auto md:mx-0">
@@ -282,10 +282,10 @@ export function LandingHome() {
                 className="text-center"
               >
                 <div className="relative inline-flex mb-4">
-                  <div className="w-14 h-14 rounded-full bg-primary/10 backdrop-blur-sm flex items-center justify-center">
-                    <step.icon className="w-6 h-6 text-primary" />
+                  <div className="w-14 h-14 rounded-full bg-amber-500/10 backdrop-blur-sm flex items-center justify-center">
+                    <step.icon className="w-6 h-6 text-amber-400" />
                   </div>
-                  <span className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-primary text-primary-foreground text-sm font-medium flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-black text-sm font-bold flex items-center justify-center shadow-lg shadow-amber-500/30">
                     {index + 1}
                   </span>
                 </div>
@@ -327,17 +327,17 @@ export function LandingHome() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className={`p-6 rounded-2xl border backdrop-blur-sm ${
+                className={`p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 ${
                   phase.status === 'current' 
-                    ? 'border-primary bg-primary/10' 
-                    : 'border-border/50 bg-card/80'
+                    ? 'border-amber-500/50 bg-gradient-to-br from-amber-500/10 to-yellow-500/5 shadow-lg shadow-amber-500/10' 
+                    : 'border-border/50 bg-card/80 hover:border-amber-500/30'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-3">
                   {phase.status === 'completed' ? (
                     <CheckCircle2 className="w-5 h-5 text-green-500" />
                   ) : phase.status === 'current' ? (
-                    <Zap className="w-5 h-5 text-primary" />
+                    <Zap className="w-5 h-5 text-amber-400" />
                   ) : (
                     <Circle className="w-5 h-5 text-muted-foreground" />
                   )}
@@ -388,7 +388,7 @@ export function LandingHome() {
             className="text-center max-w-xl mx-auto"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to play?
+              Ready to <span className="bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 bg-clip-text text-transparent">play</span>?
             </h2>
             <p className="text-muted-foreground mb-8">
               Download the app and start winning today.

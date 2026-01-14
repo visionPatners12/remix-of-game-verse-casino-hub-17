@@ -46,7 +46,7 @@ export function LandingNavbar() {
             </Button>
           </Link>
           <Link to="/auth">
-            <Button size="sm" className="gap-1">
+            <Button size="sm" className="gap-1 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold shadow-md shadow-amber-500/25">
               Play Now <ArrowRight className="w-3.5 h-3.5" />
             </Button>
           </Link>
@@ -83,7 +83,7 @@ export function LandingNavbar() {
 
               <div className="border-t border-border pt-4 space-y-2">
                 <Link to="/auth" onClick={() => setMobileOpen(false)}>
-                  <Button className="w-full">Play Now</Button>
+                  <Button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold">Play Now</Button>
                 </Link>
                 <Link to="/auth" onClick={() => setMobileOpen(false)}>
                   <Button variant="outline" className="w-full">
