@@ -381,56 +381,10 @@ const DepositFlow = () => {
           </div>
         </div>
 
-        {/* Action button */}
-        <Button 
-          onClick={() => setCurrentStep(3)} 
-          className="w-full h-12 text-base font-medium"
-        >
-          {t('buttons.continue')}
-        </Button>
       </div>
     );
   };
 
-  // Step 3: Confirmation
-  const renderConfirmation = () => (
-    <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-      <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mb-6">
-        <Check className="h-10 w-10 text-green-500" />
-      </div>
-      
-      <h2 className="text-xl font-semibold text-center mb-2">
-        {selectedMethod === 'apple-pay' 
-          ? t('confirmation.applePayTitle')
-          : t('confirmation.cryptoTitle')}
-      </h2>
-      
-      <p className="text-muted-foreground text-center text-sm mb-8 max-w-xs">
-        {selectedMethod === 'apple-pay' 
-          ? t('confirmation.applePayDesc')
-          : t('confirmation.cryptoDesc')}
-      </p>
-      
-      <div className="w-full space-y-3 max-w-xs">
-        <Button 
-          onClick={() => navigate('/wallet')} 
-          className="w-full h-12 text-base font-medium"
-        >
-          {t('confirmation.viewWallet')}
-        </Button>
-        <Button 
-          variant="outline" 
-          onClick={() => {
-            setCurrentStep(1);
-            setSelectedMethod(null);
-          }} 
-          className="w-full h-12 text-base"
-        >
-          {t('confirmation.newDeposit')}
-        </Button>
-      </div>
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -439,7 +393,6 @@ const DepositFlow = () => {
       <div className="flex-1 flex flex-col">
         {currentStep === 1 && renderMethodSelection()}
         {currentStep === 2 && selectedMethod === 'crypto' && renderCryptoDetails()}
-        {currentStep === 3 && renderConfirmation()}
       </div>
     </div>
   );
