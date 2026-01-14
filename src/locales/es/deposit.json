@@ -36,7 +36,7 @@
     "recommended": "Popular"
   },
   "crypto": {
-    "title": "Crypto",
+    "title": "Depósito Crypto",
     "subtitle": "Tu dirección de depósito personal",
     "loading": "Obteniendo tu dirección de depósito...",
     "error": "No se pudo generar la dirección. Por favor, intenta de nuevo.",
@@ -48,7 +48,14 @@
     "copyDescription": "Usa esta dirección para tus depósitos",
     "copied": "¡Copiado!",
     "copyAddress": "Copiar dirección",
-    "addressCopied": "Dirección de depósito copiada al portapapeles"
+    "addressCopied": "Dirección de depósito copiada al portapapeles",
+    "ensTitle": "Tu nombre de depósito",
+    "ensDescription": "Comparte este nombre para recibir crypto fácilmente",
+    "ensCopied": "Nombre ENS copiado al portapapeles",
+    "walletTitle": "Dirección de billetera",
+    "walletDescription": "Usa esta dirección para transferencias directas",
+    "importantNote": "Importante",
+    "gameNote": "Las apuestas de juegos se hacen en USDC en Base. Puedes depositar cualquier crypto y usar la función Swap para convertirla."
   },
   "mobileMoney": {
     "title": "Mobile Money",

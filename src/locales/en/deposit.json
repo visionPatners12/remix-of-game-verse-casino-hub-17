@@ -36,7 +36,7 @@
     "recommended": "Popular"
   },
   "crypto": {
-    "title": "Crypto",
+    "title": "Deposit Crypto",
     "subtitle": "Your personal deposit address",
     "loading": "Retrieving your deposit address...",
     "error": "Unable to generate address. Please try again.",
@@ -48,7 +48,14 @@
     "copyDescription": "Use this address for your deposits",
     "copied": "Copied!",
     "copyAddress": "Copy Address",
-    "addressCopied": "Deposit address copied to clipboard"
+    "addressCopied": "Deposit address copied to clipboard",
+    "ensTitle": "Your Deposit Name",
+    "ensDescription": "Share this name to receive crypto easily",
+    "ensCopied": "ENS name copied to clipboard",
+    "walletTitle": "Wallet Address",
+    "walletDescription": "Use this address for direct transfers",
+    "importantNote": "Important",
+    "gameNote": "Game bets are made in USDC on Base. You can deposit any crypto and use the Swap feature to convert it."
   },
   "mobileMoney": {
     "title": "Mobile Money",

@@ -36,7 +36,7 @@
     "recommended": "Populaire"
   },
   "crypto": {
-    "title": "Crypto",
+    "title": "Dépôt Crypto",
     "subtitle": "Votre adresse de dépôt personnelle",
     "loading": "Récupération de votre adresse de dépôt...",
     "error": "Impossible de générer l'adresse. Veuillez réessayer.",
@@ -48,7 +48,14 @@
     "copyDescription": "Utilisez cette adresse pour vos dépôts",
     "copied": "Copié !",
     "copyAddress": "Copier l'adresse",
-    "addressCopied": "Adresse de dépôt copiée dans le presse-papiers"
+    "addressCopied": "Adresse de dépôt copiée dans le presse-papiers",
+    "ensTitle": "Votre nom de dépôt",
+    "ensDescription": "Partagez ce nom pour recevoir des crypto facilement",
+    "ensCopied": "Nom ENS copié dans le presse-papiers",
+    "walletTitle": "Adresse du portefeuille",
+    "walletDescription": "Utilisez cette adresse pour les transferts directs",
+    "importantNote": "Important",
+    "gameNote": "Les paris de jeux sont en USDC sur Base. Vous pouvez déposer n'importe quelle crypto et utiliser la fonction Swap pour la convertir."
   },
   "mobileMoney": {
     "title": "Mobile Money",
