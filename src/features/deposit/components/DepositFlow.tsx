@@ -242,38 +242,48 @@ const DepositFlow = () => {
 
     return (
       <div className="px-4 py-6 space-y-6">
-        {/* ENS Address Card (Primary) */}
+        {/* 1. ENS Address - Primary */}
         {ensSubdomain && (
-          <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl p-5 border border-primary/20">
-            <div className="flex items-center justify-between">
-              <div className="flex-1 min-w-0">
-                <p className="text-sm text-muted-foreground mb-1">{t('crypto.ensTitle')}</p>
-                <p className="text-xl font-bold text-primary truncate">{ensSubdomain}</p>
-                <p className="text-xs text-muted-foreground mt-1">{t('crypto.ensDescription')}</p>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">1</span>
+              <label className="text-sm font-medium">{t('crypto.primaryAddress')}</label>
+              <span className="px-2 py-0.5 text-[10px] font-medium bg-green-500/20 text-green-600 dark:text-green-400 rounded-full">
+                {t('crypto.recommended')}
+              </span>
+            </div>
+            <div className="bg-gradient-to-br from-primary/15 via-primary/10 to-primary/5 rounded-2xl p-5 border border-primary/30 shadow-sm">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="text-2xl font-bold text-primary truncate">{ensSubdomain}</p>
+                  <p className="text-xs text-muted-foreground mt-1.5">{t('crypto.easyToShare')}</p>
+                </div>
+                <button
+                  onClick={handleCopyENS}
+                  className={cn(
+                    "w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all",
+                    copiedENS 
+                      ? "bg-green-500/20 border border-green-500/30" 
+                      : "bg-primary/10 border border-primary/20 active:bg-primary/20 active:scale-95"
+                  )}
+                >
+                  {copiedENS ? (
+                    <Check className="h-6 w-6 text-green-500" />
+                  ) : (
+                    <Copy className="h-6 w-6 text-primary" />
+                  )}
+                </button>
               </div>
-              <button
-                onClick={handleCopyENS}
-                className={cn(
-                  "w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ml-3 transition-all",
-                  copiedENS ? "bg-green-500/20" : "bg-primary/10 active:bg-primary/20"
-                )}
-              >
-                {copiedENS ? (
-                  <Check className="h-5 w-5 text-green-500" />
-                ) : (
-                  <Copy className="h-5 w-5 text-primary" />
-                )}
-              </button>
             </div>
           </div>
         )}
 
         {/* QR Code section */}
-        <div className="flex flex-col items-center">
-          <div className="bg-card p-4 rounded-2xl shadow-sm border border-border/30">
+        <div className="flex flex-col items-center py-2">
+          <div className="bg-white p-4 rounded-2xl shadow-md">
             <QRCode
               value={selectedCrypto.address}
-              size={180}
+              size={160}
               style={{ height: "auto", maxWidth: "100%", width: "100%" }}
               viewBox="0 0 256 256"
               level="M"
@@ -284,32 +294,33 @@ const DepositFlow = () => {
           </p>
         </div>
 
-        {/* Wallet Address Card */}
-        <div className="space-y-2">
+        {/* 2. Wallet Address - Alternative */}
+        <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <Wallet className="h-4 w-4 text-muted-foreground" />
-            <label className="text-sm font-medium text-muted-foreground">
-              {t('crypto.walletTitle')}
-            </label>
+            <span className="w-6 h-6 rounded-full bg-muted text-muted-foreground text-xs font-bold flex items-center justify-center">2</span>
+            <label className="text-sm font-medium">{t('crypto.alternativeAddress')}</label>
           </div>
           <button
             onClick={handleCopyAddress}
             className={cn(
-              "w-full flex items-center gap-3 p-4 rounded-xl transition-all",
-              "bg-muted/50 active:bg-muted active:scale-[0.99]"
+              "w-full flex items-center gap-3 p-4 rounded-xl transition-all border",
+              copied 
+                ? "bg-green-500/5 border-green-500/30" 
+                : "bg-muted/30 border-border/50 active:bg-muted active:scale-[0.99]"
             )}
           >
-            <code className="flex-1 text-sm font-mono text-left break-all">
+            <Wallet className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+            <code className="flex-1 text-sm font-mono text-left break-all text-muted-foreground">
               {selectedCrypto.address}
             </code>
             <div className={cn(
-              "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors",
-              copied ? "bg-green-500/10" : "bg-primary/10"
+              "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors",
+              copied ? "bg-green-500/10" : "bg-muted"
             )}>
               {copied ? (
                 <Check className="h-5 w-5 text-green-500" />
               ) : (
-                <Copy className="h-5 w-5 text-primary" />
+                <Copy className="h-5 w-5 text-muted-foreground" />
               )}
             </div>
           </button>
