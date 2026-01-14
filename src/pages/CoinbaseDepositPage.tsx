@@ -113,6 +113,15 @@ const CoinbaseDepositPage = () => {
               assetSymbol="USDC"
               country="US"
               currency="USD"
+              onError={(error) => {
+                console.error('[Coinbase FundCard] Error:', error);
+              }}
+              onSuccess={(result) => {
+                console.log('[Coinbase FundCard] Success:', result);
+              }}
+              onStatus={(status) => {
+                console.log('[Coinbase FundCard] Status:', status);
+              }}
             >
               {/* Header with icons */}
               <div className="mb-6 text-center">

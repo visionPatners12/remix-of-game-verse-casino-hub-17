@@ -29,20 +29,30 @@ export const useCdpSessionToken = (walletAddress: string | undefined): UseCdpSes
         body: {
           addresses: [{ address: walletAddress, blockchains: ['base'] }],
           assets: ['USDC']
+          // clientIp can be added if needed for geo-restrictions
         }
       });
 
+      // Handle function invocation error
       if (fnError) {
-        console.error('[CDP Session Token] Function error:', fnError);
-        throw new Error(fnError.message || 'Failed to generate session token');
+        console.error('[CDP Session Token] Function invocation error:', fnError);
+        throw new Error(fnError.message || 'Failed to invoke edge function');
       }
 
+      // Handle Coinbase API errors returned by the edge function
+      if (data?.error) {
+        console.error('[CDP Session Token] Coinbase error:', data.error, data.details);
+        const errorMsg = data.details?.message || data.error;
+        throw new Error(errorMsg);
+      }
+
+      // Validate token exists
       if (!data?.token) {
         console.error('[CDP Session Token] No token in response:', data);
         throw new Error('No token received from Coinbase');
       }
 
-      console.log('[CDP Session Token] Token generated successfully');
+      console.log('[CDP Session Token] Token generated successfully, channel_id:', data.channel_id);
       setSessionToken(data.token);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to generate session token';
