@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Play } from 'lucide-react';
+import { Play, Copy } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { WaitingRoomHeader } from './WaitingRoomHeader';
 import { DepositButton } from './DepositButton';
@@ -10,6 +10,35 @@ import { ShareGameModal } from '../../components/ShareGameModal';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import { useClipboard } from '@/hooks/useClipboard';
+
+// Room Code Badge component for bottom placement
+const RoomCodeBadge: React.FC<{ roomCode: string }> = ({ roomCode }) => {
+  const { copyToClipboard } = useClipboard();
+  
+  return (
+    <motion.button
+      onClick={() => copyToClipboard(roomCode, `Code ${roomCode} copied!`)}
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.97 }}
+      className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl 
+        bg-gradient-to-br from-amber-500/20 via-yellow-500/15 to-orange-500/20 
+        border border-amber-500/40 hover:border-amber-400/60
+        shadow-[0_0_20px_rgba(251,191,36,0.15)] hover:shadow-[0_0_25px_rgba(251,191,36,0.25)]
+        transition-all duration-300 group"
+    >
+      <span className="text-xs text-muted-foreground uppercase tracking-wide">Room Code</span>
+      <span 
+        className="font-mono text-lg tracking-[0.25em] font-black 
+          bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-400 
+          bg-clip-text text-transparent drop-shadow-sm"
+      >
+        {roomCode}
+      </span>
+      <Copy className="w-4 h-4 text-amber-400/70 group-hover:text-amber-300 transition-colors" />
+    </motion.button>
+  );
+};
 
 interface WaitingRoomPlayer {
   id: string;
@@ -214,18 +243,6 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
             </motion.div>
           )}
 
-          {/* Free game indicator - subtle, no deposit UI needed */}
-          {isFreeGame && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex justify-center"
-            >
-              <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-green-500/10 text-green-500 border border-green-500/20">
-                Free game
-              </span>
-            </motion.div>
-          )}
 
           {/* Players List */}
           <motion.div
@@ -269,6 +286,16 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
               Minimum 2 players to start
             </p>
           )}
+
+          {/* Room Code - Bottom placement */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="flex justify-center pt-4"
+          >
+            <RoomCodeBadge roomCode={roomCode} />
+          </motion.div>
         </motion.div>
       </div>
 
