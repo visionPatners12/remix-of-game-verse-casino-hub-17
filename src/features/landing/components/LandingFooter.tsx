@@ -45,7 +45,7 @@ export function LandingFooter() {
                 href="https://twitter.com/pryzen" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
+                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-amber-500/10 hover:border-amber-500/50 hover:text-amber-400 transition-colors"
                 aria-label="Twitter"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@ export function LandingFooter() {
                 href="https://t.me/pryzen" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
+                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-amber-500/10 hover:border-amber-500/50 hover:text-amber-400 transition-colors"
                 aria-label="Telegram"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@ export function LandingFooter() {
                 href="https://discord.gg/pryzen" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
+                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-amber-500/10 hover:border-amber-500/50 hover:text-amber-400 transition-colors"
                 aria-label="Discord"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -83,7 +83,7 @@ export function LandingFooter() {
           <p>© {currentYear} PRYZEN. All rights reserved.</p>
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1.5">
-              <span className="w-5 h-5 rounded-full bg-destructive/20 text-destructive flex items-center justify-center text-[10px] font-bold">18+</span>
+              <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-[10px] font-bold border border-amber-500/30">18+</span>
               Adults only
             </span>
             <span className="text-border">•</span>
