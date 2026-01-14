@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 import { useLogin, usePrivy, useIdentityToken, useLogout } from '@privy-io/react-auth';
 import { FloatingParticles } from '@/components/ui/FloatingParticles';
 import { AnimatedGradientText } from '@/components/ui/AnimatedGradientText';
@@ -12,8 +13,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/utils/logger';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { usePrivyModalFocusFix } from '@/hooks/usePrivyModalFocusFix';
+import { saveReferralCode } from '@/features/mlm/hooks/useReferralStorage';
 import { toast } from 'sonner';
-
 interface PrivyLoginScreenProps {
   logoUrl?: string;
 }
@@ -22,9 +23,19 @@ type AuthView = 'main' | 'login' | 'signup';
 
 export function PrivyLoginScreen({ logoUrl = "/pryzen-logo.png" }: PrivyLoginScreenProps) {
   const { t } = useTranslation('auth');
+  const [searchParams] = useSearchParams();
   
   // Fix for iOS PWA keyboard not appearing on Privy OTP input
   usePrivyModalFocusFix();
+  
+  // Capture referral code from URL (survives PWA installation)
+  useEffect(() => {
+    const refCode = searchParams.get('ref');
+    if (refCode) {
+      saveReferralCode(refCode);
+      logger.info('Referral code captured from URL:', refCode);
+    }
+  }, [searchParams]);
   
   // Auth view state
   const [authView, setAuthView] = useState<AuthView>('main');
