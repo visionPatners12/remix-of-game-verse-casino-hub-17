@@ -22,6 +22,7 @@ import { useAutoJoin } from '../hooks/useAutoJoin';
 import { useRealtimeGame } from '../hooks/useRealtimeGame';
 import { usePlayersWithUsernames } from '../hooks/usePlayersWithUsernames';
 import { usePawnAnimation } from '../hooks/usePawnAnimation';
+import { useLudoGameActions } from '../hooks/useLudoGameActions';
 import { isInEnemyPrison } from '../model/movement';
 import type { Color } from '../model/ludoModel';
 import type { UIMove } from '../types';
@@ -38,7 +39,7 @@ export const LudoKonva: React.FC = () => {
   const { toast } = useToast();
   const { playPieceMoveSound } = useGameSounds();
   const [showShareModal, setShowShareModal] = useState(false);
-  const [isStartingGame, setIsStartingGame] = useState(false);
+  // Note: isStartingGame is now from useLudoGameActions hook
   const [waitingForMove, setWaitingForMove] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
   const [possibleMoves, setPossibleMoves] = useState<UIMove[]>([]);
@@ -275,35 +276,26 @@ export const LudoKonva: React.FC = () => {
   const boardSize = isMobile ? availableWidth : Math.min(availableWidth, availableHeight);
   const cellSize = Math.floor(boardSize / 15); // Use 15 to exclude header space
 
-  const startGame = async () => {
-    if (!gameData || !user || gameData.created_by !== user.id) return;
-    
-    setIsStartingGame(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('ludo-game', {
-        body: { action: 'start', gameId }
-      });
-
-      if (error) throw error;
-
-      if (!data?.ok) {
-        throw new Error(data?.error || 'Failed to start game');
-      }
-
-      toast({
-        title: "Game started!",
-        description: "The game has begun successfully.",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error?.message || "Unable to start the game.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsStartingGame(false);
-    }
-  };
+  // Use hook for game actions
+  const { startGame, isStartingGame: hookIsStarting } = useLudoGameActions({
+    gameId: gameId || '',
+    gameData,
+    currentPlayer,
+    possibleMoves,
+    waitingForMove,
+    isMoving,
+    isAnimating,
+    setWaitingForMove,
+    setPossibleMoves,
+    setIsMoving,
+    startAnimation,
+    clearAnimation,
+  });
+  
+  // Memoized start game handler
+  const handleStartGame = useCallback(() => {
+    startGame(user?.id);
+  }, [startGame, user?.id]);
 
   // Helper for checking if pawn is at home
   const isAtHome = (position: number, color: Color): boolean => {
@@ -592,8 +584,8 @@ export const LudoKonva: React.FC = () => {
         players={playersWithUsernames}
         currentPlayer={currentPlayer as any}
         isCreator={user?.id === gameData.created_by}
-        onStartGame={startGame}
-        isStartingGame={isStartingGame}
+        onStartGame={handleStartGame}
+        isStartingGame={hookIsStarting}
       />
     );
   }
