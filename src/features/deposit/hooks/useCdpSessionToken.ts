@@ -36,7 +36,23 @@ export const useCdpSessionToken = (walletAddress: string | undefined): UseCdpSes
       // Handle function invocation error
       if (fnError) {
         console.error('[CDP Session Token] Function invocation error:', fnError);
-        throw new Error(fnError.message || 'Failed to invoke edge function');
+        
+        let errorMessage = fnError.message || 'Failed to invoke edge function';
+        
+        // Extract error body from fnError.context (Response object) for non-2xx responses
+        if (fnError.context && typeof fnError.context.json === 'function') {
+          try {
+            const errorBody = await fnError.context.json();
+            console.error('[CDP Session Token] Error body:', errorBody);
+            if (errorBody?.error) {
+              errorMessage = errorBody.details?.message || errorBody.error;
+            }
+          } catch (parseError) {
+            console.warn('[CDP Session Token] Could not parse error context:', parseError);
+          }
+        }
+        
+        throw new Error(errorMessage);
       }
 
       // Handle Coinbase API errors returned by the edge function
