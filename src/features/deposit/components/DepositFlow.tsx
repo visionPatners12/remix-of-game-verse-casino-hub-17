@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Smartphone, Building2, ChevronRight, Check, Copy, Shield, Clock, AlertCircle, CreditCard, Apple } from 'lucide-react';
+import { ArrowLeft, Smartphone, Building2, ChevronRight, Check, Copy, Clock, AlertCircle, Info, Wallet } from 'lucide-react';
 import { useDeposit } from '../hooks/useDeposit';
 import { useUnifiedWallet } from '@/features/wallet';
 import { useFundWallet } from '@privy-io/react-auth';
@@ -11,7 +11,6 @@ import { cn } from '@/lib/utils';
 import QRCode from 'react-qr-code';
 import { toast } from 'sonner';
 import coinbaseLogo from '@/assets/coinbase-logo.png';
-import { USDCOnBaseBadge } from '@/components/shared/USDCOnBaseBadge';
 import { TokenUSDC, NetworkBase, NetworkPolygon, NetworkEthereum, NetworkArbitrumOne, NetworkOptimism } from '@web3icons/react';
 
 type DepositMethod = 'crypto' | 'coinbase' | 'mobile-money' | 'bank-transfer' | 'apple-pay';
@@ -28,8 +27,9 @@ interface DepositMethodOption {
 const DepositFlow = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('deposit');
-  const { selectedCrypto, isLoadingAddress } = useDeposit();
+  const { selectedCrypto, isLoadingAddress, ensSubdomain } = useDeposit();
   const { address } = useUnifiedWallet();
+  const [copiedENS, setCopiedENS] = useState(false);
   const { fundWallet } = useFundWallet();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedMethod, setSelectedMethod] = useState<DepositMethod | null>(null);
@@ -138,6 +138,18 @@ const DepositFlow = () => {
     }
   };
 
+  const handleCopyENS = async () => {
+    if (!ensSubdomain) return;
+    try {
+      await navigator.clipboard.writeText(ensSubdomain);
+      setCopiedENS(true);
+      toast.success(t('crypto.ensCopied'));
+      setTimeout(() => setCopiedENS(false), 2000);
+    } catch (error) {
+      console.error('Failed to copy ENS:', error);
+    }
+  };
+
   // Native-style header
   const renderHeader = () => (
     <div 
@@ -230,8 +242,31 @@ const DepositFlow = () => {
 
     return (
       <div className="px-4 py-6 space-y-6">
-        {/* USDC on Base Badge */}
-        <USDCOnBaseBadge variant="card" size="lg" />
+        {/* ENS Address Card (Primary) */}
+        {ensSubdomain && (
+          <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl p-5 border border-primary/20">
+            <div className="flex items-center justify-between">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-muted-foreground mb-1">{t('crypto.ensTitle')}</p>
+                <p className="text-xl font-bold text-primary truncate">{ensSubdomain}</p>
+                <p className="text-xs text-muted-foreground mt-1">{t('crypto.ensDescription')}</p>
+              </div>
+              <button
+                onClick={handleCopyENS}
+                className={cn(
+                  "w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ml-3 transition-all",
+                  copiedENS ? "bg-green-500/20" : "bg-primary/10 active:bg-primary/20"
+                )}
+              >
+                {copiedENS ? (
+                  <Check className="h-5 w-5 text-green-500" />
+                ) : (
+                  <Copy className="h-5 w-5 text-primary" />
+                )}
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* QR Code section */}
         <div className="flex flex-col items-center">
@@ -249,40 +284,14 @@ const DepositFlow = () => {
           </p>
         </div>
 
-        {/* Supported Chains */}
+        {/* Wallet Address Card */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-muted-foreground text-center block">
-            {t('crypto.supportedChains')}
-          </label>
-          <div className="flex flex-wrap gap-2 justify-center">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50">
-              <NetworkPolygon variant="branded" size={16} />
-              <span className="text-xs font-medium">Polygon</span>
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50">
-              <NetworkEthereum variant="branded" size={16} />
-              <span className="text-xs font-medium">Ethereum</span>
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50">
-              <NetworkBase variant="branded" size={16} />
-              <span className="text-xs font-medium">Base</span>
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50">
-              <NetworkArbitrumOne variant="branded" size={16} />
-              <span className="text-xs font-medium">Arbitrum</span>
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50">
-              <NetworkOptimism variant="branded" size={16} />
-              <span className="text-xs font-medium">Optimism</span>
-            </div>
+          <div className="flex items-center gap-2">
+            <Wallet className="h-4 w-4 text-muted-foreground" />
+            <label className="text-sm font-medium text-muted-foreground">
+              {t('crypto.walletTitle')}
+            </label>
           </div>
-        </div>
-
-        {/* Address copy section */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-muted-foreground">
-            {t('crypto.copyTitle', { symbol: 'USDT' })}
-          </label>
           <button
             onClick={handleCopyAddress}
             className={cn(
@@ -306,43 +315,58 @@ const DepositFlow = () => {
           </button>
         </div>
 
-        {/* Info cards */}
+        {/* Supported Chains */}
         <div className="space-y-3">
-          {/* Network info */}
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-muted/30">
-            <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
-              <Shield className="h-4 w-4 text-primary" />
+          <label className="text-sm font-medium text-muted-foreground block">
+            {t('crypto.supportedChains')}
+          </label>
+          <div className="flex flex-wrap gap-2">
+            <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-muted/50">
+              <NetworkBase variant="branded" size={18} />
+              <span className="text-sm font-medium">Base</span>
             </div>
-            <div className="flex-1">
-              <p className="text-sm font-medium">{t('processing.network')}</p>
-              <p className="text-xs text-muted-foreground">Polygon</p>
+            <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-muted/50">
+              <NetworkPolygon variant="branded" size={18} />
+              <span className="text-sm font-medium">Polygon</span>
             </div>
-          </div>
-
-          {/* Time info */}
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-muted/30">
-            <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
-              <Clock className="h-4 w-4 text-primary" />
+            <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-muted/50">
+              <NetworkEthereum variant="branded" size={18} />
+              <span className="text-sm font-medium">Ethereum</span>
             </div>
-            <div className="flex-1">
-              <p className="text-sm font-medium">{t('processing.estimatedTime')}</p>
-              <p className="text-xs text-muted-foreground">{t('processing.time')}</p>
+            <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-muted/50">
+              <NetworkArbitrumOne variant="branded" size={18} />
+              <span className="text-sm font-medium">Arbitrum</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-muted/50">
+              <NetworkOptimism variant="branded" size={18} />
+              <span className="text-sm font-medium">Optimism</span>
             </div>
           </div>
         </div>
 
-        {/* Warning */}
-        <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+        {/* Info Card - USDC on Base for games */}
+        <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
           <div className="flex gap-3">
-            <AlertCircle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+            <Info className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <p className="text-sm font-medium text-amber-700 dark:text-amber-400">
-                {t('reminders.title')}
+              <p className="text-sm font-medium text-blue-700 dark:text-blue-400">
+                {t('crypto.importantNote')}
               </p>
-              <p className="text-xs text-amber-600 dark:text-amber-500">
-                {t('reminders.onlySend', { name: selectedCrypto.name, symbol: selectedCrypto.symbol })}
+              <p className="text-xs text-blue-600 dark:text-blue-300">
+                {t('crypto.gameNote')}
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* Processing Time */}
+        <div className="flex items-center gap-3 p-3 rounded-xl bg-muted/30">
+          <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
+            <Clock className="h-4 w-4 text-primary" />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-medium">{t('processing.estimatedTime')}</p>
+            <p className="text-xs text-muted-foreground">{t('processing.time')}</p>
           </div>
         </div>
 
