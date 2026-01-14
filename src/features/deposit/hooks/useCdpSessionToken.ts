@@ -27,11 +27,8 @@ export const useCdpSessionToken = (walletAddress: string | undefined): UseCdpSes
       
       const { data, error: fnError } = await supabase.functions.invoke('cdp-session-token', {
         body: {
-          endpoint: 'token',
-          body: {
-            addresses: [{ address: walletAddress, blockchains: ['polygon'] }],
-            // assets: ['USDC'], // optional depending on flow
-          },
+          addresses: [{ address: walletAddress, blockchains: ['polygon'] }],
+          assets: ['USDC'],
         },
       });
 
