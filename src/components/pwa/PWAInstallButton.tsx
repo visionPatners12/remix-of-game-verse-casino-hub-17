@@ -1,9 +1,8 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Apple, Smartphone } from 'lucide-react';
 import { toast } from 'sonner';
 import '@khmyznikov/pwa-install';
-import { BetaWarningDialog } from './BetaWarningDialog';
 
 interface PWAInstallButtonProps {
   variant?: "default" | "outline" | "ghost";
@@ -24,8 +23,6 @@ export function PWAInstallButton({
   className 
 }: PWAInstallButtonProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [showBetaDialog, setShowBetaDialog] = useState(false);
-  const [selectedPlatform, setSelectedPlatform] = useState<'ios' | 'android'>('ios');
 
   // Setup event listeners for PWA install events
   useEffect(() => {
@@ -56,66 +53,47 @@ export function PWAInstallButton({
     };
   }, []);
 
-  const handleButtonClick = useCallback((platformType: 'ios' | 'android') => {
-    setSelectedPlatform(platformType);
-    setShowBetaDialog(true);
-  }, []);
-
-  const handleConfirmInstall = useCallback(() => {
-    setShowBetaDialog(false);
+  const handleButtonClick = useCallback(() => {
     const pwaElement = containerRef.current?.querySelector('pwa-install') as PWAInstallElement | null;
     if (pwaElement) {
       pwaElement.showDialog(true);
     }
   }, []);
 
-  const handleCloseDialog = useCallback(() => {
-    setShowBetaDialog(false);
-  }, []);
-
   return (
-    <>
-      <div ref={containerRef} className={`flex flex-col sm:flex-row gap-3 ${className}`}>
-        {/* PWA Install Web Component - must be visible for dialog to work */}
-        <pwa-install
-          manifest-url="/manifest.webmanifest"
-          manual-apple="true"
-          manual-chrome="true"
-          use-local-storage="true"
-          {...{ styles: pwaInstallStyles } as any}
-        />
-
-        {/* Visible Buttons */}
-        {(platform === "ios" || platform === "both") && (
-          <Button 
-            variant={variant} 
-            size={size}
-            onClick={() => handleButtonClick('ios')}
-            className="gap-2"
-          >
-            <Apple className="h-5 w-5" />
-            <span>Download iOS</span>
-          </Button>
-        )}
-        {(platform === "android" || platform === "both") && (
-          <Button 
-            variant={variant} 
-            size={size}
-            onClick={() => handleButtonClick('android')}
-            className="gap-2"
-          >
-            <Smartphone className="h-5 w-5" />
-            <span>Download Android</span>
-          </Button>
-        )}
-      </div>
-
-      <BetaWarningDialog
-        isOpen={showBetaDialog}
-        onClose={handleCloseDialog}
-        onConfirm={handleConfirmInstall}
-        platform={selectedPlatform}
+    <div ref={containerRef} className={`flex flex-col sm:flex-row gap-3 ${className}`}>
+      {/* PWA Install Web Component - must be visible for dialog to work */}
+      <pwa-install
+        manifest-url="/manifest.webmanifest"
+        manual-apple="true"
+        manual-chrome="true"
+        use-local-storage="true"
+        {...{ styles: pwaInstallStyles } as any}
       />
-    </>
+
+      {/* Visible Buttons */}
+      {(platform === "ios" || platform === "both") && (
+        <Button 
+          variant={variant} 
+          size={size}
+          onClick={handleButtonClick}
+          className="gap-2"
+        >
+          <Apple className="h-5 w-5" />
+          <span>Download iOS</span>
+        </Button>
+      )}
+      {(platform === "android" || platform === "both") && (
+        <Button 
+          variant={variant} 
+          size={size}
+          onClick={handleButtonClick}
+          className="gap-2"
+        >
+          <Smartphone className="h-5 w-5" />
+          <span>Download Android</span>
+        </Button>
+      )}
+    </div>
   );
 }
