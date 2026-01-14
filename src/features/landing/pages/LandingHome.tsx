@@ -7,6 +7,7 @@ import { LandingLayout } from "../components/LandingLayout";
 import { DownloadButtons } from "../components/shared/DownloadButtons";
 import { PhoneMockup } from "../components/shared/PhoneMockup";
 import { useStandaloneMode } from "@/hooks/useStandaloneMode";
+import { FloatingUSDCIcons } from "@/features/onboarding/components/FloatingUSDCIcons";
 import landingLudoGame from "@/assets/landing-ludo-game.png";
 import landingWallet from "@/assets/landing-wallet.png";
 import landingGames from "@/assets/landing-games.png";
@@ -145,6 +146,9 @@ export function LandingHome() {
         {/* Gradient overlays for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
         <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80" />
+        
+        {/* Floating USDC Icons */}
+        <FloatingUSDCIcons />
         
         {/* Content */}
         <div className="container px-4 py-16 md:py-24 lg:py-32 relative z-10">
@@ -379,6 +383,9 @@ export function LandingHome() {
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" />
+        
+        {/* Floating USDC Icons */}
+        <FloatingUSDCIcons />
         
         <div className="container px-4 relative z-10">
           <motion.div
