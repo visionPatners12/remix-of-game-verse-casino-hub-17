@@ -25,7 +25,7 @@ export function MobileMenuActions({
         <h3 className="text-xs font-medium text-muted-foreground px-4 py-2 bg-muted/20">Action Center</h3>
         <MenuAction 
           icon={Gamepad2} 
-          label="Mes Parties" 
+          label="My Games" 
           onClick={() => onNavigate('/my-games')}
           variant="mobile"
         />
