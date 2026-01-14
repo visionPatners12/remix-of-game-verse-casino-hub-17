@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   FundCard,
@@ -9,13 +8,12 @@ import {
   FundCardPaymentMethodDropdown,
   FundCardSubmitButton,
 } from '@coinbase/onchainkit/fund';
+import { TokenUSDC, NetworkBase } from '@web3icons/react';
 import { CoinbaseProvider } from '@/features/deposit/providers/CoinbaseProvider';
 import { MobilePageHeader } from '@/components/shared/MobilePageHeader';
-import { ChainIcon } from '@/components/ui/chain-icon';
 import { Shield } from 'lucide-react';
 
 const CoinbaseDepositPage = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation('deposit');
 
   return (
@@ -23,28 +21,30 @@ const CoinbaseDepositPage = () => {
       <div className="min-h-screen bg-background">
         <MobilePageHeader 
           title="Coinbase Pay" 
-          rightContent={<ChainIcon chainId={8453} size={24} showName />}
+          rightContent={
+            <div className="flex items-center gap-1">
+              <TokenUSDC variant="branded" size={20} />
+              <NetworkBase variant="branded" size={20} />
+            </div>
+          }
         />
 
         {/* Content */}
         <div className="px-4 py-6">
           <div className="max-w-md mx-auto">
-            {/* Network Badge */}
-            <div className="flex items-center justify-center gap-2 mb-4 p-3 bg-muted/50 border border-border/30 rounded-xl">
-              <ChainIcon chainId={8453} size={28} />
-              <div className="text-center">
-                <span className="text-sm font-semibold text-foreground">USDC</span>
-                <span className="text-xs text-muted-foreground ml-1">on Base Network</span>
-              </div>
-            </div>
-            
             <FundCard
               assetSymbol="USDC"
               country="US"
               currency="USD"
             >
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold text-center text-foreground">
+              {/* Header with icons */}
+              <div className="mb-6 text-center">
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <TokenUSDC variant="branded" size={32} />
+                  <span className="text-muted-foreground">→</span>
+                  <NetworkBase variant="branded" size={32} />
+                </div>
+                <h2 className="text-xl font-semibold text-foreground">
                   {t('coinbase.title')}
                 </h2>
               </div>
@@ -53,8 +53,8 @@ const CoinbaseDepositPage = () => {
               <FundCardAmountInputTypeSwitch />
               <FundCardPresetAmountInputList />
               
-              <div className="my-4 p-4 bg-muted/50 border border-border/30 rounded-lg">
-                <p className="text-xs font-medium text-foreground text-center">
+              <div className="my-4 p-3 bg-muted/50 border border-border/30 rounded-lg">
+                <p className="text-xs font-medium text-muted-foreground text-center">
                   {t('coinbase.selectMethod')}
                 </p>
               </div>
@@ -62,8 +62,8 @@ const CoinbaseDepositPage = () => {
               <FundCardPaymentMethodDropdown />
               <FundCardSubmitButton />
               
-              <div className="mt-12 p-4 bg-muted/50 border border-border/30 rounded-xl">
-                <div className="flex items-start space-x-3">
+              <div className="mt-8 p-4 bg-muted/50 border border-border/30 rounded-xl">
+                <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
                     <Shield className="h-5 w-5 text-primary" />
                   </div>
