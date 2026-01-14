@@ -22,8 +22,8 @@ export const CoinbaseProvider: React.FC<CoinbaseProviderProps> = ({ children }) 
         },
       }}
       chain={base}
-      apiKey="W0lNgoVAMtfoPOXNZaOnHAneo8oYC1IX"
-      projectId="cc348ae5-5cea-4d01-b3ae-106d367715c1"
+      apiKey="02b31654-4176-4b84-95ad-5cfa3d897195"
+      projectId="4f2b1591-6e22-463c-a481-3f2a6bf15c10"
     >
       {children}
     </OnchainKitProvider>
