@@ -33,22 +33,13 @@ export const useUserWalletLookup = () => {
 
       if (error) throw error;
 
-      // For each user, fetch their wallet address and ENS
+      // For each user, fetch their ENS subdomain and wallet_address from users table
       const usersWithWallets = await Promise.all(
         (data || []).map(async (user: any) => {
-          // Fetch ENS subdomain from users table
           const { data: userData } = await supabase
             .from('users')
-            .select('ens_subdomain')
+            .select('ens_subdomain, wallet_address')
             .eq('id', user.id)
-            .single();
-
-          // Fetch wallet address
-          const { data: walletData } = await supabase
-            .from('user_wallet')
-            .select('wallet_address')
-            .eq('user_id', user.id)
-            .eq('is_primary', true)
             .single();
 
           return {
@@ -58,7 +49,7 @@ export const useUserWalletLookup = () => {
             last_name: user.last_name,
             avatar_url: user.avatar_url,
             ens_subdomain: userData?.ens_subdomain || null,
-            wallet_address: walletData?.wallet_address || null
+            wallet_address: userData?.wallet_address || null
           };
         })
       );
@@ -77,27 +68,16 @@ export const useUserWalletLookup = () => {
 
   const lookupUserWallet = useCallback(async (userId: string): Promise<SearchedUser | null> => {
     try {
-      // Fetch user details
+      // Fetch user details including wallet_address directly from users table
       const { data: user, error: userError } = await supabase
         .from('users')
-        .select('id, username, first_name, last_name, avatar_url, ens_subdomain')
+        .select('id, username, first_name, last_name, avatar_url, ens_subdomain, wallet_address')
         .eq('id', userId)
         .single();
 
       if (userError || !user) return null;
 
-      // Fetch wallet address
-      const { data: wallet } = await supabase
-        .from('user_wallet')
-        .select('wallet_address')
-        .eq('user_id', userId)
-        .eq('is_primary', true)
-        .single();
-
-      return {
-        ...user,
-        wallet_address: wallet?.wallet_address || null
-      };
+      return user;
     } catch (error) {
       console.error('User lookup error:', error);
       return null;
