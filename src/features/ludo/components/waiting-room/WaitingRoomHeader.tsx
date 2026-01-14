@@ -45,7 +45,7 @@ export const WaitingRoomHeader: React.FC<WaitingRoomHeaderProps> = ({
       className="sticky top-0 z-10 bg-gradient-to-b from-background via-background/95 to-background/80 backdrop-blur-xl border-b border-white/5"
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
-      <div className="flex items-center justify-between px-3 h-16">
+      <div className="flex items-center justify-between px-3 h-14">
         {/* Leave button */}
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
@@ -60,26 +60,8 @@ export const WaitingRoomHeader: React.FC<WaitingRoomHeaderProps> = ({
           </Button>
         </motion.div>
 
-        {/* Center: Premium Room Code Display */}
-        <motion.button
-          onClick={handleCopyCode}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-          className="flex items-center gap-2.5 px-4 py-2 rounded-xl 
-            bg-gradient-to-br from-amber-500/20 via-yellow-500/15 to-orange-500/20 
-            border border-amber-500/40 hover:border-amber-400/60
-            shadow-[0_0_20px_rgba(251,191,36,0.15)] hover:shadow-[0_0_25px_rgba(251,191,36,0.25)]
-            transition-all duration-300 group"
-        >
-          <span 
-            className="font-mono text-lg tracking-[0.25em] font-black 
-              bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-400 
-              bg-clip-text text-transparent drop-shadow-sm"
-          >
-            {roomCode}
-          </span>
-          <Copy className="w-4 h-4 text-amber-400/70 group-hover:text-amber-300 transition-colors" />
-        </motion.button>
+        {/* Center: Title */}
+        <span className="text-sm font-semibold text-foreground">Waiting Room</span>
 
         {/* Share button */}
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
