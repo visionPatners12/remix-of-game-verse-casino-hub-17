@@ -1,167 +1,154 @@
 // deno-lint-ignore-file no-explicit-any
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.51.0";
-import { generateJwt } from "npm:@coinbase/cdp-sdk@1.40.1/auth";
-
-// -------------------- Config --------------------
-const SB_URL = Deno.env.get("SUPABASE_URL") ?? "";
-const SB_ANON = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
+import * as jose from "https://esm.sh/jose@5.9.6?target=deno";
 
 const CDP_API_KEY_ID = Deno.env.get("CDP_API_KEY_ID") ?? "";
 const CDP_API_KEY_SECRET = Deno.env.get("CDP_API_KEY_SECRET") ?? "";
-
-const ALLOWED_ORIGINS = (Deno.env.get("ALLOWED_ORIGINS") ?? "")
-  .split(",")
-  .map((s) => s.trim())
-  .filter(Boolean);
-
-const IP_FORWARD_SECRET = Deno.env.get("IP_FORWARD_SECRET") ?? "";
 
 const CDP_HOST = "api.developer.coinbase.com";
 const CDP_PATH = "/onramp/v1/token";
 const CDP_URL = `https://${CDP_HOST}${CDP_PATH}`;
 
-// -------------------- CORS --------------------
-function corsHeaders(origin: string | null) {
-  if (!origin || ALLOWED_ORIGINS.length === 0) return {};
-  if (!ALLOWED_ORIGINS.includes(origin)) return {};
-  return {
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "authorization, content-type",
-    "Vary": "Origin",
-  };
-}
+const corsHeaders: Record<string, string> = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "authorization, content-type, apikey, x-client-info",
+};
 
-function json(status: number, body: any, extraHeaders: Record<string, string> = {}) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { "Content-Type": "application/json", ...extraHeaders },
-  });
-}
-
-// -------------------- Types --------------------
 type SessionTokenRequest = {
   addresses: Array<{ address: string; blockchains: string[] }>;
   assets?: string[];
+  clientIp?: string;
 };
 
-// -------------------- Helpers --------------------
-function bestEffortClientIp(req: Request): string | undefined {
-  return (
-    req.headers.get("cf-connecting-ip")?.trim() ||
-    req.headers.get("x-real-ip")?.trim() ||
-    undefined
-  );
+function json(status: number, body: any) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
 }
 
-function verifiedClientIp(req: Request): string | undefined {
-  if (!IP_FORWARD_SECRET) return undefined;
-
-  const secret = req.headers.get("x-ip-forward-secret")?.trim();
-  if (!secret || secret !== IP_FORWARD_SECRET) return undefined;
-
-  const ip = req.headers.get("x-client-ip-verified")?.trim();
-  return ip || undefined;
+function randomHex(bytes = 16) {
+  const b = new Uint8Array(bytes);
+  crypto.getRandomValues(b);
+  return Array.from(b).map((x) => x.toString(16).padStart(2, "0")).join("");
 }
 
-async function requireSupabaseUser(req: Request) {
-  if (!SB_URL || !SB_ANON) {
-    const auth = req.headers.get("authorization") ?? "";
-    if (!auth.startsWith("Bearer ")) throw new Error("Missing Authorization bearer token");
-    return;
-  }
-
-  const authHeader = req.headers.get("authorization") ?? "";
-  const sb = createClient(SB_URL, SB_ANON, { global: { headers: { Authorization: authHeader } } });
-  const { data, error } = await sb.auth.getUser();
-  if (error || !data?.user) throw new Error("Unauthorized");
+function base64ToBytes(b64: string) {
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
 }
 
-function validateBody(body: any): SessionTokenRequest {
-  if (!body || typeof body !== "object") throw new Error("Invalid JSON body");
+function bytesToBase64Url(bytes: Uint8Array) {
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  const b64 = btoa(bin);
+  return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
 
-  const { addresses, assets } = body as SessionTokenRequest;
-  if (!Array.isArray(addresses) || addresses.length === 0) {
+async function importEd25519PrivateKeyFromBase64(secretB64: string) {
+  const raw = base64ToBytes(secretB64.trim());
+  const d = bytesToBase64Url(raw);
+
+  const jwk = { kty: "OKP", crv: "Ed25519", d };
+  return await jose.importJWK(jwk as any, "EdDSA");
+}
+
+async function generateCdpJwtEd25519(opts: {
+  keyId: string;
+  keySecretB64: string;
+  method: string;
+  host: string;
+  path: string;
+  ttlSeconds?: number;
+}) {
+  const now = Math.floor(Date.now() / 1000);
+  const ttl = opts.ttlSeconds ?? 120;
+
+  const uri = `${opts.method.toUpperCase()} ${opts.host}${opts.path}`;
+
+  const key = await importEd25519PrivateKeyFromBase64(opts.keySecretB64);
+
+  const payload = {
+    iss: "cdp",
+    sub: opts.keyId,
+    nbf: now,
+    exp: now + ttl,
+    uri,
+  };
+
+  return await new jose.SignJWT(payload)
+    .setProtectedHeader({
+      alg: "EdDSA",
+      kid: opts.keyId,
+      nonce: randomHex(16),
+      typ: "JWT",
+    })
+    .sign(key);
+}
+
+function validateBody(b: any): SessionTokenRequest {
+  if (!b || typeof b !== "object") throw new Error("Invalid JSON body");
+  if (!Array.isArray(b.addresses) || b.addresses.length === 0) {
     throw new Error("addresses[] is required");
   }
-  for (const a of addresses) {
+  for (const a of b.addresses) {
     if (!a?.address || typeof a.address !== "string") throw new Error("addresses[].address invalid");
     if (!Array.isArray(a.blockchains) || a.blockchains.length === 0) {
-      throw new Error("addresses[].blockchains is required");
+      throw new Error("addresses[].blockchains required");
     }
   }
-  if (assets !== undefined) {
-    if (!Array.isArray(assets)) throw new Error("assets must be an array");
-  }
-
-  return { addresses, assets };
+  if (b.assets !== undefined && !Array.isArray(b.assets)) throw new Error("assets must be array");
+  if (b.clientIp !== undefined && typeof b.clientIp !== "string") throw new Error("clientIp must be string");
+  return b as SessionTokenRequest;
 }
 
-// -------------------- Handler --------------------
 serve(async (req) => {
-  const origin = req.headers.get("origin");
-  const cors = corsHeaders(origin);
-
-  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
-  if (req.method !== "POST") return json(405, { error: "Method not allowed" }, cors);
-
   try {
+    if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders });
+    if (req.method !== "POST") return json(405, { error: "Method not allowed" });
+
     if (!CDP_API_KEY_ID || !CDP_API_KEY_SECRET) {
-      console.error("Missing CDP credentials");
-      return json(500, { error: "Missing CDP_API_KEY_ID / CDP_API_KEY_SECRET" }, cors);
+      return json(500, { error: "Missing CDP_API_KEY_ID / CDP_API_KEY_SECRET" });
     }
 
-    await requireSupabaseUser(req);
-
     const body = validateBody(await req.json());
-    console.log("Generating session token for addresses:", body.addresses);
 
-    const clientIp = verifiedClientIp(req) ?? bestEffortClientIp(req);
-
-    const jwt = await generateJwt({
-      apiKeyId: CDP_API_KEY_ID,
-      apiKeySecret: CDP_API_KEY_SECRET,
-      requestMethod: "POST",
-      requestHost: CDP_HOST,
-      requestPath: CDP_PATH,
-      expiresIn: 120,
+    const jwt = await generateCdpJwtEd25519({
+      keyId: CDP_API_KEY_ID,
+      keySecretB64: CDP_API_KEY_SECRET,
+      method: "POST",
+      host: CDP_HOST,
+      path: CDP_PATH,
+      ttlSeconds: 120,
     });
 
-    const payload: Record<string, any> = {
-      addresses: body.addresses,
-    };
-    if (body.assets?.length) payload.assets = body.assets;
-    if (clientIp) payload.clientIp = clientIp;
-
-    console.log("Calling Coinbase token API...");
     const resp = await fetch(CDP_URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        addresses: body.addresses,
+        assets: body.assets,
+        clientIp: body.clientIp,
+      }),
     });
 
     const text = await resp.text();
     let data: any;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      data = { raw: text };
-    }
+    try { data = JSON.parse(text); } catch { data = { raw: text }; }
 
     if (!resp.ok) {
-      console.error("Coinbase API error:", resp.status, data);
-      return json(resp.status, { error: "Coinbase token API error", details: data }, cors);
+      return json(resp.status, { error: "Coinbase error", details: data });
     }
 
-    console.log("Session token generated successfully");
-    return json(200, data, cors);
+    return json(200, data);
   } catch (e: any) {
-    console.error("Error generating session token:", e?.message ?? String(e));
-    return json(400, { error: e?.message ?? String(e) }, cors);
+    return json(400, { error: e?.message ?? String(e) });
   }
 });
