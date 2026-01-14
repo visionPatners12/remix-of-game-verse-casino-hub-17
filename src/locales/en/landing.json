@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "The Social Network for Sports Fans",
-    "description": "Join the community. Follow top tipsters, share your analyses, experience every match intensely."
+    "title": "Pryzen Game - Crypto Multiplayer Games & On-Chain Betting",
+    "description": "Play multiplayer crypto games with friends. Bet on-chain, compete in Ludo and more. Win crypto rewards."
   },
   "nav": {
     "features": "Features",
@@ -9,64 +9,64 @@
     "community": "Community",
     "login": "Log In",
     "signup": "Sign Up",
-    "getStarted": "Get Started"
+    "getStarted": "Start Playing"
   },
   "hero": {
-    "tagline": "The social network for sports fans",
-    "title": "Share your passion.",
-    "titleHighlight": "Join the community.",
-    "subtitle": "Follow the best tipsters, discuss with your community, and experience every match intensely.",
-    "cta": "Get Started Free",
-    "secondaryCta": "Discover",
+    "tagline": "CRYPTO GAMING",
+    "title": "Play. Bet.",
+    "titleHighlight": "Win Crypto.",
+    "subtitle": "Multiplayer games with on-chain betting. Play Ludo with friends, make predictions, win USDC on Base.",
+    "cta": "Start Playing",
+    "secondaryCta": "Explore Games",
     "stats": {
-      "users": "Active Members",
-      "predictions": "Analyses Shared",
-      "paid": "Discussions"
+      "users": "Active Players",
+      "predictions": "Games Played",
+      "paid": "USDC Won"
     }
   },
   "features": {
-    "title": "Everything to experience sports differently",
-    "subtitle": "A platform built for true fans",
+    "title": "Why Pryzen Game?",
+    "subtitle": "The ultimate crypto gaming platform",
     "social": {
-      "title": "Your sports feed",
-      "description": "Follow the teams and players that matter to you. Comments, analyses, real-time debates."
+      "title": "Real-Time Multiplayer",
+      "description": "Challenge friends or match with players worldwide. Play anytime, anywhere."
     },
     "crypto": {
-      "title": "Top tipsters",
-      "description": "Discover tipsters with the best track records. Copy their analyses or create your own."
+      "title": "On-Chain Betting",
+      "description": "Transparent bets on Base. USDC payouts instantly to your wallet."
     },
     "live": {
-      "title": "Every match live",
-      "description": "Live stats, lineups, real-time odds. Everything you need to follow the action."
+      "title": "Provably Fair",
+      "description": "All game results are verifiable on-chain. No cheating, no manipulation."
     },
     "games": {
-      "title": "Play with friends",
-      "description": "Challenge your friends on Ludo and other games. Crypto stakes, instant results."
+      "title": "Multiple Games",
+      "description": "Ludo, predictions, and more games coming soon. Never get bored."
     },
     "leaderboard": {
       "title": "Leaderboards",
-      "description": "Climb the ranks with your winning analyses"
+      "description": "Compete for the top spots and earn rewards"
     },
     "tipsters": {
-      "title": "Verified tipsters",
-      "description": "Follow experts with transparent track records"
+      "title": "Win Crypto",
+      "description": "Real crypto rewards. Withdraw anytime."
     }
   },
   "games": {
     "title": "Games",
-    "subtitle": "Challenge your friends and win",
+    "subtitle": "Challenge your friends and win crypto",
     "viewAll": "View All Games"
   },
   "community": {
     "title": "Join the community",
-    "subtitle": "Thousands of sports fans are waiting",
+    "subtitle": "Thousands of crypto gamers are waiting",
     "discord": "Discord",
     "telegram": "Telegram",
     "twitter": "X"
   },
   "cta": {
-    "title": "Ready to join the community?",
-    "subtitle": "Download the app and start sharing your analyses today.",
+    "title": "Ready to play?",
+    "subtitle": "Download the app and start winning crypto today.",
     "button": "Create my account"
   },
   "footer": {
@@ -80,81 +80,81 @@
     "privacy": "Privacy",
     "cookies": "Cookies",
     "responsible": "Responsible Gaming",
-    "copyright": "© {{year}} All rights reserved"
+    "copyright": "© {{year}} Pryzen Game. All rights reserved"
   },
   "discover": {
     "backToHome": "Back to Home",
     "feed": {
       "badge": "SOCIAL",
-      "title": "Social Feed + Sport",
-      "description": "A unique feed that combines social content with sports. Follow tipsters, share predictions, react to live events, and build your sports community all in one place.",
+      "title": "Social Gaming",
+      "description": "Connect with players worldwide. Share your wins, follow top players, and build your gaming reputation.",
       "bestOfBothWorlds": {
         "badge": "UNIQUE",
-        "title": "The Best of Both Worlds",
-        "description": "Social media meets sports betting in a revolutionary way"
+        "title": "Gaming Meets Social",
+        "description": "Social features combined with competitive gaming"
       },
       "socialContent": {
-        "title": "Social Content",
-        "description": "Posts, predictions, reactions from the community"
+        "title": "Player Profiles",
+        "description": "Track your stats, wins, and rankings"
       },
       "liveHighlights": {
-        "title": "Live Highlights",
-        "description": "Best moments from matches in real-time"
+        "title": "Live Games",
+        "description": "Watch games in real-time"
       },
       "communityPredictions": {
-        "title": "Community Predictions",
-        "description": "What the community predicts, aggregated insights"
+        "title": "Leaderboards",
+        "description": "Compete for the top spots"
       },
       "postTypes": {
-        "badge": "CONTENT",
-        "title": "6 Post Types",
-        "description": "Express yourself in multiple ways",
-        "simplePost": { "title": "Simple Post", "description": "Share thoughts about sports" },
-        "prediction": { "title": "Prediction", "description": "Predict results with confidence" },
-        "opinion": { "title": "Opinion", "description": "Debate matches and players" },
-        "bet": { "title": "Bet", "description": "Share on-chain bets" },
-        "highlight": { "title": "Highlight", "description": "React to best moments" },
-        "liveEvent": { "title": "Live Event", "description": "Comment in real-time" }
+        "badge": "FEATURES",
+        "title": "Social Features",
+        "description": "Connect and compete",
+        "simplePost": { "title": "Chat", "description": "Talk with other players" },
+        "prediction": { "title": "Challenges", "description": "Challenge friends directly" },
+        "opinion": { "title": "Rankings", "description": "Climb the leaderboards" },
+        "bet": { "title": "Rewards", "description": "Win crypto prizes" },
+        "highlight": { "title": "Achievements", "description": "Unlock badges and rewards" },
+        "liveEvent": { "title": "Tournaments", "description": "Join competitive events" }
       },
       "screenshots": { "title": "See it in action" },
       "cta": {
-        "title": "Ready to join the feed?",
-        "description": "Create your account and start sharing your sports predictions today.",
-        "button": "Join the Feed"
+        "title": "Ready to join?",
+        "description": "Create your account and start playing today.",
+        "button": "Join Now"
       }
     },
     "sports": {
-      "badge": "COMPLETE",
-      "title": "Sports Pages",
-      "description": "Dedicated pages for leagues, teams, matches, and players. All the sports data you need, beautifully organized and always up-to-date.",
+      "badge": "PREDICTIONS",
+      "title": "Sports Predictions",
+      "description": "Predict match outcomes and win crypto. Coming soon!",
       "pageTypes": {
         "league": {
-          "title": "League Page",
-          "description": "Complete league overview with standings, schedules, and statistics.",
-          "standings": "Real-time standings",
+          "title": "League Predictions",
+          "description": "Predict league winners and standings.",
+          "standings": "League standings",
           "schedule": "Match schedule",
-          "stats": "League statistics",
+          "stats": "Statistics",
           "scorers": "Top scorers"
         },
         "team": {
-          "title": "Team Page",
-          "description": "Everything about your favorite team in one place.",
-          "squad": "Full squad",
+          "title": "Team Predictions",
+          "description": "Predict team performance.",
+          "squad": "Team info",
           "stats": "Team stats",
           "upcoming": "Upcoming matches",
           "history": "Results history"
         },
         "match": {
-          "title": "Match Page",
-          "description": "Live match center with all the data you need.",
-          "liveScore": "Live score and events",
-          "odds": "Updated odds",
+          "title": "Match Predictions",
+          "description": "Predict match results.",
+          "liveScore": "Live scores",
+          "odds": "Betting odds",
           "stats": "Match statistics",
           "bets": "Available bets"
         },
         "player": {
-          "title": "Player Page",
-          "description": "Detailed player profiles and performance data.",
+          "title": "Player Stats",
+          "description": "View player performance data.",
           "bio": "Bio and career",
           "stats": "Detailed statistics",
           "value": "Market value",
@@ -163,23 +163,23 @@
       },
       "supported": {
         "title": "Supported Sports",
-        "description": "All major sports covered"
+        "description": "Major sports coming soon"
       },
       "cta": {
-        "title": "Explore Sports",
-        "description": "Create your account and start exploring leagues, teams, and players.",
-        "button": "Explore Sports"
+        "title": "Coming Soon",
+        "description": "Sports predictions launching soon. Join the waitlist.",
+        "button": "Join Waitlist"
       }
     },
     "gaming": {
-      "badge": "ACTIVE",
+      "badge": "LIVE",
       "title": "On-Chain Gaming",
       "description": "Play classic games on the blockchain. Fair, transparent, and fun. Stake crypto and compete with players worldwide.",
       "ludo": {
         "title": "Ludo",
-        "subtitle": "The Classic Board Game, Reinvented",
+        "subtitle": "The Classic Board Game, On-Chain",
         "players": "2-4 Players",
-        "bets": "On-Chain Bets",
+        "bets": "USDC Bets",
         "leaderboard": "Leaderboard",
         "realtime": "Real-Time",
         "play": "Play Ludo"
@@ -187,15 +187,15 @@
       "upcoming": {
         "badge": "COMING SOON",
         "title": "Upcoming Games",
-        "description": "More games are on the way",
+        "description": "More games launching soon",
         "checkers": { "title": "Checkers", "description": "Classic strategy game" },
         "cards": { "title": "Cards", "description": "Poker & more" },
-        "quiz": { "title": "Sports Quiz", "description": "Test your knowledge" },
+        "quiz": { "title": "Trivia", "description": "Test your knowledge" },
         "dice": { "title": "Dice", "description": "Lucky rolls" }
       },
       "cta": {
         "title": "Ready to play?",
-        "description": "Start playing Ludo now and compete for crypto prizes.",
+        "description": "Start playing Ludo now and compete for USDC prizes.",
         "button": "Start Playing"
       }
     }

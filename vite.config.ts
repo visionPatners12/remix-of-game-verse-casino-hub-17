@@ -15,17 +15,17 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         includeAssets: ['favicon.ico', 'icons/*.png', 'offline.html'],
         manifest: {
-          name: 'PRYZEN - Gaming Evolved',
-          short_name: 'PRYZEN',
-          description: 'Jouez au Ludo avec des mises en USDT - La plateforme de jeux on-chain',
+          name: 'Pryzen Game',
+          short_name: 'Pryzen',
+          description: 'Crypto multiplayer games & on-chain betting. Play Ludo with friends, win USDC.',
           theme_color: '#0f0f1a',
           background_color: '#0f0f1a',
           display: 'standalone',
           orientation: 'portrait',
           scope: '/',
           start_url: '/',
-          lang: 'fr',
-          categories: ['games', 'entertainment'],
+          lang: 'en',
+          categories: ['games', 'entertainment', 'finance'],
           icons: [
             {
               src: '/icons/icon-72x72.png',
@@ -82,15 +82,21 @@ export default defineConfig(({ mode }) => {
           ],
           shortcuts: [
             {
-              name: 'Jouer au Ludo',
+              name: 'Play Ludo',
               short_name: 'Ludo',
               url: '/games/ludo/create',
               icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }]
             },
             {
-              name: 'Mon Wallet',
+              name: 'My Wallet',
               short_name: 'Wallet',
               url: '/wallet',
+              icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }]
+            },
+            {
+              name: 'Games',
+              short_name: 'Games',
+              url: '/games',
               icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }]
             }
           ],

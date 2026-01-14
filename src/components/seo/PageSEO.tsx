@@ -11,7 +11,14 @@ interface PageSEOProps {
   jsonLd?: object;
 }
 
-const BASE_URL = 'https://pryzen.io';
+const BASE_URL = 'https://pryzen.app';
+
+const DEFAULT_SEO = {
+  title: 'Pryzen Game - Crypto Multiplayer Games',
+  description: 'Play multiplayer crypto games with friends. Bet on-chain, win crypto rewards.',
+  keywords: 'crypto games, multiplayer, on-chain betting, blockchain games, ludo crypto',
+  ogImage: `${BASE_URL}/pryzen-logo.png`
+};
 
 export const PageSEO = ({
   title,

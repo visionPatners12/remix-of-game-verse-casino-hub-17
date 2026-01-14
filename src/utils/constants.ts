@@ -1,8 +1,9 @@
 
 // Application constants - Version minimaliste
 export const APP_CONFIG = {
-  NAME: 'PRYZEN',
-  TAGLINE: 'GAMING EVOLVED',
+  NAME: 'Pryzen Game',
+  TAGLINE: 'Play. Bet. Win Crypto.',
+  DESCRIPTION: 'Crypto multiplayer games & on-chain betting',
   VERSION: '1.0.0',
 } as const;
 
