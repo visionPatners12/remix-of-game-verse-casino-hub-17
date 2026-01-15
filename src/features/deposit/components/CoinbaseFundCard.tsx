@@ -1,8 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TokenUSDC, NetworkBase } from '@web3icons/react';
-import { ArrowUpDown, CreditCard, Loader2, Building2, Check, Wallet } from 'lucide-react';
+import { TokenUSDC } from '@web3icons/react';
+import { ArrowUpDown, CreditCard, Loader2, Building2, Check, Wallet, Banknote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useCdpPaymentMethods } from '@/features/deposit/hooks/useCdpPaymentMethods';
+import { markCoinbaseDepositPending } from '@/utils/coinbasePwa';
+import { useAuth } from '@/features/auth';
 
 // Apple Pay icon component
 const ApplePayIcon = () => (
@@ -11,13 +14,15 @@ const ApplePayIcon = () => (
   </svg>
 );
 
-// Payment methods configuration
-const PAYMENT_METHODS = [
-  { id: 'APPLE_PAY', name: 'Apple Pay', Icon: ApplePayIcon, description: 'Express checkout' },
-  { id: 'CARD', name: 'Debit Card', Icon: CreditCard, description: 'Visa, Mastercard' },
-  { id: 'ACH_BANK_ACCOUNT', name: 'Bank Transfer', Icon: Building2, description: 'ACH (US only)' },
-  { id: 'FIAT_WALLET', name: 'Coinbase Balance', Icon: Wallet, description: 'Use your balance' },
-];
+// Icon mapping for payment methods
+const PAYMENT_METHOD_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  CARD: CreditCard,
+  APPLE_PAY: ApplePayIcon,
+  ACH_BANK_ACCOUNT: Building2,
+  FIAT_WALLET: Wallet,
+  CRYPTO_ACCOUNT: Wallet,
+  SEPA: Banknote,
+};
 
 interface CoinbaseFundCardProps {
   sessionToken: string;
@@ -33,6 +38,9 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   onError,
 }) => {
   const { t } = useTranslation('deposit');
+  const { user } = useAuth();
+  const { data: paymentData, isLoading: isLoadingMethods } = useCdpPaymentMethods();
+  
   const [amount, setAmount] = useState('');
   const [inputType, setInputType] = useState<'fiat' | 'crypto'>('fiat');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -66,25 +74,43 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Construct Coinbase Pay URL with session token
+      // Get user ID for tracking (partnerUserRef)
+      const userId = user?.id || '';
+      const fiatCurrency = paymentData?.currencies?.[0] || 'USD';
+
+      // Construct Coinbase Pay URL with all parameters
       const baseUrl = 'https://pay.coinbase.com/buy/select-asset';
       const params = new URLSearchParams({
         sessionToken,
         defaultAsset: 'USDC',
         defaultNetwork: 'base',
-        presetFiatAmount: inputType === 'fiat' ? amount : '',
-        presetCryptoAmount: inputType === 'crypto' ? amount : '',
         defaultPaymentMethod: selectedPaymentMethod,
+        fiatCurrency,
+        defaultExperience: 'buy',
       });
 
-      // Remove empty params
-      Array.from(params.entries()).forEach(([key, value]) => {
-        if (!value) params.delete(key);
-      });
+      // Add amount based on input type
+      if (inputType === 'fiat') {
+        params.set('presetFiatAmount', amount);
+      } else {
+        params.set('presetCryptoAmount', amount);
+      }
+
+      // Add partner user ref for Transaction Status API tracking
+      if (userId) {
+        params.set('partnerUserRef', userId.substring(0, 50)); // Max 50 chars
+      }
 
       const coinbasePayUrl = `${baseUrl}?${params.toString()}`;
       
       console.log('[CoinbaseFundCard] Opening Coinbase Pay:', coinbasePayUrl);
+      
+      // Mark deposit as pending for PWA return detection
+      markCoinbaseDepositPending({
+        amount,
+        sessionToken,
+        partnerUserRef: userId,
+      });
       
       // Open in new window/tab
       window.open(coinbasePayUrl, '_blank', 'noopener,noreferrer');
@@ -96,10 +122,10 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     } finally {
       setIsSubmitting(false);
     }
-  }, [amount, inputType, sessionToken, selectedPaymentMethod, onSuccess, onError]);
+  }, [amount, inputType, sessionToken, selectedPaymentMethod, paymentData, user, onSuccess, onError]);
 
-  const displaySymbol = inputType === 'fiat' ? '$' : 'USDC';
   const numericAmount = parseFloat(amount) || 0;
+  const methods = paymentData?.methods || [];
 
   return (
     <div className="space-y-4">
@@ -184,41 +210,55 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
         <label className="text-sm font-medium text-muted-foreground mb-3 block">
           {t('coinbase.selectMethod', 'Payment Method')}
         </label>
-        <div className="space-y-2">
-          {PAYMENT_METHODS.map((method) => (
-            <button
-              key={method.id}
-              onClick={() => setSelectedPaymentMethod(method.id)}
-              className={`
-                w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                ${selectedPaymentMethod === method.id
-                  ? 'bg-primary/10 border border-primary/50'
-                  : 'bg-muted/50 border border-transparent hover:bg-muted'}
-              `}
-            >
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                selectedPaymentMethod === method.id ? 'bg-primary/20 text-primary' : 'bg-background text-muted-foreground'
-              }`}>
-                <method.Icon />
-              </div>
-              <div className="flex-1 text-left">
-                <p className={`font-medium text-sm ${
-                  selectedPaymentMethod === method.id ? 'text-primary' : 'text-foreground'
-                }`}>{method.name}</p>
-                <p className="text-xs text-muted-foreground">{method.description}</p>
-              </div>
-              {selectedPaymentMethod === method.id && (
-                <Check className="h-5 w-5 text-primary" />
-              )}
-            </button>
-          ))}
-        </div>
+        
+        {isLoadingMethods ? (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+          </div>
+        ) : methods.length === 0 ? (
+          <p className="text-center text-muted-foreground py-4">
+            {t('coinbase.noMethods', 'No payment methods available')}
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {methods.map((method) => {
+              const IconComponent = PAYMENT_METHOD_ICONS[method.id] || CreditCard;
+              return (
+                <button
+                  key={method.id}
+                  onClick={() => setSelectedPaymentMethod(method.id)}
+                  className={`
+                    w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                    ${selectedPaymentMethod === method.id
+                      ? 'bg-primary/10 border border-primary/50'
+                      : 'bg-muted/50 border border-transparent hover:bg-muted'}
+                  `}
+                >
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                    selectedPaymentMethod === method.id ? 'bg-primary/20 text-primary' : 'bg-background text-muted-foreground'
+                  }`}>
+                    <IconComponent className="h-5 w-5" />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <p className={`font-medium text-sm ${
+                      selectedPaymentMethod === method.id ? 'text-primary' : 'text-foreground'
+                    }`}>{method.name}</p>
+                    <p className="text-xs text-muted-foreground">{method.description}</p>
+                  </div>
+                  {selectedPaymentMethod === method.id && (
+                    <Check className="h-5 w-5 text-primary" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Submit Button */}
       <Button
         onClick={handleSubmit}
-        disabled={isSubmitting || !amount || parseFloat(amount) <= 0}
+        disabled={isSubmitting || !amount || parseFloat(amount) <= 0 || isLoadingMethods}
         className="w-full h-14 rounded-2xl text-base font-semibold bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isSubmitting ? (
