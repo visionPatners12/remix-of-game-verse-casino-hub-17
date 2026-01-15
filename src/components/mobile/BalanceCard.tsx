@@ -54,20 +54,19 @@ export const BalanceCard = ({
           </div>
         </div>
         
-        {/* USDC Balance with token count and chain icon */}
+        {/* USDC Balance with chain icon */}
         {!isLoading && usdcBalance && (
           <div className="flex items-center justify-between bg-muted/30 rounded-lg px-3 py-2">
             <div className="flex items-center gap-2">
-              <TokenUSDC variant="branded" size={20} />
+              <div className="relative">
+                <TokenUSDC variant="branded" size={20} />
+                {usdcChainId && (
+                  <div className="absolute -bottom-1 -right-1 bg-background rounded-full p-0.5">
+                    {getChainIcon(usdcChainId)}
+                  </div>
+                )}
+              </div>
               <span className="text-sm font-medium">{usdcBalance} USDC</span>
-            </div>
-            <div className="relative">
-              <TokenUSDC variant="branded" size={24} />
-              {usdcChainId && (
-                <div className="absolute -bottom-1 -right-1 bg-background rounded-full p-0.5">
-                  {getChainIcon(usdcChainId)}
-                </div>
-              )}
             </div>
           </div>
         )}
