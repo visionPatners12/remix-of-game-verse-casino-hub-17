@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle, Loader2, Wallet, ExternalLink, AlertTriangle, XCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { TokenUSDC, NetworkBase } from '@web3icons/react';
 import { useToast } from '@/hooks/use-toast';
 import { useWallets } from '@privy-io/react-auth';
 import { useSmartWallets } from '@privy-io/react-auth/smart-wallets';
@@ -377,15 +378,8 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
   const isLoading = transactionState === 'wallet-pending';
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      {/* Amount display */}
-      <div className="text-center">
-        <p className="text-sm text-muted-foreground">Montant à déposer</p>
-        <p className="text-3xl font-bold">{betAmount} USDC</p>
-        <p className="text-xs text-muted-foreground mt-1">Réseau Base</p>
-      </div>
-
-      {/* Cancelled/Error state message (no separate button - main button handles retry) */}
+    <div className="flex flex-col items-center gap-3">
+      {/* Cancelled/Error state message */}
       <AnimatePresence>
         {(transactionState === 'cancelled' || transactionState === 'error') && (
           <motion.div
@@ -416,7 +410,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
         )}
       </AnimatePresence>
 
-      {/* Deposit Button with glow effect */}
+      {/* Deposit Button with USDC + Base icon */}
       <motion.div 
         className="w-full relative"
         animate={transactionState === 'cancelled' ? { x: [-8, 8, -8, 8, 0] } : {}}
@@ -444,46 +438,41 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
           )}
           
-          <span className="relative z-10 flex items-center justify-center">
+          <span className="relative z-10 flex items-center justify-center gap-2">
             {transactionState === 'wallet-pending' ? (
               <>
-                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Confirmation wallet...
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Confirmation...
               </>
-            ) : transactionState === 'cancelled' ? (
+            ) : transactionState === 'cancelled' || transactionState === 'error' ? (
               <>
-                <RefreshCw className="w-5 h-5 mr-2" />
-                Réessayer le dépôt
-              </>
-            ) : transactionState === 'error' ? (
-              <>
-                <RefreshCw className="w-5 h-5 mr-2" />
+                <RefreshCw className="w-5 h-5" />
                 Réessayer
               </>
             ) : !hasWalletConnected ? (
               <>
-                <Wallet className="w-5 h-5 mr-2" />
-                Connecter le wallet
+                <Wallet className="w-5 h-5" />
+                Connecter wallet
               </>
             ) : !isSmartWalletReady ? (
               <>
-                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Initialisation Smart Wallet...
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Initialisation...
               </>
             ) : (
               <>
-                <Wallet className="w-5 h-5 mr-2" />
-                Déposer {betAmount} USDC
+                <div className="relative flex-shrink-0">
+                  <TokenUSDC variant="branded" size={22} />
+                  <div className="absolute -bottom-0.5 -right-0.5 bg-success rounded-full p-0.5">
+                    <NetworkBase size={10} />
+                  </div>
+                </div>
+                <span>Pay {betAmount} USDC</span>
               </>
             )}
           </span>
         </Button>
       </motion.div>
-
-      {/* Info */}
-      <p className="text-xs text-muted-foreground text-center">
-        Les fonds seront envoyés au pot de la partie
-      </p>
     </div>
   );
 };
