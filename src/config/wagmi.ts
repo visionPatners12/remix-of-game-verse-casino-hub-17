@@ -21,7 +21,7 @@ export const wagmiConfig = createConfig({
   multiInjectedProviderDiscovery: true,
   transports: {
     [polygon.id]: http('https://polygon-mainnet.infura.io/v3/4a9defd4655c4958b48ebfb8cc63f2e9'),
-    [base.id]: http('https://mainnet.base.org'),
+    [base.id]: http('https://base-mainnet.infura.io/v3/4a9defd4655c4958b48ebfb8cc63f2e9'),
   },
   storage: createStorage({
     storage: typeof window !== 'undefined' ? window.localStorage : undefined,
