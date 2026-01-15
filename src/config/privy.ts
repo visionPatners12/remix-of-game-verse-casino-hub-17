@@ -1,10 +1,10 @@
 import { type PrivyConfig } from '@azuro-org/sdk-social-aa-connector';
-import { polygon } from 'wagmi/chains';
+import { polygon, base } from 'wagmi/chains';
 import { WALLETCONNECT_PROJECT_ID } from './constants';
 
 export const privyConfig: PrivyConfig = {
   walletConnectCloudProjectId: WALLETCONNECT_PROJECT_ID,
-  supportedChains: [polygon],
+  supportedChains: [polygon, base],
   defaultChain: polygon,
   loginMethods: ['sms', 'email', 'wallet'],
   appearance: {

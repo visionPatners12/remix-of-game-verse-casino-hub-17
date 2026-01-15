@@ -1,7 +1,7 @@
 import { http, createStorage } from 'wagmi';
 import { createConfig } from '@privy-io/wagmi';
 import { injected } from 'wagmi/connectors';
-import { polygon } from 'wagmi/chains';
+import { polygon, base } from 'wagmi/chains';
 import { PRYZEN_APP, getOrigin } from './constants';
 
 // Configuration wagmi simplifiée pour PWA
@@ -9,7 +9,7 @@ import { PRYZEN_APP, getOrigin } from './constants';
 // - Uniquement injected() pour MetaMask browser extension
 // - localStorage pour persistance fiable sur iOS PWA
 export const wagmiConfig = createConfig({
-  chains: [polygon],
+  chains: [polygon, base],
   connectors: [
     injected({
       shimDisconnect: true,
@@ -21,6 +21,7 @@ export const wagmiConfig = createConfig({
   multiInjectedProviderDiscovery: true,
   transports: {
     [polygon.id]: http('https://polygon-mainnet.infura.io/v3/4a9defd4655c4958b48ebfb8cc63f2e9'),
+    [base.id]: http('https://mainnet.base.org'),
   },
   storage: createStorage({
     storage: typeof window !== 'undefined' ? window.localStorage : undefined,
