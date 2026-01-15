@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      cdp_supported_countries: {
+        Row: {
+          country_code: string
+          country_name: string
+          created_at: string | null
+          fiat_currencies: Json
+          id: string
+          is_active: boolean | null
+          last_synced_at: string | null
+          payment_methods: Json
+          purchase_limits: Json | null
+          subdivisions: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          country_code: string
+          country_name: string
+          created_at?: string | null
+          fiat_currencies?: Json
+          id?: string
+          is_active?: boolean | null
+          last_synced_at?: string | null
+          payment_methods?: Json
+          purchase_limits?: Json | null
+          subdivisions?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          country_code?: string
+          country_name?: string
+          created_at?: string | null
+          fiat_currencies?: Json
+          id?: string
+          is_active?: boolean | null
+          last_synced_at?: string | null
+          payment_methods?: Json
+          purchase_limits?: Json | null
+          subdivisions?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       collections: {
         Row: {
           admin_address: string | null
