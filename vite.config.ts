@@ -116,8 +116,13 @@ export default defineConfig(({ mode }) => {
               protocol: 'web+pryzen',
               url: '/protocol-handler?url=%s'
             }
-          ]
-        },
+          ],
+          // Deep linking: PWA should handle all URLs from this origin
+          launch_handler: {
+            client_mode: ["navigate-existing", "auto"]
+          },
+          handle_links: "preferred"
+        } as any,
         workbox: {
           // Précacher l'essentiel + vendors JS critiques pour offline
           globPatterns: [

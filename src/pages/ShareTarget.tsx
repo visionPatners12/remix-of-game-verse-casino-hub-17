@@ -64,6 +64,15 @@ export default function ShareTarget() {
     
     // Navigate to the target
     navigate(targetPath, { replace: true });
+    
+    // Fallback: if still on this page after 2s, force hard navigation
+    const timeout = setTimeout(() => {
+      if (window.location.pathname === '/share-target') {
+        window.location.href = targetPath;
+      }
+    }, 2000);
+    
+    return () => clearTimeout(timeout);
   }, [searchParams, navigate]);
 
   return (
