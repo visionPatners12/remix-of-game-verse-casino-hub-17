@@ -3,10 +3,10 @@ import { CryptoOption } from '@/types/wallet';
 
 export const cryptoOptions: CryptoOption[] = [
   {
-    id: 'usdt-polygon',
-    name: 'USDT (Polygon)',
-    symbol: 'USDT',
+    id: 'usdc-base',
+    name: 'USDC (Base)',
+    symbol: 'USDC',
     address: '', // Will be generated dynamically
-    network: 'Polygon'
+    network: 'Base'
   }
 ];

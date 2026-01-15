@@ -7,8 +7,8 @@ export const SUPPORTED_CHAINS = [polygon, mainnet, arbitrum, optimism, base];
 // Chain IDs we support
 export const SUPPORTED_CHAIN_IDS = SUPPORTED_CHAINS.map(c => c.id);
 
-// Default chain is Polygon (where PRYZEN operates)
-export const DEFAULT_CHAIN_ID = polygon.id;
+// Default chain is Base (where PRYZEN operates)
+export const DEFAULT_CHAIN_ID = base.id;
 
 // Note: SDK is configured in useLifiConfig hook with EVM provider
 
