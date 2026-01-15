@@ -7,7 +7,6 @@ import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
 import { useCdpSessionToken } from '@/features/deposit/hooks/useCdpSessionToken';
 import { FundCard } from '@coinbase/onchainkit/fund';
 import { Button } from '@/components/ui/button';
-import '@coinbase/onchainkit/styles.css';
 const CoinbaseDepositPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('deposit');

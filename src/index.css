@@ -11,6 +11,10 @@
 @import './styles/gaming-animations.css';
 /* === TAILWIND DIRECTIVES === */
 @tailwind base;
+
+/* === VENDOR STYLES (must come after @tailwind base) === */
+@import '@coinbase/onchainkit/styles.css';
+
 @tailwind components;
 @tailwind utilities;
 
