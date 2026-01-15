@@ -16,6 +16,7 @@ import heroBgIllustration from "@/assets/hero-bg-illustration.png";
 import howtoBgIllustration from "@/assets/howto-bg-illustration.png";
 import roadmapBgIllustration from "@/assets/roadmap-bg-illustration.png";
 import ctaBgIllustration from "@/assets/cta-bg-illustration.png";
+import coinbaseLogo from "@/assets/coinbase-logo.svg";
 import { 
   Gamepad2,
   UserPlus,
@@ -184,7 +185,7 @@ export function LandingHome() {
       {/* Trust Bar */}
       <section className="py-8 border-y border-border/20 bg-muted/30">
         <div className="container px-4">
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
             {trustFeatures.map((feature) => (
               <div key={feature.title} className="flex items-center gap-3">
                 <feature.icon className="w-5 h-5 text-amber-400" />
@@ -194,6 +195,10 @@ export function LandingHome() {
                 </div>
               </div>
             ))}
+            {/* Coinbase Partner */}
+            <div className="flex items-center gap-2 pl-4 border-l border-border/40">
+              <img src={coinbaseLogo} alt="Coinbase" className="h-5 opacity-80" />
+            </div>
           </div>
         </div>
       </section>
