@@ -110,7 +110,24 @@
     "title": "Compra USDC en Base con Coinbase Pay",
     "selectMethod": "Selecciona tu método de pago preferido",
     "securedBy": "Asegurado por Coinbase",
-    "securityNote": "Tu depósito es seguro y procesado directamente por Coinbase en la red Base"
+    "securityNote": "Tu depósito es seguro y procesado directamente por Coinbase en la red Base",
+    "enterAmount": "Ingresa el monto",
+    "opening": "Abriendo Coinbase...",
+    "buyUsdc": "Comprar USDC",
+    "noMethods": "No hay métodos de pago disponibles"
+  },
+  "applePay": {
+    "native": "Apple Pay Directo",
+    "description": "Pago rápido y seguro",
+    "phoneRequired": "Número de teléfono requerido",
+    "phoneRequiredMessage": "Por favor, añade tu número de teléfono en ajustes para usar Apple Pay",
+    "goToSettings": "Ir a Ajustes",
+    "processing": "Procesando Apple Pay...",
+    "fees": "Tarifas de transacción",
+    "exchangeFee": "Tarifa de cambio",
+    "networkFee": "Tarifa de red",
+    "total": "Total a pagar",
+    "youReceive": "Recibirás"
   },
   "buttons": {
     "back": "Atrás",

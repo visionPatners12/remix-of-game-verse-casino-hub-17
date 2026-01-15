@@ -1,11 +1,16 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { TokenUSDC } from '@web3icons/react';
-import { ArrowUpDown, CreditCard, Loader2, Building2, Check, Wallet, Banknote } from 'lucide-react';
+import { ArrowUpDown, CreditCard, Loader2, Building2, Check, Wallet, Banknote, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCdpPaymentMethods } from '@/features/deposit/hooks/useCdpPaymentMethods';
+import { useApplePayOrder } from '@/features/deposit/hooks/useApplePayOrder';
 import { markCoinbaseDepositPending } from '@/utils/coinbasePwa';
 import { useAuth } from '@/features/auth';
+import { useUserProfile } from '@/features/profile/hooks/useUserProfile';
+import { useUnifiedWallet } from '@/features/wallet/hooks/core/useUnifiedWallet';
+import { toast } from 'sonner';
 
 // Apple Pay icon component
 const ApplePayIcon = () => (
@@ -38,8 +43,12 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   onError,
 }) => {
   const { t } = useTranslation('deposit');
+  const navigate = useNavigate();
   const { user } = useAuth();
+  const { walletAddress } = useUnifiedWallet();
+  const { profile, isLoading: isLoadingProfile } = useUserProfile();
   const { data: paymentData, isLoading: isLoadingMethods } = useCdpPaymentMethods();
+  const { createOrder: createApplePayOrder, isLoading: isApplePayLoading } = useApplePayOrder();
   
   const [amount, setAmount] = useState('');
   const [inputType, setInputType] = useState<'fiat' | 'crypto'>('fiat');
@@ -65,7 +74,82 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     setInputType(prev => prev === 'fiat' ? 'crypto' : 'fiat');
   };
 
+  // Handle Apple Pay native flow
+  const handleApplePaySubmit = useCallback(async () => {
+    if (!amount || parseFloat(amount) <= 0) {
+      onError?.('Please enter a valid amount');
+      return;
+    }
+
+    // Check if phone number exists
+    const phoneNumber = profile?.phone || profile?.phone_number;
+    if (!phoneNumber) {
+      toast.error(t('applePay.phoneRequired'), {
+        description: t('applePay.phoneRequiredMessage'),
+        action: {
+          label: t('applePay.goToSettings'),
+          onClick: () => navigate('/settings', { 
+            state: { 
+              returnTo: '/deposit/coinbase',
+              requiredField: 'phone' 
+            }
+          }),
+        },
+      });
+      return;
+    }
+
+    if (!walletAddress) {
+      onError?.('Wallet not connected');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const email = user?.email || profile?.email || '';
+      const userId = user?.id || '';
+
+      const orderResponse = await createApplePayOrder({
+        destinationAddress: walletAddress,
+        email,
+        phoneNumber,
+        paymentAmount: amount,
+        partnerUserRef: userId.substring(0, 50),
+      });
+
+      if (!orderResponse || !orderResponse.paymentLink?.url) {
+        throw new Error('Failed to create Apple Pay order');
+      }
+
+      console.log('[CoinbaseFundCard] Apple Pay order created:', orderResponse);
+
+      // Mark deposit as pending for PWA return detection
+      markCoinbaseDepositPending({
+        amount,
+        sessionToken,
+        partnerUserRef: userId,
+      });
+
+      // Open Apple Pay payment link
+      window.open(orderResponse.paymentLink.url, '_blank', 'noopener,noreferrer');
+      
+      onSuccess?.();
+    } catch (err) {
+      console.error('[CoinbaseFundCard] Apple Pay error:', err);
+      onError?.(err instanceof Error ? err.message : 'Failed to process Apple Pay');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [amount, profile, walletAddress, user, sessionToken, createApplePayOrder, navigate, t, onSuccess, onError]);
+
+  // Handle standard Coinbase Pay flow
   const handleSubmit = useCallback(async () => {
+    // If Apple Pay native is selected, use the special flow
+    if (selectedPaymentMethod === 'APPLE_PAY_NATIVE') {
+      return handleApplePaySubmit();
+    }
+
     if (!amount || parseFloat(amount) <= 0) {
       onError?.('Please enter a valid amount');
       return;
@@ -122,7 +206,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     } finally {
       setIsSubmitting(false);
     }
-  }, [amount, inputType, sessionToken, selectedPaymentMethod, paymentData, user, onSuccess, onError]);
+  }, [amount, inputType, sessionToken, selectedPaymentMethod, paymentData, user, handleApplePaySubmit, onSuccess, onError]);
 
   const numericAmount = parseFloat(amount) || 0;
   const methods = paymentData?.methods || [];
@@ -221,6 +305,33 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
           </p>
         ) : (
           <div className="space-y-2">
+            {/* Apple Pay Native Option - First */}
+            <button
+              onClick={() => setSelectedPaymentMethod('APPLE_PAY_NATIVE')}
+              className={`
+                w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                ${selectedPaymentMethod === 'APPLE_PAY_NATIVE'
+                  ? 'bg-primary/10 border border-primary/50'
+                  : 'bg-muted/50 border border-transparent hover:bg-muted'}
+              `}
+            >
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                selectedPaymentMethod === 'APPLE_PAY_NATIVE' ? 'bg-primary/20 text-primary' : 'bg-background text-muted-foreground'
+              }`}>
+                <ApplePayIcon />
+              </div>
+              <div className="flex-1 text-left">
+                <p className={`font-medium text-sm ${
+                  selectedPaymentMethod === 'APPLE_PAY_NATIVE' ? 'text-primary' : 'text-foreground'
+                }`}>{t('applePay.native', 'Apple Pay Direct')}</p>
+                <p className="text-xs text-muted-foreground">{t('applePay.description', 'Fast & secure checkout')}</p>
+              </div>
+              {selectedPaymentMethod === 'APPLE_PAY_NATIVE' && (
+                <Check className="h-5 w-5 text-primary" />
+              )}
+            </button>
+
+            {/* Other payment methods */}
             {methods.map((method) => {
               const IconComponent = PAYMENT_METHOD_ICONS[method.id] || CreditCard;
               return (
