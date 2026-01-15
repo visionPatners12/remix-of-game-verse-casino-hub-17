@@ -32,3 +32,6 @@ verify_jwt = false
 
 [functions.cdp-countries]
 verify_jwt = false
+
+[functions.privy-transactions]
+verify_jwt = false
