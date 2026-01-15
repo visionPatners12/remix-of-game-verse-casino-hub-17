@@ -14,7 +14,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 // USDC on Base (6 decimals)
 const USDC_CONTRACT = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' as const;
-const DEPOSIT_ADDRESS = '0x47C294f6fb030367c5214c96b63fe6A7564AD773' as const;
+const DEPOSIT_ADDRESS = '0xaB8B5F94e2C72af5F60Bd2b2D3e9c669Fec19460' as const;
 
 type TransactionState = 'idle' | 'wallet-pending' | 'tx-pending' | 'confirming' | 'confirmed' | 'cancelled' | 'error';
 
