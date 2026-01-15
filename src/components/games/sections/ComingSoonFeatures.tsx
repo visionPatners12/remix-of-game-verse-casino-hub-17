@@ -62,7 +62,7 @@ export const ComingSoonFeatures = () => {
       </motion.div>
 
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3">
         <UpcomingFeatureCard {...tournaments} />
         <UpcomingFeatureCard {...playOnline} />
       </div>
