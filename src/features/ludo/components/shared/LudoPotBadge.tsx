@@ -12,6 +12,7 @@ interface LudoPotBadgeProps {
   size?: 'sm' | 'md' | 'lg';
   showTrophy?: boolean;
   variant?: 'default' | 'glow' | 'minimal';
+  isFreeGame?: boolean;
   className?: string;
 }
 
@@ -20,9 +21,9 @@ export const LudoPotBadge: React.FC<LudoPotBadgeProps> = ({
   size = 'md',
   showTrophy = true,
   variant = 'default',
+  isFreeGame = false,
   className,
 }) => {
-  const isFreeGame = amount === 0;
 
   if (isFreeGame) {
     return (

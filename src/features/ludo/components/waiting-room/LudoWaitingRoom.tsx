@@ -202,10 +202,11 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
             className="flex justify-center"
           >
             <LudoPotBadge
-              amount={isFreeGame ? 0 : betAmount * playersReadyCount}
+              amount={betAmount * playersReadyCount}
               size="lg"
               variant="glow"
               showTrophy={true}
+              isFreeGame={isFreeGame}
             />
           </motion.div>
 
