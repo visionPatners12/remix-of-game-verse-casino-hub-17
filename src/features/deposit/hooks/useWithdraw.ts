@@ -7,13 +7,13 @@ import { logger } from '@/utils/logger';
 import { isAddress, erc20Abi, parseUnits, encodeFunctionData } from 'viem';
 import { useBalance, usePublicClient, useAccount } from 'wagmi';
 import { useSendTransaction, useWallets, usePrivy } from '@privy-io/react-auth';
-import { polygon } from 'viem/chains';
+import { base } from 'viem/chains';
 
-// Default chain config (Polygon)
-const DEFAULT_CHAIN = polygon;
+// Default chain config (Base)
+const DEFAULT_CHAIN = base;
 const DEFAULT_TOKEN = {
-  address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F' as `0x${string}`, // USDT on Polygon
-  symbol: 'USDT',
+  address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' as `0x${string}`, // USDC on Base
+  symbol: 'USDC',
   decimals: 6,
 };
 
@@ -39,7 +39,7 @@ export const useWithdraw = () => {
   
   // Use selectedToken's chain/token info or fallback to defaults
   const appChain = selectedToken?.chainId 
-    ? { id: selectedToken.chainId, name: selectedToken.chainName || 'Polygon' } 
+    ? { id: selectedToken.chainId, name: selectedToken.chainName || 'Base' } 
     : { id: DEFAULT_CHAIN.id, name: DEFAULT_CHAIN.name };
   
   const betToken = selectedToken 

@@ -445,12 +445,12 @@ export const WinnerModal: React.FC<WinnerModalProps> = ({
                     </div>
                     {claimTxHash && (
                       <a
-                        href={`https://polygonscan.com/tx/${claimTxHash}`}
+                        href={`https://basescan.org/tx/${claimTxHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1 text-xs text-success/70 hover:text-success transition-colors"
                       >
-                        View on Polygonscan
+                        View on Basescan
                         <ExternalLink className="w-3 h-3" />
                       </a>
                     )}

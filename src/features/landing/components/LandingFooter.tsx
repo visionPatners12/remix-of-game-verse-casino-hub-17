@@ -14,7 +14,7 @@ export function LandingFooter() {
               <span className="text-lg font-semibold">PRYZEN</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              On-chain games with USDT bets on Polygon.
+              On-chain games with USDC bets on Base.
             </p>
           </div>
 

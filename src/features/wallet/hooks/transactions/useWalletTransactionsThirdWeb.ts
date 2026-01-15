@@ -3,8 +3,8 @@ import { useUnifiedWallet } from '../core/useUnifiedWallet';
 import { ThirdWebTransactionsResponse, transformThirdWebTransaction, transformERC20Transfer } from '../../types/transactions';
 
 const CLIENT_ID = "7664bfb40927b7688babc12152f89138";
-const THIRDWEB_API_URL = 'https://137.insight.thirdweb.com/v1/wallets';
-const ERC20_TRANSFERS_URL = 'https://137.insight.thirdweb.com/v1/tokens/erc20/transfers';
+const THIRDWEB_API_URL = 'https://8453.insight.thirdweb.com/v1/wallets';
+const ERC20_TRANSFERS_URL = 'https://8453.insight.thirdweb.com/v1/tokens/erc20/transfers';
 
 interface ERC20Transfer {
   chain_id: string;

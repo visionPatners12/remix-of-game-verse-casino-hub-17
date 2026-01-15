@@ -47,7 +47,7 @@ const slideConfig = [
     rippleColor: "bg-emerald-400/10",
     title: "100%",
     titleHighlight: "On-Chain",
-    description: "Your funds are secure on Polygon blockchain",
+    description: "Your funds are secure on Base blockchain",
   },
 ];
 

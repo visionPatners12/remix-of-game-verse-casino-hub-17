@@ -13,6 +13,16 @@ export interface CryptoOption {
 
 export const cryptoOptions: CryptoOption[] = [
   {
+    id: 'usdc-base',
+    name: 'USDC',
+    symbol: 'USDC',
+    network: 'Base',
+    decimals: 6,
+    address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+    contractAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+    logoUrl: '/images/crypto/usdc.png'
+  },
+  {
     id: 'usdt-polygon',
     name: 'USDT',
     symbol: 'USDT', 
@@ -30,16 +40,6 @@ export const cryptoOptions: CryptoOption[] = [
     decimals: 6,
     address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
     contractAddress: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
-    logoUrl: '/images/crypto/usdc.png'
-  },
-  {
-    id: 'usdc-base',
-    name: 'USDC',
-    symbol: 'USDC',
-    network: 'Base',
-    decimals: 6,
-    address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
-    contractAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
     logoUrl: '/images/crypto/usdc.png'
   },
   {

@@ -22,7 +22,7 @@ export const WalletQRModal = ({ isOpen, onClose, address, ensSubdomain }: Wallet
   };
 
   const handleViewOnExplorer = () => {
-    window.open(`https://polygonscan.com/address/${address}`, '_blank');
+    window.open(`https://basescan.org/address/${address}`, '_blank');
   };
 
   return (
