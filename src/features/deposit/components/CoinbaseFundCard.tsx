@@ -1,8 +1,23 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TokenUSDC, NetworkBase } from '@web3icons/react';
-import { ArrowUpDown, CreditCard, ExternalLink, Loader2 } from 'lucide-react';
+import { ArrowUpDown, CreditCard, Loader2, Building2, Check, Wallet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
+// Apple Pay icon component
+const ApplePayIcon = () => (
+  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+    <path d="M17.72 8.2c-.1.08-1.94 1.12-1.94 3.42 0 2.66 2.34 3.6 2.4 3.62-.01.06-.37 1.28-1.23 2.52-.76 1.1-1.56 2.19-2.78 2.19s-1.52-.7-2.93-.7c-1.37 0-1.86.72-2.97.72s-1.88-1.01-2.78-2.25C4.4 15.89 3.5 13.1 3.5 10.44c0-4.24 2.76-6.49 5.47-6.49 1.44 0 2.65.95 3.55.95.87 0 2.22-1 3.86-1 .62 0 2.86.06 4.34 2.16zm-5.11-3.96c.55-.66.95-1.57.95-2.49 0-.13-.01-.26-.04-.36-.91.03-1.99.6-2.64 1.36-.52.59-1 1.51-1 2.43 0 .14.02.28.04.33.07.01.18.03.28.03.82 0 1.85-.54 2.41-1.3z"/>
+  </svg>
+);
+
+// Payment methods configuration
+const PAYMENT_METHODS = [
+  { id: 'APPLE_PAY', name: 'Apple Pay', Icon: ApplePayIcon, description: 'Express checkout' },
+  { id: 'CARD', name: 'Debit Card', Icon: CreditCard, description: 'Visa, Mastercard' },
+  { id: 'ACH_BANK_ACCOUNT', name: 'Bank Transfer', Icon: Building2, description: 'ACH (US only)' },
+  { id: 'FIAT_WALLET', name: 'Coinbase Balance', Icon: Wallet, description: 'Use your balance' },
+];
 
 interface CoinbaseFundCardProps {
   sessionToken: string;
@@ -22,6 +37,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   const [inputType, setInputType] = useState<'fiat' | 'crypto'>('fiat');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('CARD');
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9.]/g, '');
@@ -58,6 +74,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
         defaultNetwork: 'base',
         presetFiatAmount: inputType === 'fiat' ? amount : '',
         presetCryptoAmount: inputType === 'crypto' ? amount : '',
+        defaultPaymentMethod: selectedPaymentMethod,
       });
 
       // Remove empty params
@@ -79,7 +96,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     } finally {
       setIsSubmitting(false);
     }
-  }, [amount, inputType, sessionToken, onSuccess, onError]);
+  }, [amount, inputType, sessionToken, selectedPaymentMethod, onSuccess, onError]);
 
   const displaySymbol = inputType === 'fiat' ? '$' : 'USDC';
   const numericAmount = parseFloat(amount) || 0;
@@ -162,20 +179,39 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
         </button>
       </div>
 
-      {/* Payment Method Display */}
+      {/* Payment Method Selection */}
       <div className="bg-card rounded-2xl p-4 border border-border/50">
         <label className="text-sm font-medium text-muted-foreground mb-3 block">
           {t('coinbase.selectMethod', 'Payment Method')}
         </label>
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-muted/50">
-          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-            <CreditCard className="h-5 w-5 text-primary" />
-          </div>
-          <div className="flex-1">
-            <p className="font-medium text-foreground text-sm">Card, Bank & More</p>
-            <p className="text-xs text-muted-foreground">Select payment method on Coinbase</p>
-          </div>
-          <ExternalLink className="h-4 w-4 text-muted-foreground" />
+        <div className="space-y-2">
+          {PAYMENT_METHODS.map((method) => (
+            <button
+              key={method.id}
+              onClick={() => setSelectedPaymentMethod(method.id)}
+              className={`
+                w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                ${selectedPaymentMethod === method.id
+                  ? 'bg-primary/10 border border-primary/50'
+                  : 'bg-muted/50 border border-transparent hover:bg-muted'}
+              `}
+            >
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                selectedPaymentMethod === method.id ? 'bg-primary/20 text-primary' : 'bg-background text-muted-foreground'
+              }`}>
+                <method.Icon />
+              </div>
+              <div className="flex-1 text-left">
+                <p className={`font-medium text-sm ${
+                  selectedPaymentMethod === method.id ? 'text-primary' : 'text-foreground'
+                }`}>{method.name}</p>
+                <p className="text-xs text-muted-foreground">{method.description}</p>
+              </div>
+              {selectedPaymentMethod === method.id && (
+                <Check className="h-5 w-5 text-primary" />
+              )}
+            </button>
+          ))}
         </div>
       </div>
 
