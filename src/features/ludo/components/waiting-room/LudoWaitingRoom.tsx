@@ -184,15 +184,25 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
           animate={{ opacity: 1, y: 0 }}
           className="space-y-6"
         >
-          {/* Pot Display - now shows for all games */}
+          {/* Room Code - Above the pot */}
           <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="flex justify-center"
           >
+            <RoomCodeBadge roomCode={roomCode} />
+          </motion.div>
+
+          {/* Pot Display - shows total pot based on bet and player count */}
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.15 }}
+            className="flex justify-center"
+          >
             <LudoPotBadge
-              amount={betAmount * playersReadyCount}
+              amount={isFreeGame ? 0 : betAmount * playersReadyCount}
               size="lg"
               variant="glow"
               showTrophy={true}
@@ -287,15 +297,6 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
             </p>
           )}
 
-          {/* Room Code - Bottom placement */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="flex justify-center pt-4"
-          >
-            <RoomCodeBadge roomCode={roomCode} />
-          </motion.div>
         </motion.div>
       </div>
 
