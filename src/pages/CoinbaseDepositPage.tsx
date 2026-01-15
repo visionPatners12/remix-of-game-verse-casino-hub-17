@@ -6,7 +6,6 @@ import { Shield, Loader2, AlertCircle, RefreshCw, ArrowLeft, Info } from 'lucide
 import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
 import { useCdpSessionToken } from '@/features/deposit/hooks/useCdpSessionToken';
 import { CoinbaseFundCard } from '@/features/deposit/components/CoinbaseFundCard';
-import { CoinbaseProvider } from '@/features/deposit/providers/CoinbaseProvider';
 import { Button } from '@/components/ui/button';
 
 const CoinbaseDepositPage = () => {
@@ -118,19 +117,17 @@ const CoinbaseDepositPage = () => {
             </div>
           </div>
 
-          {/* Official OnchainKit FundCard */}
-          <CoinbaseProvider>
-            <CoinbaseFundCard
-              sessionToken={sessionToken}
-              presetAmounts={['25', '50', '100']}
-              onSuccess={() => {
-                console.log('[CoinbaseDeposit] Success - Coinbase Pay opened');
-              }}
-              onError={(err) => {
-                console.error('[CoinbaseDeposit] Error:', err);
-              }}
-            />
-          </CoinbaseProvider>
+          {/* Custom FundCard */}
+          <CoinbaseFundCard
+            sessionToken={sessionToken}
+            presetAmounts={['25', '50', '100']}
+            onSuccess={() => {
+              console.log('[CoinbaseDeposit] Success - Coinbase Pay opened');
+            }}
+            onError={(err) => {
+              console.error('[CoinbaseDeposit] Error:', err);
+            }}
+          />
 
           {/* Security Note */}
           <div className="p-4 rounded-2xl bg-muted/50 border border-border/30">

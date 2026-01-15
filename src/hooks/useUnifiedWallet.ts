@@ -1,32 +1,22 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useConnect, useDisconnect, useWalletClient, useSwitchChain } from 'wagmi';
 import { useAccount } from '@azuro-org/sdk-social-aa-connector';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { useAuth } from '@/hooks/useAuth';
 import { usePrivySessionRecovery } from '@/hooks/usePrivySessionRecovery';
 import { logger } from '@/utils/logger';
-import { 
-  getCachedWalletState, 
-  setCachedWalletState, 
-  clearWalletSessionCache,
-  type CachedWalletState 
-} from '@/utils/walletSessionCache';
 
 /**
  * Unified wallet hook that combines all wallet functionality
+ * Replaces useRealWallet, useSimpleWallet, and eliminates wallet confusion
  * 
- * Optimizations:
- * - Uses localStorage cache for instant initial state
- * - Shows cached wallet while Privy initializes
- * - Lazy-loads session recovery to not block render
+ * Now includes Privy session recovery to handle cases where Supabase
+ * is connected but Privy needs re-authentication.
  * 
  * Supports both external wallets AND Privy embedded wallets (for email/social login).
  */
 export function useUnifiedWallet() {
   const { userType } = useAuth();
-  
-  // Get cached state for immediate display (before Privy is ready)
-  const cachedState = useMemo(() => getCachedWalletState(), []);
   
   // Azuro SDK account (may have AA wallet address)
   const { address: azuroAddress, isConnected: azuroConnected, isConnecting, chainId, isAAWallet } = useAccount();
@@ -132,8 +122,6 @@ export function useUnifiedWallet() {
     logger.wallet('🔌 Disconnect wallet requested');
     
     try {
-      // Clear cache on logout
-      clearWalletSessionCache();
       await logout();
       logger.wallet('✅ Wallet disconnected successfully');
     } catch (error) {
@@ -148,31 +136,13 @@ export function useUnifiedWallet() {
     }
   };
 
-  // Cache wallet state when it changes (for faster next load)
-  useEffect(() => {
-    if (ready && authenticated && effectiveState.address && effectiveState.chainId) {
-      setCachedWalletState({
-        address: effectiveState.address,
-        chainId: effectiveState.chainId,
-        isAAWallet: isAAWallet || effectiveState.hasEmbeddedWallet,
-      });
-    }
-  }, [ready, authenticated, effectiveState.address, effectiveState.chainId, isAAWallet, effectiveState.hasEmbeddedWallet]);
-
-  // If Privy is not ready but we have cached state, show optimistic UI
-  const showCachedState = !ready && cachedState;
-
-  // Determine the address to show (real or cached)
-  const displayAddress = effectiveState.address || (showCachedState ? cachedState.address : null);
-  const displayChainId = effectiveState.chainId || (showCachedState ? cachedState.chainId : null);
-
   return {
-    // Core wallet state (uses cached address if Privy not ready)
-    address: displayAddress,
-    isConnected: isTrulyConnected || showCachedState,
-    isConnecting: isConnecting || (!ready && !!cachedState), // Show connecting while Privy initializes with cache
-    chainId: displayChainId,
-    network: displayChainId ? { name: 'Polygon', chainId: displayChainId } : null,
+    // Core wallet state
+    address: effectiveState.address,
+    isConnected: isTrulyConnected,
+    isConnecting,
+    chainId: effectiveState.chainId,
+    network: effectiveState.network,
     
     // Session recovery states
     isRecoveringSession: isRecovering,
@@ -180,19 +150,15 @@ export function useUnifiedWallet() {
     privyReady: ready,
     privyAuthenticated: authenticated,
     
-    // New: indicate if showing cached/optimistic state
-    isOptimistic: showCachedState,
-    hasCachedSession: !!cachedState,
-    
     // Legacy compatibility (will be removed in next phase)
-    walletAddress: displayAddress || null,
+    walletAddress: effectiveState.address || null,
     isWalletConnected: isTrulyConnected,
     external: {
-      address: displayAddress,
-      isConnected: isTrulyConnected || showCachedState,
-      isConnecting: isConnecting || (!ready && !!cachedState),
-      chainId: displayChainId,
-      network: displayChainId ? { name: 'Polygon', chainId: displayChainId } : null,
+      address: effectiveState.address,
+      isConnected: isTrulyConnected,
+      isConnecting,
+      chainId: effectiveState.chainId,
+      network: effectiveState.network,
       isModalOpen: false,
     },
     
@@ -206,12 +172,12 @@ export function useUnifiedWallet() {
     disconnectExternal: disconnectWallet,
     
     // Utils
-    isLoading: isConnecting || isRecovering || (!ready && !!cachedState),
-    hasAnyWallet: effectiveState.isConnected || showCachedState,
+    isLoading: isConnecting || isRecovering,
+    hasAnyWallet: effectiveState.isConnected,
     walletClient,
     wallets, // Expose all Privy wallets for advanced use cases
     
     // Azuro Social Login specific
-    isAAWallet: isAAWallet || effectiveState.hasEmbeddedWallet || (showCachedState && cachedState.isAAWallet) || false,
+    isAAWallet: isAAWallet || effectiveState.hasEmbeddedWallet || false,
   };
 }

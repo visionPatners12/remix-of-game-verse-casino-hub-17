@@ -25,8 +25,7 @@ export function usePrivySessionRecovery() {
     return supabaseConnected && privyNotReady && !recoveryAttempted;
   }, [userType, isSupabaseAuth, ready, authenticated, recoveryAttempted]);
 
-  // Attempt to recover the Privy session with lazy-load delay
-  // This prevents blocking the initial render
+  // Attempt to recover the Privy session
   useEffect(() => {
     if (!needsRecovery || isRecovering || !ready) return;
 
@@ -54,10 +53,7 @@ export function usePrivySessionRecovery() {
       }
     };
 
-    // Delay recovery attempt to not block initial render
-    // This allows the UI to show cached state first
-    const timeout = setTimeout(attemptRecovery, 300);
-    return () => clearTimeout(timeout);
+    attemptRecovery();
   }, [needsRecovery, ready, isRecovering, getAccessToken]);
 
   // Computed state for whether Privy needs manual reconnection
