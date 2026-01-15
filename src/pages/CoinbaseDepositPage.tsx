@@ -1,19 +1,65 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TokenUSDC, NetworkBase } from '@web3icons/react';
 import { Shield, Loader2, AlertCircle, RefreshCw, ArrowLeft, Info } from 'lucide-react';
+import { toast } from 'sonner';
 import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
 import { useCdpSessionToken } from '@/features/deposit/hooks/useCdpSessionToken';
 import { CoinbaseFundCard } from '@/features/deposit/components/CoinbaseFundCard';
-import { CoinbaseProvider } from '@/features/deposit/providers/CoinbaseProvider';
 import { Button } from '@/components/ui/button';
+import { getCoinbaseDepositPending, clearCoinbaseDepositPending } from '@/utils/coinbasePwa';
 
 const CoinbaseDepositPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('deposit');
   const { address, isConnected } = useUnifiedWallet();
   const { sessionToken, isLoading, error, regenerate } = useCdpSessionToken(address);
+
+  // PWA Return Detection - Listen for when user comes back from Coinbase Pay
+  useEffect(() => {
+    const handleReturn = () => {
+      const pending = getCoinbaseDepositPending();
+      if (pending) {
+        console.log('[CoinbaseDeposit] User returned from Coinbase Pay');
+        
+        // Show success toast
+        toast.success(t('coinbase.transactionInitiated', 'Transaction initiated'), {
+          description: t('coinbase.checkWallet', 'Check your wallet for the deposit. It may take a few minutes.'),
+        });
+        
+        // Clear the pending state
+        clearCoinbaseDepositPending();
+      }
+    };
+
+    // Visibility change (tab becomes visible)
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        handleReturn();
+      }
+    };
+
+    // Page show (back/forward cache restoration)
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        handleReturn();
+      }
+    };
+
+    // Window focus
+    const onFocus = () => handleReturn();
+
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    window.addEventListener('pageshow', onPageShow);
+    window.addEventListener('focus', onFocus);
+
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      window.removeEventListener('pageshow', onPageShow);
+      window.removeEventListener('focus', onFocus);
+    };
+  }, [t]);
 
   // Header consistant avec DepositFlow
   const renderHeader = () => (
@@ -118,19 +164,18 @@ const CoinbaseDepositPage = () => {
             </div>
           </div>
 
-          {/* Official OnchainKit FundCard */}
-          <CoinbaseProvider>
-            <CoinbaseFundCard
-              sessionToken={sessionToken}
-              presetAmounts={['25', '50', '100']}
-              onSuccess={() => {
-                console.log('[CoinbaseDeposit] Success - Coinbase Pay opened');
-              }}
-              onError={(err) => {
-                console.error('[CoinbaseDeposit] Error:', err);
-              }}
-            />
-          </CoinbaseProvider>
+          {/* Fund Card - Now without OnchainKit wrapper */}
+          <CoinbaseFundCard
+            sessionToken={sessionToken}
+            presetAmounts={['25', '50', '100']}
+            onSuccess={() => {
+              console.log('[CoinbaseDeposit] Success - Coinbase Pay opened');
+            }}
+            onError={(err) => {
+              console.error('[CoinbaseDeposit] Error:', err);
+              toast.error(err);
+            }}
+          />
 
           {/* Security Note */}
           <div className="p-4 rounded-2xl bg-muted/50 border border-border/30">

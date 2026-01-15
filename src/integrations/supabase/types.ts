@@ -14,6 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
+      cdp_buy_options: {
+        Row: {
+          country_code: string
+          created_at: string
+          id: string
+          is_active: boolean
+          last_synced_at: string | null
+          subdivision_code: string | null
+          updated_at: string
+        }
+        Insert: {
+          country_code: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_synced_at?: string | null
+          subdivision_code?: string | null
+          updated_at?: string
+        }
+        Update: {
+          country_code?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_synced_at?: string | null
+          subdivision_code?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cdp_buy_options_cache: {
+        Row: {
+          country_code: string
+          created_at: string
+          id: string
+          is_active: boolean
+          last_synced_at: string | null
+          payment_currencies: Json
+          purchase_currencies: Json
+          raw: Json | null
+          subdivision_code: string | null
+          updated_at: string
+        }
+        Insert: {
+          country_code: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_synced_at?: string | null
+          payment_currencies?: Json
+          purchase_currencies?: Json
+          raw?: Json | null
+          subdivision_code?: string | null
+          updated_at?: string
+        }
+        Update: {
+          country_code?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_synced_at?: string | null
+          payment_currencies?: Json
+          purchase_currencies?: Json
+          raw?: Json | null
+          subdivision_code?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cdp_supported_countries: {
         Row: {
           country_code: string
