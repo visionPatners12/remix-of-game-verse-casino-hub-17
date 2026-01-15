@@ -1,7 +1,7 @@
 // Main Swap Widget component - Native design with optimized loading
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowDownUp, Loader2, AlertCircle, CheckCircle2, Wallet, Zap } from 'lucide-react';
+import { ArrowDownUp, Loader2, AlertCircle, CheckCircle2, Wallet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { TokenSelector } from './TokenSelector';
@@ -64,10 +64,19 @@ function SwapWidgetSkeleton() {
 }
 
 export function SwapWidget() {
-  const { address, isConnected, connectWallet, isAAWallet } = useUnifiedWallet();
+  const { address, signerAddress, isConnected, connectWallet, isAAWallet } = useUnifiedWallet();
   
   // Configure LI.FI SDK with wallet provider
   const { isReady: isLifiReady } = useLifiConfig();
+  
+  // STRATEGY: Use Smart Account address for AA wallets, EOA signer for external wallets
+  // This allows AA users to swap directly from their Smart Account
+  const effectiveSwapAddress = useMemo(() => {
+    if (isAAWallet && address) {
+      return address; // Use Smart Account for AA users
+    }
+    return signerAddress; // Use EOA for external wallet users
+  }, [isAAWallet, address, signerAddress]);
   
   // Chain state
   const [fromChainId, setFromChainId] = useState<number>(DEFAULT_CHAIN_ID);
@@ -83,21 +92,60 @@ export function SwapWidget() {
 
   // Hooks
   const { chains, isLoading: isLoadingChains } = useLifiChains();
+  // Use effectiveSwapAddress for balances - Smart Account for AA, EOA for external
   const { tokens, tokensWithBalance, isLoadingTokens, refetchBalances } = useLifiTokens({
-    walletAddress: address,
+    walletAddress: effectiveSwapAddress || undefined,
   });
+
+  // Handlers to sync chain/token selection
+  const handleFromChainChange = useCallback((newChainId: number) => {
+    setFromChainId(newChainId);
+    // Reset token if it doesn't match the new chain
+    if (fromToken && fromToken.chainId !== newChainId) {
+      setFromToken(null);
+    }
+  }, [fromToken]);
+
+  const handleToChainChange = useCallback((newChainId: number) => {
+    setToChainId(newChainId);
+    // Reset token if it doesn't match the new chain
+    if (toToken && toToken.chainId !== newChainId) {
+      setToToken(null);
+    }
+  }, [toToken]);
+
+  const handleFromTokenSelect = useCallback((token: SwapToken) => {
+    setFromToken(token);
+    // Sync chain to match the token's chain
+    if (token.chainId !== fromChainId) {
+      setFromChainId(token.chainId);
+    }
+  }, [fromChainId]);
+
+  const handleToTokenSelect = useCallback((token: SwapToken) => {
+    setToToken(token);
+    // Sync chain to match the token's chain
+    if (token.chainId !== toChainId) {
+      setToChainId(token.chainId);
+    }
+  }, [toChainId]);
   
+  // Only request quote when SDK is fully configured to avoid address mismatch
+  // Use effectiveSwapAddress (EOA) - same address used by LI.FI SDK for signing
+  const canRequestQuote = isLifiReady && !!effectiveSwapAddress;
+  
+  // Use token's chainId for quote to ensure consistency
   const { quote, route, isLoading: isLoadingQuote, isFetching, error: quoteError, canQuote } = useLifiQuote({
-    fromChainId,
-    toChainId,
+    fromChainId: fromToken?.chainId ?? fromChainId,
+    toChainId: toToken?.chainId ?? toChainId,
     fromToken,
     toToken,
     fromAmount,
-    userAddress: address,
+    userAddress: canRequestQuote ? effectiveSwapAddress : undefined, // Must match SDK signer address
     slippage,
   });
 
-  // Both execution hooks - we choose based on wallet type
+  // EOA execution hook (for external wallets)
   const eoaExecution = useLifiExecution({
     onSuccess: () => {
       refetchBalances();
@@ -105,6 +153,7 @@ export function SwapWidget() {
     },
   });
 
+  // AA execution hook (for Smart Wallet users)
   const aaExecution = useLifiAAExecution({
     onSuccess: () => {
       refetchBalances();
@@ -112,16 +161,16 @@ export function SwapWidget() {
     },
   });
 
-  // Select active execution based on wallet type
+  // Select the appropriate execution hook based on wallet type
   const execution = isAAWallet ? aaExecution : eoaExecution;
   const { status, steps, error: executionError, reset, isExecuting } = execution;
 
-  // Get balances for selected tokens
+  // Get balances for selected tokens - use token's chainId
   const fromTokenBalance = tokensWithBalance.find(
-    t => t.address.toLowerCase() === fromToken?.address?.toLowerCase() && t.chainId === fromChainId
+    t => t.address.toLowerCase() === fromToken?.address?.toLowerCase() && t.chainId === (fromToken?.chainId ?? fromChainId)
   );
   const toTokenBalance = tokensWithBalance.find(
-    t => t.address.toLowerCase() === toToken?.address?.toLowerCase() && t.chainId === toChainId
+    t => t.address.toLowerCase() === toToken?.address?.toLowerCase() && t.chainId === (toToken?.chainId ?? toChainId)
   );
 
   // Calculate USD values
@@ -146,14 +195,16 @@ export function SwapWidget() {
 
   // Handle swap execution
   const handleSwap = useCallback(async () => {
-    if (!route || !address) return;
+    if (!route || !effectiveSwapAddress) return;
     
     if (isAAWallet) {
-      await aaExecution.execute(route, address);
+      // Execute via Smart Account
+      await aaExecution.execute(route, effectiveSwapAddress);
     } else {
+      // Execute via EOA
       await eoaExecution.execute(route);
     }
-  }, [route, address, isAAWallet, aaExecution, eoaExecution]);
+  }, [route, effectiveSwapAddress, isAAWallet, aaExecution, eoaExecution]);
 
   // Reset on success after delay
   useEffect(() => {
@@ -197,7 +248,7 @@ export function SwapWidget() {
           <ChainSelector
             chains={chains}
             selectedChainId={fromChainId}
-            onSelect={setFromChainId}
+            onSelect={handleFromChainChange}
             isLoading={isLoadingChains}
           />
         </div>
@@ -216,9 +267,12 @@ export function SwapWidget() {
             tokens={tokens}
             tokensWithBalance={tokensWithBalance}
             selectedToken={fromToken}
-            onSelect={setFromToken}
+            onSelect={handleFromTokenSelect}
             chainId={fromChainId}
             isLoading={isLoadingTokens}
+            isAAWallet={isAAWallet}
+            aaAddress={address || undefined}
+            signerAddress={signerAddress || undefined}
           />
         </div>
       </section>
@@ -242,7 +296,7 @@ export function SwapWidget() {
           <ChainSelector
             chains={chains}
             selectedChainId={toChainId}
-            onSelect={setToChainId}
+            onSelect={handleToChainChange}
             isLoading={isLoadingChains}
           />
         </div>
@@ -262,9 +316,12 @@ export function SwapWidget() {
             tokens={tokens}
             tokensWithBalance={tokensWithBalance}
             selectedToken={toToken}
-            onSelect={setToToken}
+            onSelect={handleToTokenSelect}
             chainId={toChainId}
             isLoading={isLoadingTokens}
+            isAAWallet={isAAWallet}
+            aaAddress={address || undefined}
+            signerAddress={signerAddress || undefined}
           />
         </div>
       </section>

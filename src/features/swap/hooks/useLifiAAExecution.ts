@@ -1,93 +1,33 @@
-// Hook for executing LI.FI swaps via Privy Smart Account (Account Abstraction)
+// Hook for executing LI.FI swaps via Smart Account (AA)
 import { useState, useCallback } from 'react';
 import { getStepTransaction, getStatus, type Route } from '@lifi/sdk';
 import { useSmartWallets } from '@privy-io/react-auth/smart-wallets';
 import { encodeFunctionData, erc20Abi, createPublicClient, http, type Chain } from 'viem';
-import { polygon, mainnet, arbitrum, optimism, base } from 'viem/chains';
+import { polygon, base, arbitrum, optimism, mainnet } from 'viem/chains';
 import type { SwapExecutionStep, SwapStatus } from '../types';
 import { toast } from 'sonner';
+
+// Chain mapping for public clients
+const CHAINS: Record<number, Chain> = {
+  1: mainnet,
+  137: polygon,
+  8453: base,
+  42161: arbitrum,
+  10: optimism,
+};
 
 interface UseLifiAAExecutionOptions {
   onSuccess?: (txHash: string) => void;
   onError?: (error: Error) => void;
 }
 
-// Chain mapping for viem
-const CHAIN_MAP: Record<number, Chain> = {
-  [polygon.id]: polygon,
-  [mainnet.id]: mainnet,
-  [arbitrum.id]: arbitrum,
-  [optimism.id]: optimism,
-  [base.id]: base,
-};
-
 // Native token address (zero address)
-const NATIVE_TOKEN_ADDRESS = '0x0000000000000000000000000000000000000000';
+const NATIVE_TOKEN = '0x0000000000000000000000000000000000000000';
+const NATIVE_TOKEN_EEE = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
-// Check ERC20 allowance
-async function checkAllowance(
-  tokenAddress: string,
-  ownerAddress: string,
-  spenderAddress: string,
-  chainId: number
-): Promise<bigint> {
-  const chain = CHAIN_MAP[chainId];
-  if (!chain) {
-    console.warn(`Chain ${chainId} not supported for allowance check`);
-    return BigInt(0);
-  }
-
-  try {
-    const publicClient = createPublicClient({
-      chain,
-      transport: http(),
-    });
-
-    // @ts-expect-error - viem type mismatch with erc20Abi
-    const allowance = await publicClient.readContract({
-      address: tokenAddress as `0x${string}`,
-      abi: erc20Abi,
-      functionName: 'allowance',
-      args: [ownerAddress as `0x${string}`, spenderAddress as `0x${string}`],
-    });
-
-    return allowance as bigint;
-  } catch (err) {
-    console.error('Error checking allowance:', err);
-    return BigInt(0);
-  }
-}
-
-// Poll LI.FI status until done
-async function pollStatus(
-  txHash: string,
-  fromChainId: number,
-  toChainId: number,
-  bridge: string,
-  maxAttempts = 60
-): Promise<'DONE' | 'FAILED' | 'PENDING'> {
-  for (let i = 0; i < maxAttempts; i++) {
-    try {
-      const result = await getStatus({
-        txHash,
-        fromChain: fromChainId,
-        toChain: toChainId,
-        bridge,
-      });
-
-      if (result.status === 'DONE' || result.status === 'FAILED') {
-        return result.status;
-      }
-
-      // Wait before next poll
-      await new Promise(resolve => setTimeout(resolve, 5000));
-    } catch (err) {
-      console.warn('Status poll error:', err);
-      await new Promise(resolve => setTimeout(resolve, 5000));
-    }
-  }
-
-  return 'PENDING';
+function isNativeToken(address: string): boolean {
+  const lower = address.toLowerCase();
+  return lower === NATIVE_TOKEN || lower === NATIVE_TOKEN_EEE;
 }
 
 export function useLifiAAExecution({ onSuccess, onError }: UseLifiAAExecutionOptions = {}) {
@@ -97,6 +37,36 @@ export function useLifiAAExecution({ onSuccess, onError }: UseLifiAAExecutionOpt
   const [txHash, setTxHash] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // Check token allowance
+  const checkAllowance = useCallback(async (
+    tokenAddress: string,
+    owner: string,
+    spender: string,
+    chainId: number
+  ): Promise<bigint> => {
+    const chain = CHAINS[chainId];
+    if (!chain) return BigInt(0);
+
+    try {
+      const publicClient = createPublicClient({
+        chain,
+        transport: http(),
+      });
+
+      // Cast to any to avoid strict viem typing issues
+      const allowance = await (publicClient as any).readContract({
+        address: tokenAddress,
+        abi: erc20Abi,
+        functionName: 'allowance',
+        args: [owner, spender],
+      });
+      return BigInt(allowance);
+    } catch (err) {
+      console.error('Error checking allowance:', err);
+      return BigInt(0);
+    }
+  }, []);
+
   const execute = useCallback(async (route: Route, fromAddress: string) => {
     if (!route) {
       setError('Missing route');
@@ -104,7 +74,7 @@ export function useLifiAAExecution({ onSuccess, onError }: UseLifiAAExecutionOpt
     }
 
     if (!smartWalletClient) {
-      setError('Smart Wallet not available. Please try again.');
+      setError('Smart Wallet client not available');
       return;
     }
 
@@ -126,55 +96,49 @@ export function useLifiAAExecution({ onSuccess, onError }: UseLifiAAExecutionOpt
     try {
       for (let i = 0; i < route.steps.length; i++) {
         const step = route.steps[i];
-
+        
         // Update step status to active
-        setSteps(prev => prev.map((s, idx) =>
+        setSteps(prev => prev.map((s, idx) => 
           idx === i ? { ...s, status: 'active' } : s
         ));
 
         // Get transaction data from LI.FI
-        const stepTx = await getStepTransaction(step);
-
-        if (!stepTx.transactionRequest) {
+        const stepWithTx = await getStepTransaction(step);
+        
+        if (!stepWithTx.transactionRequest) {
           throw new Error(`No transaction request for step ${i + 1}`);
         }
 
-        const { to, data, value } = stepTx.transactionRequest;
+        const { to, data, value } = stepWithTx.transactionRequest;
 
-        if (!to || !data) {
-          throw new Error(`Invalid transaction data for step ${i + 1}`);
-        }
-
-        // Build calls array
+        // Build calls array for batched execution
         const calls: Array<{ to: `0x${string}`; data?: `0x${string}`; value?: bigint }> = [];
 
         // Check if we need to approve (for ERC20 tokens, not native)
         const fromTokenAddress = step.action.fromToken.address;
-        const isNativeToken = fromTokenAddress.toLowerCase() === NATIVE_TOKEN_ADDRESS.toLowerCase();
-
-        if (!isNativeToken) {
+        if (!isNativeToken(fromTokenAddress)) {
+          // Get approval address from estimate
+          const approvalAddress = step.estimate?.approvalAddress || to;
+          
           const allowance = await checkAllowance(
             fromTokenAddress,
             fromAddress,
-            to as string,
+            approvalAddress as string,
             step.action.fromChainId
           );
-
+          
           const requiredAmount = BigInt(step.action.fromAmount);
-
+          
           if (allowance < requiredAmount) {
-            // Add approval call to the batch
+            console.log('[AA Execution] Adding approval call for', fromTokenAddress);
+            // Add approval for required amount (with small buffer)
             calls.push({
               to: fromTokenAddress as `0x${string}`,
               data: encodeFunctionData({
                 abi: erc20Abi,
                 functionName: 'approve',
-                args: [to as `0x${string}`, requiredAmount],
+                args: [approvalAddress as `0x${string}`, requiredAmount * BigInt(2)],
               }),
-            });
-
-            toast.info('Batching approval with swap', {
-              description: 'Token approval will be included in the transaction',
             });
           }
         }
@@ -186,9 +150,11 @@ export function useLifiAAExecution({ onSuccess, onError }: UseLifiAAExecutionOpt
           value: value ? BigInt(value.toString()) : undefined,
         });
 
+        console.log('[AA Execution] Executing step', i + 1, 'with', calls.length, 'calls');
+
         // Execute via Smart Wallet (batched if approval needed)
-        // @ts-expect-error - Privy smart wallet client typing differs from viem
-        const hash = await smartWalletClient.sendTransaction({
+        // Use sendTransaction with calls array for batched UserOperation
+        const hash = await (smartWalletClient as any).sendTransaction({
           account: smartWalletClient.account,
           calls,
         });
@@ -196,69 +162,73 @@ export function useLifiAAExecution({ onSuccess, onError }: UseLifiAAExecutionOpt
         lastTxHash = hash;
         setTxHash(hash);
 
-        // Update step with tx hash
-        setSteps(prev => prev.map((s, idx) =>
-          idx === i ? { ...s, txHash: hash } : s
-        ));
+        // Wait for transaction status
+        let txStatus = 'PENDING';
+        let attempts = 0;
+        const maxAttempts = 60; // 5 minutes max wait
 
-        // For cross-chain transactions, poll status
-        if (step.action.fromChainId !== step.action.toChainId) {
-          toast.info('Waiting for bridge confirmation...', {
-            description: 'Cross-chain transfers may take a few minutes',
-          });
-
-          const finalStatus = await pollStatus(
-            hash,
-            step.action.fromChainId,
-            step.action.toChainId,
-            step.tool
-          );
-
-          if (finalStatus === 'FAILED') {
-            throw new Error(`Bridge failed for step ${i + 1}`);
+        while (txStatus !== 'DONE' && txStatus !== 'FAILED' && attempts < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds
+          
+          try {
+            const result = await getStatus({
+              txHash: hash,
+              fromChain: step.action.fromChainId,
+              toChain: step.action.toChainId,
+              bridge: step.tool,
+            });
+            txStatus = result.status;
+            console.log('[AA Execution] Status:', txStatus);
+          } catch (statusErr) {
+            console.warn('[AA Execution] Status check error:', statusErr);
           }
+          
+          attempts++;
         }
 
-        // Mark step as completed
-        setSteps(prev => prev.map((s, idx) =>
-          idx === i ? { ...s, status: 'completed' } : s
+        if (txStatus === 'FAILED') {
+          throw new Error(`Transaction failed for step ${i + 1}`);
+        }
+
+        // Update step as completed
+        setSteps(prev => prev.map((s, idx) => 
+          idx === i ? { ...s, status: 'completed', txHash: hash } : s
         ));
       }
 
-      // All steps completed
       setStatus('success');
       toast.success('Swap completed successfully!');
       onSuccess?.(lastTxHash || '');
 
     } catch (err: any) {
-      console.error('AA Swap execution error:', err);
-
-      // Provide specific error messages for common AA issues
-      let errorMessage = err.message || 'Swap failed';
-
-      if (err.message?.includes('signature') || err.message?.includes('signer')) {
-        errorMessage = 'This route requires an external wallet signature. Please try a different route.';
-      } else if (err.message?.includes('paymaster')) {
-        errorMessage = 'Gas sponsorship unavailable. Please ensure you have funds for gas.';
-      } else if (err.message?.includes('rejected') || err.message?.includes('denied')) {
-        errorMessage = 'Transaction was rejected';
+      console.error('[AA Execution] Error:', err);
+      
+      // Check if it's an AA-incompatible route error
+      const errorMessage = err.message || 'Swap failed';
+      const isSignatureError = errorMessage.toLowerCase().includes('signature') || 
+                               errorMessage.toLowerCase().includes('signer') ||
+                               errorMessage.toLowerCase().includes('unauthorized');
+      
+      if (isSignatureError) {
+        setError('This route requires an external wallet. Please transfer funds to your signer wallet.');
+      } else {
+        setError(errorMessage);
       }
-
-      setError(errorMessage);
+      
       setStatus('error');
-
+      
       // Mark current step as failed
-      setSteps(prev => prev.map(s =>
+      setSteps(prev => prev.map(s => 
         s.status === 'active' ? { ...s, status: 'failed' } : s
       ));
-
+      
       toast.error('Swap failed', {
         description: errorMessage,
       });
-
+      
       onError?.(err);
     }
-  }, [smartWalletClient, onSuccess, onError]);
+  }, [smartWalletClient, checkAllowance, onSuccess, onError]);
 
   const reset = useCallback(() => {
     setStatus('idle');

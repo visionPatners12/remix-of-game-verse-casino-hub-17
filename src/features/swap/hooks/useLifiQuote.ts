@@ -38,8 +38,8 @@ export function useLifiQuote({
   const query = useQuery({
     queryKey: [
       'lifi-quote',
-      fromChainId,
-      toChainId,
+      fromToken?.chainId, // Use token's chainId for consistency
+      toToken?.chainId,
       fromToken?.address,
       toToken?.address,
       debouncedAmount,
@@ -55,9 +55,10 @@ export function useLifiQuote({
         Math.floor(Number(debouncedAmount) * 10 ** fromToken.decimals)
       ).toString();
 
+      // Use token's chainId to ensure consistency
       const quoteResult = await getQuote({
-        fromChain: fromChainId,
-        toChain: toChainId,
+        fromChain: fromToken.chainId,
+        toChain: toToken.chainId,
         fromToken: fromToken.address,
         toToken: toToken.address,
         fromAmount: amountWei,

@@ -22,6 +22,10 @@ interface TokenSelectorProps {
   chainId: number;
   isLoading?: boolean;
   label?: string;
+  // AA wallet info (kept for compatibility, not currently used)
+  isAAWallet?: boolean;
+  aaAddress?: string;
+  signerAddress?: string;
 }
 
 export function TokenSelector({
@@ -37,28 +41,59 @@ export function TokenSelector({
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
 
-  // Filter tokens based on mode
+  // All chain tokens with balances merged in
+  const chainTokens = useMemo(() => {
+    const chainList = tokens.filter(t => t.chainId === chainId);
+    const balanceMap = new Map(
+      tokensWithBalance
+        .filter(t => t.chainId === chainId)
+        .map(t => [t.address.toLowerCase(), t])
+    );
+    
+    // Merge balance info into tokens
+    return chainList.map(t => ({
+      ...t,
+      balance: balanceMap.get(t.address.toLowerCase())?.balance,
+      balanceUSD: balanceMap.get(t.address.toLowerCase())?.balanceUSD,
+    }));
+  }, [tokens, tokensWithBalance, chainId]);
+
+  // Filter and sort tokens based on mode
   const baseTokens = useMemo(() => {
+    // For "from" mode: ONLY show tokens with balance > 0
     if (mode === 'from') {
-      // For "From": show only wallet tokens with balance > 0
-      return tokensWithBalance
-        .filter(t => t.chainId === chainId && BigInt(t.balance || '0') > 0n)
-        .sort((a, b) => {
-          const aValue = Number(a.balanceUSD || 0);
-          const bValue = Number(b.balanceUSD || 0);
-          return bValue - aValue;
-        });
-    } else {
-      // For "To": show destination tokens (stablecoins + popular)
-      return tokens
-        .filter(t => t.chainId === chainId && DESTINATION_TOKENS.includes(t.symbol))
-        .sort((a, b) => {
-          const aIndex = DESTINATION_TOKENS.indexOf(a.symbol);
-          const bIndex = DESTINATION_TOKENS.indexOf(b.symbol);
-          return aIndex - bIndex;
-        });
+      const tokensWithPositiveBalance = chainTokens.filter(t => 
+        t.balance && BigInt(t.balance) > 0n
+      );
+      
+      // Sort by USD value descending
+      return tokensWithPositiveBalance.sort((a, b) => {
+        const aUsd = Number(a.balanceUSD || 0);
+        const bUsd = Number(b.balanceUSD || 0);
+        return bUsd - aUsd;
+      });
     }
-  }, [mode, tokens, tokensWithBalance, chainId]);
+    
+    // For "to" mode: show destination tokens, sorted by popularity
+    const filtered = chainTokens.filter(t => DESTINATION_TOKENS.includes(t.symbol));
+    
+    return filtered.sort((a, b) => {
+      // Tokens with balance come first
+      const aHasBalance = a.balance && BigInt(a.balance) > 0n;
+      const bHasBalance = b.balance && BigInt(b.balance) > 0n;
+      if (aHasBalance && !bHasBalance) return -1;
+      if (!aHasBalance && bHasBalance) return 1;
+      
+      // Then by popularity
+      const aPopular = POPULAR_TOKENS.indexOf(a.symbol);
+      const bPopular = POPULAR_TOKENS.indexOf(b.symbol);
+      if (aPopular !== -1 && bPopular === -1) return -1;
+      if (aPopular === -1 && bPopular !== -1) return 1;
+      if (aPopular !== -1 && bPopular !== -1) return aPopular - bPopular;
+      
+      return a.symbol.localeCompare(b.symbol);
+    });
+  }, [mode, chainTokens]);
 
   // Apply search filter
   const filteredTokens = useMemo(() => {
@@ -71,7 +106,7 @@ export function TokenSelector({
     );
   }, [baseTokens, search]);
 
-  // Get balance for a token
+  // Get balance for a token (for display purposes)
   const getBalance = useCallback((token: SwapToken) => {
     return tokensWithBalance.find(
       t => t.address.toLowerCase() === token.address.toLowerCase() && t.chainId === chainId
