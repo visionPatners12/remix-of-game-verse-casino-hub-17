@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { CheckCircle, Loader2, Wallet, ExternalLink, AlertTriangle, XCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { useSendTransaction, useWallets } from '@privy-io/react-auth';
+import { useWallets } from '@privy-io/react-auth';
+import { useSmartWallets } from '@privy-io/react-auth/smart-wallets';
 import { encodeFunctionData, parseUnits, erc20Abi } from 'viem';
-import { polygon } from 'viem/chains';
+import { base } from 'viem/chains';
 import { useWaitForTransactionReceipt } from 'wagmi';
 import { cn } from '@/lib/utils';
 import { useWalletDeepLink } from '@/hooks/useWalletDeepLink';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 
-const USDT_CONTRACT = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F' as const;
+// USDC on Base (6 decimals)
+const USDC_CONTRACT = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' as const;
 const DEPOSIT_ADDRESS = '0x47C294f6fb030367c5214c96b63fe6A7564AD773' as const;
 
 type TransactionState = 'idle' | 'wallet-pending' | 'tx-pending' | 'confirming' | 'confirmed' | 'cancelled' | 'error';
@@ -69,8 +71,8 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
   const [showRetry, setShowRetry] = useState(false);
 
   const { toast } = useToast();
-  const { sendTransaction } = useSendTransaction();
   const { wallets } = useWallets();
+  const { client: smartWalletClient } = useSmartWallets();
   const { openWallet, isIosPwa } = useWalletDeepLink();
   
   // Helper to save state to sessionStorage
@@ -104,6 +106,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
   } = useWaitForTransactionReceipt({
     hash: txHash,
     confirmations: 2,
+    chainId: base.id,
   });
 
   // Update state when confirming
@@ -133,7 +136,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       clearStorage(); // Clear storage on confirmation error
       toast({
         title: "Confirmation échouée",
-        description: "La transaction a peut-être échoué. Vérifiez sur PolygonScan.",
+        description: "La transaction a peut-être échoué. Vérifiez sur BaseScan.",
         variant: "destructive",
       });
       setTxHash(undefined);
@@ -157,13 +160,13 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       throw new Error("No wallet available");
     }
 
-    // Switch to Polygon mainnet
+    // Switch to Base mainnet
     try {
-      await wallet.switchChain(polygon.id);
+      await wallet.switchChain(base.id);
     } catch (e) {
       toast({
         title: "Changement de réseau requis",
-        description: "Veuillez passer sur Polygon et réessayer.",
+        description: "Veuillez passer sur Base et réessayer.",
         variant: "destructive",
       });
       throw e;
@@ -199,27 +202,35 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       setTransactionState('wallet-pending');
       saveToStorage('wallet-pending'); // Save immediately before wallet interaction
       setShowRetry(false);
-      const activeWallet = await ensureWalletReady();
+      await ensureWalletReady();
 
-      // Encode ERC-20 transfer call (USDT has 6 decimals)
+      // Check smart wallet is ready
+      if (!smartWalletClient) {
+        toast({
+          title: "Smart Wallet non prêt",
+          description: "Veuillez patienter que le smart wallet soit initialisé.",
+          variant: "destructive",
+        });
+        throw new Error("Smart wallet not ready");
+      }
+
+      // Encode ERC-20 transfer call (USDC has 6 decimals)
       const data = encodeFunctionData({
         abi: erc20Abi,
         functionName: 'transfer',
         args: [DEPOSIT_ADDRESS, parseUnits(betAmount.toString(), 6)]
       });
 
-      // Send USDT transfer transaction with explicit chainId for Privy
-      const result = await sendTransaction(
-        { 
-          to: USDT_CONTRACT, 
+      // Send USDC transfer via Smart Wallet (sponsored gas)
+      // Type cast needed for Privy smart wallet client compatibility
+      const hash = await (smartWalletClient as any).sendTransaction({
+        account: smartWalletClient.account,
+        calls: [{
+          to: USDC_CONTRACT,
           data,
-          value: 0n, // Explicit: no native token transfer - helps MetaMask identify as ERC-20 transfer
-          chainId: polygon.id,
-        },
-        { address: activeWallet.address }
-      );
-
-      const hash = result.hash as `0x${string}`;
+          value: 0n,
+        }],
+      });
       
       // Save txHash to DB immediately (before waiting for confirmation)
       // This ensures state is preserved if user refreshes
@@ -243,7 +254,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
         description: "En attente de confirmation blockchain (2 blocs)...",
       });
     } catch (error) {
-      console.error("USDT deposit failed:", error);
+      console.error("USDC deposit failed:", error);
       
       if (isUserCancellation(error)) {
         setTransactionState('cancelled');
@@ -325,7 +336,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
         )}
         
         <a 
-          href={`https://polygonscan.com/tx/${txHash}`}
+          href={`https://basescan.org/tx/${txHash}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-xs text-primary hover:underline"
@@ -354,7 +365,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
         <div className="text-center">
           <p className="text-lg font-semibold text-success">Dépôt confirmé</p>
           <p className="text-sm text-muted-foreground mt-1">
-            {betAmount} USDT envoyé
+            {betAmount} USDC envoyé
           </p>
         </div>
       </motion.div>
@@ -362,6 +373,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
   }
 
   const hasWalletConnected = wallets && wallets.length > 0;
+  const isSmartWalletReady = !!smartWalletClient;
   const isLoading = transactionState === 'wallet-pending';
 
   return (
@@ -369,8 +381,8 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       {/* Amount display */}
       <div className="text-center">
         <p className="text-sm text-muted-foreground">Montant à déposer</p>
-        <p className="text-3xl font-bold">{betAmount} USDT</p>
-        <p className="text-xs text-muted-foreground mt-1">Réseau Polygon</p>
+        <p className="text-3xl font-bold">{betAmount} USDC</p>
+        <p className="text-xs text-muted-foreground mt-1">Réseau Base</p>
       </div>
 
       {/* Cancelled/Error state message (no separate button - main button handles retry) */}
@@ -412,12 +424,13 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       >
         <Button
           onClick={handleDeposit}
-          disabled={isLoading}
+          disabled={isLoading || (hasWalletConnected && !isSmartWalletReady)}
           size="lg"
           className={cn(
             "w-full h-14 text-base font-semibold relative overflow-hidden transition-all duration-300",
             !hasWalletConnected && "bg-muted text-muted-foreground",
-            hasWalletConnected && !isLoading && [
+            hasWalletConnected && !isSmartWalletReady && "bg-muted text-muted-foreground",
+            hasWalletConnected && isSmartWalletReady && !isLoading && [
               "bg-gradient-to-r from-success to-emerald-500",
               "hover:from-success/90 hover:to-emerald-500/90",
               "shadow-lg shadow-success/25",
@@ -427,7 +440,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
           )}
         >
           {/* Glow shimmer effect */}
-          {hasWalletConnected && !isLoading && transactionState === 'idle' && (
+          {hasWalletConnected && isSmartWalletReady && !isLoading && transactionState === 'idle' && (
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
           )}
           
@@ -452,10 +465,15 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
                 <Wallet className="w-5 h-5 mr-2" />
                 Connecter le wallet
               </>
+            ) : !isSmartWalletReady ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Initialisation Smart Wallet...
+              </>
             ) : (
               <>
                 <Wallet className="w-5 h-5 mr-2" />
-                Déposer {betAmount} USDT
+                Déposer {betAmount} USDC
               </>
             )}
           </span>
