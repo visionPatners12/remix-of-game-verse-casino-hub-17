@@ -5,9 +5,9 @@ import { TokenUSDC, NetworkBase } from '@web3icons/react';
 import { Shield, Loader2, AlertCircle, RefreshCw, ArrowLeft, Info } from 'lucide-react';
 import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
 import { useCdpSessionToken } from '@/features/deposit/hooks/useCdpSessionToken';
-import { CoinbaseFundCard } from '@/features/deposit/components/CoinbaseFundCard';
+import { FundCard } from '@coinbase/onchainkit/fund';
 import { Button } from '@/components/ui/button';
-
+import '@coinbase/onchainkit/styles.css';
 const CoinbaseDepositPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('deposit');
@@ -117,17 +117,18 @@ const CoinbaseDepositPage = () => {
             </div>
           </div>
 
-          {/* Custom FundCard */}
-          <CoinbaseFundCard
-            sessionToken={sessionToken}
-            presetAmounts={['25', '50', '100']}
-            onSuccess={() => {
-              console.log('[CoinbaseDeposit] Success - Coinbase Pay opened');
-            }}
-            onError={(err) => {
-              console.error('[CoinbaseDeposit] Error:', err);
-            }}
-          />
+          {/* OnchainKit FundCard */}
+          <div className="[&_.ock-container]:!bg-card [&_.ock-container]:!border-border [&_.ock-container]:!rounded-2xl [&_.ock-container]:!shadow-lg [&_button]:!rounded-xl [&_input]:!rounded-xl [&_input]:!bg-muted [&_input]:!border-border">
+            <FundCard
+              sessionToken={sessionToken}
+              assetSymbol="USDC"
+              country="US"
+              currency="USD"
+              headerText="Purchase USDC"
+              buttonText="Continue with Coinbase"
+              presetAmountInputs={['25', '50', '100']}
+            />
+          </div>
 
           {/* Security Note */}
           <div className="p-4 rounded-2xl bg-muted/50 border border-border/30">
