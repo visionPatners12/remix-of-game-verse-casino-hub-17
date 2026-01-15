@@ -508,6 +508,84 @@ export type Database = {
         }
         Relationships: []
       }
+      privy_transactions: {
+        Row: {
+          asset: string
+          caip2: string | null
+          chain: string
+          created_at: string
+          display_value: string | null
+          id: string
+          privy_created_at: number | null
+          privy_transaction_id: string | null
+          raw_value: string | null
+          raw_value_decimals: number | null
+          recipient: string | null
+          sender: string | null
+          status: string
+          transaction_hash: string
+          type: string | null
+          updated_at: string
+          user_id: string
+          wallet_id: string
+        }
+        Insert: {
+          asset: string
+          caip2?: string | null
+          chain: string
+          created_at?: string
+          display_value?: string | null
+          id?: string
+          privy_created_at?: number | null
+          privy_transaction_id?: string | null
+          raw_value?: string | null
+          raw_value_decimals?: number | null
+          recipient?: string | null
+          sender?: string | null
+          status?: string
+          transaction_hash: string
+          type?: string | null
+          updated_at?: string
+          user_id: string
+          wallet_id: string
+        }
+        Update: {
+          asset?: string
+          caip2?: string | null
+          chain?: string
+          created_at?: string
+          display_value?: string | null
+          id?: string
+          privy_created_at?: number | null
+          privy_transaction_id?: string | null
+          raw_value?: string | null
+          raw_value_decimals?: number | null
+          recipient?: string | null
+          sender?: string | null
+          status?: string
+          transaction_hash?: string
+          type?: string | null
+          updated_at?: string
+          user_id?: string
+          wallet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "privy_transactions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "public_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "privy_transactions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       referrals: {
         Row: {
           created_at: string | null

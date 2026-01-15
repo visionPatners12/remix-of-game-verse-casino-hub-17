@@ -16,13 +16,13 @@ import {
   TrendingUp,
   ExternalLink
 } from 'lucide-react';
-import { useWalletTransactionsThirdWeb } from '@/features/wallet/hooks/transactions/useWalletTransactionsThirdWeb';
+import { useWalletTransactionsPrivy } from '@/features/wallet/hooks/transactions/useWalletTransactionsPrivy';
 
 const TransactionsPage = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState<string>('all');
   
-  const { data: transactions = [], isLoading, error, refetch } = useWalletTransactionsThirdWeb();
+  const { data: transactions = [], isLoading, error, refetch } = useWalletTransactionsPrivy({ chain: 'base', asset: 'usdc' });
 
   const getTypeIcon = (type: string) => {
     if (type === 'withdrawal') {
@@ -251,7 +251,7 @@ const TransactionsPage = () => {
                                 variant="ghost"
                                 size="sm"
                                 className="h-6 w-6 p-0 rounded-full hover:bg-accent/30 transition-colors"
-                                onClick={() => window.open(`https://polygonscan.com/tx/${transaction.hash}`, '_blank')}
+                                onClick={() => window.open(`https://basescan.org/tx/${transaction.hash}`, '_blank')}
                               >
                                 <ExternalLink className="h-3 w-3" />
                               </Button>
