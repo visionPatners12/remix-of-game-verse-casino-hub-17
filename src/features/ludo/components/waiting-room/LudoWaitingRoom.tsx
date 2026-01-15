@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Play, Copy } from 'lucide-react';
+import { Play, Copy, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { WaitingRoomHeader } from './WaitingRoomHeader';
 import { DepositButton } from './DepositButton';
@@ -194,20 +194,34 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
             <RoomCodeBadge roomCode={roomCode} />
           </motion.div>
 
-          {/* Pot Display - shows total pot based on bet and player count */}
+          {/* Pot Display - Entry fee for paid games OR Free Game badge */}
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.15 }}
-            className="flex justify-center"
+            className="flex flex-col items-center gap-2"
           >
-            <LudoPotBadge
-              amount={betAmount * playersReadyCount}
-              size="lg"
-              variant="glow"
-              showTrophy={true}
-              isFreeGame={isFreeGame}
-            />
+            {isFreeGame ? (
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/30">
+                <Sparkles className="w-4 h-4 text-emerald-400" />
+                <span className="text-sm font-medium text-emerald-400">Free Game</span>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-muted-foreground">Entry fee:</span>
+                  <span className="font-bold text-foreground">{betAmount} USDC</span>
+                </div>
+                <LudoPotBadge
+                  amount={betAmount * playersReadyCount}
+                  size="lg"
+                  variant="glow"
+                  showTrophy={true}
+                  isFreeGame={false}
+                />
+                <span className="text-xs text-muted-foreground">Current pot</span>
+              </>
+            )}
           </motion.div>
 
           {/* Deposit Section - 3 states */}
