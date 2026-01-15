@@ -64,16 +64,20 @@ function SwapWidgetSkeleton() {
 }
 
 export function SwapWidget() {
-  const { address, isConnected, connectWallet, isAAWallet } = useUnifiedWallet();
+  const { address, signerAddress, isConnected, connectWallet, isAAWallet } = useUnifiedWallet();
   
   // Configure LI.FI SDK with wallet provider
   const { isReady: isLifiReady } = useLifiConfig();
   
-  // Use the unified address for all wallet types
+  // STRATEGY: Use Smart Account address for AA wallets, EOA signer for external wallets
+  // This allows AA users to swap directly from their Smart Account
   const effectiveSwapAddress = useMemo(() => {
-    return address || null;
-  }, [address]);
-
+    if (isAAWallet && address) {
+      return address; // Use Smart Account for AA users
+    }
+    return signerAddress; // Use EOA for external wallet users
+  }, [isAAWallet, address, signerAddress]);
+  
   // Chain state
   const [fromChainId, setFromChainId] = useState<number>(DEFAULT_CHAIN_ID);
   const [toChainId, setToChainId] = useState<number>(DEFAULT_CHAIN_ID);
@@ -268,7 +272,7 @@ export function SwapWidget() {
             isLoading={isLoadingTokens}
             isAAWallet={isAAWallet}
             aaAddress={address || undefined}
-            signerAddress={address || undefined}
+            signerAddress={signerAddress || undefined}
           />
         </div>
       </section>
@@ -317,7 +321,7 @@ export function SwapWidget() {
             isLoading={isLoadingTokens}
             isAAWallet={isAAWallet}
             aaAddress={address || undefined}
-            signerAddress={address || undefined}
+            signerAddress={signerAddress || undefined}
           />
         </div>
       </section>

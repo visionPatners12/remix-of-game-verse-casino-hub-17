@@ -17,27 +17,25 @@ const CHAIN_MAP: Record<number, Chain> = {
 
 // Initialize LI.FI SDK with EVM provider using the active Privy wallet
 export function useLifiConfig() {
-  const { address, isConnected, isAAWallet, wallets } = useUnifiedWallet();
+  const { address, signerAddress, activePrivyWallet, isConnected, isAAWallet } = useUnifiedWallet();
   const configuredAddressRef = useRef<string | null>(null);
   const currentChainIdRef = useRef<number>(137); // Default to Polygon
   const [isReady, setIsReady] = useState(false);
 
-  // Get the active Privy wallet for signing
-  const activePrivyWallet = wallets?.find(w => w.walletClientType === 'privy') || wallets?.[0];
-
   // Debug: Log wallet configuration
   useEffect(() => {
     console.log('[LiFi Config] Wallet state:', {
-      address,
+      address, // Effective wallet holding funds (AA or EOA)
+      signerAddress, // EOA for signing transactions
       isAAWallet,
       isConnected,
       walletType: activePrivyWallet?.walletClientType,
     });
-  }, [address, isAAWallet, isConnected, activePrivyWallet]);
+  }, [address, signerAddress, isAAWallet, isConnected, activePrivyWallet]);
 
   // Create a proper viem WalletClient from Privy provider
   const createViemClient = useCallback(async (chainId?: number) => {
-    if (!activePrivyWallet || !address) {
+    if (!activePrivyWallet || !signerAddress) {
       throw new Error('No compatible wallet found. Please reconnect.');
     }
 
@@ -48,27 +46,27 @@ export function useLifiConfig() {
     
     // Create a proper viem WalletClient with the EIP-1193 provider
     const client = createWalletClient({
-      account: address as `0x${string}`,
+      account: signerAddress as `0x${string}`,
       chain,
       transport: custom(provider),
     });
 
     return client;
-  }, [activePrivyWallet, address]);
+  }, [activePrivyWallet, signerAddress]);
 
-  // Reconfigure SDK when address changes
+  // Reconfigure SDK when signer address changes
   useEffect(() => {
-    if (!address || !activePrivyWallet) {
+    if (!signerAddress || !activePrivyWallet) {
       setIsReady(false);
       return;
     }
-    if (configuredAddressRef.current === address) {
+    if (configuredAddressRef.current === signerAddress) {
       setIsReady(true);
       return;
     }
 
     const getWalletClient = async () => {
-      console.log('[LiFi] getWalletClient called, address:', address);
+      console.log('[LiFi] getWalletClient called, signerAddress:', signerAddress);
       return createViemClient();
     };
 
@@ -99,12 +97,12 @@ export function useLifiConfig() {
       ] as SDKProvider[],
     });
 
-    configuredAddressRef.current = address;
+    configuredAddressRef.current = signerAddress;
     setIsReady(true);
-    console.log('[LiFi] SDK configured for address:', address);
-  }, [address, activePrivyWallet, createViemClient]);
+    console.log('[LiFi] SDK configured for signerAddress:', signerAddress);
+  }, [signerAddress, activePrivyWallet, createViemClient]);
 
   return {
-    isReady: isConnected && !!address && isReady,
+    isReady: isConnected && !!signerAddress && isReady,
   };
 }
