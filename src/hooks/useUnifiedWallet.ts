@@ -166,6 +166,9 @@ export function useUnifiedWallet() {
   const displayAddress = effectiveState.address || (showCachedState ? cachedState.address : null);
   const displayChainId = effectiveState.chainId || (showCachedState ? cachedState.chainId : null);
 
+  // Find active Privy wallet for LiFi SDK compatibility
+  const activePrivyWallet = wallets.find(w => w.walletClientType === 'privy') || wallets[0] || null;
+
   return {
     // Core wallet state (uses cached address if Privy not ready)
     address: displayAddress,
@@ -210,6 +213,10 @@ export function useUnifiedWallet() {
     hasAnyWallet: effectiveState.isConnected || showCachedState,
     walletClient,
     wallets, // Expose all Privy wallets for advanced use cases
+    
+    // LiFi SDK compatibility
+    signerAddress: displayAddress,
+    activePrivyWallet,
     
     // Azuro Social Login specific
     isAAWallet: isAAWallet || effectiveState.hasEmbeddedWallet || (showCachedState && cachedState.isAAWallet) || false,

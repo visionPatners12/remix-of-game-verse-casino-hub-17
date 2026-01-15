@@ -29,3 +29,6 @@ verify_jwt = false
 
 [functions.cdp-session-token]
 verify_jwt = false
+
+[functions.cdp-countries]
+verify_jwt = false
