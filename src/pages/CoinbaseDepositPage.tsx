@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TokenUSDC, NetworkBase } from '@web3icons/react';
 import { Shield, Loader2, AlertCircle, RefreshCw, ArrowLeft, Info } from 'lucide-react';
-import { DEFAULT_CHAIN_NAME } from '@/config/chains';
 import { toast } from 'sonner';
 import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
 import { useCdpSessionToken } from '@/features/deposit/hooks/useCdpSessionToken';
@@ -160,7 +159,7 @@ const CoinbaseDepositPage = () => {
               </div>
               <div>
                 <h2 className="text-xl font-bold text-foreground">USDC</h2>
-                <p className="text-sm text-muted-foreground">on {DEFAULT_CHAIN_NAME} Network</p>
+                <p className="text-sm text-muted-foreground">on Base Network</p>
               </div>
             </div>
           </div>

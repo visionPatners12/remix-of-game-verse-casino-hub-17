@@ -6,9 +6,6 @@ import * as jose from "https://esm.sh/jose@5.9.6?target=deno";
 const CDP_API_KEY_ID = Deno.env.get("CDP_API_KEY_ID") ?? "";
 const CDP_API_KEY_SECRET = Deno.env.get("CDP_API_KEY_SECRET") ?? "";
 
-// Default destination network for onramp (Base)
-const DEFAULT_DESTINATION_NETWORK = "base";
-
 // API v1 for session tokens
 const CDP_HOST = "api.developer.coinbase.com";
 const CDP_PATH = "/onramp/v1/token";
@@ -223,7 +220,7 @@ async function handleApplePayOrder(body: ApplePayOrderRequest) {
   const orderPayload = {
     agreementAcceptedAt: now,
     destinationAddress: body.destinationAddress,
-    destinationNetwork: DEFAULT_DESTINATION_NETWORK,
+    destinationNetwork: "base",
     email: body.email,
     phoneNumber: body.phoneNumber,
     phoneNumberVerifiedAt: now,

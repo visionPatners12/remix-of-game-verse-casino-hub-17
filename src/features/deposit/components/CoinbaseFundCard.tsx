@@ -11,7 +11,6 @@ import { useAuth } from '@/features/auth';
 import { useUserProfile } from '@/features/profile/hooks/useUserProfile';
 import { useUnifiedWallet } from '@/features/wallet/hooks/core/useUnifiedWallet';
 import { toast } from 'sonner';
-import { getChainSlug, DEFAULT_CHAIN_ID } from '@/config/chains';
 
 // Apple Pay icon component
 const ApplePayIcon = () => (
@@ -168,7 +167,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
       const params = new URLSearchParams({
         sessionToken,
         defaultAsset: 'USDC',
-        defaultNetwork: getChainSlug(DEFAULT_CHAIN_ID),
+        defaultNetwork: 'base',
         defaultPaymentMethod: selectedPaymentMethod,
         fiatCurrency,
         defaultExperience: 'buy',
