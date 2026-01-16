@@ -28,6 +28,7 @@ export function OptimizedProfileStep({ onNext, onBack }: OnboardingStepProps) {
   const [dateOfBirth, setDateOfBirth] = useState<Date | undefined>();
   const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [hasExistingUsername, setHasExistingUsername] = useState(false);
   
   const isPrivyUser = user?.user_metadata?.auth_method === 'privy';
 
@@ -58,7 +59,17 @@ export function OptimizedProfileStep({ onNext, onBack }: OnboardingStepProps) {
         phone: profile.phone || '',
         country: profile.country || 'FR',
       });
-      setDateOfBirth(undefined); // date_of_birth not in ProfileData yet
+      
+      // Load date of birth if it exists
+      if (profile.date_of_birth) {
+        setDateOfBirth(new Date(profile.date_of_birth));
+      }
+      
+      // Track if username already exists (cannot be changed)
+      if (profile.username && profile.username.trim().length > 0) {
+        setHasExistingUsername(true);
+      }
+      
       setProfilePictureUrl(profile.avatar_url);
     }
   }, [profile]);
@@ -243,6 +254,7 @@ export function OptimizedProfileStep({ onNext, onBack }: OnboardingStepProps) {
             isPhoneVerified={profile?.phone_verified || false}
             onInputChange={handleInputChange}
             onDateChange={setDateOfBirth}
+            isUsernameDisabled={hasExistingUsername}
           />
 
           {/* Continue Button */}

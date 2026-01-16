@@ -2,7 +2,7 @@ import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Check, X, Loader2 } from "lucide-react";
+import { Check, X, Loader2, Lock } from "lucide-react";
 import { DateOfBirthField, PhoneField } from '@/features/auth/fields';
 
 interface FormData {
@@ -24,6 +24,7 @@ interface UserFormProps {
   isPhoneVerified: boolean;
   onInputChange: (field: string, value: string) => void;
   onDateChange: (date: Date | undefined) => void;
+  isUsernameDisabled?: boolean;
 }
 
 export function UserForm({
@@ -36,6 +37,7 @@ export function UserForm({
   isPhoneVerified,
   onInputChange,
   onDateChange,
+  isUsernameDisabled = false,
 }: UserFormProps) {
   return (
     <div className="space-y-6">
@@ -82,6 +84,7 @@ export function UserForm({
             id="username"
             value={formData.username}
             onChange={(e) => {
+              if (isUsernameDisabled) return;
               const sanitized = e.target.value
                 .toLowerCase()
                 .replace(/\s+/g, '')
@@ -89,14 +92,19 @@ export function UserForm({
               onInputChange('username', sanitized);
             }}
             placeholder="username"
+            disabled={isUsernameDisabled}
+            readOnly={isUsernameDisabled}
             className={`pr-10 ${
+              isUsernameDisabled ? 'bg-muted cursor-not-allowed opacity-70' :
               errors.username ? 'border-destructive' : 
               usernameAvailable === true ? 'border-green-500' : 
               usernameAvailable === false ? 'border-destructive' : ''
             }`}
           />
           <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-            {isCheckingUsername ? (
+            {isUsernameDisabled ? (
+              <Lock className="w-4 h-4 text-muted-foreground" />
+            ) : isCheckingUsername ? (
               <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
             ) : usernameAvailable === true ? (
               <Check className="w-4 h-4 text-green-500" />
@@ -105,8 +113,14 @@ export function UserForm({
             ) : null}
           </div>
         </div>
-        {errors.username && <p className="text-sm text-destructive">{errors.username}</p>}
-        {usernameAvailable === false && (
+        {isUsernameDisabled && (
+          <p className="text-xs text-muted-foreground flex items-center gap-1">
+            <Lock className="w-3 h-3" />
+            Username cannot be changed once set
+          </p>
+        )}
+        {!isUsernameDisabled && errors.username && <p className="text-sm text-destructive">{errors.username}</p>}
+        {!isUsernameDisabled && usernameAvailable === false && (
           <p className="text-sm text-destructive">This username is not available</p>
         )}
       </div>

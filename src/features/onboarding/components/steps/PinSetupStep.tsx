@@ -40,10 +40,9 @@ export function PinSetupStep({ onNext, onBack }: OnboardingStepProps) {
   useEffect(() => {
     if (!isPinStatusLoading && pinStatus?.hasPin) {
       logger.info('PIN already exists, skipping PIN setup step');
-      setOnboardingProgress('profile');
       onNext?.();
     }
-  }, [pinStatus?.hasPin, isPinStatusLoading, onNext, setOnboardingProgress]);
+  }, [pinStatus?.hasPin, isPinStatusLoading, onNext]);
 
   const handleBack = () => {
     if (step === 'confirm') {
