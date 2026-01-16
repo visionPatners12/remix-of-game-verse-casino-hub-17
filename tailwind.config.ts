@@ -140,6 +140,13 @@ const config: Config = {
           subtle: "hsl(var(--error) / 0.1)",
           light: "hsl(var(--error) / 0.2)",
         },
+        // Ludo game colors
+        ludo: {
+          red: "#EF4444",
+          green: "#22C55E", 
+          yellow: "#EAB308",
+          blue: "#3B82F6",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
