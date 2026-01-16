@@ -83,6 +83,42 @@ export type Database = {
         }
         Relationships: []
       }
+      cdp_offramp_supported_countries: {
+        Row: {
+          country_code: string
+          country_name: string
+          created_at: string
+          id: string
+          is_active: boolean
+          last_synced_at: string | null
+          payment_methods: Json
+          subdivisions: Json | null
+          updated_at: string
+        }
+        Insert: {
+          country_code: string
+          country_name: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_synced_at?: string | null
+          payment_methods?: Json
+          subdivisions?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          country_code?: string
+          country_name?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_synced_at?: string | null
+          payment_methods?: Json
+          subdivisions?: Json | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cdp_supported_countries: {
         Row: {
           country_code: string
