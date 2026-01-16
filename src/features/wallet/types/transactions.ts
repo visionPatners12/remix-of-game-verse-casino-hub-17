@@ -1,3 +1,5 @@
+import { getChainName, NATIVE_SYMBOLS, DEFAULT_CHAIN_ID } from '@/config/chains';
+
 // ThirdWeb Transaction Types - v2
 export interface ThirdWebTransaction {
   chain_id: string;
@@ -119,6 +121,7 @@ export const transformERC20Transfer = (tx: ERC20Transfer, walletAddress: string)
       createdAt = new Date().toISOString();
     }
     
+    const chainId = parseInt(tx.chain_id) || DEFAULT_CHAIN_ID;
     return {
       id: tx.transaction_hash || `transfer-${tx.block_number}`,
       amount: amount,
@@ -130,13 +133,14 @@ export const transformERC20Transfer = (tx: ERC20Transfer, walletAddress: string)
       from_address: tx.from_address || '',
       to_address: tx.to_address || '',
       hash: tx.transaction_hash || '',
-      network: 'Polygon',
+      network: getChainName(chainId),
       fee: 0, // ERC20 transfers endpoint doesn't include gas info
       confirmations: 1,
       user_id: walletAddress
     };
   } catch (error) {
     console.error('Error transforming ERC20 transfer:', error, tx);
+    const chainId = parseInt(tx.chain_id) || DEFAULT_CHAIN_ID;
     return {
       id: tx.transaction_hash || `error-${Date.now()}`,
       amount: 0,
@@ -148,7 +152,7 @@ export const transformERC20Transfer = (tx: ERC20Transfer, walletAddress: string)
       from_address: tx.from_address || '',
       to_address: tx.to_address || '',
       hash: tx.transaction_hash || '',
-      network: 'Polygon',
+      network: getChainName(chainId),
       fee: 0,
       confirmations: 0,
       user_id: walletAddress
@@ -197,9 +201,10 @@ export const transformThirdWebTransaction = (tx: ThirdWebTransaction, walletAddr
       const shortRecipient = recipient ? `${recipient.slice(0, 6)}...${recipient.slice(-4)}` : 'Unknown';
       description = `Token transfer to ${shortRecipient}`;
     } else {
-      // Native MATIC transfer
+      // Native token transfer - use chain-specific symbol
+      const chainId = parseInt(tx.chain_id) || DEFAULT_CHAIN_ID;
       amount = tx.value ? parseFloat(tx.value) / Math.pow(10, 18) : 0;
-      currency = 'MATIC';
+      currency = NATIVE_SYMBOLS[chainId] || 'ETH';
       
       if (isOutgoing) {
         const shortTo = tx.to_address ? `${tx.to_address.slice(0, 6)}...${tx.to_address.slice(-4)}` : 'Unknown';
@@ -227,6 +232,7 @@ export const transformThirdWebTransaction = (tx: ThirdWebTransaction, walletAddr
       createdAt = new Date().toISOString();
     }
     
+    const chainId = parseInt(tx.chain_id) || DEFAULT_CHAIN_ID;
     return {
       id: tx.hash || `tx-${tx.block_number}-${tx.transaction_index}`,
       amount: amount,
@@ -238,17 +244,18 @@ export const transformThirdWebTransaction = (tx: ThirdWebTransaction, walletAddr
       from_address: tx.from_address || '',
       to_address: tx.to_address || '',
       hash: tx.hash || '',
-      network: 'Polygon',
+      network: getChainName(chainId),
       fee: gasUsed,
       confirmations: 1,
       user_id: walletAddress
     };
   } catch (error) {
     console.error('Error transforming transaction:', error, tx);
+    const chainId = parseInt(tx.chain_id) || DEFAULT_CHAIN_ID;
     return {
       id: tx.hash || `error-${Date.now()}`,
       amount: 0,
-      currency: 'MATIC',
+      currency: NATIVE_SYMBOLS[chainId] || 'ETH',
       type: 'deposit',
       status: 'failed',
       description: 'Transaction parsing error',
@@ -256,7 +263,7 @@ export const transformThirdWebTransaction = (tx: ThirdWebTransaction, walletAddr
       from_address: tx.from_address || '',
       to_address: tx.to_address || '',
       hash: tx.hash || '',
-      network: 'Polygon',
+      network: getChainName(chainId),
       fee: 0,
       confirmations: 0,
       user_id: walletAddress

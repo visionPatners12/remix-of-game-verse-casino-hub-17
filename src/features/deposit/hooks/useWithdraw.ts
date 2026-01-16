@@ -4,15 +4,14 @@ import { WalletToken } from '@/features/wallet/types';
 import { cryptoOptions } from '../config/crypto';
 import { toast } from '@/hooks/use-toast';
 import { logger } from '@/utils/logger';
-import { isAddress, erc20Abi, parseUnits, encodeFunctionData } from 'viem';
+import { erc20Abi, parseUnits, encodeFunctionData } from 'viem';
 import { useBalance, usePublicClient, useAccount } from 'wagmi';
 import { useSendTransaction, useWallets, usePrivy } from '@privy-io/react-auth';
-import { base } from 'viem/chains';
+import { DEFAULT_CHAIN, USDC_ADDRESSES } from '@/config/chains';
 
-// Default chain config (Base)
-const DEFAULT_CHAIN = base;
+// Use centralized chain config
 const DEFAULT_TOKEN = {
-  address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' as `0x${string}`, // USDC on Base
+  address: USDC_ADDRESSES[DEFAULT_CHAIN.id] as `0x${string}`,
   symbol: 'USDC',
   decimals: 6,
 };

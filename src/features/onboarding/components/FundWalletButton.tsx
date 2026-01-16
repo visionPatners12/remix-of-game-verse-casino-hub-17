@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useFundWallet } from '@privy-io/react-auth';
-import { base } from 'viem/chains';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
 import { TokenUSDC, NetworkBase } from '@web3icons/react';
+import { DEFAULT_CHAIN, USDC_ADDRESSES } from '@/config/chains';
 
 interface FundWalletButtonProps {
   className?: string;
@@ -30,8 +30,8 @@ export const FundWalletButton: React.FC<FundWalletButtonProps> = ({ className })
     setIsLoading(true);
     try {
       await fundWallet(address, {
-        chain: base,                              // Base mainnet
-        asset: { erc20: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' }, // USDC (Base)
+        chain: DEFAULT_CHAIN,
+        asset: { erc20: USDC_ADDRESSES[DEFAULT_CHAIN.id] },
         amount: '50',
         defaultFundingMethod: 'card',
         card: { preferredProvider: 'coinbase' }

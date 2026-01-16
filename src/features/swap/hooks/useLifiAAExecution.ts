@@ -2,19 +2,10 @@
 import { useState, useCallback } from 'react';
 import { getStepTransaction, getStatus, type Route } from '@lifi/sdk';
 import { useSmartWallets } from '@privy-io/react-auth/smart-wallets';
-import { encodeFunctionData, erc20Abi, createPublicClient, http, type Chain } from 'viem';
-import { polygon, base, arbitrum, optimism, mainnet } from 'viem/chains';
+import { encodeFunctionData, erc20Abi, createPublicClient, http } from 'viem';
 import type { SwapExecutionStep, SwapStatus } from '../types';
 import { toast } from 'sonner';
-
-// Chain mapping for public clients
-const CHAINS: Record<number, Chain> = {
-  1: mainnet,
-  137: polygon,
-  8453: base,
-  42161: arbitrum,
-  10: optimism,
-};
+import { CHAIN_MAP } from '@/config/chains';
 
 interface UseLifiAAExecutionOptions {
   onSuccess?: (txHash: string) => void;
@@ -44,7 +35,7 @@ export function useLifiAAExecution({ onSuccess, onError }: UseLifiAAExecutionOpt
     spender: string,
     chainId: number
   ): Promise<bigint> => {
-    const chain = CHAINS[chainId];
+    const chain = CHAIN_MAP[chainId];
     if (!chain) return BigInt(0);
 
     try {
