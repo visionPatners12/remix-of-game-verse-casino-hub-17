@@ -121,7 +121,7 @@ serve(async (req) => {
     const input = { ...body, ...qp };
 
     const address = String(input.address ?? "").trim();
-    const chain = String(input.chain ?? "polygon"); // défaut: Polygon (0x89)
+    const chain = String(input.chain ?? "base"); // défaut: Base (8453)
     const includeNFTs = String(input.include_nfts ?? "false").toLowerCase() === "true";
     const withPrices = String(input.with_prices ?? "false").toLowerCase() === "true";
     const nftLimit = isNaN(Number(input.nft_limit)) ? 100 : Math.max(1, Math.min(100, Number(input.nft_limit)));

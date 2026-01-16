@@ -2,10 +2,23 @@
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { getChains, ChainType } from '@lifi/sdk';
 import type { SwapChain } from '../types';
-import { SUPPORTED_CHAIN_IDS, CHAIN_ICONS } from '@/config/lifi';
+import { SUPPORTED_CHAIN_IDS, CHAIN_ICONS, NATIVE_SYMBOLS, DEFAULT_CHAIN_ID } from '@/config/chains';
 
 // Initial chains for instant display while fetching fresh data
+// Base is first as it's the default chain
 const INITIAL_CHAINS: SwapChain[] = [
+  {
+    id: 8453,
+    name: 'Base',
+    icon: 'base',
+    nativeToken: {
+      address: '0x0000000000000000000000000000000000000000',
+      symbol: 'ETH',
+      name: 'Ethereum',
+      decimals: 18,
+      chainId: 8453,
+    },
+  },
   {
     id: 137,
     name: 'Polygon',
@@ -52,18 +65,6 @@ const INITIAL_CHAINS: SwapChain[] = [
       name: 'Ethereum',
       decimals: 18,
       chainId: 10,
-    },
-  },
-  {
-    id: 8453,
-    name: 'Base',
-    icon: 'base',
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      symbol: 'ETH',
-      name: 'Ethereum',
-      decimals: 18,
-      chainId: 8453,
     },
   },
 ];

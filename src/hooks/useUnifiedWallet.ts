@@ -5,6 +5,7 @@ import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { useAuth } from '@/hooks/useAuth';
 import { usePrivySessionRecovery } from '@/hooks/usePrivySessionRecovery';
 import { logger } from '@/utils/logger';
+import { getChainName } from '@/config/chains';
 import { 
   getCachedWalletState, 
   setCachedWalletState, 
@@ -84,7 +85,7 @@ export function useUnifiedWallet() {
       address: activeAddress,
       isConnected: connected,
       chainId: chainId || null,
-      network: chainId ? { name: 'Polygon', chainId } : null,
+      network: chainId ? { name: getChainName(chainId), chainId } : null,
       hasEmbeddedWallet,
     };
   };
@@ -175,7 +176,7 @@ export function useUnifiedWallet() {
     isConnected: isTrulyConnected || showCachedState,
     isConnecting: isConnecting || (!ready && !!cachedState), // Show connecting while Privy initializes with cache
     chainId: displayChainId,
-    network: displayChainId ? { name: 'Polygon', chainId: displayChainId } : null,
+    network: displayChainId ? { name: getChainName(displayChainId), chainId: displayChainId } : null,
     
     // Session recovery states
     isRecoveringSession: isRecovering,
@@ -195,7 +196,7 @@ export function useUnifiedWallet() {
       isConnected: isTrulyConnected || showCachedState,
       isConnecting: isConnecting || (!ready && !!cachedState),
       chainId: displayChainId,
-      network: displayChainId ? { name: 'Polygon', chainId: displayChainId } : null,
+      network: displayChainId ? { name: getChainName(displayChainId), chainId: displayChainId } : null,
       isModalOpen: false,
     },
     
