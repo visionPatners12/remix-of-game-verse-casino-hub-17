@@ -11,6 +11,7 @@ export interface BaseProfileData {
   avatar_url?: string | null;
   bio?: string;
   country?: string;
+  date_of_birth?: string;
   is_profile_public?: boolean;
   auth_method?: 'email' | 'wallet';
   created_at?: string;
