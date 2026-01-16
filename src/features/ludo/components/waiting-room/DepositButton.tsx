@@ -255,6 +255,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
           .update({
             tx_hash: hash,
             deposit_status: 'pending',
+            is_ready: true,
           } as any)
           .eq('game_id', gameId)
           .eq('user_id', userId);
