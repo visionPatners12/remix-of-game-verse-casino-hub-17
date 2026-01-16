@@ -30,7 +30,7 @@ export const LudoRoomsList: React.FC<LudoRoomsListProps> = ({ rooms, loading }) 
   return (
     <section>
       {/* Section header */}
-      <div className="flex items-center gap-2 mb-3">
+      <div className="flex items-center gap-2 mb-2">
         <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
           Open Rooms
         </h2>
@@ -41,8 +41,8 @@ export const LudoRoomsList: React.FC<LudoRoomsListProps> = ({ rooms, loading }) 
         )}
       </div>
 
-      {/* Content */}
-      <div className="space-y-2">
+      {/* Content - no spacing between items, dividers handled by cards */}
+      <div>
         {loading ? (
           // Loading skeletons
           <>
@@ -68,7 +68,7 @@ export const LudoRoomsList: React.FC<LudoRoomsListProps> = ({ rooms, loading }) 
             </p>
           </motion.div>
         ) : (
-          // Room cards
+          // Room list items
           rooms.map((room, index) => (
             <LudoRoomCard
               key={room.id}
@@ -79,6 +79,7 @@ export const LudoRoomsList: React.FC<LudoRoomsListProps> = ({ rooms, loading }) 
               bet_amount={room.bet_amount}
               pot={room.pot}
               index={index}
+              isLast={index === rooms.length - 1}
             />
           ))
         )}
