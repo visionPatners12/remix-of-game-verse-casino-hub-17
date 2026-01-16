@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useCallback } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/features/auth';
 import { useOnboardingSteps } from '../hooks/useOnboardingSteps';
@@ -18,13 +18,13 @@ export function UnifiedOnboardingRouter() {
   const { session, isLoading: isAuthLoading } = useAuth();
   const { goToNextStep, goToPreviousStep } = useOnboardingSteps();
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     goToNextStep();
-  };
+  }, [goToNextStep]);
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     goToPreviousStep();
-  };
+  }, [goToPreviousStep]);
 
   const handleComplete = () => {
     // Set flag to trigger celebration on games page

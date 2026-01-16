@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Shield, Check, Loader2, Lock, Fingerprint } from 'lucide-react';
@@ -33,16 +33,37 @@ export function PinSetupStep({ onNext, onBack }: OnboardingStepProps) {
   const [confirmPin, setConfirmPin] = useState('');
   const [step, setStep] = useState<'create' | 'confirm' | 'success'>('create');
   const [isLoading, setIsLoading] = useState(false);
+  const hasSkipped = useRef(false);
   
   const { pinStatus, isLoading: isPinStatusLoading, createPin } = usePinManagement();
   const { setOnboardingProgress } = useOnboarding();
 
+  // Debug logging
   useEffect(() => {
+    logger.debug('[PinSetupStep] Status check:', {
+      isPinStatusLoading,
+      hasPin: pinStatus?.hasPin,
+      hasSkipped: hasSkipped.current
+    });
+  }, [isPinStatusLoading, pinStatus]);
+
+  // Skip PIN step if already configured
+  useEffect(() => {
+    if (hasSkipped.current) return;
+    
     if (!isPinStatusLoading && pinStatus?.hasPin) {
-      logger.info('PIN already exists, skipping PIN setup step');
+      hasSkipped.current = true;
+      logger.info('[PinSetupStep] PIN already exists, skipping to next step');
       onNext?.();
     }
   }, [pinStatus?.hasPin, isPinStatusLoading, onNext]);
+
+  // Reset skip flag on unmount
+  useEffect(() => {
+    return () => {
+      hasSkipped.current = false;
+    };
+  }, []);
 
   const handleBack = () => {
     if (step === 'confirm') {
