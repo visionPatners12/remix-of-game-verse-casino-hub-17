@@ -1,5 +1,63 @@
 /* Animations CSS natives optimisées pour la performance */
 
+/* === BRANDED LOADER ANIMATIONS === */
+@keyframes spin-orbital {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spin-orbital-reverse {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.85;
+    transform: scale(0.98);
+  }
+}
+
+.animate-spin-orbital {
+  animation: spin-orbital 1.5s linear infinite;
+}
+
+.animate-spin-orbital-reverse {
+  animation: spin-orbital-reverse 2.5s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+/* Animation delay utilities */
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
 /* === GPU OPTIMIZATION === */
 /* Active animations get GPU acceleration */
 .gpu-accelerated,
