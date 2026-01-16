@@ -12,6 +12,13 @@ import { cn } from '@/lib/utils';
 import { useWalletDeepLink } from '@/hooks/useWalletDeepLink';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
 
 // USDC on Base (6 decimals)
 const USDC_CONTRACT = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' as const;
@@ -70,6 +77,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
   });
   
   const [showRetry, setShowRetry] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const { toast } = useToast();
   const { wallets } = useWallets();
@@ -417,7 +425,13 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
         transition={{ duration: 0.4 }}
       >
         <Button
-          onClick={handleDeposit}
+          onClick={() => {
+            if (hasWalletConnected && isSmartWalletReady && transactionState === 'idle') {
+              setShowConfirmModal(true);
+            } else {
+              handleDeposit();
+            }
+          }}
           disabled={isLoading || (hasWalletConnected && !isSmartWalletReady)}
           size="lg"
           className={cn(
@@ -472,6 +486,77 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
             )}
           </span>
         </Button>
+
+        {/* Confirmation Modal */}
+        <Dialog open={showConfirmModal} onOpenChange={setShowConfirmModal}>
+          <DialogContent className="max-w-sm">
+            <DialogHeader>
+              <DialogTitle className="text-center">Confirmer le dépôt</DialogTitle>
+            </DialogHeader>
+            
+            <div className="space-y-3 py-4">
+              {/* Amount - Prominent display */}
+              <div className="flex flex-col items-center gap-2 p-5 bg-muted/50 rounded-xl">
+                <span className="text-sm text-muted-foreground">Montant</span>
+                <div className="flex items-center gap-3">
+                  <TokenUSDC variant="branded" size={32} />
+                  <span className="text-3xl font-bold">{betAmount} USDC</span>
+                </div>
+              </div>
+              
+              {/* Token */}
+              <div className="flex items-center justify-between p-3 border rounded-lg">
+                <span className="text-sm text-muted-foreground">Token</span>
+                <div className="flex items-center gap-2">
+                  <TokenUSDC variant="branded" size={20} />
+                  <span className="font-medium">USDC</span>
+                </div>
+              </div>
+              
+              {/* Network */}
+              <div className="flex items-center justify-between p-3 border rounded-lg">
+                <span className="text-sm text-muted-foreground">Réseau</span>
+                <div className="flex items-center gap-2">
+                  <NetworkBase size={20} />
+                  <span className="font-medium">Base</span>
+                </div>
+              </div>
+              
+              {/* Destination Address */}
+              <div className="flex items-center justify-between p-3 border rounded-lg">
+                <span className="text-sm text-muted-foreground">Destination</span>
+                <a 
+                  href={`https://basescan.org/address/${DEPOSIT_ADDRESS}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-sm text-primary hover:underline"
+                >
+                  {DEPOSIT_ADDRESS.slice(0, 6)}...{DEPOSIT_ADDRESS.slice(-4)}
+                </a>
+              </div>
+            </div>
+            
+            <DialogFooter className="flex gap-2 sm:gap-2">
+              <Button 
+                variant="outline" 
+                onClick={() => setShowConfirmModal(false)}
+                className="flex-1"
+              >
+                Annuler
+              </Button>
+              <Button 
+                onClick={() => {
+                  setShowConfirmModal(false);
+                  handleDeposit();
+                }}
+                className="flex-1 bg-success hover:bg-success/90 text-success-foreground"
+              >
+                <CheckCircle className="w-4 h-4 mr-2" />
+                Confirmer
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </motion.div>
     </div>
   );
