@@ -18,18 +18,32 @@ interface UseCdpJwtResult {
 
 export const useCdpJwt = (): UseCdpJwtResult => {
   const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expiresAt, setExpiresAt] = useState<number | null>(null);
+  
+  // Refs to avoid dependency loops
   const refreshingRef = useRef(false);
+  const hasGeneratedRef = useRef(false);
+  const tokenRef = useRef<string | null>(null);
+  const expiresAtRef = useRef<number | null>(null);
 
-  const isExpired = expiresAt ? Date.now() > expiresAt : false;
+  const isExpired = expiresAt ? Date.now() >= expiresAt : true;
+
+  // Sync refs with state
+  useEffect(() => {
+    tokenRef.current = token;
+  }, [token]);
+
+  useEffect(() => {
+    expiresAtRef.current = expiresAt;
+  }, [expiresAt]);
 
   const generateToken = useCallback(async (): Promise<string | null> => {
     // Prevent concurrent refreshes
     if (refreshingRef.current) {
       console.log('[useCdpJwt] Already refreshing, skipping...');
-      return token;
+      return tokenRef.current;
     }
 
     refreshingRef.current = true;
@@ -101,22 +115,27 @@ export const useCdpJwt = (): UseCdpJwtResult => {
       setIsLoading(false);
       refreshingRef.current = false;
     }
-  }, [token]);
+  }, []); // No dependencies - stable function reference
 
-  // Auto-refresh when expired
   const refresh = useCallback(async (): Promise<string | null> => {
+    const currentToken = tokenRef.current;
+    const currentExpiresAt = expiresAtRef.current;
+    
     // If token exists and not expired, return it
-    if (token && expiresAt && Date.now() < expiresAt) {
+    if (currentToken && currentExpiresAt && Date.now() < currentExpiresAt) {
       console.log('[useCdpJwt] Token still valid, using cached token');
-      return token;
+      return currentToken;
     }
     
     // Otherwise generate new token
     return generateToken();
-  }, [token, expiresAt, generateToken]);
+  }, [generateToken]);
 
-  // Generate token on mount
+  // Generate token on mount - ONCE ONLY
   useEffect(() => {
+    if (hasGeneratedRef.current) return;
+    hasGeneratedRef.current = true;
+    
     generateToken();
   }, [generateToken]);
 
