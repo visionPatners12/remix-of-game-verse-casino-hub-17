@@ -169,13 +169,16 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       throw new Error("No wallet available");
     }
 
-    // Switch to Base mainnet
+    // Verify we're on Base (should be default now)
     try {
-      await wallet.switchChain(base.id);
+      const currentChainId = wallet.chainId;
+      if (currentChainId !== `eip155:${base.id}`) {
+        await wallet.switchChain(base.id);
+      }
     } catch (e) {
       toast({
-        title: "Changement de réseau requis",
-        description: "Veuillez passer sur Base et réessayer.",
+        title: "Réseau Base requis",
+        description: "Impossible de basculer sur Base. Veuillez réessayer.",
         variant: "destructive",
       });
       throw e;
