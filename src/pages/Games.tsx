@@ -9,7 +9,7 @@ import { CategoriesTabs } from '@/components/games/CategoriesTabs';
 import { PopularGamesRow } from '@/components/games/PopularGamesRow';
 import { CompactGameCard } from '@/components/games/CompactGameCard';
 import { CompactUpcomingCard } from '@/components/games/CompactUpcomingCard';
-import { Trophy, Swords, Calendar, DollarSign, Globe, Zap, Users, Target, Gamepad2 as GamepadIcon } from 'lucide-react';
+import { Trophy, Calendar, DollarSign, Globe, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 // Types
@@ -87,13 +87,6 @@ export default function Games() {
     { icon: Zap },
   ];
 
-  const playOnlineChips = [
-    { icon: Target },
-    { icon: Users },
-    { icon: GamepadIcon },
-    { icon: Zap },
-  ];
-
   return (
     <Layout>
       <div className="container mx-auto px-3 py-4 max-w-6xl space-y-4">
@@ -106,8 +99,8 @@ export default function Games() {
         {/* 2. Hero Featured Game - Compact horizontal */}
         <HeroFeaturedGame />
 
-        {/* 3. Coming Soon - Compact horizontal cards */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {/* 3. Coming Soon - Tournaments only */}
+        <section>
           <CompactUpcomingCard
             icon={Trophy}
             title={t('upcoming.tournaments.title', 'Tournaments')}
@@ -115,14 +108,6 @@ export default function Games() {
             chips={tournamentsChips}
             accentColor="amber"
             index={0}
-          />
-          <CompactUpcomingCard
-            icon={Swords}
-            title={t('upcoming.playOnline.title', 'Play Online')}
-            description={t('upcoming.playOnline.description', 'Instant matchmaking')}
-            chips={playOnlineChips}
-            accentColor="violet"
-            index={1}
           />
         </section>
 
