@@ -15,12 +15,12 @@ interface BalanceCardProps {
 
 const getChainIcon = (chainId: number) => {
   switch (chainId) {
-    case 137: return <NetworkPolygon variant="branded" size={16} />;
-    case 1: return <NetworkEthereum variant="branded" size={16} />;
-    case 8453: return <NetworkBase variant="branded" size={16} />;
-    case 42161: return <NetworkArbitrumOne variant="branded" size={16} />;
-    case 10: return <NetworkOptimism variant="branded" size={16} />;
-    default: return <NetworkBase variant="branded" size={16} />;
+    case 137: return <NetworkPolygon variant="branded" size={12} />;
+    case 1: return <NetworkEthereum variant="branded" size={12} />;
+    case 8453: return <NetworkBase variant="branded" size={12} />;
+    case 42161: return <NetworkArbitrumOne variant="branded" size={12} />;
+    case 10: return <NetworkOptimism variant="branded" size={12} />;
+    default: return <NetworkBase variant="branded" size={12} />;
   }
 };
 
@@ -59,14 +59,14 @@ export const BalanceCard = ({
           <div className="flex items-center justify-between bg-muted/30 rounded-lg px-3 py-2">
             <div className="flex items-center gap-2">
               <div className="relative">
-                <TokenUSDC variant="branded" size={20} />
+                <TokenUSDC variant="branded" size={28} />
                 {usdcChainId && (
-                  <div className="absolute -bottom-1 -right-1 bg-background rounded-full p-0.5">
+                  <div className="absolute -bottom-1 -right-1 bg-background rounded-full p-0.5 border border-border">
                     {getChainIcon(usdcChainId)}
                   </div>
                 )}
               </div>
-              <span className="text-sm font-medium">{usdcBalance} USDC</span>
+              <span className="text-sm font-medium">{usdcBalance}</span>
             </div>
           </div>
         )}
