@@ -235,8 +235,11 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
 
       // Send USDC transfer via Smart Wallet (sponsored gas)
       // Type cast needed for Privy smart wallet client compatibility
+      // IMPORTANT: Explicitly specify chain: base to ensure transaction goes to Base network
+      console.log('[DepositButton] Sending transaction on Base (chainId:', base.id, ')');
       const hash = await (smartWalletClient as any).sendTransaction({
         account: smartWalletClient.account,
+        chain: base,
         calls: [{
           to: USDC_CONTRACT,
           data,
