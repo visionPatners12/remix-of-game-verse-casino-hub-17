@@ -129,6 +129,7 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
         .update({
           tx_hash: txHash,
           deposit_status: 'pending',
+          is_ready: true,
         } as any)
         .eq('game_id', gameId)
         .eq('user_id', user.id);
