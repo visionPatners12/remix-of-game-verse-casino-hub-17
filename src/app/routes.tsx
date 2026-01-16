@@ -10,12 +10,10 @@ import Auth from '@/pages/Auth';
 import Auth2 from '@/pages/Auth2';
 import NotFound from '@/pages/NotFound';
 
-// Loading fallback
-const PageLoader = () => (
-  <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center">
-    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-  </div>
-);
+// Loading fallback with branded loader
+import { FullPageLoader } from '@/components/ui/full-page-loader';
+
+const PageLoader = () => <FullPageLoader text="Chargement..." />;
 
 // Lazy loaded pages with retry
 const Games = lazyWithRetry(() => import('@/pages/Games'));

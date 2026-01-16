@@ -1,18 +1,66 @@
 import { QueryClient } from '@tanstack/react-query';
 
-// Configuration optimisée du QueryClient pour réduire les requêtes API
+/**
+ * Check if an error is network-related and should be retried
+ */
+function isNetworkError(error: unknown): boolean {
+  if (error instanceof TypeError && error.message.includes('fetch')) {
+    return true;
+  }
+  
+  if (error instanceof Error) {
+    const message = error.message.toLowerCase();
+    
+    // Server errors
+    if (message.includes('500') || message.includes('502') || 
+        message.includes('503') || message.includes('504')) {
+      return true;
+    }
+    
+    // Rate limiting
+    if (message.includes('429') || message.includes('rate limit')) {
+      return true;
+    }
+    
+    // Network issues
+    if (message.includes('network') || message.includes('timeout') || 
+        message.includes('aborted') || message.includes('connection') ||
+        message.includes('failed to fetch')) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+// Configuration optimisée du QueryClient avec retry intelligent
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 1,
-      staleTime: 1000 * 60 * 10, // 10 minutes par défaut (était 5)
+      // Retry intelligent: 3x pour erreurs réseau, 1x pour autres
+      retry: (failureCount, error) => {
+        if (isNetworkError(error)) {
+          return failureCount < 3;
+        }
+        return failureCount < 1;
+      },
+      // Exponential backoff pour les retries
+      retryDelay: (attemptIndex) => Math.min(1000 * Math.pow(2, attemptIndex), 30000),
+      staleTime: 1000 * 60 * 10, // 10 minutes par défaut
       gcTime: 1000 * 60 * 60 * 24, // 24 heures - important pour la persistance
       refetchOnWindowFocus: false, // Désactivé par défaut pour économiser data
-      refetchOnReconnect: false, // Désactivé - on garde le cache
+      refetchOnReconnect: true, // Activé - refetch quand le réseau revient
       refetchOnMount: false, // Désactivé - utiliser le cache existant
     },
     mutations: {
-      retry: 1,
+      // Retry pour mutations réseau
+      retry: (failureCount, error) => {
+        if (isNetworkError(error)) {
+          return failureCount < 2;
+        }
+        return false;
+      },
+      retryDelay: (attemptIndex) => Math.min(1000 * Math.pow(2, attemptIndex), 10000),
     },
   },
 });

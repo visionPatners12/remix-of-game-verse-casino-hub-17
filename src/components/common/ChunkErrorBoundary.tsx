@@ -1,7 +1,6 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { WifiOff, RefreshCw } from 'lucide-react';
-import { Button } from '@/ui';
 import { logger } from '@/utils/logger';
+import { NetworkErrorPage } from './NetworkErrorPage';
 
 interface ChunkErrorBoundaryProps {
   children: ReactNode;
@@ -57,27 +56,11 @@ export class ChunkErrorBoundary extends Component<ChunkErrorBoundaryProps, Chunk
       }
 
       return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center bg-background">
-          <WifiOff className="h-16 w-16 text-muted-foreground mb-6" />
-          
-          <h3 className="text-xl font-semibold mb-3">
-            {this.state.isChunkError ? 'Loading error' : 'Network error'}
-          </h3>
-          
-          <p className="text-muted-foreground mb-8 max-w-md">
-            Please check your connection and try again.
-          </p>
-          
-          <Button
-            onClick={this.handleReload}
-            variant="default"
-            size="lg"
-            className="gap-2"
-          >
-            <RefreshCw className="h-5 w-5" />
-            Refresh
-          </Button>
-        </div>
+        <NetworkErrorPage
+          onRetry={this.handleReload}
+          title={this.state.isChunkError ? "Erreur de chargement" : "Erreur réseau"}
+          message="Une erreur est survenue lors du chargement. Vérifiez votre connexion et réessayez."
+        />
       );
     }
 
