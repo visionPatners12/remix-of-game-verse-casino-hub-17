@@ -4,8 +4,8 @@ import { WALLETCONNECT_PROJECT_ID } from './constants';
 
 export const privyConfig: PrivyConfig = {
   walletConnectCloudProjectId: WALLETCONNECT_PROJECT_ID,
-  supportedChains: [polygon, base],
-  defaultChain: polygon,
+  supportedChains: [base, polygon],
+  defaultChain: base,
   loginMethods: ['sms', 'email', 'wallet'],
   appearance: {
     theme: 'dark',

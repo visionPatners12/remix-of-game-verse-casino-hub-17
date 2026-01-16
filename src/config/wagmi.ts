@@ -9,7 +9,7 @@ import { PRYZEN_APP, getOrigin } from './constants';
 // - Uniquement injected() pour MetaMask browser extension
 // - localStorage pour persistance fiable sur iOS PWA
 export const wagmiConfig = createConfig({
-  chains: [polygon, base],
+  chains: [base, polygon],
   connectors: [
     injected({
       shimDisconnect: true,
