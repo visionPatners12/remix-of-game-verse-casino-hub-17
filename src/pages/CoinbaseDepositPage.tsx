@@ -2,19 +2,16 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TokenUSDC, NetworkBase } from '@web3icons/react';
-import { Shield, Loader2, AlertCircle, RefreshCw, ArrowLeft, Info } from 'lucide-react';
+import { Shield, ArrowLeft, Info } from 'lucide-react';
 import { toast } from 'sonner';
 import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
-import { useCdpSessionToken } from '@/features/deposit/hooks/useCdpSessionToken';
 import { CoinbaseFundCard } from '@/features/deposit/components/CoinbaseFundCard';
-import { Button } from '@/components/ui/button';
 import { getCoinbaseDepositPending, clearCoinbaseDepositPending } from '@/utils/coinbasePwa';
 
 const CoinbaseDepositPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('deposit');
-  const { address, isConnected } = useUnifiedWallet();
-  const { sessionToken, isLoading, error, regenerate } = useCdpSessionToken(address);
+  const { isConnected } = useUnifiedWallet();
 
   // PWA Return Detection - Listen for when user comes back from Coinbase Pay
   useEffect(() => {
@@ -61,7 +58,7 @@ const CoinbaseDepositPage = () => {
     };
   }, [t]);
 
-  // Header consistant avec DepositFlow
+  // Header
   const renderHeader = () => (
     <div 
       className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50"
@@ -80,66 +77,6 @@ const CoinbaseDepositPage = () => {
       </div>
     </div>
   );
-
-  // Loading state premium
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background flex flex-col">
-        {renderHeader()}
-        <div className="flex-1 flex flex-col items-center justify-center px-4">
-          <div className="relative">
-            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-              <Loader2 className="h-8 w-8 text-primary animate-spin" />
-            </div>
-            <div className="absolute -bottom-1 -right-1">
-              <div className="w-6 h-6 rounded-full bg-background flex items-center justify-center">
-                <TokenUSDC variant="branded" size={20} />
-              </div>
-            </div>
-          </div>
-          <p className="mt-6 text-muted-foreground text-center">
-            {t('coinbase.generatingSession', 'Preparing your session...')}
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // Error state
-  if (error || !isConnected || !sessionToken) {
-    return (
-      <div className="min-h-screen bg-background flex flex-col">
-        {renderHeader()}
-        <div className="flex-1 flex flex-col items-center justify-center px-4">
-          <div className="w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center mb-4">
-            <AlertCircle className="h-8 w-8 text-destructive" />
-          </div>
-          <h3 className="text-lg font-semibold text-foreground mb-2">
-            {!isConnected 
-              ? t('coinbase.walletRequired', 'Wallet Connection Required')
-              : t('coinbase.sessionError', 'Session Error')
-            }
-          </h3>
-          <p className="text-muted-foreground text-center text-sm mb-6 max-w-xs">
-            {!isConnected 
-              ? t('coinbase.connectWalletMessage', 'Please connect your wallet to continue.')
-              : error || t('coinbase.tryAgain', 'Something went wrong. Please try again.')
-            }
-          </p>
-          {isConnected && (
-            <Button 
-              onClick={regenerate}
-              variant="outline"
-              className="gap-2"
-            >
-              <RefreshCw className="h-4 w-4" />
-              {t('coinbase.retry', 'Try Again')}
-            </Button>
-          )}
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -164,9 +101,8 @@ const CoinbaseDepositPage = () => {
             </div>
           </div>
 
-          {/* Fund Card - Now without OnchainKit wrapper */}
+          {/* Fund Card - JWT generation handled internally */}
           <CoinbaseFundCard
-            sessionToken={sessionToken}
             presetAmounts={['25', '50', '100']}
             onSuccess={() => {
               console.log('[CoinbaseDeposit] Success - Coinbase Pay opened');

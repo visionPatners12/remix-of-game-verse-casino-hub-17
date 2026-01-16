@@ -5,7 +5,9 @@ import { TokenUSDC } from '@web3icons/react';
 import { ArrowUpDown, CreditCard, Loader2, Building2, Check, Wallet, Banknote, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCdpPaymentMethods } from '@/features/deposit/hooks/useCdpPaymentMethods';
-import { useApplePayOrder } from '@/features/deposit/hooks/useApplePayOrder';
+import { useCdpJwt } from '@/features/deposit/hooks/useCdpJwt';
+import { useCdpOnrampSession } from '@/features/deposit/hooks/useCdpOnrampSession';
+import { QuoteBreakdown } from '@/features/deposit/components/QuoteBreakdown';
 import { markCoinbaseDepositPending } from '@/utils/coinbasePwa';
 import { useAuth } from '@/features/auth';
 import { useUserProfile } from '@/features/profile/hooks/useUserProfile';
@@ -30,14 +32,12 @@ const PAYMENT_METHOD_ICONS: Record<string, React.ComponentType<{ className?: str
 };
 
 interface CoinbaseFundCardProps {
-  sessionToken: string;
   presetAmounts?: string[];
   onSuccess?: () => void;
   onError?: (error: string) => void;
 }
 
 export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
-  sessionToken,
   presetAmounts = ['25', '50', '100'],
   onSuccess,
   onError,
@@ -48,13 +48,28 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   const { walletAddress } = useUnifiedWallet();
   const { profile, isLoading: isLoadingProfile } = useUserProfile();
   const { data: paymentData, isLoading: isLoadingMethods } = useCdpPaymentMethods();
-  const { createOrder: createApplePayOrder, isLoading: isApplePayLoading } = useApplePayOrder();
+  
+  // CDP JWT and Session hooks
+  const { token: jwtToken, isLoading: isLoadingJwt, error: jwtError, refresh: refreshJwt, isExpired } = useCdpJwt();
+  const { quote, isLoading: isCreatingSession, error: sessionError, createSession, reset: resetSession } = useCdpOnrampSession();
   
   const [amount, setAmount] = useState('');
   const [inputType, setInputType] = useState<'fiat' | 'crypto'>('fiat');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('CARD');
+
+  // Detect user country from profile or navigator
+  const getUserCountry = useCallback(() => {
+    // Try profile country first
+    if (profile?.country) {
+      return profile.country;
+    }
+    // Fallback to navigator language
+    const locale = navigator.language || 'en-US';
+    const parts = locale.split('-');
+    return parts.length > 1 ? parts[1] : 'US';
+  }, [profile?.country]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9.]/g, '');
@@ -63,39 +78,26 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     const sanitized = parts.length > 2 ? parts[0] + '.' + parts.slice(1).join('') : value;
     setAmount(sanitized);
     setSelectedPreset(null);
+    // Reset session when amount changes
+    resetSession();
   };
 
   const handlePresetClick = (preset: string) => {
     setAmount(preset);
     setSelectedPreset(preset);
+    // Reset session when amount changes
+    resetSession();
   };
 
   const toggleInputType = () => {
     setInputType(prev => prev === 'fiat' ? 'crypto' : 'fiat');
+    resetSession();
   };
 
-  // Handle Apple Pay native flow
-  const handleApplePaySubmit = useCallback(async () => {
+  // Handle standard Coinbase Pay flow using v2 sessions API
+  const handleSubmit = useCallback(async () => {
     if (!amount || parseFloat(amount) <= 0) {
       onError?.('Please enter a valid amount');
-      return;
-    }
-
-    // Check if phone number exists
-    const phoneNumber = profile?.phone || profile?.phone_number;
-    if (!phoneNumber) {
-      toast.error(t('applePay.phoneRequired'), {
-        description: t('applePay.phoneRequiredMessage'),
-        action: {
-          label: t('applePay.goToSettings'),
-          onClick: () => navigate('/settings', { 
-            state: { 
-              returnTo: '/deposit/coinbase',
-              requiredField: 'phone' 
-            }
-          }),
-        },
-      });
       return;
     }
 
@@ -107,112 +109,75 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     setIsSubmitting(true);
 
     try {
-      const email = user?.email || profile?.email || '';
-      const userId = user?.id || '';
+      // Refresh JWT if expired
+      let token = jwtToken;
+      if (!token || isExpired) {
+        console.log('[CoinbaseFundCard] JWT expired or missing, refreshing...');
+        token = await refreshJwt();
+        if (!token) {
+          throw new Error('Failed to generate authentication token');
+        }
+      }
 
-      const orderResponse = await createApplePayOrder({
-        destinationAddress: walletAddress,
-        email,
-        phoneNumber,
+      const userId = user?.id || '';
+      const country = getUserCountry();
+
+      console.log('[CoinbaseFundCard] Creating onramp session...');
+
+      const response = await createSession({
+        jwtToken: token,
+        walletAddress,
         paymentAmount: amount,
+        paymentMethod: selectedPaymentMethod,
+        country,
         partnerUserRef: userId.substring(0, 50),
       });
 
-      if (!orderResponse || !orderResponse.paymentLink?.url) {
-        throw new Error('Failed to create Apple Pay order');
+      if (!response) {
+        throw new Error(sessionError || 'Failed to create session');
       }
 
-      console.log('[CoinbaseFundCard] Apple Pay order created:', orderResponse);
+      console.log('[CoinbaseFundCard] Session created, opening:', response.session.onrampUrl);
 
       // Mark deposit as pending for PWA return detection
       markCoinbaseDepositPending({
         amount,
-        sessionToken,
+        sessionToken: token,
         partnerUserRef: userId,
       });
 
-      // Open Apple Pay payment link
-      window.open(orderResponse.paymentLink.url, '_blank', 'noopener,noreferrer');
-      
-      onSuccess?.();
-    } catch (err) {
-      console.error('[CoinbaseFundCard] Apple Pay error:', err);
-      onError?.(err instanceof Error ? err.message : 'Failed to process Apple Pay');
-    } finally {
-      setIsSubmitting(false);
-    }
-  }, [amount, profile, walletAddress, user, sessionToken, createApplePayOrder, navigate, t, onSuccess, onError]);
+      // Open Coinbase Pay URL
+      window.open(response.session.onrampUrl, '_blank', 'noopener,noreferrer');
 
-  // Handle standard Coinbase Pay flow
-  const handleSubmit = useCallback(async () => {
-    // If Apple Pay native is selected, use the special flow
-    if (selectedPaymentMethod === 'APPLE_PAY_NATIVE') {
-      return handleApplePaySubmit();
-    }
-
-    if (!amount || parseFloat(amount) <= 0) {
-      onError?.('Please enter a valid amount');
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      // Get user ID for tracking (partnerUserRef)
-      const userId = user?.id || '';
-      const fiatCurrency = paymentData?.currencies?.[0] || 'USD';
-
-      // Construct Coinbase Pay URL with all parameters
-      const baseUrl = 'https://pay.coinbase.com/buy/select-asset';
-      const params = new URLSearchParams({
-        sessionToken,
-        defaultAsset: 'USDC',
-        defaultNetwork: 'base',
-        defaultPaymentMethod: selectedPaymentMethod,
-        fiatCurrency,
-        defaultExperience: 'buy',
-      });
-
-      // Add amount based on input type
-      if (inputType === 'fiat') {
-        params.set('presetFiatAmount', amount);
-      } else {
-        params.set('presetCryptoAmount', amount);
-      }
-
-      // Add partner user ref for Transaction Status API tracking
-      if (userId) {
-        params.set('partnerUserRef', userId.substring(0, 50)); // Max 50 chars
-      }
-
-      const coinbasePayUrl = `${baseUrl}?${params.toString()}`;
-      
-      console.log('[CoinbaseFundCard] Opening Coinbase Pay:', coinbasePayUrl);
-      
-      // Mark deposit as pending for PWA return detection
-      markCoinbaseDepositPending({
-        amount,
-        sessionToken,
-        partnerUserRef: userId,
-      });
-      
-      // Open in new window/tab
-      window.open(coinbasePayUrl, '_blank', 'noopener,noreferrer');
-      
       onSuccess?.();
     } catch (err) {
       console.error('[CoinbaseFundCard] Error:', err);
-      onError?.(err instanceof Error ? err.message : 'Failed to open Coinbase Pay');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to open Coinbase Pay';
+      onError?.(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
-  }, [amount, inputType, sessionToken, selectedPaymentMethod, paymentData, user, handleApplePaySubmit, onSuccess, onError]);
+  }, [amount, walletAddress, jwtToken, isExpired, refreshJwt, user, getUserCountry, selectedPaymentMethod, createSession, sessionError, onSuccess, onError]);
 
   const numericAmount = parseFloat(amount) || 0;
   const methods = paymentData?.methods || [];
+  const isLoading = isLoadingJwt || isLoadingMethods;
+  const hasError = jwtError || sessionError;
 
   return (
     <div className="space-y-4">
+      {/* JWT Error */}
+      {jwtError && (
+        <div className="p-3 rounded-xl bg-destructive/10 border border-destructive/20 flex items-start gap-2">
+          <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-medium text-destructive">Authentication Error</p>
+            <p className="text-xs text-destructive/80">{jwtError}</p>
+          </div>
+        </div>
+      )}
+
       {/* Amount Input Card */}
       <div className="bg-card rounded-2xl p-5 border border-border/50">
         <label className="text-sm font-medium text-muted-foreground mb-3 block">
@@ -305,39 +270,15 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
           </p>
         ) : (
           <div className="space-y-2">
-            {/* Apple Pay Native Option - First */}
-            <button
-              onClick={() => setSelectedPaymentMethod('APPLE_PAY_NATIVE')}
-              className={`
-                w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                ${selectedPaymentMethod === 'APPLE_PAY_NATIVE'
-                  ? 'bg-primary/10 border border-primary/50'
-                  : 'bg-muted/50 border border-transparent hover:bg-muted'}
-              `}
-            >
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                selectedPaymentMethod === 'APPLE_PAY_NATIVE' ? 'bg-primary/20 text-primary' : 'bg-background text-muted-foreground'
-              }`}>
-                <ApplePayIcon />
-              </div>
-              <div className="flex-1 text-left">
-                <p className={`font-medium text-sm ${
-                  selectedPaymentMethod === 'APPLE_PAY_NATIVE' ? 'text-primary' : 'text-foreground'
-                }`}>{t('applePay.native', 'Apple Pay Direct')}</p>
-                <p className="text-xs text-muted-foreground">{t('applePay.description', 'Fast & secure checkout')}</p>
-              </div>
-              {selectedPaymentMethod === 'APPLE_PAY_NATIVE' && (
-                <Check className="h-5 w-5 text-primary" />
-              )}
-            </button>
-
-            {/* Other payment methods */}
             {methods.map((method) => {
               const IconComponent = PAYMENT_METHOD_ICONS[method.id] || CreditCard;
               return (
                 <button
                   key={method.id}
-                  onClick={() => setSelectedPaymentMethod(method.id)}
+                  onClick={() => {
+                    setSelectedPaymentMethod(method.id);
+                    resetSession();
+                  }}
                   className={`
                     w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     ${selectedPaymentMethod === method.id
@@ -366,16 +307,23 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
         )}
       </div>
 
+      {/* Quote Breakdown (shown after session creation) */}
+      {quote && <QuoteBreakdown quote={quote} />}
+      {isCreatingSession && <QuoteBreakdown quote={null} isLoading />}
+
       {/* Submit Button */}
       <Button
         onClick={handleSubmit}
-        disabled={isSubmitting || !amount || parseFloat(amount) <= 0 || isLoadingMethods}
+        disabled={isSubmitting || isCreatingSession || !amount || parseFloat(amount) <= 0 || isLoading || !!jwtError}
         className="w-full h-14 rounded-2xl text-base font-semibold bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isSubmitting ? (
+        {isSubmitting || isCreatingSession ? (
           <>
             <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-            {t('coinbase.opening', 'Opening Coinbase...')}
+            {isCreatingSession 
+              ? t('coinbase.creatingSession', 'Creating session...')
+              : t('coinbase.opening', 'Opening Coinbase...')
+            }
           </>
         ) : (
           <>
