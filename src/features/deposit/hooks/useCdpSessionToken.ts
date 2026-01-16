@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getChainSlug, DEFAULT_CHAIN_ID } from '@/config/chains';
 
 interface UseCdpSessionTokenResult {
   sessionToken: string | null;
@@ -27,7 +28,7 @@ export const useCdpSessionToken = (walletAddress: string | undefined): UseCdpSes
       
       const { data, error: fnError } = await supabase.functions.invoke('cdp-onramp?endpoint=token', {
         body: {
-          addresses: [{ address: walletAddress, blockchains: ['base'] }],
+          addresses: [{ address: walletAddress, blockchains: [getChainSlug(DEFAULT_CHAIN_ID)] }],
           assets: ['USDC'],
         },
       });
