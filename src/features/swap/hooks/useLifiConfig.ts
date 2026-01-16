@@ -1,25 +1,15 @@
 // LI.FI SDK Configuration Hook - Configures SDK with wallet provider
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { createConfig, EVM, type SDKProvider } from '@lifi/sdk';
-import { createWalletClient, custom, type Chain } from 'viem';
-import { polygon, mainnet, arbitrum, optimism, base, bsc } from 'viem/chains';
+import { createWalletClient, custom } from 'viem';
 import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
-
-// Chain ID to viem chain mapping
-const CHAIN_MAP: Record<number, Chain> = {
-  1: mainnet,
-  137: polygon,
-  42161: arbitrum,
-  10: optimism,
-  8453: base,
-  56: bsc,
-};
+import { CHAIN_MAP, DEFAULT_CHAIN, DEFAULT_CHAIN_ID } from '@/config/chains';
 
 // Initialize LI.FI SDK with EVM provider using the active Privy wallet
 export function useLifiConfig() {
   const { address, signerAddress, activePrivyWallet, isConnected, isAAWallet } = useUnifiedWallet();
   const configuredAddressRef = useRef<string | null>(null);
-  const currentChainIdRef = useRef<number>(137); // Default to Polygon
+  const currentChainIdRef = useRef<number>(DEFAULT_CHAIN_ID); // Default to Base
   const [isReady, setIsReady] = useState(false);
 
   // Debug: Log wallet configuration
@@ -40,7 +30,7 @@ export function useLifiConfig() {
     }
 
     const targetChainId = chainId || currentChainIdRef.current;
-    const chain = CHAIN_MAP[targetChainId] || polygon;
+    const chain = CHAIN_MAP[targetChainId] || DEFAULT_CHAIN;
     
     const provider = await activePrivyWallet.getEthereumProvider();
     

@@ -1,6 +1,8 @@
 import { type ThirdWebNFTsResponse } from '../types';
+import { DEFAULT_CHAIN_ID } from '@/config/chains';
 
-const CHAIN_ID = 137; // Polygon mainnet
+// Note: NFT collection is still on Polygon for now
+const CHAIN_ID = 137; // Polygon mainnet - NFT collection specific
 const COLLECTION_ADDRESS = "0x402b898335B918d38AdF5A31654C2E59279AD0b2";
 const CLIENT_ID = "7664bfb40927b7688babc12152f89138";
 
