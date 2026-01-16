@@ -6,7 +6,6 @@ import { useToast } from '@/hooks/use-toast';
 import { useWallets } from '@privy-io/react-auth';
 import { useSmartWallets } from '@privy-io/react-auth/smart-wallets';
 import { encodeFunctionData, parseUnits, erc20Abi } from 'viem';
-import { base } from 'viem/chains';
 import { useWaitForTransactionReceipt } from 'wagmi';
 import { cn } from '@/lib/utils';
 import { useWalletDeepLink } from '@/hooks/useWalletDeepLink';
@@ -19,9 +18,10 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog';
+import { DEFAULT_CHAIN, USDC_ADDRESSES } from '@/config/chains';
 
-// USDC on Base (6 decimals)
-const USDC_CONTRACT = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' as const;
+// Use centralized chain config
+const USDC_CONTRACT = USDC_ADDRESSES[DEFAULT_CHAIN.id] as `0x${string}`;
 const DEPOSIT_ADDRESS = '0xaB8B5F94e2C72af5F60Bd2b2D3e9c669Fec19460' as const;
 
 type TransactionState = 'idle' | 'wallet-pending' | 'tx-pending' | 'confirming' | 'confirmed' | 'cancelled' | 'error';
@@ -115,7 +115,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
   } = useWaitForTransactionReceipt({
     hash: txHash,
     confirmations: 2,
-    chainId: base.id,
+    chainId: DEFAULT_CHAIN.id,
   });
 
   // Update state when confirming
@@ -172,8 +172,8 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
     // Verify we're on Base (should be default now)
     try {
       const currentChainId = wallet.chainId;
-      if (currentChainId !== `eip155:${base.id}`) {
-        await wallet.switchChain(base.id);
+      if (currentChainId !== `eip155:${DEFAULT_CHAIN.id}`) {
+        await wallet.switchChain(DEFAULT_CHAIN.id);
       }
     } catch (e) {
       toast({
@@ -235,11 +235,11 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
 
       // Send USDC transfer via Smart Wallet (sponsored gas)
       // Type cast needed for Privy smart wallet client compatibility
-      // IMPORTANT: Explicitly specify chain: base to ensure transaction goes to Base network
-      console.log('[DepositButton] Sending transaction on Base (chainId:', base.id, ')');
+      // IMPORTANT: Explicitly specify chain to ensure transaction goes to correct network
+      console.log('[DepositButton] Sending transaction on', DEFAULT_CHAIN.name, '(chainId:', DEFAULT_CHAIN.id, ')');
       const hash = await (smartWalletClient as any).sendTransaction({
         account: smartWalletClient.account,
-        chain: base,
+        chain: DEFAULT_CHAIN,
         calls: [{
           to: USDC_CONTRACT,
           data,

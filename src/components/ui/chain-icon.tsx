@@ -1,4 +1,5 @@
 import React from 'react';
+import { DEFAULT_CHAIN_ID } from '@/config/chains';
 
 export interface ChainConfig {
   id: number;
@@ -9,13 +10,14 @@ export interface ChainConfig {
   symbol: string;
 }
 
+// Base first as default chain
 export const SUPPORTED_CHAINS: ChainConfig[] = [
-  { id: 137, name: 'Polygon', shortName: 'POL', color: '#8247E5', bgColor: 'bg-purple-500/20', symbol: 'MATIC' },
+  { id: 8453, name: 'Base', shortName: 'BASE', color: '#0052FF', bgColor: 'bg-blue-600/20', symbol: 'ETH' },
+  { id: 137, name: 'Polygon', shortName: 'POL', color: '#8247E5', bgColor: 'bg-purple-500/20', symbol: 'POL' },
   { id: 1, name: 'Ethereum', shortName: 'ETH', color: '#627EEA', bgColor: 'bg-blue-500/20', symbol: 'ETH' },
+  { id: 42161, name: 'Arbitrum', shortName: 'ARB', color: '#2D374B', bgColor: 'bg-slate-500/20', symbol: 'ETH' },
+  { id: 10, name: 'Optimism', shortName: 'OP', color: '#FF0420', bgColor: 'bg-red-500/20', symbol: 'ETH' },
   { id: 56, name: 'BNB Chain', shortName: 'BNB', color: '#F0B90B', bgColor: 'bg-yellow-500/20', symbol: 'BNB' },
-  { id: 42161, name: 'Arbitrum', shortName: 'ARB', color: '#2D374B', bgColor: 'bg-slate-500/20', symbol: 'ARB' },
-  { id: 10, name: 'Optimism', shortName: 'OP', color: '#FF0420', bgColor: 'bg-red-500/20', symbol: 'OP' },
-  { id: 8453, name: 'Base', shortName: 'BASE', color: '#0052FF', bgColor: 'bg-blue-600/20', symbol: 'BASE' },
 ];
 
 export const getChainConfig = (chainId: number): ChainConfig | undefined => {
