@@ -10,14 +10,17 @@ import { cn } from '@/lib/utils';
 
 interface PotWidgetProps {
   amount: number;
+  betAmount?: number;
   className?: string;
 }
 
 export const PotWidget: React.FC<PotWidgetProps> = ({
   amount,
+  betAmount,
   className,
 }) => {
-  const isFreeGame = amount === 0;
+  // Use betAmount to determine if it's a free game (bet_amount = 0 means free)
+  const isFreeGame = betAmount !== undefined ? betAmount <= 0 : amount === 0;
 
   if (isFreeGame) {
     return (
