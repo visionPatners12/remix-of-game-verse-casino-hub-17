@@ -110,11 +110,20 @@ const LudoGamesPage: React.FC = () => {
             max_players: g.max_players || 4,
             bet_amount: (g as any).bet_amount ?? null,
             pot: (g as any).pot ?? null,
-            players: g.players.map(p => ({
-              id: p.id,
-              color: p.color as 'red' | 'green' | 'yellow' | 'blue',
-              user: p.users
-            }))
+            players: g.players.map(p => {
+              // Map DB color enum (R, G, Y, B) to display color (red, green, yellow, blue)
+              const colorMap: Record<string, 'red' | 'green' | 'yellow' | 'blue'> = {
+                'R': 'red',
+                'G': 'green', 
+                'Y': 'yellow',
+                'B': 'blue'
+              };
+              return {
+                id: p.id,
+                color: colorMap[p.color] || 'red',
+                user: p.users
+              };
+            })
           }))}
           loading={loading} 
         />
