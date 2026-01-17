@@ -27,6 +27,7 @@ interface FloatingGameControlsProps {
   
   // Pot props
   potAmount: number;
+  betAmount?: number;
 }
 
 export const FloatingGameControls: React.FC<FloatingGameControlsProps> = ({
@@ -43,6 +44,7 @@ export const FloatingGameControls: React.FC<FloatingGameControlsProps> = ({
   triggerRoll,
   isSpectator,
   potAmount,
+  betAmount,
 }) => {
   return (
     <motion.div 
@@ -81,7 +83,7 @@ export const FloatingGameControls: React.FC<FloatingGameControlsProps> = ({
         </div>
 
         {/* Pot - right */}
-        <PotWidget amount={potAmount} />
+        <PotWidget amount={potAmount} betAmount={betAmount} />
       </div>
     </motion.div>
   );

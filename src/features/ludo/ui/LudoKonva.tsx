@@ -618,6 +618,7 @@ export const LudoKonva: React.FC = () => {
               triggerRoll={skipRollTrigger}
               isSpectator={isSpectator}
               potAmount={gameData?.pot ?? (gameData?.bet_amount || 0) * players.length}
+              betAmount={gameData?.bet_amount || 0}
             />
           </LudoGameHUD>
 
