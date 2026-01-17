@@ -27,16 +27,16 @@ export const LudoActionCards: React.FC = () => {
 
   return (
     <div className="space-y-3">
-      {/* Row 1: Create + Join (50/50) */}
-      <div className="grid grid-cols-2 gap-3">
-        {/* Create Game - Left */}
+      {/* Row 1: Create + Join (1/3 - 2/3) */}
+      <div className="grid grid-cols-3 gap-3">
+        {/* Create Game - Left (1/3) */}
         <motion.button
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           whileTap={{ scale: 0.98 }}
           transition={{ delay: 0.1 }}
           onClick={() => navigate('/games/ludo/create')}
-          className="relative h-32 rounded-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/70 shadow-lg shadow-primary/20 overflow-hidden group"
+          className="col-span-1 relative h-32 rounded-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/70 shadow-lg shadow-primary/20 overflow-hidden group"
         >
           {/* Animated glow */}
           <div className="absolute inset-0 bg-gradient-to-t from-white/0 via-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -48,25 +48,25 @@ export const LudoActionCards: React.FC = () => {
           }} />
 
           {/* Content */}
-          <div className="relative h-full flex flex-col items-center justify-center gap-2">
-            <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
-              <Plus className="w-6 h-6 text-primary-foreground" strokeWidth={2.5} />
+          <div className="relative h-full flex flex-col items-center justify-center gap-1.5">
+            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
+              <Plus className="w-5 h-5 text-primary-foreground" strokeWidth={2.5} />
             </div>
-            <span className="text-lg font-bold text-primary-foreground tracking-wide">
-              CREATE GAME
+            <span className="text-sm font-bold text-primary-foreground tracking-wide">
+              CREATE
             </span>
           </div>
 
           {/* Corner accent */}
-          <div className="absolute top-0 right-0 w-16 h-16 bg-white/10 rounded-bl-[40px]" />
+          <div className="absolute top-0 right-0 w-12 h-12 bg-white/10 rounded-bl-[32px]" />
         </motion.button>
 
-        {/* Join by Code - Right (50%) */}
+        {/* Join by Code - Right (2/3) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="h-32 rounded-2xl bg-card border border-border hover:border-primary/30 transition-colors p-4 flex flex-col"
+          className="col-span-2 h-32 rounded-2xl bg-card border border-border hover:border-primary/30 transition-colors p-4 flex flex-col"
         >
           <span className="text-sm font-semibold text-foreground mb-2">
             Join Room
