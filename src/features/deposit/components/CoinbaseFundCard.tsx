@@ -5,7 +5,6 @@ import { TokenUSDC } from '@web3icons/react';
 import { ArrowUpDown, CreditCard, Loader2, Building2, Check, Wallet, Banknote, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCdpPaymentMethods } from '@/features/deposit/hooks/useCdpPaymentMethods';
-import { useCdpJwt } from '@/features/deposit/hooks/useCdpJwt';
 import { useCdpOnrampSession } from '@/features/deposit/hooks/useCdpOnrampSession';
 import { QuoteBreakdown } from '@/features/deposit/components/QuoteBreakdown';
 import { markCoinbaseDepositPending } from '@/utils/coinbasePwa';
@@ -49,8 +48,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   const { profile, isLoading: isLoadingProfile } = useUserProfile();
   const { data: paymentData, isLoading: isLoadingMethods } = useCdpPaymentMethods();
   
-  // CDP JWT and Session hooks
-  const { token: jwtToken, isLoading: isLoadingJwt, error: jwtError, refresh: refreshJwt, isExpired } = useCdpJwt();
+  // CDP Session hook (JWT is now handled server-side)
   const { quote, isLoading: isCreatingSession, error: sessionError, createSession, reset: resetSession } = useCdpOnrampSession();
   
   const [amount, setAmount] = useState('');
@@ -94,7 +92,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     resetSession();
   };
 
-  // Handle standard Coinbase Pay flow using v2 sessions API
+  // Handle standard Coinbase Pay flow using backend edge function
   const handleSubmit = useCallback(async () => {
     if (!amount || parseFloat(amount) <= 0) {
       onError?.('Please enter a valid amount');
@@ -109,23 +107,12 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Refresh JWT if expired
-      let token = jwtToken;
-      if (!token || isExpired) {
-        console.log('[CoinbaseFundCard] JWT expired or missing, refreshing...');
-        token = await refreshJwt();
-        if (!token) {
-          throw new Error('Failed to generate authentication token');
-        }
-      }
-
       const userId = user?.id || '';
       const country = getUserCountry();
 
-      console.log('[CoinbaseFundCard] Creating onramp session...');
+      console.log('[CoinbaseFundCard] Creating onramp session via edge function...');
 
       const response = await createSession({
-        jwtToken: token,
         walletAddress,
         paymentAmount: amount,
         paymentMethod: selectedPaymentMethod,
@@ -142,7 +129,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
       // Mark deposit as pending for PWA return detection
       markCoinbaseDepositPending({
         amount,
-        sessionToken: token,
+        sessionToken: 'edge-function-session',
         partnerUserRef: userId,
       });
 
@@ -158,22 +145,22 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     } finally {
       setIsSubmitting(false);
     }
-  }, [amount, walletAddress, jwtToken, isExpired, refreshJwt, user, getUserCountry, selectedPaymentMethod, createSession, sessionError, onSuccess, onError]);
+  }, [amount, walletAddress, user, getUserCountry, selectedPaymentMethod, createSession, sessionError, onSuccess, onError]);
 
   const numericAmount = parseFloat(amount) || 0;
   const methods = paymentData?.methods || [];
-  const isLoading = isLoadingJwt || isLoadingMethods;
-  const hasError = jwtError || sessionError;
+  const isLoading = isLoadingMethods;
+  const hasError = sessionError;
 
   return (
     <div className="space-y-4">
-      {/* JWT Error */}
-      {jwtError && (
+      {/* Session Error */}
+      {sessionError && (
         <div className="p-3 rounded-xl bg-destructive/10 border border-destructive/20 flex items-start gap-2">
           <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-medium text-destructive">Authentication Error</p>
-            <p className="text-xs text-destructive/80">{jwtError}</p>
+            <p className="text-sm font-medium text-destructive">Session Error</p>
+            <p className="text-xs text-destructive/80">{sessionError}</p>
           </div>
         </div>
       )}
@@ -314,7 +301,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
       {/* Submit Button */}
       <Button
         onClick={handleSubmit}
-        disabled={isSubmitting || isCreatingSession || !amount || parseFloat(amount) <= 0 || isLoading || !!jwtError}
+        disabled={isSubmitting || isCreatingSession || !amount || parseFloat(amount) <= 0 || isLoading || !!sessionError}
         className="w-full h-14 rounded-2xl text-base font-semibold bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isSubmitting || isCreatingSession ? (

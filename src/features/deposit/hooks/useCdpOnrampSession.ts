@@ -1,9 +1,7 @@
 import { useState, useCallback } from 'react';
-
-const CDP_ONRAMP_URL = 'https://api.cdp.coinbase.com/platform/v2/onramp/sessions';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface OnrampSessionRequest {
-  jwtToken: string;
   walletAddress: string;
   paymentAmount: string;
   paymentCurrency?: string;
@@ -62,7 +60,7 @@ export const useCdpOnrampSession = (): UseCdpOnrampSessionResult => {
     setError(null);
 
     try {
-      console.log('[useCdpOnrampSession] Creating session with params:', {
+      console.log('[useCdpOnrampSession] Creating session via edge function with params:', {
         walletAddress: request.walletAddress,
         paymentAmount: request.paymentAmount,
         paymentMethod: request.paymentMethod,
@@ -91,26 +89,24 @@ export const useCdpOnrampSession = (): UseCdpOnrampSessionResult => {
 
       console.log('[useCdpOnrampSession] Request payload:', payload);
 
-      const response = await fetch(CDP_ONRAMP_URL, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${request.jwtToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
+      // Call the edge function instead of direct Coinbase API
+      const { data, error: fnError } = await supabase.functions.invoke('cdp-onramp-session', {
+        body: payload,
       });
 
-      const data = await response.json();
+      if (fnError) {
+        console.error('[useCdpOnrampSession] Edge function error:', fnError);
+        throw new Error(fnError.message || 'Edge function error');
+      }
 
-      if (!response.ok) {
-        console.error('[useCdpOnrampSession] API error:', response.status, data);
-        const errorMessage = data?.error?.message || data?.message || `API error: ${response.status}`;
-        throw new Error(errorMessage);
+      if (data?.error) {
+        console.error('[useCdpOnrampSession] API error:', data.error);
+        throw new Error(data.error);
       }
 
       console.log('[useCdpOnrampSession] Session created successfully:', data);
 
-      if (!data.session?.onrampUrl) {
+      if (!data?.session?.onrampUrl) {
         throw new Error('No onramp URL in response');
       }
 
