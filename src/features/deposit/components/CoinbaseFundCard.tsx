@@ -11,6 +11,7 @@ import { markCoinbaseDepositPending } from '@/utils/coinbasePwa';
 import { useAuth } from '@/features/auth';
 import { useUnifiedWallet } from '@/features/wallet/hooks/core/useUnifiedWallet';
 import { useUserCountry } from '@/hooks/useUserCountry';
+import { useEnsSubdomain } from '@/hooks/useEnsSubdomain';
 import { toast } from 'sonner';
 
 // Apple Pay icon component
@@ -47,8 +48,12 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   const navigate = useNavigate();
   const { user } = useAuth();
   const { walletAddress } = useUnifiedWallet();
+  const { ensSubdomain } = useEnsSubdomain();
   const { country } = useUserCountry();
   const { data: paymentData, isLoading: isLoadingMethods } = useCdpPaymentMethods();
+  
+  // Use ENS subdomain if available, fallback to wallet address
+  const destinationAddress = ensSubdomain || walletAddress;
   
   // CDP Session hook (JWT is now handled server-side)
   const { quote, isLoading: isCreatingSession, error: sessionError, createSession, reset: resetSession } = useCdpOnrampSession();
@@ -99,7 +104,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
       return;
     }
 
-    if (!walletAddress) {
+    if (!destinationAddress) {
       onError?.('Wallet not connected');
       return;
     }
@@ -107,10 +112,13 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     try {
       const userId = user?.id || '';
 
-      console.log('[CoinbaseFundCard] Creating onramp session via edge function...');
+      console.log('[CoinbaseFundCard] Creating onramp session via edge function...', {
+        destinationAddress,
+        usingEns: !!ensSubdomain
+      });
 
       const response = await createSession({
-        walletAddress,
+        walletAddress: destinationAddress,
         paymentAmount: amount,
         paymentMethod: selectedPaymentMethod,
         country,
