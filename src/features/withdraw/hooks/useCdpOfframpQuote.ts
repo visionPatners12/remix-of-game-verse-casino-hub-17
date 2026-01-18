@@ -1,9 +1,7 @@
 import { useState, useCallback } from 'react';
-
-const CDP_OFFRAMP_API_URL = 'https://api.developer.coinbase.com/onramp/v1/sell/quote';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface OfframpQuoteRequest {
-  jwtToken: string;
   sellCurrency: string;        // "USDC"
   sellNetwork: string;         // "base"
   sellAmount: string;          // "100.00"
@@ -48,42 +46,36 @@ export const useCdpOfframpQuote = (): UseCdpOfframpQuoteResult => {
     setError(null);
 
     try {
-      console.log('[useCdpOfframpQuote] Creating offramp quote...');
+      console.log('[useCdpOfframpQuote] Creating offramp quote via Edge Function...');
       
-      // Build request payload
-      const payload: Record<string, string> = {
-        sell_currency: request.sellCurrency,
-        sell_network: request.sellNetwork,
-        sell_amount: request.sellAmount,
-        cashout_currency: request.cashoutCurrency,
-        payment_method: request.paymentMethod,
+      // Build request payload for the Edge Function
+      const payload = {
+        sellCurrency: request.sellCurrency,
+        sellNetwork: request.sellNetwork,
+        sellAmount: request.sellAmount,
+        cashoutCurrency: request.cashoutCurrency,
+        paymentMethod: request.paymentMethod,
         country: request.country,
-        source_address: request.sourceAddress,
-        redirect_url: request.redirectUrl,
-        partner_user_ref: request.partnerUserRef,
+        subdivision: request.subdivision,
+        sourceAddress: request.sourceAddress,
+        redirectUrl: request.redirectUrl,
+        partnerUserRef: request.partnerUserRef,
       };
-
-      // Add subdivision if provided (required for US)
-      if (request.subdivision) {
-        payload.subdivision = request.subdivision;
-      }
 
       console.log('[useCdpOfframpQuote] Request payload:', payload);
 
-      const response = await fetch(CDP_OFFRAMP_API_URL, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${request.jwtToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
+      const { data, error: fnError } = await supabase.functions.invoke('cdp-offramp-quote', {
+        body: payload,
       });
 
-      const data = await response.json();
+      if (fnError) {
+        console.error('[useCdpOfframpQuote] Function error:', fnError);
+        throw new Error(fnError.message || 'Failed to invoke edge function');
+      }
 
-      if (!response.ok) {
-        console.error('[useCdpOfframpQuote] API error:', data);
-        throw new Error(data.message || data.error || `HTTP ${response.status}`);
+      if (data?.error) {
+        console.error('[useCdpOfframpQuote] Response error:', data.error);
+        throw new Error(data.error);
       }
 
       console.log('[useCdpOfframpQuote] Quote received:', data);
