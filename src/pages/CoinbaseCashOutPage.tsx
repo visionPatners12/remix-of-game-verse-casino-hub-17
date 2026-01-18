@@ -55,7 +55,7 @@ const CoinbaseCashOutPage: React.FC = () => {
       labelKey: 'cashout.methods.bankAccount',
       descKey: 'cashout.methods.bankAccountDesc',
       icon: Building2,
-      available: country === 'US',
+      available: true,
     },
     {
       id: 'CRYPTO_ACCOUNT',
