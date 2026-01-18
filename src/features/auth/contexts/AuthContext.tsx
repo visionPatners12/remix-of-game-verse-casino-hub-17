@@ -2,7 +2,6 @@ import React, { createContext, useContext } from 'react';
 import { AuthContextType } from '../types';
 import { useAuthSession } from '../hooks/useAuthSession';
 import { useAuthActions } from '../hooks/useAuthActions';
-import { useSyncSafeAddress } from '@/hooks/useSyncSafeAddress';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -12,9 +11,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const sessionState = useAuthSession();
   const actions = useAuthActions();
-  
-  // Sync Safe address to database when available
-  useSyncSafeAddress();
 
   // Direct context value without memoization for simplicity
   const value: AuthContextType = {
