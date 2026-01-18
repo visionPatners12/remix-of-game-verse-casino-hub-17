@@ -43,7 +43,7 @@ export const OfframpQuoteBreakdown: React.FC<OfframpQuoteBreakdownProps> = ({
           {t('cashout.youSell', 'You sell')}
         </span>
         <span className="font-medium">
-          {formatAmount(quote.sell_amount.amount, quote.sell_amount.currency)}
+          {formatAmount(quote.sell_amount.value, quote.sell_amount.currency)}
         </span>
       </div>
 
@@ -53,7 +53,7 @@ export const OfframpQuoteBreakdown: React.FC<OfframpQuoteBreakdownProps> = ({
           {t('cashout.subtotal', 'Subtotal')}
         </span>
         <span className="text-muted-foreground">
-          {formatAmount(quote.cashout_subtotal.amount, quote.cashout_subtotal.currency)}
+          {formatAmount(quote.cashout_subtotal.value, quote.cashout_subtotal.currency)}
         </span>
       </div>
 
@@ -63,7 +63,7 @@ export const OfframpQuoteBreakdown: React.FC<OfframpQuoteBreakdownProps> = ({
           {t('cashout.coinbaseFee', 'Coinbase fee')}
         </span>
         <span className="text-destructive">
-          -{formatAmount(quote.coinbase_fee.amount, quote.coinbase_fee.currency)}
+          -{formatAmount(quote.coinbase_fee.value, quote.coinbase_fee.currency)}
         </span>
       </div>
 
@@ -76,7 +76,7 @@ export const OfframpQuoteBreakdown: React.FC<OfframpQuoteBreakdownProps> = ({
           {t('cashout.youReceive', 'You receive')}
         </span>
         <span className="text-lg font-bold text-green-500">
-          {formatAmount(quote.cashout_total.amount, quote.cashout_total.currency)}
+          {formatAmount(quote.cashout_total.value, quote.cashout_total.currency)}
         </span>
       </div>
     </div>

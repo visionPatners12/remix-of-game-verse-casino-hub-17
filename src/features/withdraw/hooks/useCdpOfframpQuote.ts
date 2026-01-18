@@ -15,7 +15,7 @@ export interface OfframpQuoteRequest {
 }
 
 export interface OfframpQuoteAmount {
-  amount: string;
+  value: string;
   currency: string;
 }
 

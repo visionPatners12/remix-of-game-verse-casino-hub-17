@@ -296,7 +296,7 @@ const CoinbaseCashOutPage: React.FC = () => {
                   {t('cashout.youWillReceive', 'You will receive')}
                 </p>
                 <p className="text-4xl font-bold text-green-500">
-                  ${quote.cashout_total.amount}
+                  ${quote.cashout_total.value}
                 </p>
                 <p className="text-sm text-muted-foreground">
                   {getDestinationText()}
