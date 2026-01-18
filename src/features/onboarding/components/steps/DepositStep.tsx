@@ -8,6 +8,7 @@ import { OnboardingStepProps } from '../../types';
 import { useENSGeneration } from '../../hooks/useENSGeneration';
 import { useUserProfile } from '@/features/profile';
 import { useToast } from '@/hooks/use-toast';
+import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
 import { supabase } from '@/integrations/supabase/client';
 import { DepositQRCode } from '@/features/deposit/components/DepositQRCode';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -36,6 +37,7 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
   const { autoGenerateENSAndDeposit, isLoading, generatedENS, depositAddress, generationError, resetENS } = useENSGeneration();
   const { profile } = useUserProfile();
   const { toast } = useToast();
+  const { address: safeAddress, privyReady, privyAuthenticated } = useUnifiedWallet();
   const [existingENS, setExistingENS] = useState<string | null>(null);
   const [existingWallet, setExistingWallet] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
@@ -45,21 +47,23 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
       if (profile?.id) {
         const { data } = await supabase
           .from('users')
-          .select('ens_subdomain, wallet_address')
+          .select('ens_subdomain, safe_address, wallet_address')
           .eq('id', profile.id)
           .single();
         
         if (data?.ens_subdomain) {
           setExistingENS(data.ens_subdomain);
-          setExistingWallet(data.wallet_address);
-        } else if (profile?.username) {
-          autoGenerateENSAndDeposit(profile.username);
+          // Prefer safe_address, fallback to wallet_address
+          setExistingWallet(data.safe_address || data.wallet_address);
+        } else if (profile?.username && safeAddress && privyReady && privyAuthenticated) {
+          // Pass Safe address explicitly to ENS generation
+          autoGenerateENSAndDeposit(profile.username, safeAddress);
         }
       }
     };
     
     checkExistingENS();
-  }, [profile?.username, profile?.id]);
+  }, [profile?.username, profile?.id, safeAddress, privyReady, privyAuthenticated]);
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
@@ -124,7 +128,8 @@ export const DepositStep = ({ onNext, onBack }: OnboardingStepProps) => {
 
     if (existingENS || (generatedENS && depositAddress)) {
       const ensName = existingENS || generatedENS;
-      const address = existingWallet || depositAddress;
+      // Use Safe address from wallet hook, or fallback to existing/generated
+      const address = safeAddress || existingWallet || depositAddress;
       
       return (
         <motion.div 

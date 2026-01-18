@@ -1,68 +1,65 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/features/auth';
+import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
 import { CryptoOption } from '@/types/wallet';
 import { cryptoOptions } from '../config/crypto';
 import { logger } from '@/utils/logger';
 
 export const useDeposit = () => {
   const { user } = useAuth();
+  const { address: safeAddress, isConnected } = useUnifiedWallet();
   const [selectedCrypto, setSelectedCrypto] = useState<CryptoOption>(cryptoOptions[0]);
   const [isLoadingAddress, setIsLoadingAddress] = useState(true);
   const [ensSubdomain, setEnsSubdomain] = useState<string | null>(null);
 
-  // Check for existing address or generate new one when component mounts
+  // Use Safe address directly from useUnifiedWallet + load ENS from DB
   useEffect(() => {
-    loadOrGenerateAddress();
-  }, []);
+    const loadData = async () => {
+      setIsLoadingAddress(true);
+      try {
+        // Use Safe address directly from wallet hook
+        if (safeAddress) {
+          setSelectedCrypto(prev => ({
+            ...prev,
+            address: safeAddress
+          }));
+          logger.debug('[useDeposit] Using Safe address from wallet:', safeAddress);
+        }
 
-  const loadOrGenerateAddress = async () => {
-    setIsLoadingAddress(true);
-    try {
-      if (!user) return;
+        // Load ENS subdomain from database
+        if (user?.id) {
+          const { data, error } = await supabase
+            .from('users')
+            .select('ens_subdomain')
+            .eq('id', user.id)
+            .maybeSingle();
 
-      // Fetch wallet address and ENS subdomain in parallel
-      const [walletResult, userResult] = await Promise.all([
-        supabase
-          .from('user_wallet')
-          .select('wallet_address')
-          .eq('user_id', user.id)
-          .maybeSingle(),
-        supabase
-          .from('users')
-          .select('ens_subdomain')
-          .eq('id', user.id)
-          .maybeSingle()
-      ]);
+          if (error) {
+            logger.error('[useDeposit] Error fetching ENS:', error);
+          }
 
-      if (walletResult.error) {
-        logger.error('Error fetching user wallet:', walletResult.error);
+          if (data?.ens_subdomain) {
+            setEnsSubdomain(data.ens_subdomain);
+            logger.debug('[useDeposit] ENS subdomain loaded:', data.ens_subdomain);
+          }
+        }
+      } catch (error) {
+        logger.error('[useDeposit] Error loading data:', error);
+      } finally {
+        setIsLoadingAddress(false);
       }
+    };
 
-      if (userResult.error) {
-        logger.error('Error fetching user ENS:', userResult.error);
-      }
-
-      if (walletResult.data?.wallet_address) {
-        setSelectedCrypto(prev => ({
-          ...prev,
-          address: walletResult.data.wallet_address
-        }));
-      }
-
-      if (userResult.data?.ens_subdomain) {
-        setEnsSubdomain(userResult.data.ens_subdomain);
-      }
-    } catch (error) {
-      logger.error('Error loading address:', error);
-    } finally {
-      setIsLoadingAddress(false);
-    }
-  };
+    loadData();
+  }, [safeAddress, user?.id]);
 
   const handleCryptoChange = (crypto: CryptoOption) => {
-    setSelectedCrypto(crypto);
+    // Preserve the Safe address when changing crypto
+    setSelectedCrypto({
+      ...crypto,
+      address: safeAddress || crypto.address
+    });
   };
 
   return {
@@ -70,6 +67,8 @@ export const useDeposit = () => {
     cryptoOptions,
     handleCryptoChange,
     isLoadingAddress,
-    ensSubdomain
+    ensSubdomain,
+    // Expose Safe address for components that need it directly
+    safeAddress
   };
 };
