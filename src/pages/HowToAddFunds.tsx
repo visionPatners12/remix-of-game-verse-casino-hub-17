@@ -81,7 +81,7 @@ export default function HowToAddFunds() {
           <Button 
             variant="ghost" 
             size="sm" 
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/deposit', { replace: true })}
             className="p-2"
           >
             <ArrowLeft className="h-5 w-5" />

@@ -148,7 +148,7 @@ const CoinbaseCashOutPage: React.FC = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <MobilePageHeader 
         title={t('cashout.title', 'Cash Out to USD')} 
-        onBack={() => step === 'confirm' ? handleBack() : navigate('/withdrawal')}
+        onBack={() => step === 'confirm' ? handleBack() : navigate('/withdrawal', { replace: true })}
       />
 
       <div className="flex-1 px-4 py-6 space-y-5">

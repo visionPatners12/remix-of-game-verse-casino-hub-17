@@ -66,7 +66,7 @@ const CoinbaseDepositPage = () => {
     >
       <div className="flex items-center h-14 px-4">
         <button 
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/deposit', { replace: true })}
           className="w-10 h-10 -ml-2 flex items-center justify-center rounded-full active:bg-muted transition-colors"
         >
           <ArrowLeft className="h-5 w-5" />

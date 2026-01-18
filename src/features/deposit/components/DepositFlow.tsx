@@ -119,7 +119,7 @@ const DepositFlow = () => {
 
   const handleBack = () => {
     if (currentStep === 1) {
-      navigate(-1);
+      navigate('/wallet', { replace: true });
     } else {
       setCurrentStep(1);
       setSelectedMethod(null);

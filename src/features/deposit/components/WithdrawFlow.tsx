@@ -91,7 +91,7 @@ const WithdrawFlow = () => {
   const handleBack = () => {
     switch (currentStep) {
       case 'mode':
-        navigate(-1);
+        navigate('/wallet', { replace: true });
         break;
       case 'user-search':
         setCurrentStep('mode');

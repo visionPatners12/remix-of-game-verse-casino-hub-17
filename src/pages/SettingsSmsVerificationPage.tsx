@@ -42,7 +42,7 @@ export default function SettingsSmsVerificationPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate('/settings')}
+            onClick={() => navigate('/settings', { replace: true })}
             className="p-2"
           >
             <ArrowLeft className="h-5 w-5" />

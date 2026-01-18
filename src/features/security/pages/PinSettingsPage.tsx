@@ -272,7 +272,7 @@ export const PinSettingsPage: React.FC = () => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/settings', { replace: true })}
             className="shrink-0"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />

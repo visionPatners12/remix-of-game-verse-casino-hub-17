@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -6,6 +7,7 @@ import { NotificationsList } from '../components';
 import { useNotifications } from '../hooks';
 
 export function NotificationsPage() {
+  const navigate = useNavigate();
   const { notifications, isLoading, unreadCount, markAsRead, markAllAsRead } = useNotifications();
 
   if (isLoading) {
@@ -29,7 +31,7 @@ export function NotificationsPage() {
             <Button 
               variant="ghost" 
               size="sm"
-              onClick={() => window.history.back()}
+              onClick={() => navigate('/', { replace: true })}
               className="p-2"
             >
               <ArrowLeft className="h-5 w-5" />
