@@ -25,7 +25,19 @@
     "processing": "Preparando...",
     "comingSoon": "Próximamente",
     "note": "Serás redirigido a Coinbase para completar la transacción.",
-    "securityNote": "Tu transacción está protegida por la seguridad institucional de Coinbase."
+    "securityNote": "Tu transacción está protegida por la seguridad institucional de Coinbase.",
+    "paymentMethod": "Dónde recibir",
+    "toYourBank": "a tu cuenta bancaria",
+    "toCoinbaseBalance": "a tu saldo de Coinbase",
+    "toCoinbaseCrypto": "a tu cuenta crypto de Coinbase",
+    "methods": {
+      "fiatWallet": "Saldo Coinbase",
+      "fiatWalletDesc": "Recibe USD en tu cuenta Coinbase",
+      "bankAccount": "Cuenta bancaria",
+      "bankAccountDesc": "Transferencia directa a tu banco (solo EE.UU.)",
+      "cryptoAccount": "Cuenta Crypto",
+      "cryptoAccountDesc": "Mantener como crypto en Coinbase"
+    }
   },
   "userSearch": {
     "title": "Enviar a usuario",

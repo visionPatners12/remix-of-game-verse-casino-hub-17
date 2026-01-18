@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Shield, ExternalLink, Loader2, AlertCircle, ArrowLeft } from 'lucide-react';
+import { ArrowRight, Shield, ExternalLink, Loader2, AlertCircle, ArrowLeft, Check, Building2, Wallet, Bitcoin } from 'lucide-react';
 import { TokenUSDC } from '@web3icons/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -13,8 +13,17 @@ import { useCdpOfframpQuote } from '@/features/withdraw/hooks/useCdpOfframpQuote
 import { OfframpQuoteBreakdown } from '@/features/withdraw/components/OfframpQuoteBreakdown';
 import { useUserCountry } from '@/hooks/useUserCountry';
 import { DEFAULT_CHAIN_NAME } from '@/config/chains';
+import { cn } from '@/lib/utils';
 
 type FlowStep = 'input' | 'confirm';
+
+interface PaymentMethodOption {
+  id: string;
+  labelKey: string;
+  descKey: string;
+  icon: React.ElementType;
+  available: boolean;
+}
 
 const CoinbaseCashOutPage: React.FC = () => {
   const { t } = useTranslation('withdraw');
@@ -29,6 +38,52 @@ const CoinbaseCashOutPage: React.FC = () => {
   const [step, setStep] = useState<FlowStep>('input');
   const [offrampUrl, setOfframpUrl] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<string>('FIAT_WALLET');
+
+  // Payment methods with country-based availability
+  const paymentMethods: PaymentMethodOption[] = useMemo(() => [
+    {
+      id: 'FIAT_WALLET',
+      labelKey: 'cashout.methods.fiatWallet',
+      descKey: 'cashout.methods.fiatWalletDesc',
+      icon: Wallet,
+      available: true,
+    },
+    {
+      id: 'ACH_BANK_ACCOUNT',
+      labelKey: 'cashout.methods.bankAccount',
+      descKey: 'cashout.methods.bankAccountDesc',
+      icon: Building2,
+      available: country === 'US',
+    },
+    {
+      id: 'CRYPTO_ACCOUNT',
+      labelKey: 'cashout.methods.cryptoAccount',
+      descKey: 'cashout.methods.cryptoAccountDesc',
+      icon: Bitcoin,
+      available: true,
+    },
+  ], [country]);
+
+  // Get destination text based on payment method
+  const getDestinationText = () => {
+    switch (paymentMethod) {
+      case 'ACH_BANK_ACCOUNT':
+        return t('cashout.toYourBank', 'to your bank account');
+      case 'FIAT_WALLET':
+        return t('cashout.toCoinbaseBalance', 'to your Coinbase balance');
+      case 'CRYPTO_ACCOUNT':
+        return t('cashout.toCoinbaseCrypto', 'to your Coinbase crypto account');
+      default:
+        return '';
+    }
+  };
+
+  // Get subtitle for the visual flow
+  const getFlowSubtitle = () => {
+    const method = paymentMethods.find(m => m.id === paymentMethod);
+    return method ? t(method.labelKey, method.id) : '';
+  };
 
   // Preset amounts
   const presetAmounts = ['25', '50', '100', '250'];
@@ -47,7 +102,7 @@ const CoinbaseCashOutPage: React.FC = () => {
         sellNetwork: 'base',
         sellAmount: amount,
         cashoutCurrency: 'USD',
-        paymentMethod: 'ACH_BANK_ACCOUNT',
+        paymentMethod: paymentMethod,
         country: country,
         subdivision: country === 'US' ? 'CA' : undefined,
         sourceAddress: address,
@@ -107,13 +162,14 @@ const CoinbaseCashOutPage: React.FC = () => {
               <span className="text-xl font-bold text-green-500">$</span>
             </div>
             <span className="text-sm font-medium">USD</span>
-            <span className="text-xs text-muted-foreground">{t('cashout.bankAccount', 'Bank Account')}</span>
+            <span className="text-xs text-muted-foreground">{getFlowSubtitle()}</span>
           </div>
         </div>
 
         {/* STEP 1: Amount Input */}
         {step === 'input' && (
           <>
+            {/* Amount Input Card */}
             <Card className="border-border/50">
               <CardContent className="p-4 space-y-4">
                 <div className="space-y-2">
@@ -148,6 +204,49 @@ const CoinbaseCashOutPage: React.FC = () => {
                       ${preset}
                     </Button>
                   ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Payment Method Selector */}
+            <Card className="border-border/50">
+              <CardContent className="p-4 space-y-3">
+                <label className="text-sm font-medium">
+                  {t('cashout.paymentMethod', 'Where to receive')}
+                </label>
+                <div className="space-y-2">
+                  {paymentMethods.filter(m => m.available).map((method) => {
+                    const Icon = method.icon;
+                    return (
+                      <button
+                        key={method.id}
+                        onClick={() => setPaymentMethod(method.id)}
+                        className={cn(
+                          "w-full p-3 rounded-lg border text-left flex items-center gap-3 transition-colors",
+                          paymentMethod === method.id
+                            ? "border-primary bg-primary/5"
+                            : "border-border/50 hover:border-border"
+                        )}
+                      >
+                        <div className={cn(
+                          "w-10 h-10 rounded-full flex items-center justify-center",
+                          paymentMethod === method.id ? "bg-primary/10" : "bg-muted"
+                        )}>
+                          <Icon className={cn(
+                            "h-5 w-5",
+                            paymentMethod === method.id ? "text-primary" : "text-muted-foreground"
+                          )} />
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium text-sm">{t(method.labelKey, method.id)}</p>
+                          <p className="text-xs text-muted-foreground">{t(method.descKey, '')}</p>
+                        </div>
+                        {paymentMethod === method.id && (
+                          <Check className="h-4 w-4 text-primary" />
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>
@@ -200,7 +299,7 @@ const CoinbaseCashOutPage: React.FC = () => {
                   ${quote.cashout_total.amount}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  {t('cashout.toYourBank', 'to your bank account')}
+                  {getDestinationText()}
                 </p>
               </CardContent>
             </Card>
