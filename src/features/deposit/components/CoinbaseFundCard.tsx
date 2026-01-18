@@ -9,8 +9,8 @@ import { useCdpOnrampSession } from '@/features/deposit/hooks/useCdpOnrampSessio
 import { QuoteBreakdown } from '@/features/deposit/components/QuoteBreakdown';
 import { markCoinbaseDepositPending } from '@/utils/coinbasePwa';
 import { useAuth } from '@/features/auth';
-import { useUserProfile } from '@/features/profile/hooks/useUserProfile';
 import { useUnifiedWallet } from '@/features/wallet/hooks/core/useUnifiedWallet';
+import { useUserCountry } from '@/hooks/useUserCountry';
 import { toast } from 'sonner';
 
 // Apple Pay icon component
@@ -47,7 +47,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   const navigate = useNavigate();
   const { user } = useAuth();
   const { walletAddress } = useUnifiedWallet();
-  const { profile, isLoading: isLoadingProfile } = useUserProfile();
+  const { country } = useUserCountry();
   const { data: paymentData, isLoading: isLoadingMethods } = useCdpPaymentMethods();
   
   // CDP Session hook (JWT is now handled server-side)
@@ -62,18 +62,6 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   // 2-step flow state
   const [step, setStep] = useState<FlowStep>('input');
   const [onrampUrl, setOnrampUrl] = useState<string | null>(null);
-
-  // Detect user country from profile or navigator
-  const getUserCountry = useCallback(() => {
-    // Try profile country first
-    if (profile?.country) {
-      return profile.country;
-    }
-    // Fallback to navigator language
-    const locale = navigator.language || 'en-US';
-    const parts = locale.split('-');
-    return parts.length > 1 ? parts[1] : 'US';
-  }, [profile?.country]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9.]/g, '');
@@ -118,7 +106,6 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
 
     try {
       const userId = user?.id || '';
-      const country = getUserCountry();
 
       console.log('[CoinbaseFundCard] Creating onramp session via edge function...');
 
@@ -146,7 +133,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
       onError?.(errorMessage);
       toast.error(errorMessage);
     }
-  }, [amount, walletAddress, user, getUserCountry, selectedPaymentMethod, createSession, sessionError, onError]);
+  }, [amount, walletAddress, user, country, selectedPaymentMethod, createSession, sessionError, onError]);
 
   // Step 2: Confirm and open Coinbase Pay
   const handleConfirmPayment = useCallback(() => {
