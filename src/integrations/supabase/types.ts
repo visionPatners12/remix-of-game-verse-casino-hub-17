@@ -1231,6 +1231,7 @@ export type Database = {
           privy_user_id: string | null
           push_enabled: boolean | null
           referral_code: string | null
+          safe_address: string | null
           updated_at: string | null
           username: string | null
           view_count: number | null
@@ -1257,6 +1258,7 @@ export type Database = {
           privy_user_id?: string | null
           push_enabled?: boolean | null
           referral_code?: string | null
+          safe_address?: string | null
           updated_at?: string | null
           username?: string | null
           view_count?: number | null
@@ -1283,6 +1285,7 @@ export type Database = {
           privy_user_id?: string | null
           push_enabled?: boolean | null
           referral_code?: string | null
+          safe_address?: string | null
           updated_at?: string | null
           username?: string | null
           view_count?: number | null

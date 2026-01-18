@@ -4,6 +4,7 @@ import { useToast } from '@/hooks/use-toast';
 
 interface ENSGenerationRequest {
   label: string;
+  wallet_address?: string; // Optional: Pass Safe address explicitly
 }
 
 interface ENSGenerationResult {
@@ -21,7 +22,12 @@ export const useENSGeneration = () => {
   const [generationError, setGenerationError] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const autoGenerateENSAndDeposit = async (label: string): Promise<ENSGenerationResult> => {
+  /**
+   * Generate ENS subdomain for a user
+   * @param label - The ENS label (username)
+   * @param safeAddress - Optional Safe address to use (from useUnifiedWallet)
+   */
+  const autoGenerateENSAndDeposit = async (label: string, safeAddress?: string): Promise<ENSGenerationResult> => {
     setIsLoading(true);
     setGenerationError(null);
     
@@ -37,9 +43,15 @@ export const useENSGeneration = () => {
         throw new Error('Authentication required. Please log in.');
       }
 
+      // Build request body - include Safe address if provided
+      const requestBody: ENSGenerationRequest = { label };
+      if (safeAddress) {
+        requestBody.wallet_address = safeAddress;
+      }
+
       // Call the edge function with authentication
       const { data, error } = await supabase.functions.invoke('ens-subname', {
-        body: { label } as ENSGenerationRequest,
+        body: requestBody,
         headers: {
           Authorization: `Bearer ${session.access_token}`,
         },
