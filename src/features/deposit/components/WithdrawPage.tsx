@@ -175,7 +175,7 @@ const WithdrawPage = () => {
         </div>
       ) : (
         <>
-          <MobilePageHeader title="Withdraw Funds" />
+          <MobilePageHeader title="Withdraw Funds" onBack={() => navigate('/games')} />
 
           {/* Progress Indicator */}
           <StepProgressIndicator
