@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { TokenUSDC } from '@web3icons/react';
-import { ArrowUpDown, CreditCard, Loader2, Building2, Check, Wallet, Banknote, AlertCircle } from 'lucide-react';
+import { ArrowUpDown, CreditCard, Loader2, Building2, Check, Wallet, Banknote, AlertCircle, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCdpPaymentMethods } from '@/features/deposit/hooks/useCdpPaymentMethods';
 import { useCdpOnrampSession } from '@/features/deposit/hooks/useCdpOnrampSession';
@@ -36,6 +36,8 @@ interface CoinbaseFundCardProps {
   onError?: (error: string) => void;
 }
 
+type FlowStep = 'input' | 'confirm';
+
 export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   presetAmounts = ['25', '50', '100'],
   onSuccess,
@@ -56,6 +58,10 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('CARD');
+  
+  // 2-step flow state
+  const [step, setStep] = useState<FlowStep>('input');
+  const [onrampUrl, setOnrampUrl] = useState<string | null>(null);
 
   // Detect user country from profile or navigator
   const getUserCountry = useCallback(() => {
@@ -78,6 +84,8 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     setSelectedPreset(null);
     // Reset session when amount changes
     resetSession();
+    setStep('input');
+    setOnrampUrl(null);
   };
 
   const handlePresetClick = (preset: string) => {
@@ -85,15 +93,19 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
     setSelectedPreset(preset);
     // Reset session when amount changes
     resetSession();
+    setStep('input');
+    setOnrampUrl(null);
   };
 
   const toggleInputType = () => {
     setInputType(prev => prev === 'fiat' ? 'crypto' : 'fiat');
     resetSession();
+    setStep('input');
+    setOnrampUrl(null);
   };
 
-  // Handle standard Coinbase Pay flow using backend edge function
-  const handleSubmit = useCallback(async () => {
+  // Step 1: Get quote without redirecting
+  const handleGetQuote = useCallback(async () => {
     if (!amount || parseFloat(amount) <= 0) {
       onError?.('Please enter a valid amount');
       return;
@@ -103,8 +115,6 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
       onError?.('Wallet not connected');
       return;
     }
-
-    setIsSubmitting(true);
 
     try {
       const userId = user?.id || '';
@@ -124,8 +134,33 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
         throw new Error(sessionError || 'Failed to create session');
       }
 
-      console.log('[CoinbaseFundCard] Session created, opening:', response.session.onrampUrl);
+      console.log('[CoinbaseFundCard] Session created, storing URL for confirmation');
+      
+      // Store URL and move to confirmation step
+      setOnrampUrl(response.session.onrampUrl);
+      setStep('confirm');
 
+    } catch (err) {
+      console.error('[CoinbaseFundCard] Error:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Failed to get quote';
+      onError?.(errorMessage);
+      toast.error(errorMessage);
+    }
+  }, [amount, walletAddress, user, getUserCountry, selectedPaymentMethod, createSession, sessionError, onError]);
+
+  // Step 2: Confirm and open Coinbase Pay
+  const handleConfirmPayment = useCallback(() => {
+    if (!onrampUrl) {
+      toast.error('Session expired, please try again');
+      setStep('input');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const userId = user?.id || '';
+      
       // Mark deposit as pending for PWA return detection
       markCoinbaseDepositPending({
         amount,
@@ -134,24 +169,103 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
       });
 
       // Open Coinbase Pay URL
-      window.open(response.session.onrampUrl, '_blank', 'noopener,noreferrer');
+      window.open(onrampUrl, '_blank', 'noopener,noreferrer');
 
       onSuccess?.();
     } catch (err) {
-      console.error('[CoinbaseFundCard] Error:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Failed to open Coinbase Pay';
-      onError?.(errorMessage);
-      toast.error(errorMessage);
+      console.error('[CoinbaseFundCard] Error opening Coinbase:', err);
+      toast.error('Failed to open Coinbase Pay');
     } finally {
       setIsSubmitting(false);
     }
-  }, [amount, walletAddress, user, getUserCountry, selectedPaymentMethod, createSession, sessionError, onSuccess, onError]);
+  }, [onrampUrl, user, amount, onSuccess]);
+
+  // Go back to input step
+  const handleBack = useCallback(() => {
+    setStep('input');
+    setOnrampUrl(null);
+    resetSession();
+  }, [resetSession]);
 
   const numericAmount = parseFloat(amount) || 0;
   const methods = paymentData?.methods || [];
   const isLoading = isLoadingMethods;
-  const hasError = sessionError;
+  const selectedMethodName = methods.find(m => m.id === selectedPaymentMethod)?.name || selectedPaymentMethod;
 
+  // Confirmation step UI
+  if (step === 'confirm' && quote) {
+    return (
+      <div className="space-y-4">
+        {/* Header with back button */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleBack}
+            className="p-2 rounded-xl bg-muted hover:bg-muted/80 transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5 text-muted-foreground" />
+          </button>
+          <h3 className="text-lg font-semibold text-foreground">
+            {t('coinbase.confirmPurchase', 'Confirm Purchase')}
+          </h3>
+        </div>
+
+        {/* Transaction Summary */}
+        <div className="bg-card rounded-2xl p-5 border border-border/50 space-y-4">
+          <div className="flex items-center justify-between">
+            <span className="text-muted-foreground">{t('coinbase.amount', 'Amount')}</span>
+            <span className="text-xl font-bold text-foreground">${numericAmount.toFixed(2)}</span>
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <span className="text-muted-foreground">{t('coinbase.paymentMethod', 'Payment Method')}</span>
+            <span className="font-medium text-foreground">{selectedMethodName}</span>
+          </div>
+
+          <div className="border-t border-border/50 pt-4">
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground">{t('coinbase.youWillReceive', 'You will receive')}</span>
+              <div className="flex items-center gap-2">
+                <TokenUSDC variant="branded" size={24} />
+                <span className="text-xl font-bold text-primary">
+                  {parseFloat(quote.purchaseAmount).toFixed(2)} USDC
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Detailed Quote Breakdown */}
+        <QuoteBreakdown quote={quote} />
+
+        {/* Action Buttons */}
+        <div className="flex gap-3">
+          <Button
+            variant="outline"
+            onClick={handleBack}
+            className="flex-1 h-14 rounded-2xl text-base font-semibold"
+          >
+            {t('common:buttons.back', 'Back')}
+          </Button>
+          <Button
+            onClick={handleConfirmPayment}
+            disabled={isSubmitting}
+            className="flex-1 h-14 rounded-2xl text-base font-semibold bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg shadow-primary/30"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                {t('coinbase.opening', 'Opening Coinbase...')}
+              </>
+            ) : (
+              t('coinbase.confirmAndPay', 'Confirm & Pay')
+            )}
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Input step UI
   return (
     <div className="space-y-4">
       {/* Session Error */}
@@ -294,28 +408,24 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
         )}
       </div>
 
-      {/* Quote Breakdown (shown after session creation) */}
-      {quote && <QuoteBreakdown quote={quote} />}
+      {/* Loading state for quote */}
       {isCreatingSession && <QuoteBreakdown quote={null} isLoading />}
 
-      {/* Submit Button */}
+      {/* Get Quote Button */}
       <Button
-        onClick={handleSubmit}
-        disabled={isSubmitting || isCreatingSession || !amount || parseFloat(amount) <= 0 || isLoading || !!sessionError}
+        onClick={handleGetQuote}
+        disabled={isCreatingSession || !amount || parseFloat(amount) <= 0 || isLoading || !!sessionError}
         className="w-full h-14 rounded-2xl text-base font-semibold bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isSubmitting || isCreatingSession ? (
+        {isCreatingSession ? (
           <>
             <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-            {isCreatingSession 
-              ? t('coinbase.creatingSession', 'Creating session...')
-              : t('coinbase.opening', 'Opening Coinbase...')
-            }
+            {t('coinbase.gettingQuote', 'Getting quote...')}
           </>
         ) : (
           <>
             <TokenUSDC variant="branded" size={20} className="mr-2" />
-            {t('coinbase.buyUsdc', 'Buy USDC')}
+            {t('coinbase.getQuote', 'Get Quote')}
             {numericAmount > 0 && ` · $${numericAmount.toFixed(0)}`}
           </>
         )}
