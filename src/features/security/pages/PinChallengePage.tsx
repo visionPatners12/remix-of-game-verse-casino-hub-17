@@ -129,7 +129,7 @@ export const PinChallengePage: React.FC = () => {
   };
 
   const handleCancel = () => {
-    navigate(-1);
+    navigate('/', { replace: true });
   };
 
   const reasonLabel = REASON_LABELS[reason] || REASON_LABELS.default;

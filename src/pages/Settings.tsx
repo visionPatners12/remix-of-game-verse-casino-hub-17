@@ -57,7 +57,7 @@ export default function Settings() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/mobile-menu', { replace: true })}
           className="h-9 w-9 -ml-2"
         >
           <ArrowLeft className="h-5 w-5" />
@@ -143,7 +143,7 @@ export default function Settings() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate('/mobile-menu', { replace: true })}
               className="rounded-full hover:bg-primary/10 hover:text-primary transition-all duration-200 w-10 h-10 shadow-subtle"
             >
               <ArrowLeft className="w-5 h-5" />

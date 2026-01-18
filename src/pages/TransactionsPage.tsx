@@ -90,7 +90,7 @@ const TransactionsPage = () => {
       <main className="min-h-screen bg-background" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         <header className="sticky top-0 z-20 bg-gradient-to-r from-background via-background/98 to-background/95 backdrop-blur-md border-b border-border/50">
           <nav className="flex items-center justify-between px-6 py-4">
-            <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="hover:bg-primary/10 transition-colors">
+            <Button variant="ghost" size="sm" onClick={() => navigate('/wallet', { replace: true })} className="hover:bg-primary/10 transition-colors">
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <h1 className="text-lg font-semibold tracking-tight">Transactions</h1>
@@ -132,7 +132,7 @@ const TransactionsPage = () => {
           <Button 
             variant="ghost" 
             size="sm" 
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/wallet', { replace: true })}
             className="h-9 w-9 p-0 rounded-full hover:bg-accent/50 transition-all duration-150 active:scale-95"
           >
             <ArrowLeft className="h-5 w-5 text-foreground" />

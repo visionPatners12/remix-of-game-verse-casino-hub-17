@@ -28,7 +28,7 @@ export default function ProfileSettingsPage() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate('/settings', { replace: true })}
               className="rounded-full hover:bg-primary/10 hover:text-primary transition-all duration-200 w-10 h-10 shadow-subtle"
             >
               <ArrowLeft className="w-5 h-5" />
