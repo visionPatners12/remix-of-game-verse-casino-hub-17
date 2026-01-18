@@ -36,43 +36,43 @@ export const OfframpQuoteBreakdown: React.FC<OfframpQuoteBreakdownProps> = ({
   };
 
   return (
-    <div className="space-y-3 p-4 bg-muted/50 rounded-lg">
+    <div className="bg-muted/50 rounded-xl p-4 border border-border/30 space-y-3">
       {/* You sell */}
-      <div className="flex justify-between items-center text-sm">
-        <span className="text-muted-foreground">
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">
           {t('cashout.youSell', 'You sell')}
         </span>
-        <span className="font-medium">
+        <span className="text-sm font-medium">
           {formatAmount(quote.sell_amount.value, quote.sell_amount.currency)}
         </span>
       </div>
 
       {/* Subtotal (fiat equivalent) */}
-      <div className="flex justify-between items-center text-sm">
-        <span className="text-muted-foreground">
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">
           {t('cashout.subtotal', 'Subtotal')}
         </span>
-        <span className="text-muted-foreground">
+        <span className="text-sm text-muted-foreground">
           {formatAmount(quote.cashout_subtotal.value, quote.cashout_subtotal.currency)}
         </span>
       </div>
 
       {/* Coinbase fee */}
-      <div className="flex justify-between items-center text-sm">
-        <span className="text-muted-foreground">
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">
           {t('cashout.coinbaseFee', 'Coinbase fee')}
         </span>
-        <span className="text-destructive">
+        <span className="text-sm text-destructive font-medium">
           -{formatAmount(quote.coinbase_fee.value, quote.coinbase_fee.currency)}
         </span>
       </div>
 
       {/* Divider */}
-      <div className="border-t border-border my-2" />
+      <div className="border-t border-border/30" />
 
       {/* You receive */}
-      <div className="flex justify-between items-center">
-        <span className="font-medium">
+      <div className="flex justify-between items-center pt-1">
+        <span className="text-sm font-medium text-foreground">
           {t('cashout.youReceive', 'You receive')}
         </span>
         <span className="text-lg font-bold text-green-500">

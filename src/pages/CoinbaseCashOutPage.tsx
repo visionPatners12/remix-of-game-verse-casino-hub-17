@@ -1,10 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Shield, ExternalLink, Loader2, AlertCircle, ArrowLeft, Check, Building2, Wallet, Bitcoin } from 'lucide-react';
-import { TokenUSDC } from '@web3icons/react';
+import { Shield, ExternalLink, Loader2, AlertCircle, ArrowLeft, Check, Building2, Wallet, Bitcoin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { useTranslation } from 'react-i18next';
 import { MobilePageHeader } from '@/components/shared/MobilePageHeader';
 import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
@@ -12,7 +9,6 @@ import { usePrivy } from '@privy-io/react-auth';
 import { useCdpOfframpQuote } from '@/features/withdraw/hooks/useCdpOfframpQuote';
 import { OfframpQuoteBreakdown } from '@/features/withdraw/components/OfframpQuoteBreakdown';
 import { useUserCountry } from '@/hooks/useUserCountry';
-import { DEFAULT_CHAIN_NAME } from '@/config/chains';
 import { cn } from '@/lib/utils';
 
 type FlowStep = 'input' | 'confirm';
@@ -87,6 +83,8 @@ const CoinbaseCashOutPage: React.FC = () => {
 
   // Preset amounts
   const presetAmounts = ['25', '50', '100', '250'];
+  
+  const numericAmount = parseFloat(amount) || 0;
 
   const handleGetQuote = async () => {
     if (!amount || parseFloat(amount) <= 0 || !address) {
@@ -96,7 +94,6 @@ const CoinbaseCashOutPage: React.FC = () => {
     setIsProcessing(true);
 
     try {
-      
       const result = await createQuote({
         sellCurrency: 'USDC',
         sellNetwork: 'base',
@@ -144,191 +141,185 @@ const CoinbaseCashOutPage: React.FC = () => {
         onBack={() => step === 'confirm' ? handleBack() : navigate('/withdrawal')}
       />
 
-      <div className="flex-1 px-4 py-6 space-y-6">
-        {/* Visual Flow: USDC → USD */}
-        <div className="flex items-center justify-center gap-4 py-6">
-          <div className="flex flex-col items-center gap-2">
-            <div className="w-14 h-14 rounded-full bg-[#2775CA]/10 flex items-center justify-center">
-              <TokenUSDC variant="branded" className="w-9 h-9" />
-            </div>
-            <span className="text-sm font-medium">USDC</span>
-            <span className="text-xs text-muted-foreground">{DEFAULT_CHAIN_NAME}</span>
-          </div>
-          
-          <ArrowRight className="h-5 w-5 text-muted-foreground" />
-          
-          <div className="flex flex-col items-center gap-2">
-            <div className="w-14 h-14 rounded-full bg-green-500/10 flex items-center justify-center">
-              <span className="text-xl font-bold text-green-500">$</span>
-            </div>
-            <span className="text-sm font-medium">USD</span>
-            <span className="text-xs text-muted-foreground">{getFlowSubtitle()}</span>
-          </div>
-        </div>
-
+      <div className="flex-1 px-4 py-6 space-y-5">
         {/* STEP 1: Amount Input */}
         {step === 'input' && (
           <>
-            {/* Amount Input Card */}
-            <Card className="border-border/50">
-              <CardContent className="p-4 space-y-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">
-                    {t('cashout.amountLabel', 'Amount to sell')}
-                  </label>
-                  <div className="relative">
-                    <Input
-                      type="number"
-                      inputMode="decimal"
-                      placeholder="0.00"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      className="text-xl h-14 pr-16"
-                    />
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">
-                      USDC
-                    </span>
-                  </div>
-                </div>
+            {/* Amount Input Card - Modern Style */}
+            <div className="bg-card rounded-2xl p-5 border border-border/50">
+              <label className="text-sm font-medium text-muted-foreground mb-4 block">
+                {t('cashout.amountLabel', 'Amount to sell')}
+              </label>
+              
+              <div className="flex items-center justify-center gap-2 py-4">
+                <input
+                  type="text"
+                  inputMode="decimal"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value.replace(/[^0-9.]/g, ''))}
+                  placeholder="0"
+                  className="text-4xl font-bold text-foreground bg-transparent border-none outline-none text-right w-full max-w-[160px] placeholder:text-muted-foreground/50"
+                />
+                <span className="text-2xl font-semibold text-muted-foreground">USDC</span>
+              </div>
+              
+              <p className="text-center text-sm text-muted-foreground">
+                ≈ ${numericAmount.toFixed(2)} USD
+              </p>
+            </div>
 
-                {/* Preset Amounts */}
-                <div className="flex gap-2">
-                  {presetAmounts.map((preset) => (
-                    <Button
-                      key={preset}
-                      variant={amount === preset ? 'default' : 'outline'}
-                      size="sm"
-                      className="flex-1"
-                      onClick={() => setAmount(preset)}
+            {/* Preset Amounts - Grid */}
+            <div className="grid grid-cols-4 gap-2">
+              {presetAmounts.map((preset) => (
+                <button
+                  key={preset}
+                  onClick={() => setAmount(preset)}
+                  className={cn(
+                    "py-3 px-2 rounded-xl font-semibold text-sm transition-all duration-200",
+                    amount === preset
+                      ? "bg-primary/15 border-primary/50 text-primary border"
+                      : "bg-muted border border-border/50 text-foreground hover:bg-primary/10"
+                  )}
+                >
+                  ${preset}
+                </button>
+              ))}
+            </div>
+
+            {/* Payment Method Selector - Modern */}
+            <div className="bg-card rounded-2xl p-4 border border-border/50">
+              <label className="text-sm font-medium text-muted-foreground mb-3 block">
+                {t('cashout.paymentMethod', 'Where to receive')}
+              </label>
+              
+              <div className="space-y-2">
+                {paymentMethods.filter(m => m.available).map((method) => {
+                  const Icon = method.icon;
+                  const isSelected = paymentMethod === method.id;
+                  return (
+                    <button
+                      key={method.id}
+                      onClick={() => setPaymentMethod(method.id)}
+                      className={cn(
+                        "w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200",
+                        isSelected
+                          ? "bg-primary/10 border border-primary/50"
+                          : "bg-muted/50 border border-transparent hover:bg-muted"
+                      )}
                     >
-                      ${preset}
-                    </Button>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Payment Method Selector */}
-            <Card className="border-border/50">
-              <CardContent className="p-4 space-y-3">
-                <label className="text-sm font-medium">
-                  {t('cashout.paymentMethod', 'Where to receive')}
-                </label>
-                <div className="space-y-2">
-                  {paymentMethods.filter(m => m.available).map((method) => {
-                    const Icon = method.icon;
-                    return (
-                      <button
-                        key={method.id}
-                        onClick={() => setPaymentMethod(method.id)}
-                        className={cn(
-                          "w-full p-3 rounded-lg border text-left flex items-center gap-3 transition-colors",
-                          paymentMethod === method.id
-                            ? "border-primary bg-primary/5"
-                            : "border-border/50 hover:border-border"
-                        )}
-                      >
-                        <div className={cn(
-                          "w-10 h-10 rounded-full flex items-center justify-center",
-                          paymentMethod === method.id ? "bg-primary/10" : "bg-muted"
+                      <div className={cn(
+                        "w-10 h-10 rounded-lg flex items-center justify-center",
+                        isSelected ? "bg-primary/20 text-primary" : "bg-background text-muted-foreground"
+                      )}>
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div className="flex-1 text-left">
+                        <p className={cn(
+                          "font-medium text-sm",
+                          isSelected ? "text-primary" : "text-foreground"
                         )}>
-                          <Icon className={cn(
-                            "h-5 w-5",
-                            paymentMethod === method.id ? "text-primary" : "text-muted-foreground"
-                          )} />
-                        </div>
-                        <div className="flex-1">
-                          <p className="font-medium text-sm">{t(method.labelKey, method.id)}</p>
-                          <p className="text-xs text-muted-foreground">{t(method.descKey, '')}</p>
-                        </div>
-                        {paymentMethod === method.id && (
-                          <Check className="h-4 w-4 text-primary" />
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
+                          {t(method.labelKey, method.id)}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {t(method.descKey, '')}
+                        </p>
+                      </div>
+                      {isSelected && (
+                        <Check className="h-5 w-5 text-primary" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
             {/* Error Display */}
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm">
+              <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-xl text-destructive text-sm">
                 <AlertCircle className="h-4 w-4 flex-shrink-0" />
                 <span>{error}</span>
               </div>
             )}
 
-            {/* Powered by Coinbase */}
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-              <span>{t('cashout.poweredBy', 'Powered by Coinbase')}</span>
-              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 3.6c4.64 0 8.4 3.76 8.4 8.4s-3.76 8.4-8.4 8.4-8.4-3.76-8.4-8.4 3.76-8.4 8.4-8.4zm-2.4 4.8v7.2h4.8c1.988 0 3.6-1.612 3.6-3.6s-1.612-3.6-3.6-3.6H9.6z"/>
-              </svg>
-            </div>
-
-            {/* Get Quote Button */}
+            {/* Get Quote Button - Gradient */}
             <Button
               onClick={handleGetQuote}
               disabled={isDisabled}
-              className="w-full h-14 text-base font-semibold gap-2"
+              className="w-full h-14 rounded-2xl text-base font-semibold bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg shadow-primary/20 disabled:opacity-50 disabled:shadow-none"
               size="lg"
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
+                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                   {t('cashout.gettingQuote', 'Getting Quote...')}
                 </>
               ) : (
-                t('cashout.getQuote', 'Get Quote')
+                <>
+                  <span className="text-lg font-bold text-green-400 mr-1">$</span>
+                  {t('cashout.getQuote', 'Get Quote')}
+                  {numericAmount > 0 && (
+                    <span className="ml-1 opacity-80">· {numericAmount.toFixed(0)} USDC</span>
+                  )}
+                </>
               )}
             </Button>
+
+            {/* Powered by Coinbase */}
+            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground pt-2">
+              <span>{t('cashout.poweredBy', 'Powered by')}</span>
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 3.6c4.64 0 8.4 3.76 8.4 8.4s-3.76 8.4-8.4 8.4-8.4-3.76-8.4-8.4 3.76-8.4 8.4-8.4zm-2.4 4.8v7.2h4.8c1.988 0 3.6-1.612 3.6-3.6s-1.612-3.6-3.6-3.6H9.6z"/>
+              </svg>
+              <span className="font-medium">Coinbase</span>
+            </div>
           </>
         )}
 
         {/* STEP 2: Confirm Quote */}
         {step === 'confirm' && quote && (
           <>
-            {/* Summary Card - What you'll receive */}
-            <Card className="border-green-500/30 bg-green-500/5">
-              <CardContent className="p-6 text-center space-y-2">
-                <p className="text-sm text-muted-foreground">
-                  {t('cashout.youWillReceive', 'You will receive')}
-                </p>
-                <p className="text-4xl font-bold text-green-500">
-                  ${quote.cashout_total.value}
-                </p>
-                <p className="text-sm text-muted-foreground">
+            {/* Summary Card */}
+            <div className="bg-card rounded-2xl p-5 border border-border/50 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">{t('cashout.selling', 'Selling')}</span>
+                <span className="text-xl font-bold">{amount} USDC</span>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">{t('cashout.via', 'Via')}</span>
+                <span className="font-medium">{getFlowSubtitle()}</span>
+              </div>
+
+              <div className="border-t border-border/50 pt-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">{t('cashout.youWillReceive', 'You will receive')}</span>
+                  <span className="text-2xl font-bold text-green-500">
+                    ${quote.cashout_total.value}
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground text-right mt-1">
                   {getDestinationText()}
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* Quote Breakdown */}
             <OfframpQuoteBreakdown quote={quote} />
 
             {/* Error Display */}
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm">
+              <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-xl text-destructive text-sm">
                 <AlertCircle className="h-4 w-4 flex-shrink-0" />
                 <span>{error}</span>
               </div>
             )}
-
-            {/* Powered by Coinbase */}
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-              <span>{t('cashout.poweredBy', 'Powered by Coinbase')}</span>
-              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 3.6c4.64 0 8.4 3.76 8.4 8.4s-3.76 8.4-8.4 8.4-8.4-3.76-8.4-8.4 3.76-8.4 8.4-8.4zm-2.4 4.8v7.2h4.8c1.988 0 3.6-1.612 3.6-3.6s-1.612-3.6-3.6-3.6H9.6z"/>
-              </svg>
-            </div>
 
             {/* Action Buttons */}
             <div className="flex gap-3">
               <Button
                 variant="outline"
                 onClick={handleBack}
-                className="flex-1 h-14"
+                className="flex-1 h-14 rounded-2xl"
                 size="lg"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
@@ -337,11 +328,11 @@ const CoinbaseCashOutPage: React.FC = () => {
               <Button
                 onClick={handleConfirmCashOut}
                 disabled={!offrampUrl}
-                className="flex-1 h-14 text-base font-semibold gap-2"
+                className="flex-1 h-14 rounded-2xl text-base font-semibold bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg shadow-green-500/20"
                 size="lg"
               >
-                {t('cashout.confirmCashOut', 'Confirm & Cash Out')}
-                <ExternalLink className="h-4 w-4" />
+                {t('cashout.confirm', 'Confirm')}
+                <ExternalLink className="h-4 w-4 ml-2" />
               </Button>
             </div>
 
@@ -353,14 +344,12 @@ const CoinbaseCashOutPage: React.FC = () => {
         )}
 
         {/* Security Note - Always visible */}
-        <Card className="border-primary/20 bg-primary/5">
-          <CardContent className="p-4 flex items-start gap-3">
-            <Shield className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-            <p className="text-sm text-muted-foreground">
-              {t('cashout.securityNote', "Your transaction is secured by Coinbase's institutional-grade security.")}
-            </p>
-          </CardContent>
-        </Card>
+        <div className="bg-primary/5 rounded-2xl p-4 flex items-start gap-3 border border-primary/20">
+          <Shield className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-muted-foreground">
+            {t('cashout.securityNote', "Your transaction is secured by Coinbase's institutional-grade security.")}
+          </p>
+        </div>
       </div>
     </div>
   );
