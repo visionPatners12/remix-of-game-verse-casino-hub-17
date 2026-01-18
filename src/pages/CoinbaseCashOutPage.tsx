@@ -9,6 +9,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { useCdpOfframpQuote } from '@/features/withdraw/hooks/useCdpOfframpQuote';
 import { OfframpQuoteBreakdown } from '@/features/withdraw/components/OfframpQuoteBreakdown';
 import { useUserCountry } from '@/hooks/useUserCountry';
+import { useEnsSubdomain } from '@/hooks/useEnsSubdomain';
 import { cn } from '@/lib/utils';
 
 type FlowStep = 'input' | 'confirm';
@@ -25,8 +26,12 @@ const CoinbaseCashOutPage: React.FC = () => {
   const { t } = useTranslation('withdraw');
   const navigate = useNavigate();
   const { address } = useUnifiedWallet();
+  const { ensSubdomain } = useEnsSubdomain();
   const { user } = usePrivy();
   const { country } = useUserCountry();
+  
+  // Use ENS subdomain if available, fallback to wallet address
+  const sourceAddress = ensSubdomain || address;
   
   const { quote, createQuote, isLoading: quoteLoading, error: quoteError, reset } = useCdpOfframpQuote();
   
@@ -87,13 +92,18 @@ const CoinbaseCashOutPage: React.FC = () => {
   const numericAmount = parseFloat(amount) || 0;
 
   const handleGetQuote = async () => {
-    if (!amount || parseFloat(amount) <= 0 || !address) {
+    if (!amount || parseFloat(amount) <= 0 || !sourceAddress) {
       return;
     }
 
     setIsProcessing(true);
 
     try {
+      console.log('[CoinbaseCashOutPage] Creating offramp quote...', {
+        sourceAddress,
+        usingEns: !!ensSubdomain
+      });
+      
       const result = await createQuote({
         sellCurrency: 'USDC',
         sellNetwork: 'base',
@@ -102,9 +112,9 @@ const CoinbaseCashOutPage: React.FC = () => {
         paymentMethod: paymentMethod,
         country: country,
         subdivision: country === 'US' ? 'CA' : undefined,
-        sourceAddress: address,
+        sourceAddress: sourceAddress,
         redirectUrl: `${window.location.origin}/withdrawal/coinbase/callback`,
-        partnerUserRef: user?.id || address,
+        partnerUserRef: user?.id || sourceAddress,
       });
 
       if (result) {
@@ -132,7 +142,7 @@ const CoinbaseCashOutPage: React.FC = () => {
 
   const isLoading = quoteLoading || isProcessing;
   const error = quoteError;
-  const isDisabled = isLoading || !amount || parseFloat(amount) <= 0 || !address;
+  const isDisabled = isLoading || !amount || parseFloat(amount) <= 0 || !sourceAddress;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
