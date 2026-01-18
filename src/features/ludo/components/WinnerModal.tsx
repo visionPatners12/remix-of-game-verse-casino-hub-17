@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useGameSounds } from '@/hooks/useGameSounds';
 import { useClaimPrize } from '../hooks/useClaimPrize';
 import { cn } from '@/lib/utils';
+import { calculateNetPot } from '@/config/casino';
 
 type ClaimStatus = 'received' | 'pending_confirmations' | 'confirmed' | 'mismatch' | 'reverted' | 'timeout' | null;
 
@@ -398,7 +399,7 @@ export const WinnerModal: React.FC<WinnerModalProps> = ({
                       className="text-xl font-bold tracking-wide text-success"
                       style={{ textShadow: '0 0 10px hsl(142 71% 45% / 0.4)' }}
                     >
-                      {potAmount.toFixed(2)} USDC
+                      {calculateNetPot(potAmount).toFixed(2)} USDC
                     </span>
                   </div>
                 </div>
@@ -425,7 +426,7 @@ export const WinnerModal: React.FC<WinnerModalProps> = ({
                       }}
                     >
                       <Wallet className="w-4 h-4 mr-2" />
-                      Claim {potAmount.toFixed(2)} USDC
+                      Claim {calculateNetPot(potAmount).toFixed(2)} USDC
                     </Button>
                   </motion.div>
                 )}
