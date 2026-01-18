@@ -25,7 +25,19 @@
     "processing": "Preparing...",
     "comingSoon": "Coming Soon",
     "note": "You'll be redirected to Coinbase to complete the transaction.",
-    "securityNote": "Your transaction is secured by Coinbase's institutional-grade security."
+    "securityNote": "Your transaction is secured by Coinbase's institutional-grade security.",
+    "paymentMethod": "Where to receive",
+    "toYourBank": "to your bank account",
+    "toCoinbaseBalance": "to your Coinbase balance",
+    "toCoinbaseCrypto": "to your Coinbase crypto account",
+    "methods": {
+      "fiatWallet": "Coinbase Balance",
+      "fiatWalletDesc": "Receive USD in your Coinbase account",
+      "bankAccount": "Bank Account",
+      "bankAccountDesc": "Direct transfer to your bank (US only)",
+      "cryptoAccount": "Crypto Account",
+      "cryptoAccountDesc": "Keep as crypto in Coinbase"
+    }
   },
   "userSearch": {
     "title": "Send to User",
