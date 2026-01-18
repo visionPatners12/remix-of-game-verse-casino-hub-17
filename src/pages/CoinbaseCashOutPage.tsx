@@ -11,6 +11,7 @@ import { useUnifiedWallet } from '@/hooks/useUnifiedWallet';
 import { usePrivy } from '@privy-io/react-auth';
 import { useCdpOfframpQuote } from '@/features/withdraw/hooks/useCdpOfframpQuote';
 import { OfframpQuoteBreakdown } from '@/features/withdraw/components/OfframpQuoteBreakdown';
+import { useUserCountry } from '@/hooks/useUserCountry';
 import { DEFAULT_CHAIN_NAME } from '@/config/chains';
 
 type FlowStep = 'input' | 'confirm';
@@ -20,6 +21,7 @@ const CoinbaseCashOutPage: React.FC = () => {
   const navigate = useNavigate();
   const { address } = useUnifiedWallet();
   const { user } = usePrivy();
+  const { country } = useUserCountry();
   
   const { quote, createQuote, isLoading: quoteLoading, error: quoteError, reset } = useCdpOfframpQuote();
   
@@ -27,13 +29,6 @@ const CoinbaseCashOutPage: React.FC = () => {
   const [step, setStep] = useState<FlowStep>('input');
   const [offrampUrl, setOfframpUrl] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-
-  // Get user country from profile or browser
-  const getUserCountry = (): string => {
-    const lang = navigator.language || 'en-US';
-    const country = lang.split('-')[1];
-    return country || 'US';
-  };
 
   // Preset amounts
   const presetAmounts = ['25', '50', '100', '250'];
@@ -46,7 +41,6 @@ const CoinbaseCashOutPage: React.FC = () => {
     setIsProcessing(true);
 
     try {
-      const country = getUserCountry();
       
       const result = await createQuote({
         sellCurrency: 'USDC',

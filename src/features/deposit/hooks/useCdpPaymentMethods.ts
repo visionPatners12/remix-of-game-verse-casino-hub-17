@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { useUserProfile } from '@/features/profile/hooks/useUserProfile';
+import { useUserCountry } from '@/hooks/useUserCountry';
 
 interface PaymentMethod {
   id: string;
@@ -19,8 +19,7 @@ const PAYMENT_METHOD_INFO: Record<string, { name: string; description: string }>
 };
 
 export function useCdpPaymentMethods() {
-  const { profile } = useUserProfile();
-  const countryCode = profile?.country || 'FR'; // fallback FR
+  const { country: countryCode } = useUserCountry();
 
   return useQuery({
     queryKey: ['cdp-payment-methods', countryCode],
