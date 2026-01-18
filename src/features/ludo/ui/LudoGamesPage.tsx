@@ -52,7 +52,10 @@ const LudoGamesPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+      <header 
+        className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border"
+        style={{ paddingTop: 'env(safe-area-inset-top)' }}
+      >
         <div className="flex items-center justify-between px-4 h-14">
           <Button
             variant="ghost"
