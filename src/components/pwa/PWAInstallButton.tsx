@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Apple, Smartphone } from 'lucide-react';
 import { usePWAInstall } from '@/hooks/usePWAInstall';
 import { IOSInstallGuide } from './IOSInstallGuide';
+import { AndroidInstallGuide } from './AndroidInstallGuide';
 
 interface PWAInstallButtonProps {
   variant?: "default" | "outline" | "ghost";
@@ -18,15 +19,21 @@ export function PWAInstallButton({
   className 
 }: PWAInstallButtonProps) {
   const [showIOSGuide, setShowIOSGuide] = useState(false);
-  const { isIOS, promptInstall } = usePWAInstall();
+  const [showAndroidGuide, setShowAndroidGuide] = useState(false);
+  const { isIOS, canPromptNatively, promptInstall } = usePWAInstall();
 
   const handleIOSClick = useCallback(() => {
     setShowIOSGuide(true);
   }, []);
 
   const handleAndroidClick = useCallback(async () => {
-    await promptInstall();
-  }, [promptInstall]);
+    if (canPromptNatively) {
+      await promptInstall();
+    } else {
+      // Fallback: show manual guide
+      setShowAndroidGuide(true);
+    }
+  }, [canPromptNatively, promptInstall]);
 
   return (
     <>
@@ -58,6 +65,11 @@ export function PWAInstallButton({
       <IOSInstallGuide 
         isOpen={showIOSGuide} 
         onClose={() => setShowIOSGuide(false)} 
+      />
+      
+      <AndroidInstallGuide
+        isOpen={showAndroidGuide}
+        onClose={() => setShowAndroidGuide(false)}
       />
     </>
   );
