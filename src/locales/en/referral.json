@@ -1,0 +1,67 @@
+{
+  "page": {
+    "title": "Referral Program",
+    "subtitle": "Earn commissions on your referrals' Ludo games",
+    "loginRequired": "Sign in to access your referral dashboard"
+  },
+  "period": {
+    "label": "Period",
+    "7days": "7 days",
+    "30days": "30 days",
+    "90days": "90 days",
+    "allTime": "All time"
+  },
+  "stats": {
+    "totalStaked": "Total Staked",
+    "byYourReferrals": "by your referrals",
+    "totalEarnings": "Total Earnings",
+    "pendingEarnings": "Pending",
+    "referrals": "Referrals",
+    "games": "Games",
+    "noData": "No data for this period"
+  },
+  "levels": {
+    "title": "Breakdown by Level",
+    "n1": "Level N1",
+    "n2": "Level N2",
+    "directReferrals": "Direct referrals",
+    "indirectReferrals": "Indirect referrals",
+    "rate": "Commission rate",
+    "staked": "Staked",
+    "earned": "Earned"
+  },
+  "code": {
+    "title": "Your Referral Code",
+    "share": "Share",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "shareMessage": "Join me on PRYZEN with my code {{code}} and get started!"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "step1": {
+      "title": "Share your code",
+      "description": "Give your unique referral code to your friends"
+    },
+    "step2": {
+      "title": "They play Ludo",
+      "description": "Your referrals play Ludo games on the platform"
+    },
+    "step3": {
+      "title": "You earn commissions",
+      "description": "Get 1.5% on N1 and 0.5% on N2 of their bets"
+    }
+  },
+  "rates": {
+    "title": "Commission Rates",
+    "n1Rate": "1.5% on direct referrals (N1)",
+    "n2Rate": "0.5% on indirect referrals (N2)"
+  },
+  "terms": {
+    "title": "Terms & Conditions",
+    "description": "Commissions are calculated on finished games only. Withdrawals are subject to verification."
+  },
+  "network": {
+    "title": "Your Referral Network"
+  }
+}

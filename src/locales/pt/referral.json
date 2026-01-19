@@ -1,0 +1,67 @@
+{
+  "page": {
+    "title": "Programa de Indicação",
+    "subtitle": "Ganhe comissões nos jogos Ludo dos seus indicados",
+    "loginRequired": "Entre para acessar seu painel de indicações"
+  },
+  "period": {
+    "label": "Período",
+    "7days": "7 dias",
+    "30days": "30 dias",
+    "90days": "90 dias",
+    "allTime": "Todo o tempo"
+  },
+  "stats": {
+    "totalStaked": "Total Apostado",
+    "byYourReferrals": "pelos seus indicados",
+    "totalEarnings": "Ganhos Totais",
+    "pendingEarnings": "Pendente",
+    "referrals": "Indicados",
+    "games": "Jogos",
+    "noData": "Sem dados para este período"
+  },
+  "levels": {
+    "title": "Detalhamento por Nível",
+    "n1": "Nível N1",
+    "n2": "Nível N2",
+    "directReferrals": "Indicados diretos",
+    "indirectReferrals": "Indicados indiretos",
+    "rate": "Taxa de comissão",
+    "staked": "Apostado",
+    "earned": "Ganho"
+  },
+  "code": {
+    "title": "Seu Código de Indicação",
+    "share": "Compartilhar",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "shareMessage": "Junte-se a mim no PRYZEN com meu código {{code}} e comece a jogar!"
+  },
+  "howItWorks": {
+    "title": "Como Funciona",
+    "step1": {
+      "title": "Compartilhe seu código",
+      "description": "Dê seu código único de indicação aos seus amigos"
+    },
+    "step2": {
+      "title": "Eles jogam Ludo",
+      "description": "Seus indicados jogam partidas de Ludo na plataforma"
+    },
+    "step3": {
+      "title": "Você ganha comissões",
+      "description": "Receba 1,5% no N1 e 0,5% no N2 das apostas deles"
+    }
+  },
+  "rates": {
+    "title": "Taxas de Comissão",
+    "n1Rate": "1,5% em indicados diretos (N1)",
+    "n2Rate": "0,5% em indicados indiretos (N2)"
+  },
+  "terms": {
+    "title": "Termos e Condições",
+    "description": "As comissões são calculadas apenas em jogos finalizados. Os saques estão sujeitos a verificação."
+  },
+  "network": {
+    "title": "Sua Rede de Indicação"
+  }
+}

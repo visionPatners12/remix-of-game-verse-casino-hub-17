@@ -1,0 +1,67 @@
+{
+  "page": {
+    "title": "Programa de Referidos",
+    "subtitle": "Gana comisiones en los juegos Ludo de tus referidos",
+    "loginRequired": "Inicia sesión para acceder a tu panel de referidos"
+  },
+  "period": {
+    "label": "Período",
+    "7days": "7 días",
+    "30days": "30 días",
+    "90days": "90 días",
+    "allTime": "Todo el tiempo"
+  },
+  "stats": {
+    "totalStaked": "Total Apostado",
+    "byYourReferrals": "por tus referidos",
+    "totalEarnings": "Ganancias Totales",
+    "pendingEarnings": "Pendiente",
+    "referrals": "Referidos",
+    "games": "Partidas",
+    "noData": "Sin datos para este período"
+  },
+  "levels": {
+    "title": "Desglose por Nivel",
+    "n1": "Nivel N1",
+    "n2": "Nivel N2",
+    "directReferrals": "Referidos directos",
+    "indirectReferrals": "Referidos indirectos",
+    "rate": "Tasa de comisión",
+    "staked": "Apostado",
+    "earned": "Ganado"
+  },
+  "code": {
+    "title": "Tu Código de Referido",
+    "share": "Compartir",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "shareMessage": "¡Únete a mí en PRYZEN con mi código {{code}} y comienza a jugar!"
+  },
+  "howItWorks": {
+    "title": "Cómo Funciona",
+    "step1": {
+      "title": "Comparte tu código",
+      "description": "Da tu código único de referido a tus amigos"
+    },
+    "step2": {
+      "title": "Juegan Ludo",
+      "description": "Tus referidos juegan partidas de Ludo en la plataforma"
+    },
+    "step3": {
+      "title": "Ganas comisiones",
+      "description": "Recibe 1.5% en N1 y 0.5% en N2 de sus apuestas"
+    }
+  },
+  "rates": {
+    "title": "Tasas de Comisión",
+    "n1Rate": "1.5% en referidos directos (N1)",
+    "n2Rate": "0.5% en referidos indirectos (N2)"
+  },
+  "terms": {
+    "title": "Términos y Condiciones",
+    "description": "Las comisiones se calculan solo en juegos terminados. Los retiros están sujetos a verificación."
+  },
+  "network": {
+    "title": "Tu Red de Referidos"
+  }
+}

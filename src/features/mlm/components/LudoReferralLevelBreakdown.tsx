@@ -9,7 +9,7 @@ interface LudoReferralLevelBreakdownProps {
 }
 
 export function LudoReferralLevelBreakdown({ periodDays }: LudoReferralLevelBreakdownProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('referral');
   const { data: stats, isLoading } = useLudoReferralStats(periodDays);
 
   if (isLoading) {
@@ -29,7 +29,8 @@ export function LudoReferralLevelBreakdown({ periodDays }: LudoReferralLevelBrea
   const levels = [
     {
       level: 1,
-      name: 'N1',
+      name: t('levels.n1'),
+      description: t('levels.directReferrals'),
       rate: formatCommissionRate(1),
       referrals: stats?.total_n1_referrals || 0,
       games: stats?.total_games_n1 || 0,
@@ -40,7 +41,8 @@ export function LudoReferralLevelBreakdown({ periodDays }: LudoReferralLevelBrea
     },
     {
       level: 2,
-      name: 'N2',
+      name: t('levels.n2'),
+      description: t('levels.indirectReferrals'),
       rate: formatCommissionRate(2),
       referrals: stats?.total_n2_referrals || 0,
       games: stats?.total_games_n2 || 0,
@@ -55,7 +57,7 @@ export function LudoReferralLevelBreakdown({ periodDays }: LudoReferralLevelBrea
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="text-lg">
-          {t('referral.levelBreakdown', { defaultValue: 'Détail par Niveau' })}
+          {t('levels.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
@@ -80,19 +82,19 @@ export function LudoReferralLevelBreakdown({ periodDays }: LudoReferralLevelBrea
                 <span className="block font-medium text-foreground">
                   {level.referrals}
                 </span>
-                <span>{t('stats.referrals', { defaultValue: 'Filleuls' })}</span>
+                <span>{t('stats.referrals')}</span>
               </div>
               <div>
                 <span className="block font-medium text-foreground">
                   {level.games}
                 </span>
-                <span>{t('stats.games', { defaultValue: 'Parties' })}</span>
+                <span>{t('stats.games')}</span>
               </div>
               <div>
                 <span className="block font-medium text-foreground">
                   ${level.staked.toFixed(2)}
                 </span>
-                <span>{t('stats.staked', { defaultValue: 'Misé' })}</span>
+                <span>{t('levels.staked')}</span>
               </div>
             </div>
           </div>
