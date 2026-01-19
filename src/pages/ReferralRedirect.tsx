@@ -15,16 +15,11 @@ export default function ReferralRedirect() {
 
   useEffect(() => {
     if (code) {
-      // Save code to localStorage + cookie for later processing after signup
+      // Save code to localStorage + cookie (survives PWA installation on iOS)
       saveReferralCode(code);
-      
-      // Redirect to auth page WITH the code in URL
-      // This ensures the code survives PWA installation on iOS
-      navigate(`/auth?ref=${encodeURIComponent(code.toUpperCase())}`, { replace: true });
-    } else {
-      // No code provided, redirect to home
-      navigate('/', { replace: true });
     }
+    // Always redirect to home - code is persisted via cookie for later signup
+    navigate('/', { replace: true });
   }, [code, navigate]);
 
   return (
