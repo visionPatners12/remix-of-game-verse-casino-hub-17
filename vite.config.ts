@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         includeAssets: ['favicon.ico', 'icons/*.png', 'offline.html'],
         manifest: {
+          id: '/',
           name: 'Pryzen Game',
           short_name: 'Pryzen',
           description: 'Crypto multiplayer games & on-chain betting. Play Ludo with friends, win USDC.',
