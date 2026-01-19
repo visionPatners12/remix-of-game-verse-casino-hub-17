@@ -7,17 +7,17 @@ interface LudoReferralPeriodSelectorProps {
 }
 
 const PERIODS = [
-  { days: 7, labelKey: 'periods.7days' },
-  { days: 30, labelKey: 'periods.30days' },
-  { days: 90, labelKey: 'periods.90days' },
-  { days: 0, labelKey: 'periods.allTime' },
+  { days: 7, key: '7days' },
+  { days: 30, key: '30days' },
+  { days: 90, key: '90days' },
+  { days: 0, key: 'allTime' },
 ];
 
 export function LudoReferralPeriodSelector({
   selectedPeriod,
   onPeriodChange,
 }: LudoReferralPeriodSelectorProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('referral');
 
   return (
     <div className="flex gap-2 overflow-x-auto pb-1">
@@ -29,7 +29,7 @@ export function LudoReferralPeriodSelector({
           onClick={() => onPeriodChange(period.days)}
           className="flex-shrink-0 text-xs h-8"
         >
-          {t(period.labelKey, { defaultValue: period.days === 0 ? 'Tout' : `${period.days}j` })}
+          {t(`period.${period.key}`)}
         </Button>
       ))}
     </div>

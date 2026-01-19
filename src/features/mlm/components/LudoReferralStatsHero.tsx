@@ -9,7 +9,7 @@ interface LudoReferralStatsHeroProps {
 }
 
 export function LudoReferralStatsHero({ periodDays }: LudoReferralStatsHeroProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('referral');
   const { data: stats, isLoading } = useLudoReferralStats(periodDays);
 
   if (isLoading) {
@@ -42,28 +42,28 @@ export function LudoReferralStatsHero({ periodDays }: LudoReferralStatsHeroProps
   const statItems = [
     {
       icon: Users,
-      label: t('stats.referrals', { defaultValue: 'Filleuls' }),
+      label: t('stats.referrals'),
       value: totalReferrals,
       color: 'text-blue-500',
       bgColor: 'bg-blue-500/10',
     },
     {
       icon: Gamepad2,
-      label: t('stats.games', { defaultValue: 'Parties' }),
+      label: t('stats.games'),
       value: totalGames,
       color: 'text-purple-500',
       bgColor: 'bg-purple-500/10',
     },
     {
       icon: DollarSign,
-      label: t('stats.earnings', { defaultValue: 'Gains' }),
+      label: t('stats.totalEarnings'),
       value: `$${totalEarnings.toFixed(2)}`,
       color: 'text-green-500',
       bgColor: 'bg-green-500/10',
     },
     {
       icon: Clock,
-      label: t('stats.pending', { defaultValue: 'En attente' }),
+      label: t('stats.pendingEarnings'),
       value: `$${(stats?.pending_earnings || 0).toFixed(2)}`,
       color: 'text-orange-500',
       bgColor: 'bg-orange-500/10',
@@ -77,14 +77,14 @@ export function LudoReferralStatsHero({ periodDays }: LudoReferralStatsHeroProps
         <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-1">
             <TrendingUp className="h-4 w-4" />
-            <span>{t('stats.totalStaked', { defaultValue: 'Total Misé par Réseau' })}</span>
+            <span>{t('stats.totalStaked')}</span>
           </div>
           <p className="text-3xl font-bold text-primary">
             ${totalStaked.toFixed(2)}
           </p>
           {periodDays > 0 && (
             <p className="text-xs text-muted-foreground mt-1">
-              {t('stats.lastDays', { days: periodDays, defaultValue: `Derniers ${periodDays} jours` })}
+              {t('stats.byYourReferrals')}
             </p>
           )}
         </div>

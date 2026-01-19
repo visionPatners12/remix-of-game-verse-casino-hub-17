@@ -23,6 +23,7 @@ import enSearch from '@/locales/en/search.json';
 import enLanding from '@/locales/en/landing.json';
 import enPolymarket from '@/locales/en/polymarket.json';
 import enSecurity from '@/locales/en/security.json';
+import enReferral from '@/locales/en/referral.json';
 
 // French translations
 import frCommon from '@/locales/fr/common.json';
@@ -45,6 +46,7 @@ import frSearch from '@/locales/fr/search.json';
 import frLanding from '@/locales/fr/landing.json';
 import frPolymarket from '@/locales/fr/polymarket.json';
 import frSecurity from '@/locales/fr/security.json';
+import frReferral from '@/locales/fr/referral.json';
 
 // Spanish translations
 import esCommon from '@/locales/es/common.json';
@@ -67,6 +69,7 @@ import esSearch from '@/locales/es/search.json';
 import esLanding from '@/locales/es/landing.json';
 import esPolymarket from '@/locales/es/polymarket.json';
 import esSecurity from '@/locales/es/security.json';
+import esReferral from '@/locales/es/referral.json';
 
 // Hindi translations
 import hiCommon from '@/locales/hi/common.json';
@@ -75,6 +78,7 @@ import hiGames from '@/locales/hi/games.json';
 import hiWallet from '@/locales/hi/wallet.json';
 import hiNft from '@/locales/hi/nft.json';
 import hiSecurity from '@/locales/hi/security.json';
+import hiReferral from '@/locales/hi/referral.json';
 
 // Portuguese translations
 import ptCommon from '@/locales/pt/common.json';
@@ -83,6 +87,7 @@ import ptGames from '@/locales/pt/games.json';
 import ptWallet from '@/locales/pt/wallet.json';
 import ptNft from '@/locales/pt/nft.json';
 import ptSecurity from '@/locales/pt/security.json';
+import ptReferral from '@/locales/pt/referral.json';
 
 // Arabic translations
 import arCommon from '@/locales/ar/common.json';
@@ -91,6 +96,7 @@ import arGames from '@/locales/ar/games.json';
 import arWallet from '@/locales/ar/wallet.json';
 import arNft from '@/locales/ar/nft.json';
 import arSecurity from '@/locales/ar/security.json';
+import arReferral from '@/locales/ar/referral.json';
 
 const resources = {
   en: {
@@ -114,6 +120,7 @@ const resources = {
     landing: enLanding,
     polymarket: enPolymarket,
     security: enSecurity,
+    referral: enReferral,
   },
   fr: {
     common: frCommon,
@@ -136,6 +143,7 @@ const resources = {
     landing: frLanding,
     polymarket: frPolymarket,
     security: frSecurity,
+    referral: frReferral,
   },
   es: {
     common: esCommon,
@@ -158,6 +166,7 @@ const resources = {
     landing: esLanding,
     polymarket: esPolymarket,
     security: esSecurity,
+    referral: esReferral,
   },
   hi: {
     common: hiCommon,
@@ -166,6 +175,7 @@ const resources = {
     wallet: hiWallet,
     nft: hiNft,
     security: hiSecurity,
+    referral: hiReferral,
   },
   pt: {
     common: ptCommon,
@@ -174,6 +184,7 @@ const resources = {
     wallet: ptWallet,
     nft: ptNft,
     security: ptSecurity,
+    referral: ptReferral,
   },
   ar: {
     common: arCommon,
@@ -182,6 +193,7 @@ const resources = {
     wallet: arWallet,
     nft: arNft,
     security: arSecurity,
+    referral: arReferral,
   },
 };
 
@@ -204,7 +216,7 @@ i18n
     supportedLngs: ['en', 'fr', 'es', 'hi', 'pt', 'ar'],
     load: 'languageOnly', // 'fr-FR' → 'fr'
     defaultNS: 'common',
-    ns: ['common', 'navigation', 'profile', 'auth', 'tipster', 'bets', 'deposit', 'feed', 'pages', 'games', 'wallet', 'withdraw', 'nft', 'streaming', 'support', 'notifications', 'search', 'landing', 'polymarket', 'security'],
+    ns: ['common', 'navigation', 'profile', 'auth', 'tipster', 'bets', 'deposit', 'feed', 'pages', 'games', 'wallet', 'withdraw', 'nft', 'streaming', 'support', 'notifications', 'search', 'landing', 'polymarket', 'security', 'referral'],
     
     detection: {
       order: ['localStorage', 'navigator', 'htmlTag'],
