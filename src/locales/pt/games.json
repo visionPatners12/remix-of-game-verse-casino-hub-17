@@ -1,0 +1,71 @@
+{
+  "title": "Jogos",
+  "categories": {
+    "all": "Todos os Jogos",
+    "board": "Jogos de Tabuleiro",
+    "casino": "Cassino",
+    "sports": "Esportes"
+  },
+  "soon": "EM BREVE",
+  "play": "Jogar Agora",
+  "players": "jogadores",
+  "upcoming": {
+    "title": "Em Breve",
+    "description": "Nossos novos jogos estarão disponíveis em breve!",
+    "features": {
+      "tournaments": "Torneios",
+      "leaderboards": "Classificações",
+      "rewards": "Recompensas"
+    },
+    "notify": "Notifique-me"
+  },
+  "ludo": {
+    "title": "Ludo",
+    "createGame": "Criar Jogo",
+    "joinGame": "Entrar no Jogo",
+    "joinWithCode": "Entrar com Código",
+    "enterCode": "Digite o código da sala",
+    "publicGames": "Jogos Públicos",
+    "privateGame": "Jogo Privado",
+    "betAmount": "Valor da Aposta",
+    "maxPlayers": "Máx. Jogadores",
+    "roomCode": "Código da Sala",
+    "waitingForPlayers": "Aguardando jogadores...",
+    "gameStarting": "Jogo iniciando...",
+    "yourTurn": "Sua vez!",
+    "rollDice": "Jogar Dado",
+    "selectPiece": "Selecione uma peça para mover",
+    "colors": {
+      "red": "Vermelho",
+      "blue": "Azul",
+      "green": "Verde",
+      "yellow": "Amarelo"
+    },
+    "status": {
+      "created": "Aguardando",
+      "active": "Em Andamento",
+      "finished": "Finalizado",
+      "abandoned": "Abandonado"
+    },
+    "winner": "Vencedor",
+    "youWon": "Você Ganhou!",
+    "youLost": "Fim de Jogo",
+    "claimWinnings": "Resgatar Ganhos",
+    "leaveGame": "Sair do Jogo",
+    "confirmLeave": "Tem certeza que quer sair?",
+    "leaveWarning": "Você perderá sua aposta se sair.",
+    "depositRequired": "Depósito Necessário",
+    "depositPending": "Depósito pendente...",
+    "ready": "Pronto",
+    "notReady": "Não Pronto",
+    "startGame": "Iniciar Jogo",
+    "extraTurnOnSix": "Turno extra no 6",
+    "rules": {
+      "title": "Regras do Jogo",
+      "rule1": "Tire um 6 para colocar uma peça em jogo",
+      "rule2": "Mova as peças no sentido horário",
+      "rule3": "Cair em um oponente o envia de volta",
+      "rule4": "O primeiro a levar todas as peças para casa vence"
+    }
+  }
+}

@@ -118,9 +118,12 @@ export default function SimpleMobileMenuPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="en">{t('settings.english')}</SelectItem>
-                  <SelectItem value="fr">{t('settings.french')}</SelectItem>
-                  <SelectItem value="es">{t('settings.spanish')}</SelectItem>
+                  <SelectItem value="en">🇺🇸 English</SelectItem>
+                  <SelectItem value="fr">🇫🇷 Français</SelectItem>
+                  <SelectItem value="es">🇪🇸 Español</SelectItem>
+                  <SelectItem value="hi">🇮🇳 हिन्दी</SelectItem>
+                  <SelectItem value="pt">🇧🇷 Português</SelectItem>
+                  <SelectItem value="ar">🇸🇦 العربية</SelectItem>
                 </SelectContent>
               </Select>
             </div>

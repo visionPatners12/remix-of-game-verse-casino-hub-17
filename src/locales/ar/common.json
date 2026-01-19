@@ -1,0 +1,92 @@
+{
+  "buttons": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "submit": "إرسال",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "confirm": "تأكيد",
+    "close": "إغلاق",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "continue": "متابعة",
+    "finish": "إنهاء",
+    "retry": "إعادة المحاولة",
+    "refresh": "تحديث",
+    "seeMore": "عرض المزيد",
+    "seeLess": "عرض أقل"
+  },
+  "tabs": {
+    "posts": "المنشورات",
+    "bets": "الرهانات",
+    "predictions": "التوقعات"
+  },
+  "errors": {
+    "generic": "حدث خطأ",
+    "notFound": "غير موجود",
+    "unauthorized": "غير مصرح",
+    "networkError": "خطأ في الشبكة",
+    "serverError": "خطأ في الخادم",
+    "validationError": "خطأ في التحقق",
+    "timeout": "انتهت المهلة",
+    "loadingError": "فشل التحميل",
+    "somethingWentWrong": "حدث خطأ ما"
+  },
+  "status": {
+    "online": "متصل",
+    "offline": "غير متصل",
+    "loading": "جارٍ التحميل...",
+    "success": "نجاح",
+    "error": "خطأ",
+    "pending": "قيد الانتظار"
+  },
+  "settings": {
+    "username": "اسم المستخدم",
+    "email": "البريد الإلكتروني",
+    "phoneNumber": "رقم الهاتف",
+    "oddsFormat": "تنسيق الاحتمالات",
+    "oddsFormatHint": "اختر كيفية عرض الاحتمالات",
+    "language": "اللغة",
+    "languageHint": "اختر لغتك المفضلة",
+    "profileUpdated": "تم تحديث الملف الشخصي",
+    "profileUpdateSuccess": "تم تحديث ملفك الشخصي بنجاح.",
+    "profileUpdateError": "فشل تحديث الملف الشخصي. حاول مرة أخرى.",
+    "usernameAvailable": "اسم المستخدم متاح!",
+    "usernameTaken": "اسم المستخدم مستخدم بالفعل",
+    "usernameMinLength": "يجب أن يكون اسم المستخدم 3 أحرف على الأقل"
+  },
+  "referral": {
+    "linkCopied": "تم نسخ الرابط!",
+    "linkCopiedMessage": "تم نسخ رابط الإحالة",
+    "shareTitle": "انضم إليّ!",
+    "shareText": "استخدم هذا الرابط واحصل على مزايا حصرية!",
+    "yourReferralCode": "رمز الإحالة الخاص بك"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "tipsterPremium": {
+      "title": "تيبستر بريميوم",
+      "subtitle": "كن خبيراً محترفاً",
+      "description": "شارك توقعاتك واكسب المال",
+      "benefit1": "الوصول إلى النصائح المميزة",
+      "benefit2": "استراتيجيات حصرية",
+      "benefit3": "دعم شخصي"
+    },
+    "referralProgram": {
+      "title": "برنامج الإحالة",
+      "subtitle": "ادعُ أصدقاءك",
+      "description": "ابنِ شبكتك واكسب عمولات",
+      "benefit1": "5% عمولة لكل إحالة",
+      "benefit2": "أرباح على 3 مستويات",
+      "benefit3": "دفعات تلقائية"
+    }
+  },
+  "stats": {
+    "yourStats": "إحصائياتك",
+    "referrals": "الإحالات",
+    "networkMargin": "هامش الشبكة",
+    "totalEarnings": "إجمالي الأرباح",
+    "pending": "قيد الانتظار"
+  }
+}

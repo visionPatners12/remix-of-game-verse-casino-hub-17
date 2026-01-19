@@ -1,0 +1,39 @@
+{
+  "menu": {
+    "home": "الرئيسية",
+    "dashboard": "لوحة التحكم",
+    "feed": "التغذية",
+    "sport": "رياضة",
+    "polymarket": "بولي ماركت",
+    "game": "ألعاب",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "search": "بحث",
+    "notifications": "الإشعارات",
+    "messages": "الرسائل",
+    "wallet": "المحفظة",
+    "history": "السجل",
+    "achievements": "الإنجازات",
+    "logout": "تسجيل الخروج",
+    "back": "رجوع",
+    "userMenu": "قائمة المستخدم"
+  },
+  "quickActions": {
+    "title": "إجراءات سريعة",
+    "bet": "راهن",
+    "wallet": "المحفظة",
+    "messages": "الرسائل",
+    "performance": "الأداء"
+  },
+  "links": {
+    "myProfile": "ملفي الشخصي",
+    "history": "السجل",
+    "achievements": "الإنجازات",
+    "notifications": "الإشعارات",
+    "settings": "الإعدادات"
+  },
+  "badges": {
+    "new": "جديد",
+    "soon": "قريباً"
+  }
+}

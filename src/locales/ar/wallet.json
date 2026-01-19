@@ -1,0 +1,70 @@
+{
+  "title": "المحفظة",
+  "balance": "الرصيد",
+  "availableBalance": "الرصيد المتاح",
+  "totalBalance": "إجمالي الرصيد",
+  "pendingBalance": "قيد الانتظار",
+  "send": "إرسال",
+  "receive": "استلام",
+  "deposit": "إيداع",
+  "withdraw": "سحب",
+  "swap": "تبديل",
+  "buy": "شراء",
+  "sell": "بيع",
+  "copyAddress": "نسخ العنوان",
+  "addressCopied": "تم نسخ العنوان!",
+  "scanQR": "مسح رمز QR",
+  "shareAddress": "مشاركة العنوان",
+  "transactions": {
+    "title": "المعاملات",
+    "history": "سجل المعاملات",
+    "pending": "قيد الانتظار",
+    "completed": "مكتملة",
+    "failed": "فاشلة",
+    "noTransactions": "لا توجد معاملات بعد",
+    "viewAll": "عرض الكل",
+    "sent": "مُرسل",
+    "received": "مُستلم",
+    "swapped": "مُبدّل",
+    "deposited": "مُودع",
+    "withdrawn": "مسحوب"
+  },
+  "assets": {
+    "title": "الأصول",
+    "tokens": "التوكنات",
+    "nfts": "NFTs",
+    "noAssets": "لم يتم العثور على أصول"
+  },
+  "network": {
+    "title": "الشبكة",
+    "polygon": "بوليجون",
+    "ethereum": "إيثيريوم",
+    "switchNetwork": "تبديل الشبكة"
+  },
+  "security": {
+    "title": "الأمان",
+    "backup": "نسخ احتياطي للمحفظة",
+    "exportKey": "تصدير المفتاح الخاص",
+    "warning": "لا تشارك مفتاحك الخاص أبداً"
+  },
+  "ens": {
+    "domain": "نطاق ENS",
+    "fullAddress": "العنوان الكامل"
+  },
+  "clipboard": {
+    "copied": "تم النسخ",
+    "addressCopied": "تم نسخ العنوان",
+    "addressCopiedDesc": "تم نسخ عنوان المحفظة",
+    "txHashCopied": "تم نسخ هاش المعاملة"
+  },
+  "qr": {
+    "title": "محفظتي الرقمية",
+    "copyAddress": "نسخ العنوان",
+    "explorer": "المستكشف"
+  },
+  "actions": {
+    "deposit": "إيداع",
+    "send": "إرسال",
+    "receive": "استلام"
+  }
+}

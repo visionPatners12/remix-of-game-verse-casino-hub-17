@@ -1,0 +1,39 @@
+{
+  "menu": {
+    "home": "होम",
+    "dashboard": "डैशबोर्ड",
+    "feed": "फीड",
+    "sport": "खेल",
+    "polymarket": "पॉलीमार्केट",
+    "game": "गेम",
+    "profile": "प्रोफाइल",
+    "settings": "सेटिंग्स",
+    "search": "खोजें",
+    "notifications": "सूचनाएं",
+    "messages": "संदेश",
+    "wallet": "वॉलेट",
+    "history": "इतिहास",
+    "achievements": "उपलब्धियां",
+    "logout": "लॉग आउट",
+    "back": "वापस",
+    "userMenu": "उपयोगकर्ता मेनू"
+  },
+  "quickActions": {
+    "title": "त्वरित क्रियाएं",
+    "bet": "दांव लगाएं",
+    "wallet": "वॉलेट",
+    "messages": "संदेश",
+    "performance": "प्रदर्शन"
+  },
+  "links": {
+    "myProfile": "मेरी प्रोफाइल",
+    "history": "इतिहास",
+    "achievements": "उपलब्धियां",
+    "notifications": "सूचनाएं",
+    "settings": "सेटिंग्स"
+  },
+  "badges": {
+    "new": "नया",
+    "soon": "जल्द"
+  }
+}

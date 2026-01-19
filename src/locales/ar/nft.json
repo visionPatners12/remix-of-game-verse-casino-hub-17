@@ -1,0 +1,71 @@
+{
+  "title": "مجموعات NFT",
+  "myNFTs": "NFTs الخاصة بي",
+  "explore": "استكشاف",
+  "create": "إنشاء",
+  "collection": {
+    "title": "المجموعة",
+    "items": "عناصر",
+    "owners": "مالكين",
+    "floorPrice": "أدنى سعر",
+    "volume": "الحجم",
+    "description": "الوصف",
+    "viewAll": "عرض الكل"
+  },
+  "item": {
+    "owner": "المالك",
+    "creator": "المنشئ",
+    "price": "السعر",
+    "lastSale": "آخر بيع",
+    "rarity": "الندرة",
+    "traits": "الخصائص",
+    "history": "السجل",
+    "buy": "اشترِ الآن",
+    "makeOffer": "قدم عرضاً",
+    "transfer": "تحويل",
+    "sell": "بيع",
+    "burn": "حرق"
+  },
+  "mint": {
+    "title": "إنشاء NFT",
+    "upload": "رفع ملف",
+    "dragDrop": "اسحب وأفلت أو انقر للرفع",
+    "formats": "PNG, JPG, GIF, MP4 (أقصى 50 ميجا)",
+    "name": "الاسم",
+    "description": "الوصف",
+    "collection": "المجموعة",
+    "properties": "الخصائص",
+    "addProperty": "إضافة خاصية",
+    "supply": "الكمية",
+    "royalties": "العائدات",
+    "mint": "إنشاء",
+    "minting": "جارٍ الإنشاء..."
+  },
+  "transfer": {
+    "title": "تحويل NFT",
+    "recipient": "عنوان المستلم",
+    "confirm": "تأكيد التحويل",
+    "warning": "هذا الإجراء لا يمكن التراجع عنه"
+  },
+  "filters": {
+    "title": "الفلاتر",
+    "priceRange": "نطاق السعر",
+    "rarity": "الندرة",
+    "traits": "الخصائص",
+    "status": "الحالة",
+    "forSale": "للبيع",
+    "hasOffers": "لديه عروض"
+  },
+  "sort": {
+    "title": "ترتيب حسب",
+    "priceAsc": "السعر: من الأقل للأعلى",
+    "priceDesc": "السعر: من الأعلى للأقل",
+    "recent": "المضافة حديثاً",
+    "oldest": "الأقدم"
+  },
+  "empty": {
+    "noItems": "لم يتم العثور على NFTs",
+    "noCollections": "لم يتم العثور على مجموعات",
+    "startCollecting": "ابدأ بجمع NFTs"
+  }
+}

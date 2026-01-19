@@ -68,6 +68,27 @@ import esLanding from '@/locales/es/landing.json';
 import esPolymarket from '@/locales/es/polymarket.json';
 import esSecurity from '@/locales/es/security.json';
 
+// Hindi translations
+import hiCommon from '@/locales/hi/common.json';
+import hiNavigation from '@/locales/hi/navigation.json';
+import hiGames from '@/locales/hi/games.json';
+import hiWallet from '@/locales/hi/wallet.json';
+import hiNft from '@/locales/hi/nft.json';
+
+// Portuguese translations
+import ptCommon from '@/locales/pt/common.json';
+import ptNavigation from '@/locales/pt/navigation.json';
+import ptGames from '@/locales/pt/games.json';
+import ptWallet from '@/locales/pt/wallet.json';
+import ptNft from '@/locales/pt/nft.json';
+
+// Arabic translations
+import arCommon from '@/locales/ar/common.json';
+import arNavigation from '@/locales/ar/navigation.json';
+import arGames from '@/locales/ar/games.json';
+import arWallet from '@/locales/ar/wallet.json';
+import arNft from '@/locales/ar/nft.json';
+
 const resources = {
   en: {
     common: enCommon,
@@ -135,6 +156,37 @@ const resources = {
     polymarket: esPolymarket,
     security: esSecurity,
   },
+  hi: {
+    common: hiCommon,
+    navigation: hiNavigation,
+    games: hiGames,
+    wallet: hiWallet,
+    nft: hiNft,
+  },
+  pt: {
+    common: ptCommon,
+    navigation: ptNavigation,
+    games: ptGames,
+    wallet: ptWallet,
+    nft: ptNft,
+  },
+  ar: {
+    common: arCommon,
+    navigation: arNavigation,
+    games: arGames,
+    wallet: arWallet,
+    nft: arNft,
+  },
+};
+
+// RTL languages
+const RTL_LANGUAGES = ['ar'];
+
+// Update document direction based on language
+const updateDirection = (language: string) => {
+  const dir = RTL_LANGUAGES.includes(language) ? 'rtl' : 'ltr';
+  document.documentElement.dir = dir;
+  document.documentElement.lang = language;
 };
 
 i18n
@@ -161,5 +213,11 @@ i18n
       useSuspense: false, // Disable suspense for SSR compatibility
     },
   });
+
+// Set initial direction
+updateDirection(i18n.language);
+
+// Listen for language changes
+i18n.on('languageChanged', updateDirection);
 
 export default i18n;

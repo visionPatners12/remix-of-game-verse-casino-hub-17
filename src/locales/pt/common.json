@@ -1,0 +1,92 @@
+{
+  "buttons": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "submit": "Enviar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "continue": "Continuar",
+    "finish": "Finalizar",
+    "retry": "Tentar Novamente",
+    "refresh": "Atualizar",
+    "seeMore": "Ver Mais",
+    "seeLess": "Ver Menos"
+  },
+  "tabs": {
+    "posts": "Posts",
+    "bets": "Apostas",
+    "predictions": "Previsões"
+  },
+  "errors": {
+    "generic": "Ocorreu um erro",
+    "notFound": "Não encontrado",
+    "unauthorized": "Não autorizado",
+    "networkError": "Erro de rede",
+    "serverError": "Erro do servidor",
+    "validationError": "Erro de validação",
+    "timeout": "Tempo esgotado",
+    "loadingError": "Falha ao carregar",
+    "somethingWentWrong": "Algo deu errado"
+  },
+  "status": {
+    "online": "Online",
+    "offline": "Offline",
+    "loading": "Carregando...",
+    "success": "Sucesso",
+    "error": "Erro",
+    "pending": "Pendente"
+  },
+  "settings": {
+    "username": "Nome de usuário",
+    "email": "Email",
+    "phoneNumber": "Telefone",
+    "oddsFormat": "Formato de Odds",
+    "oddsFormatHint": "Escolha como as odds são exibidas",
+    "language": "Idioma",
+    "languageHint": "Selecione seu idioma preferido",
+    "profileUpdated": "Perfil atualizado",
+    "profileUpdateSuccess": "Seu perfil foi atualizado com sucesso.",
+    "profileUpdateError": "Falha ao atualizar perfil. Tente novamente.",
+    "usernameAvailable": "Nome de usuário disponível!",
+    "usernameTaken": "Nome de usuário já existe",
+    "usernameMinLength": "Nome de usuário deve ter pelo menos 3 caracteres"
+  },
+  "referral": {
+    "linkCopied": "Link copiado!",
+    "linkCopiedMessage": "Link de indicação copiado",
+    "shareTitle": "Junte-se a mim!",
+    "shareText": "Use este link e ganhe benefícios exclusivos!",
+    "yourReferralCode": "Seu código de indicação"
+  },
+  "dashboard": {
+    "title": "Painel",
+    "tipsterPremium": {
+      "title": "Tipster Premium",
+      "subtitle": "Torne-se um tipster profissional",
+      "description": "Compartilhe suas previsões e ganhe dinheiro",
+      "benefit1": "Acesso a dicas premium",
+      "benefit2": "Estratégias exclusivas",
+      "benefit3": "Suporte personalizado"
+    },
+    "referralProgram": {
+      "title": "Programa de Indicação",
+      "subtitle": "Convide seus amigos",
+      "description": "Construa sua rede e ganhe comissões",
+      "benefit1": "5% de comissão por indicação",
+      "benefit2": "Ganhos em até 3 níveis",
+      "benefit3": "Pagamentos automáticos"
+    }
+  },
+  "stats": {
+    "yourStats": "Suas Estatísticas",
+    "referrals": "Indicações",
+    "networkMargin": "Margem da Rede",
+    "totalEarnings": "Ganhos Totais",
+    "pending": "Pendente"
+  }
+}
