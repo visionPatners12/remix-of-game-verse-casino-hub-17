@@ -74,6 +74,7 @@ import hiNavigation from '@/locales/hi/navigation.json';
 import hiGames from '@/locales/hi/games.json';
 import hiWallet from '@/locales/hi/wallet.json';
 import hiNft from '@/locales/hi/nft.json';
+import hiSecurity from '@/locales/hi/security.json';
 
 // Portuguese translations
 import ptCommon from '@/locales/pt/common.json';
@@ -81,6 +82,7 @@ import ptNavigation from '@/locales/pt/navigation.json';
 import ptGames from '@/locales/pt/games.json';
 import ptWallet from '@/locales/pt/wallet.json';
 import ptNft from '@/locales/pt/nft.json';
+import ptSecurity from '@/locales/pt/security.json';
 
 // Arabic translations
 import arCommon from '@/locales/ar/common.json';
@@ -88,6 +90,7 @@ import arNavigation from '@/locales/ar/navigation.json';
 import arGames from '@/locales/ar/games.json';
 import arWallet from '@/locales/ar/wallet.json';
 import arNft from '@/locales/ar/nft.json';
+import arSecurity from '@/locales/ar/security.json';
 
 const resources = {
   en: {
@@ -162,6 +165,7 @@ const resources = {
     games: hiGames,
     wallet: hiWallet,
     nft: hiNft,
+    security: hiSecurity,
   },
   pt: {
     common: ptCommon,
@@ -169,6 +173,7 @@ const resources = {
     games: ptGames,
     wallet: ptWallet,
     nft: ptNft,
+    security: ptSecurity,
   },
   ar: {
     common: arCommon,
@@ -176,6 +181,7 @@ const resources = {
     games: arGames,
     wallet: arWallet,
     nft: arNft,
+    security: arSecurity,
   },
 };
 

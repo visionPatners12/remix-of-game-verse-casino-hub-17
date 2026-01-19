@@ -49,6 +49,10 @@
     "incorrectPinPlural": "Code PIN incorrect. {{count}} tentatives restantes.",
     "verificationError": "Erreur de vérification",
     "verifying": "Vérification...",
-    "timeRemaining": "Temps restant : {{time}}"
+    "timeRemaining": "Temps restant : {{time}}",
+    "numpad": {
+      "delete": "Supprimer",
+      "biometric": "Biométrique"
+    }
   }
 }
