@@ -88,5 +88,15 @@
     "networkMargin": "Margem da Rede",
     "totalEarnings": "Ganhos Totais",
     "pending": "Pendente"
+  },
+  "pwa": {
+    "installTitle": "Instalar Pryzen",
+    "iosInstructions": "No iPhone, apps são adicionados pelo Safari.",
+    "step1Title": "Toque no botão Compartilhar",
+    "step1Subtitle": "na parte inferior do Safari",
+    "step2Title": "Role e toque em Adicionar à Tela de Início",
+    "step2Subtitle": "depois toque em Adicionar",
+    "showMe": "Mostrar",
+    "gotIt": "Entendi"
   }
 }

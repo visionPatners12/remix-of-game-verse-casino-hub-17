@@ -108,5 +108,15 @@
     "networkMargin": "Margin",
     "totalEarnings": "Earnings",
     "pending": "Pending"
+  },
+  "pwa": {
+    "installTitle": "Install Pryzen",
+    "iosInstructions": "On iPhone, apps are added from Safari.",
+    "step1Title": "Tap the Share button",
+    "step1Subtitle": "at the bottom of Safari",
+    "step2Title": "Scroll and tap Add to Home Screen",
+    "step2Subtitle": "then tap Add",
+    "showMe": "Show me",
+    "gotIt": "Got it"
   }
 }

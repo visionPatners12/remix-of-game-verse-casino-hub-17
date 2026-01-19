@@ -88,5 +88,15 @@
     "networkMargin": "नेटवर्क मार्जिन",
     "totalEarnings": "कुल कमाई",
     "pending": "लंबित"
+  },
+  "pwa": {
+    "installTitle": "Pryzen इंस्टॉल करें",
+    "iosInstructions": "iPhone पर, ऐप्स Safari से जोड़े जाते हैं।",
+    "step1Title": "शेयर बटन पर टैप करें",
+    "step1Subtitle": "Safari के नीचे",
+    "step2Title": "स्क्रॉल करें और होम स्क्रीन पर जोड़ें पर टैप करें",
+    "step2Subtitle": "फिर जोड़ें पर टैप करें",
+    "showMe": "दिखाओ",
+    "gotIt": "समझ गया"
   }
 }
