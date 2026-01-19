@@ -36,14 +36,24 @@ export function useValidateReferralCode() {
       if (error) throw error;
 
       if (!data || (Array.isArray(data) && data.length === 0)) {
-        return { is_valid: false, referrer_id: null, referrer_username: null };
+        return { 
+          is_valid: false, 
+          referrer_id: null, 
+          referrer_username: null,
+          referrer_first_name: null,
+          referrer_last_name: null,
+          referrer_avatar_url: null
+        };
       }
 
       const result = Array.isArray(data) ? data[0] : data;
       return result as {
         is_valid: boolean;
-        referrer_id: string;
-        referrer_username: string;
+        referrer_id: string | null;
+        referrer_username: string | null;
+        referrer_first_name: string | null;
+        referrer_last_name: string | null;
+        referrer_avatar_url: string | null;
       };
     },
   });

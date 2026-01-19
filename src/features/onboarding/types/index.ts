@@ -18,6 +18,7 @@ export interface OnboardingStepProps {
 }
 
 export type OnboardingStepId = 
+  | 'invited-by'
   | 'welcome' 
   | 'profile' 
   | 'pin-setup' 
