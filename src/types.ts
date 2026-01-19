@@ -219,6 +219,3 @@ export function isValidSession(session: Session | null): session is AuthSession 
          isAuthenticatedUser(session.user) &&
          typeof session.access_token === 'string';
 }
-
-// ===== TIP TYPES =====
-export * from './types/tip';

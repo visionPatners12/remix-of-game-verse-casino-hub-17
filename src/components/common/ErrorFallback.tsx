@@ -1,16 +1,15 @@
 import React from 'react';
 import { Button } from '@/ui';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
-import type { FeedError } from '@/types/feed';
 
 interface ErrorFallbackProps {
-  error?: FeedError | Error | null;
+  error?: Error | null;
   onRetry?: () => void;
   variant?: 'compact' | 'full';
 }
 
 /**
- * Reusable error fallback component for feed errors
+ * Reusable error fallback component
  * Shows appropriate error messages and retry options
  */
 export function ErrorFallback({ 
@@ -23,18 +22,6 @@ export function ErrorFallback({
   const isCompact = variant === 'compact';
   
   const getErrorMessage = () => {
-    if ('type' in error) {
-      switch (error.type) {
-        case 'NETWORK':
-          return 'Connection problem. Please check your internet.';
-        case 'AUTH':
-          return 'Authentication required. Please sign in.';
-        case 'VALIDATION':
-          return 'Invalid data received. Please try again.';
-        default:
-          return error.message || 'An unexpected error occurred';
-      }
-    }
     return error.message || 'Something went wrong';
   };
 
