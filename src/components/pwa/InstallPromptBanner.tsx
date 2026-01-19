@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { X, Download, Share, Plus } from 'lucide-react';
+import { X, Download, Share, Plus, MoreVertical, PlusSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePWAInstall } from '@/hooks/usePWAInstall';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function InstallPromptBanner() {
-  const { canInstall, isIOS, promptInstall, dismissPrompt, isInstalled } = usePWAInstall();
+  const { canInstall, isIOS, isAndroid, canPromptNatively, promptInstall, dismissPrompt, isInstalled } = usePWAInstall();
   const [isVisible, setIsVisible] = useState(true);
-  const [showIOSInstructions, setShowIOSInstructions] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
 
   if (!canInstall || !isVisible || isInstalled) {
     return null;
@@ -15,12 +15,15 @@ export function InstallPromptBanner() {
 
   const handleInstall = async () => {
     if (isIOS) {
-      setShowIOSInstructions(true);
-    } else {
+      setShowInstructions(true);
+    } else if (isAndroid && canPromptNatively) {
       const installed = await promptInstall();
       if (installed) {
         setIsVisible(false);
       }
+    } else if (isAndroid) {
+      // Fallback: show manual Android guide
+      setShowInstructions(true);
     }
   };
 
@@ -40,7 +43,7 @@ export function InstallPromptBanner() {
           className="fixed bottom-20 left-4 right-4 z-50 md:bottom-4 md:left-auto md:right-4 md:max-w-sm"
         >
           <div className="bg-card border border-border rounded-2xl p-4 shadow-xl">
-            {!showIOSInstructions ? (
+            {!showInstructions ? (
               <>
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center">
@@ -48,10 +51,10 @@ export function InstallPromptBanner() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-foreground text-sm">
-                      Install PRYZEN
+                      Installer PRYZEN
                     </h3>
                     <p className="text-muted-foreground text-xs mt-0.5">
-                      Quick access from your home screen
+                      Accès rapide depuis votre écran d'accueil
                     </p>
                   </div>
                   <button
@@ -69,26 +72,26 @@ export function InstallPromptBanner() {
                     onClick={handleDismiss}
                     className="flex-1 text-xs"
                   >
-                    Later
+                    Plus tard
                   </Button>
                   <Button
                     size="sm"
                     onClick={handleInstall}
-                    className="flex-1 text-xs bg-primary hover:bg-primary-hover"
+                    className="flex-1 text-xs bg-primary hover:bg-primary/90"
                   >
                     <Download className="w-4 h-4 mr-1" />
-                    Install
+                    Installer
                   </Button>
                 </div>
               </>
-            ) : (
+            ) : isIOS ? (
               <>
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold text-foreground text-sm">
-                    Install on iOS
+                    Installer sur iOS
                   </h3>
                   <button
-                    onClick={() => setShowIOSInstructions(false)}
+                    onClick={() => setShowInstructions(false)}
                     className="p-1 text-muted-foreground hover:text-foreground transition-colors"
                   >
                     <X className="w-5 h-5" />
@@ -100,7 +103,7 @@ export function InstallPromptBanner() {
                       <Share className="w-4 h-4 text-primary" />
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      Tap <span className="text-foreground font-medium">Share</span> at the bottom of Safari
+                      Appuyez sur <span className="text-foreground font-medium">Partager</span> en bas de Safari
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
@@ -108,7 +111,7 @@ export function InstallPromptBanner() {
                       <Plus className="w-4 h-4 text-primary" />
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      Select <span className="text-foreground font-medium">"Add to Home Screen"</span>
+                      Sélectionnez <span className="text-foreground font-medium">"Sur l'écran d'accueil"</span>
                     </p>
                   </div>
                 </div>
@@ -118,7 +121,47 @@ export function InstallPromptBanner() {
                   onClick={handleDismiss}
                   className="w-full mt-4 text-xs"
                 >
-                  Got it
+                  Compris
+                </Button>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-foreground text-sm">
+                    Installer sur Android
+                  </h3>
+                  <button
+                    onClick={() => setShowInstructions(false)}
+                    className="p-1 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                      <MoreVertical className="w-4 h-4 text-primary" />
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Appuyez sur <span className="text-foreground font-medium">⋮</span> en haut à droite
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                      <PlusSquare className="w-4 h-4 text-primary" />
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Sélectionnez <span className="text-foreground font-medium">"Ajouter à l'écran d'accueil"</span>
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDismiss}
+                  className="w-full mt-4 text-xs"
+                >
+                  Compris
                 </Button>
               </>
             )}

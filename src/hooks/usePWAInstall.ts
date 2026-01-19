@@ -11,6 +11,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 interface PWAInstallResult {
   canInstall: boolean;
+  canPromptNatively: boolean;
   isInstalled: boolean;
   isIOS: boolean;
   isAndroid: boolean;
@@ -115,10 +116,12 @@ export function usePWAInstall(): PWAInstallResult {
     setWasPromptDismissed(true);
   }, []);
 
-  const canInstall = !isInstalled && !wasPromptDismissed && (!!deferredPrompt || isIOS);
+  const canInstall = !isInstalled && !wasPromptDismissed && (!!deferredPrompt || isIOS || isAndroid);
+  const canPromptNatively = !!deferredPrompt;
 
   return {
     canInstall,
+    canPromptNatively,
     isInstalled,
     isIOS,
     isAndroid,
