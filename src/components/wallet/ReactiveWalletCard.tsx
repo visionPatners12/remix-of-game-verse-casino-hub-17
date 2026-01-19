@@ -33,7 +33,7 @@ export const ReactiveWalletCard: React.FC<ReactiveWalletCardProps> = ({
   const refreshWallet = () => {};
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('fr-FR', {
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 2,
@@ -60,7 +60,7 @@ export const ReactiveWalletCard: React.FC<ReactiveWalletCardProps> = ({
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold flex items-center gap-2">
           <Wallet className="h-5 w-5" />
-          Mon Portefeuille
+          My Wallet
         </h2>
         <div className="flex items-center gap-2">
           <Badge 
@@ -98,7 +98,7 @@ export const ReactiveWalletCard: React.FC<ReactiveWalletCardProps> = ({
         <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center justify-between">
-              Solde Principal
+              Main Balance
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
             </CardTitle>
           </CardHeader>
@@ -107,7 +107,7 @@ export const ReactiveWalletCard: React.FC<ReactiveWalletCardProps> = ({
               {formatCurrency(realBalance)}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Disponible pour retrait
+              Available for withdrawal
             </p>
           </CardContent>
         </Card>
@@ -116,7 +116,7 @@ export const ReactiveWalletCard: React.FC<ReactiveWalletCardProps> = ({
         <Card className="bg-gradient-to-br from-green-500/10 to-green-500/5 border-green-500/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center justify-between">
-              Solde Bonus
+              Bonus Balance
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             </CardTitle>
           </CardHeader>
@@ -125,7 +125,7 @@ export const ReactiveWalletCard: React.FC<ReactiveWalletCardProps> = ({
               {formatCurrency(bonusBalance)}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Bonus et promotions
+              Bonuses and promotions
             </p>
           </CardContent>
         </Card>
@@ -143,7 +143,7 @@ export const ReactiveWalletCard: React.FC<ReactiveWalletCardProps> = ({
               {formatCurrency(totalBalance)}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Solde total disponible
+              Total available balance
             </p>
           </CardContent>
         </Card>

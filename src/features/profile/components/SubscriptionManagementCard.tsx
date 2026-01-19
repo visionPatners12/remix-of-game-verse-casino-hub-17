@@ -32,13 +32,13 @@ export function SubscriptionManagementCard({ subscriptions = [] }: SubscriptionM
       await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
       
       toast({
-        title: "Abonnement annulé",
-        description: "Votre abonnement a été annulé avec succès.",
+        title: "Subscription cancelled",
+        description: "Your subscription has been cancelled successfully.",
       });
     } catch (error) {
       toast({
-        title: "Erreur",
-        description: "Impossible d'annuler l'abonnement. Veuillez réessayer.",
+        title: "Error",
+        description: "Unable to cancel subscription. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -52,7 +52,7 @@ export function SubscriptionManagementCard({ subscriptions = [] }: SubscriptionM
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('fr-FR', {
+    return new Date(dateString).toLocaleDateString('en-US', {
       day: 'numeric',
       month: 'short',
       year: 'numeric'
@@ -67,17 +67,17 @@ export function SubscriptionManagementCard({ subscriptions = [] }: SubscriptionM
             <Crown className="w-12 h-12 mx-auto text-amber-500/60" />
           </div>
           <h3 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">
-            Aucun abonnement Premium
+            No Premium Subscription
           </h3>
           <p className="text-sm text-amber-600 dark:text-amber-300/80 mb-4">
-            Découvrez des tipsters experts et accédez à leurs pronostics exclusifs.
+            Discover expert tipsters and access their exclusive predictions.
           </p>
           <Button 
             size="sm" 
             className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white"
           >
             <Crown className="w-4 h-4 mr-2" />
-            Découvrir les Tipsters
+            Discover Tipsters
           </Button>
         </CardContent>
       </Card>
@@ -101,7 +101,7 @@ export function SubscriptionManagementCard({ subscriptions = [] }: SubscriptionM
                       variant={subscription.status === 'active' ? 'default' : 'secondary'}
                       className="text-xs"
                     >
-                      {subscription.status === 'active' ? 'Actif' : 'Inactif'}
+                      {subscription.status === 'active' ? 'Active' : 'Inactive'}
                     </Badge>
                     <span className="text-xs text-muted-foreground">
                       {subscription.price}€/{subscription.currency === 'EUR' ? 'mois' : 'month'}
@@ -123,11 +123,11 @@ export function SubscriptionManagementCard({ subscriptions = [] }: SubscriptionM
             <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
               <div className="flex items-center gap-1">
                 <Calendar className="w-3 h-3" />
-                <span>Expire le {formatDate(subscription.endDate)}</span>
+                <span>Expires on {formatDate(subscription.endDate)}</span>
               </div>
               <div className="flex items-center gap-1">
                 <CreditCard className="w-3 h-3" />
-                <span>Prochaine facturation</span>
+                <span>Next billing</span>
               </div>
             </div>
             
@@ -141,24 +141,24 @@ export function SubscriptionManagementCard({ subscriptions = [] }: SubscriptionM
                     disabled={cancellingId === subscription.id}
                   >
                     <AlertTriangle className="w-3 h-3 mr-2" />
-                    {cancellingId === subscription.id ? 'Annulation...' : 'Annuler l\'abonnement'}
+                    {cancellingId === subscription.id ? 'Cancelling...' : 'Cancel subscription'}
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Annuler l'abonnement</AlertDialogTitle>
+                    <AlertDialogTitle>Cancel subscription</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Êtes-vous sûr de vouloir annuler votre abonnement à {subscription.creatorName} ? 
-                      Vous garderez l'accès jusqu'au {formatDate(subscription.endDate)}.
+                      Are you sure you want to cancel your subscription to {subscription.creatorName}? 
+                      You will keep access until {formatDate(subscription.endDate)}.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Garder l'abonnement</AlertDialogCancel>
+                    <AlertDialogCancel>Keep subscription</AlertDialogCancel>
                     <AlertDialogAction 
                       onClick={() => handleUnsubscribe(subscription.id)}
                       className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                     >
-                      Oui, annuler
+                      Yes, cancel
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -175,7 +175,7 @@ export function SubscriptionManagementCard({ subscriptions = [] }: SubscriptionM
         onClick={handleManageSubscription}
       >
         <ExternalLink className="w-4 h-4 mr-2" />
-        Gérer tous mes abonnements
+        Manage all subscriptions
       </Button>
     </div>
   );

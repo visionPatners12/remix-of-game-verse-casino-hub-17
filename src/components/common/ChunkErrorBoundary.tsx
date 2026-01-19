@@ -58,8 +58,8 @@ export class ChunkErrorBoundary extends Component<ChunkErrorBoundaryProps, Chunk
       return (
         <NetworkErrorPage
           onRetry={this.handleReload}
-          title={this.state.isChunkError ? "Erreur de chargement" : "Erreur réseau"}
-          message="Une erreur est survenue lors du chargement. Vérifiez votre connexion et réessayez."
+          title={this.state.isChunkError ? "Loading error" : "Network error"}
+          message="An error occurred while loading. Check your connection and try again."
         />
       );
     }

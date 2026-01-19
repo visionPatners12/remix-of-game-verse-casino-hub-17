@@ -43,8 +43,8 @@ export function useSettings() {
       } catch (error) {
         console.error('Error loading settings:', error);
         toast({
-          title: "Erreur",
-          description: "Impossible de charger les paramètres",
+          title: "Error",
+          description: "Unable to load settings",
           variant: "destructive"
         });
       } finally {
@@ -73,14 +73,14 @@ export function useSettings() {
       }));
 
       toast({
-        title: "Paramètres mis à jour",
-        description: "Vos paramètres ont été sauvegardés avec succès"
+        title: "Settings updated",
+        description: "Your settings have been saved successfully"
       });
     } catch (error) {
       console.error('Error updating settings:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de sauvegarder les paramètres",
+        title: "Error",
+        description: "Unable to save settings",
         variant: "destructive"
       });
     } finally {

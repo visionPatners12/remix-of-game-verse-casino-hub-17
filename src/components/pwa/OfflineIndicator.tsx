@@ -28,7 +28,7 @@ export function OfflineIndicator() {
           <div className="flex items-center justify-between gap-2 py-2.5 px-4">
             <div className="flex items-center gap-2 text-sm font-medium">
               <WifiOff className="w-4 h-4 animate-pulse" />
-              <span>Vous êtes hors ligne</span>
+              <span>You are offline</span>
             </div>
             <Button
               variant="ghost"
@@ -37,7 +37,7 @@ export function OfflineIndicator() {
               className="h-7 px-2 text-xs bg-white/10 hover:bg-white/20"
             >
               <RefreshCw className="w-3 h-3 mr-1" />
-              Réessayer
+              Retry
             </Button>
           </div>
         </motion.div>
@@ -55,7 +55,7 @@ export function OfflineIndicator() {
           <div className="flex items-center justify-between gap-2 py-2.5 px-4">
             <div className="flex items-center gap-2 text-sm font-medium">
               <Wifi className="w-4 h-4" />
-              <span>Connexion rétablie</span>
+              <span>Connection restored</span>
             </div>
             <Button
               variant="ghost"
@@ -63,7 +63,7 @@ export function OfflineIndicator() {
               onClick={handleDismiss}
               className="h-7 px-2 text-xs bg-white/10 hover:bg-white/20"
             >
-              Fermer
+              Close
             </Button>
           </div>
         </motion.div>

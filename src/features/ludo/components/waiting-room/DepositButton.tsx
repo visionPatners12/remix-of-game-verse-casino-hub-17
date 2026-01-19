@@ -131,8 +131,8 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       setTransactionState('confirmed');
       clearStorage(); // Clear storage on success
       toast({
-        title: "Dépôt confirmé !",
-        description: "Votre dépôt a été confirmé sur la blockchain.",
+        title: "Deposit confirmed!",
+        description: "Your deposit has been confirmed on the blockchain.",
       });
       onDepositSuccess?.(txHash);
     }
@@ -144,8 +144,8 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       setTransactionState('error');
       clearStorage(); // Clear storage on confirmation error
       toast({
-        title: "Confirmation échouée",
-        description: "La transaction a peut-être échoué. Vérifiez sur BaseScan.",
+        title: "Confirmation failed",
+        description: "Transaction may have failed. Check on BaseScan.",
         variant: "destructive",
       });
       setTxHash(undefined);
@@ -157,8 +157,8 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
   const ensureWalletReady = async () => {
     if (!wallets || wallets.length === 0) {
       toast({
-        title: "Wallet non connecté",
-        description: "Veuillez connecter votre wallet pour continuer.",
+        title: "Wallet not connected",
+        description: "Please connect your wallet to continue.",
         variant: "destructive",
       });
       throw new Error("No wallet connected");
@@ -177,8 +177,8 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       }
     } catch (e) {
       toast({
-        title: "Réseau Base requis",
-        description: "Impossible de basculer sur Base. Veuillez réessayer.",
+        title: "Base network required",
+        description: "Unable to switch to Base. Please try again.",
         variant: "destructive",
       });
       throw e;
@@ -219,8 +219,8 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       // Check smart wallet is ready
       if (!smartWalletClient) {
         toast({
-          title: "Smart Wallet non prêt",
-          description: "Veuillez patienter que le smart wallet soit initialisé.",
+          title: "Smart Wallet not ready",
+          description: "Please wait for the smart wallet to initialize.",
           variant: "destructive",
         });
         throw new Error("Smart wallet not ready");
@@ -266,8 +266,8 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       saveToStorage('tx-pending', hash); // Save with hash after tx sent
 
       toast({
-        title: "Transaction envoyée",
-        description: "En attente de confirmation blockchain (2 blocs)...",
+        title: "Transaction sent",
+        description: "Waiting for blockchain confirmation (2 blocks)...",
       });
     } catch (error) {
       console.error("USDC deposit failed:", error);
@@ -277,16 +277,16 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
         setShowRetry(true);
         clearStorage(); // Clear storage on user cancellation
         toast({
-          title: "Transaction annulée",
-          description: "Pas de souci ! Vous pouvez réessayer quand vous voulez.",
+          title: "Transaction cancelled",
+          description: "No worries! You can try again when you want.",
         });
       } else {
         setTransactionState('error');
         setShowRetry(true);
         clearStorage(); // Clear storage on error
         toast({
-          title: "Dépôt échoué",
-          description: "La transaction a échoué. Veuillez réessayer.",
+          title: "Deposit failed",
+          description: "The transaction failed. Please try again.",
           variant: "destructive",
         });
       }
@@ -316,10 +316,10 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
         </motion.div>
         <div className="text-center">
           <p className="text-lg font-semibold text-warning">
-            {transactionState === 'confirming' ? 'Confirmation blockchain...' : 'Transaction envoyée...'}
+            {transactionState === 'confirming' ? 'Blockchain confirmation...' : 'Transaction sent...'}
           </p>
           <p className="text-sm text-muted-foreground mt-1">
-            {transactionState === 'confirming' ? 'Attente de 2 confirmations' : 'Attente du réseau'}
+            {transactionState === 'confirming' ? 'Waiting for 2 confirmations' : 'Waiting for network'}
           </p>
         </div>
         
@@ -335,7 +335,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
         <div className="flex justify-between w-full max-w-[200px] text-[10px] text-muted-foreground">
           <span>Wallet</span>
           <span>Transaction</span>
-          <span>Confirmé</span>
+          <span>Confirmed</span>
         </div>
         
         {/* iOS PWA: Open Wallet button */}
@@ -347,7 +347,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
             className="rounded-full"
           >
             <ExternalLink className="w-4 h-4 mr-2" />
-            Ouvrir le Wallet
+            Open Wallet
           </Button>
         )}
         
@@ -379,9 +379,9 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
           <CheckCircle className="w-16 h-16 text-success" />
         </motion.div>
         <div className="text-center">
-          <p className="text-lg font-semibold text-success">Dépôt confirmé</p>
+          <p className="text-lg font-semibold text-success">Deposit confirmed</p>
           <p className="text-sm text-muted-foreground mt-1">
-            {betAmount} USDC envoyé
+            {betAmount} USDC sent
           </p>
         </div>
       </motion.div>
@@ -418,8 +418,8 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
               transactionState === 'cancelled' ? "text-muted-foreground" : "text-destructive"
             )}>
               {transactionState === 'cancelled' 
-                ? "Transaction annulée" 
-                : "La transaction a échoué"}
+                ? "Transaction cancelled" 
+                : "Transaction failed"}
             </p>
           </motion.div>
         )}
@@ -468,17 +468,17 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
             ) : transactionState === 'cancelled' || transactionState === 'error' ? (
               <>
                 <RefreshCw className="w-5 h-5" />
-                Réessayer
+                Retry
               </>
             ) : !hasWalletConnected ? (
               <>
                 <Wallet className="w-5 h-5" />
-                Connecter wallet
+                Connect wallet
               </>
             ) : !isSmartWalletReady ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                Initialisation...
+                Initializing...
               </>
             ) : (
               <>
@@ -498,13 +498,13 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
         <Dialog open={showConfirmModal} onOpenChange={setShowConfirmModal}>
           <DialogContent className="max-w-sm">
             <DialogHeader>
-              <DialogTitle className="text-center">Confirmer le dépôt</DialogTitle>
+              <DialogTitle className="text-center">Confirm deposit</DialogTitle>
             </DialogHeader>
             
             <div className="space-y-3 py-4">
               {/* Amount - Prominent display */}
               <div className="flex flex-col items-center gap-2 p-5 bg-muted/50 rounded-xl">
-                <span className="text-sm text-muted-foreground">Montant</span>
+                <span className="text-sm text-muted-foreground">Amount</span>
                 <div className="flex items-center gap-3">
                   <TokenUSDC variant="branded" size={32} />
                   <span className="text-3xl font-bold">{betAmount} USDC</span>
@@ -522,7 +522,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
               
               {/* Network */}
               <div className="flex items-center justify-between p-3 border rounded-lg">
-                <span className="text-sm text-muted-foreground">Réseau</span>
+                <span className="text-sm text-muted-foreground">Network</span>
                 <div className="flex items-center gap-2">
                   <NetworkBase size={20} />
                   <span className="font-medium">Base</span>
@@ -549,7 +549,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
                 onClick={() => setShowConfirmModal(false)}
                 className="flex-1"
               >
-                Annuler
+                Cancel
               </Button>
               <Button 
                 onClick={() => {
@@ -559,7 +559,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
                 className="flex-1 bg-success hover:bg-success/90 text-success-foreground"
               >
                 <CheckCircle className="w-4 h-4 mr-2" />
-                Confirmer
+                Confirm
               </Button>
             </DialogFooter>
           </DialogContent>
