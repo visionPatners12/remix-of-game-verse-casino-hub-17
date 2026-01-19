@@ -9,11 +9,11 @@ import { usePinSession } from '../hooks/usePinSession';
 import { cn } from '@/lib/utils';
 
 const REASON_LABELS: Record<string, string> = {
-  withdraw: 'Confirmer le retrait',
-  settings: 'Modifier les paramètres',
-  transaction: 'Confirmer la transaction',
-  security: 'Accéder aux paramètres de sécurité',
-  default: 'Vérification requise',
+  withdraw: 'Confirm withdrawal',
+  settings: 'Modify settings',
+  transaction: 'Confirm transaction',
+  security: 'Access security settings',
+  default: 'Verification required',
 };
 
 export const PinChallengePage: React.FC = () => {
@@ -103,19 +103,19 @@ export const PinChallengePage: React.FC = () => {
         if (newAttempts >= MAX_ATTEMPTS) {
           setIsLocked(true);
           setLockTimeLeft(LOCKOUT_DURATION);
-          setError(`Trop de tentatives. Réessayez dans ${Math.ceil(LOCKOUT_DURATION / 60)} minutes.`);
+          setError(`Too many attempts. Try again in ${Math.ceil(LOCKOUT_DURATION / 60)} minutes.`);
         } else {
           const remaining = MAX_ATTEMPTS - newAttempts;
           setError(
             remaining > 1
-              ? `PIN incorrect. ${remaining} tentatives restantes.`
-              : `PIN incorrect. Dernière tentative.`
+              ? `Incorrect PIN. ${remaining} attempts remaining.`
+              : `Incorrect PIN. Last attempt.`
           );
         }
       }
     } catch (err) {
       setPin('');
-      setError(err instanceof Error ? err.message : 'Erreur de vérification');
+      setError(err instanceof Error ? err.message : 'Verification error');
     }
   };
 
@@ -138,7 +138,7 @@ export const PinChallengePage: React.FC = () => {
   if (isLoadingStatus) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-background">
-        <div className="animate-pulse text-muted-foreground">Chargement...</div>
+        <div className="animate-pulse text-muted-foreground">Loading...</div>
       </div>
     );
   }
@@ -155,7 +155,7 @@ export const PinChallengePage: React.FC = () => {
         >
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <h1 className="text-lg font-semibold">Sécurité</h1>
+        <h1 className="text-lg font-semibold">Security</h1>
         <div className="w-10" /> {/* Spacer for centering */}
       </div>
 
@@ -183,11 +183,11 @@ export const PinChallengePage: React.FC = () => {
           {/* Title & Description */}
           <div className="space-y-2">
             <h2 className="text-2xl font-bold text-foreground">
-              {isLocked ? 'Compte verrouillé' : 'Entrez votre PIN'}
+              {isLocked ? 'Account locked' : 'Enter your PIN'}
             </h2>
             <p className="text-muted-foreground">
               {isLocked
-                ? `Trop de tentatives. Réessayez dans ${formatTime(lockTimeLeft)}.`
+                ? `Too many attempts. Try again in ${formatTime(lockTimeLeft)}.`
                 : reasonLabel}
             </p>
           </div>
@@ -225,7 +225,7 @@ export const PinChallengePage: React.FC = () => {
           {isVerifying && (
             <div className="flex items-center justify-center gap-2 text-muted-foreground">
               <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-              <span>Vérification...</span>
+              <span>Verifying...</span>
             </div>
           )}
 
@@ -236,7 +236,7 @@ export const PinChallengePage: React.FC = () => {
               onClick={handleCancel}
               className="text-muted-foreground"
             >
-              Annuler
+              Cancel
             </Button>
           </div>
         </div>

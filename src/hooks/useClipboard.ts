@@ -11,15 +11,15 @@ export const useClipboard = () => {
       await navigator.clipboard.writeText(text);
       setCopied(true);
       toast({
-        title: "Copié avec succès",
-        description: successMessage || "Le texte a été copié dans le presse-papiers",
+        title: "Copied successfully",
+        description: successMessage || "Text copied to clipboard",
       });
       setTimeout(() => setCopied(false), 2000);
       return true;
     } catch (error) {
       toast({
-        title: "Erreur",
-        description: "Impossible de copier le texte",
+        title: "Error",
+        description: "Unable to copy text",
         variant: "destructive",
       });
       return false;
