@@ -371,6 +371,90 @@ export type Database = {
           },
         ]
       }
+      ludo_commissions: {
+        Row: {
+          beneficiary_id: string
+          bet_amount: number
+          commission_amount: number
+          commission_rate: number
+          created_at: string
+          credited_at: string | null
+          game_id: string
+          id: string
+          level: number
+          paid_at: string | null
+          player_id: string
+          status: string
+          tx_hash: string | null
+        }
+        Insert: {
+          beneficiary_id: string
+          bet_amount?: number
+          commission_amount?: number
+          commission_rate: number
+          created_at?: string
+          credited_at?: string | null
+          game_id: string
+          id?: string
+          level: number
+          paid_at?: string | null
+          player_id: string
+          status?: string
+          tx_hash?: string | null
+        }
+        Update: {
+          beneficiary_id?: string
+          bet_amount?: number
+          commission_amount?: number
+          commission_rate?: number
+          created_at?: string
+          credited_at?: string | null
+          game_id?: string
+          id?: string
+          level?: number
+          paid_at?: string | null
+          player_id?: string
+          status?: string
+          tx_hash?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ludo_commissions_beneficiary_id_fkey"
+            columns: ["beneficiary_id"]
+            isOneToOne: false
+            referencedRelation: "public_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ludo_commissions_beneficiary_id_fkey"
+            columns: ["beneficiary_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ludo_commissions_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "ludo_games"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ludo_commissions_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "public_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ludo_commissions_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ludo_game_players: {
         Row: {
           color: Database["public"]["Enums"]["ludo_color_enum"]
@@ -1565,6 +1649,10 @@ export type Database = {
           updated_at: string
           video_url: string
         }[]
+      }
+      get_ludo_referral_stats: {
+        Args: { p_period_days?: number; p_user_id: string }
+        Returns: Json
       }
       get_mlm_stats: { Args: { p_user_id: string }; Returns: Json }
       get_public_profile: {
