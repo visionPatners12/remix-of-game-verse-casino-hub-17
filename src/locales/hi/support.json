@@ -1,0 +1,66 @@
+{
+  "title": "सहायता",
+  "subtitle": "हम आपकी कैसे मदद कर सकते हैं?",
+  "contactUs": "संपर्क करें",
+  "email": "ईमेल",
+  "socialMedia": "सोशल मीडिया",
+  "helpCenter": "हेल्प सेंटर",
+  "faq": "अक्सर पूछे जाने वाले प्रश्न",
+  "guides": "गाइड",
+  "tickets": {
+    "title": "मेरी टिकट",
+    "create": "टिकट बनाएं",
+    "noTickets": "अभी तक कोई टिकट नहीं",
+    "viewAll": "सभी टिकट देखें",
+    "subject": "विषय",
+    "subjectPlaceholder": "आपकी समस्या का संक्षिप्त विवरण",
+    "message": "संदेश",
+    "messagePlaceholder": "अपनी समस्या का विस्तार से वर्णन करें...",
+    "category": "श्रेणी",
+    "priority": "प्राथमिकता",
+    "submit": "टिकट सबमिट करें",
+    "submitting": "सबमिट हो रहा है..."
+  },
+  "categories": {
+    "technical": "तकनीकी समस्या",
+    "billing": "बिलिंग और भुगतान",
+    "behavior": "उपयोगकर्ता रिपोर्ट करें",
+    "other": "अन्य"
+  },
+  "priority": {
+    "low": "कम",
+    "medium": "मध्यम",
+    "high": "उच्च",
+    "urgent": "अत्यावश्यक"
+  },
+  "status": {
+    "open": "खुला",
+    "inProgress": "प्रगति में",
+    "resolved": "हल किया गया",
+    "closed": "बंद"
+  },
+  "chat": {
+    "title": "टिकट बातचीत",
+    "reply": "जवाब दें",
+    "replyPlaceholder": "अपना जवाब टाइप करें...",
+    "send": "भेजें",
+    "fromSupport": "सहायता टीम",
+    "attachFile": "फ़ाइल अटैच करें"
+  },
+  "howToAddFunds": {
+    "title": "धन कैसे जोड़ें",
+    "step1": "अपना वॉलेट कनेक्ट करें",
+    "step2": "जमा पर जाएं",
+    "step3": "अपनी विधि चुनें",
+    "step4": "लेनदेन की पुष्टि करें"
+  },
+  "success": {
+    "ticketCreated": "टिकट सफलतापूर्वक बनाया गया",
+    "messageSent": "संदेश भेजा गया"
+  },
+  "errors": {
+    "subjectRequired": "विषय आवश्यक है",
+    "messageRequired": "संदेश आवश्यक है",
+    "submitFailed": "टिकट सबमिट करने में विफल"
+  }
+}

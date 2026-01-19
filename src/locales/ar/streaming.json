@@ -1,0 +1,90 @@
+{
+  "title": "البث المباشر",
+  "goLive": "ابدأ البث",
+  "watching": "يشاهدون",
+  "viewers": "مشاهدون",
+  "live": "مباشر",
+  "ended": "انتهى",
+  "upcoming": "قادم",
+  "create": {
+    "title": "بدء البث",
+    "streamTitle": "عنوان البث",
+    "streamTitlePlaceholder": "أدخل عنوان البث",
+    "description": "الوصف",
+    "descriptionPlaceholder": "ما موضوع بثك؟",
+    "category": "الفئة",
+    "selectCategory": "اختر الفئة",
+    "tags": "الوسوم",
+    "addTag": "أضف وسماً",
+    "match": "ربط بمباراة",
+    "selectMatch": "اختر مباراة (اختياري)",
+    "visibility": "الظهور",
+    "public": "عام",
+    "private": "خاص",
+    "startStream": "بدء البث",
+    "preparing": "جاري تحضير البث..."
+  },
+  "player": {
+    "play": "تشغيل",
+    "pause": "إيقاف مؤقت",
+    "mute": "كتم الصوت",
+    "unmute": "إلغاء كتم الصوت",
+    "fullscreen": "ملء الشاشة",
+    "exitFullscreen": "الخروج من ملء الشاشة",
+    "quality": "الجودة",
+    "settings": "الإعدادات",
+    "pip": "صورة داخل صورة",
+    "theater": "وضع المسرح",
+    "streamEnded": "انتهى البث",
+    "streamOffline": "البث غير متصل"
+  },
+  "chat": {
+    "title": "الدردشة المباشرة",
+    "sendMessage": "إرسال رسالة",
+    "placeholder": "اكتب رسالة...",
+    "emotes": "الرموز التعبيرية",
+    "slowMode": "الوضع البطيء مفعّل",
+    "subscribersOnly": "للمشتركين فقط",
+    "chatDisabled": "الدردشة معطلة",
+    "banned": "أنت محظور من هذه الدردشة"
+  },
+  "controls": {
+    "endStream": "إنهاء البث",
+    "confirmEnd": "هل أنت متأكد أنك تريد إنهاء البث؟",
+    "muteAudio": "كتم الصوت",
+    "muteVideo": "إيقاف الفيديو",
+    "shareScreen": "مشاركة الشاشة",
+    "stopSharing": "إيقاف المشاركة",
+    "settings": "إعدادات البث"
+  },
+  "stats": {
+    "title": "إحصائيات البث",
+    "peakViewers": "ذروة المشاهدين",
+    "averageViewers": "متوسط المشاهدين",
+    "duration": "المدة",
+    "messages": "رسائل الدردشة"
+  },
+  "categories": {
+    "sports": "رياضة",
+    "gaming": "ألعاب",
+    "talkShow": "برنامج حواري",
+    "analysis": "تحليل",
+    "other": "أخرى"
+  },
+  "empty": {
+    "noStreams": "لا توجد بثوث مباشرة",
+    "checkBackLater": "عد لاحقاً لمحتوى مباشر"
+  },
+  "analytics": {
+    "realtimeViewers": "المشاهدون الفوريون",
+    "live": "مباشر",
+    "current": "الحالي",
+    "max": "الأقصى",
+    "avg": "المتوسط",
+    "noData": "لا توجد بيانات متاحة",
+    "dataAppears": "ستظهر البيانات عند بدء البث",
+    "timeAgo1h": "-1س",
+    "timeAgo30m": "-30د",
+    "now": "الآن"
+  }
+}

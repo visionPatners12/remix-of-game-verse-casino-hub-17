@@ -1,0 +1,107 @@
+{
+  "league": {
+    "tabs": {
+      "standings": "स्टैंडिंग्स",
+      "matches": "मैच",
+      "social": "सोशल",
+      "highlights": "हाइलाइट्स"
+    },
+    "header": {
+      "upcoming": "आगामी",
+      "teams": "टीमें",
+      "followers": "फॉलोअर्स",
+      "follow": "फॉलो करें",
+      "unfollow": "अनफॉलो करें"
+    },
+    "matches": {
+      "live": "लाइव",
+      "upcoming": "आगामी",
+      "past": "पिछले",
+      "noMatches": "कोई मैच उपलब्ध नहीं"
+    },
+    "feed": {
+      "loading": "हाइलाइट्स लोड हो रहे हैं...",
+      "error": "हाइलाइट्स लोड करने में त्रुटि",
+      "empty": "अभी तक कोई हाइलाइट्स उपलब्ध नहीं",
+      "allLoaded": "सभी हाइलाइट्स लोड हो गए"
+    },
+    "social": {
+      "empty": "इस लीग के लिए अभी तक कोई भविष्यवाणी या दांव नहीं"
+    }
+  },
+  "team": {
+    "tabs": {
+      "standings": "स्टैंडिंग्स",
+      "matches": "मैच",
+      "social": "सोशल",
+      "highlights": "हाइलाइट्स"
+    },
+    "header": {
+      "posts": "पोस्ट",
+      "followers": "फॉलोअर्स",
+      "rank": "रैंक",
+      "points": "पॉइंट्स",
+      "follow": "फॉलो करें",
+      "unfollow": "अनफॉलो करें",
+      "staff": "स्टाफ"
+    },
+    "matches": {
+      "upcoming": "आगामी",
+      "past": "पिछले",
+      "noMatches": "कोई मैच उपलब्ध नहीं"
+    },
+    "staff": {
+      "title": "स्टाफ",
+      "headCoach": "मुख्य कोच",
+      "attacker": "फॉरवर्ड",
+      "midfielder": "मिडफील्डर",
+      "defender": "डिफेंडर",
+      "goalkeeper": "गोलकीपर",
+      "unknown": "अज्ञात",
+      "noPlayers": "कोई खिलाड़ी नहीं मिला"
+    },
+    "form": {
+      "title": "फॉर्म (पिछले 5 मैच)",
+      "goalsFor": "लक्ष्य के लिए",
+      "goalsAgainst": "खिलाफ लक्ष्य",
+      "difference": "अंतर",
+      "noData": "कोई फॉर्म डेटा उपलब्ध नहीं",
+      "win": "जी",
+      "draw": "ड्रॉ",
+      "loss": "हा"
+    },
+    "standings": {
+      "loading": "स्टैंडिंग्स लोड हो रहे हैं...",
+      "error": "स्टैंडिंग्स लोड करने में त्रुटि",
+      "empty": "कोई स्टैंडिंग्स उपलब्ध नहीं"
+    },
+    "social": {
+      "empty": "इस टीम के लिए अभी तक कोई भविष्यवाणी या दांव नहीं"
+    },
+    "stories": {
+      "highlights": "हाइलाइट्स",
+      "squad": "स्क्वाड",
+      "nextMatch": "अगला",
+      "trophies": "ट्रॉफी"
+    }
+  },
+  "match": {
+    "lineups": {
+      "title": "लाइनअप",
+      "starters": "स्टार्टिंग XI",
+      "startersFive": "स्टार्टिंग फाइव",
+      "bench": "बेंच",
+      "substitutes": "विकल्प",
+      "loading": "लाइनअप लोड हो रहे हैं...",
+      "comingSoon": "जल्द आ रहा है",
+      "availableSoon": "किकऑफ के करीब लाइनअप उपलब्ध होगा",
+      "noData": "कोई लाइनअप डेटा उपलब्ध नहीं"
+    }
+  },
+  "common": {
+    "back": "वापस",
+    "vs": "बनाम",
+    "notFound": "नहीं मिला",
+    "error": "एक त्रुटि हुई"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "page": {
+    "title": "Minhas Apostas",
+    "subtitle": "Acompanhe seu desempenho"
+  },
+  "wallet": {
+    "connect": "Conecte Sua Carteira",
+    "connectMessage": "Conecte sua carteira para ver seu histórico de apostas",
+    "connecting": "Conectando...",
+    "connectingMessage": "Conectando à sua carteira"
+  },
+  "empty": {
+    "title": "Nenhuma aposta ainda",
+    "message": "Seu histórico aparecerá aqui após sua primeira aposta"
+  },
+  "stats": {
+    "winRate": "Taxa de Vitória",
+    "wagered": "Apostado",
+    "profit": "Lucro",
+    "bets": "Apostas"
+  },
+  "bet": {
+    "single": "Aposta Simples",
+    "parlay": "Múltipla",
+    "stake": "Valor",
+    "odds": "Odds",
+    "payout": "Pagamento",
+    "potentialWin": "Ganho Potencial"
+  },
+  "status": {
+    "won": "Ganhou",
+    "lost": "Perdeu",
+    "pending": "Pendente",
+    "cashedOut": "Encerrada",
+    "canceled": "Cancelada"
+  },
+  "actions": {
+    "redeem": "Resgatar Ganhos",
+    "redeeming": "Resgatando...",
+    "cashout": "Encerrar",
+    "cashingOut": "Encerrando...",
+    "loadMore": "Carregar Mais",
+    "loading": "Carregando..."
+  },
+  "cashout": {
+    "available": "Encerramento disponível",
+    "unavailable": "Encerramento indisponível",
+    "processing": "Processando...",
+    "success": "Encerramento bem-sucedido!",
+    "error": "Falha no encerramento",
+    "approving": "Aprovando..."
+  }
+}

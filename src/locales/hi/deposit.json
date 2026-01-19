@@ -1,0 +1,136 @@
+{
+  "page": {
+    "title": "जमा",
+    "subtitle": "अपने खाते में धन जोड़ें"
+  },
+  "steps": {
+    "method": "विधि",
+    "details": "विवरण",
+    "confirmation": "पुष्टि"
+  },
+  "methods": {
+    "title": "जमा विधि चुनें",
+    "crypto": {
+      "title": "क्रिप्टो",
+      "description": "क्रिप्टो जमा"
+    },
+    "coinbase": {
+      "title": "Coinbase Pay",
+      "buyTitle": "Base पर USDC खरीदें",
+      "description": "डेबिट कार्ड, Apple Pay, बैंक"
+    },
+    "mobileMoney": {
+      "title": "मोबाइल मनी",
+      "description": "जल्द आ रहा है"
+    },
+    "bankTransfer": {
+      "title": "बैंक ट्रांसफर",
+      "description": "जल्द आ रहा है"
+    },
+    "applePay": {
+      "title": "Apple Pay",
+      "description": "Apple Pay के माध्यम से तुरंत जमा"
+    },
+    "comingSoon": "जल्द आ रहा है",
+    "processing": "प्रोसेस हो रहा है...",
+    "recommended": "लोकप्रिय"
+  },
+  "crypto": {
+    "title": "क्रिप्टो जमा करें",
+    "subtitle": "आपका व्यक्तिगत जमा पता",
+    "loading": "आपका जमा पता प्राप्त किया जा रहा है...",
+    "error": "पता जनरेट करने में असमर्थ। कृपया पुनः प्रयास करें।",
+    "retry": "पुनः प्रयास करें",
+    "qrTitle": "जमा करने के लिए स्कैन करें",
+    "qrDescription": "टोकन भेजने के लिए अपने वॉलेट से इस QR कोड को स्कैन करें",
+    "supportedChains": "समर्थित चेन",
+    "copyTitle": "{{symbol}} जमा पता",
+    "copyDescription": "अपनी जमा के लिए इस पते का उपयोग करें",
+    "copied": "कॉपी किया गया!",
+    "copyAddress": "पता कॉपी करें",
+    "addressCopied": "जमा पता क्लिपबोर्ड पर कॉपी किया गया",
+    "primaryAddress": "प्राथमिक पता",
+    "alternativeAddress": "वॉलेट पता",
+    "recommended": "अनुशंसित",
+    "easyToShare": "याद रखने और साझा करने में आसान",
+    "ensTitle": "आपका जमा नाम",
+    "ensDescription": "आसानी से क्रिप्टो प्राप्त करने के लिए यह नाम साझा करें",
+    "ensCopied": "ENS नाम क्लिपबोर्ड पर कॉपी किया गया",
+    "walletTitle": "वॉलेट पता",
+    "walletDescription": "सीधे ट्रांसफर के लिए इस पते का उपयोग करें",
+    "importantNote": "महत्वपूर्ण",
+    "gameNote": "गेम बेट्स Base पर USDC में किए जाते हैं। आप कोई भी क्रिप्टो जमा कर सकते हैं और इसे कनवर्ट करने के लिए स्वैप सुविधा का उपयोग कर सकते हैं।"
+  },
+  "mobileMoney": {
+    "title": "मोबाइल मनी",
+    "serviceTitle": "सेवा विकास में है",
+    "serviceDescription": "मोबाइल मनी जमा जल्द उपलब्ध होगा",
+    "chooseAnother": "दूसरी विधि चुनें"
+  },
+  "instructions": {
+    "title": "जमा कैसे करें",
+    "step1Title": "पता कॉपी करें",
+    "step1Desc": "जमा पता कॉपी करें या QR कोड स्कैन करें",
+    "step2Title": "अपना वॉलेट खोलें",
+    "step2Desc": "अपना पसंदीदा क्रिप्टो वॉलेट ऐप उपयोग करें",
+    "step3Title": "अपना धन भेजें",
+    "step3Desc": "इस पते पर केवल {{name}} ({{symbol}}) भेजें",
+    "step4Title": "पुष्टि की प्रतीक्षा करें",
+    "step4Desc": "1-3 नेटवर्क पुष्टि आवश्यक"
+  },
+  "reminders": {
+    "title": "महत्वपूर्ण रिमाइंडर्स",
+    "onlySend": "इस पते पर केवल {{name}} ({{symbol}}) भेजें",
+    "verifyAddress": "भेजने से पहले हमेशा पता सत्यापित करें",
+    "minimum": "न्यूनतम राशि: 0.001 {{symbol}}",
+    "confirmation": "नेटवर्क पुष्टि के बाद धन क्रेडिट होगा"
+  },
+  "confirmation": {
+    "title": "पुष्टि",
+    "applePayTitle": "जमा पूर्ण",
+    "applePayDesc": "आपका Apple Pay जमा सफलतापूर्वक प्रोसेस किया गया।",
+    "cryptoTitle": "जमा कॉन्फ़िगर किया गया",
+    "cryptoDesc": "आपका USDC पता जनरेट किया गया है। अब आप अपना जमा कर सकते हैं।",
+    "viewWallet": "मेरा वॉलेट देखें",
+    "newDeposit": "नया जमा"
+  },
+  "processing": {
+    "title": "प्रोसेसिंग समय",
+    "network": "नेटवर्क",
+    "confirmations": "पुष्टि",
+    "blocks": "1-3 ब्लॉक",
+    "estimatedTime": "अनुमानित समय",
+    "time": "2-5 मिनट"
+  },
+  "security": {
+    "title": "सुरक्षा और गोपनीयता",
+    "description": "यह पता विशेष रूप से आपके लिए जनरेट किया गया था। समर्थित नेटवर्क पर केवल USDC भेजें।"
+  },
+  "coinbase": {
+    "title": "Coinbase Pay के साथ Base पर USDC खरीदें",
+    "selectMethod": "अपनी पसंदीदा भुगतान विधि चुनें",
+    "securedBy": "Coinbase द्वारा सुरक्षित",
+    "securityNote": "आपका जमा सुरक्षित है और Base नेटवर्क पर सीधे Coinbase द्वारा प्रोसेस किया जाता है",
+    "enterAmount": "राशि दर्ज करें",
+    "opening": "Coinbase खोला जा रहा है...",
+    "buyUsdc": "USDC खरीदें",
+    "noMethods": "कोई भुगतान विधि उपलब्ध नहीं"
+  },
+  "applePay": {
+    "native": "Apple Pay डायरेक्ट",
+    "description": "तेज़ और सुरक्षित चेकआउट",
+    "phoneRequired": "फ़ोन नंबर आवश्यक",
+    "phoneRequiredMessage": "Apple Pay उपयोग करने के लिए कृपया सेटिंग्स में अपना फ़ोन नंबर जोड़ें",
+    "goToSettings": "सेटिंग्स पर जाएं",
+    "processing": "Apple Pay प्रोसेस हो रहा है...",
+    "fees": "लेनदेन शुल्क",
+    "exchangeFee": "एक्सचेंज शुल्क",
+    "networkFee": "नेटवर्क शुल्क",
+    "total": "भुगतान करने के लिए कुल",
+    "youReceive": "आपको मिलेगा"
+  },
+  "buttons": {
+    "back": "वापस",
+    "continue": "जारी रखें"
+  }
+}

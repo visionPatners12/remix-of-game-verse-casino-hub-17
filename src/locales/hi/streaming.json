@@ -1,0 +1,90 @@
+{
+  "title": "लाइव स्ट्रीम्स",
+  "goLive": "लाइव जाएं",
+  "watching": "देख रहे हैं",
+  "viewers": "दर्शक",
+  "live": "लाइव",
+  "ended": "समाप्त",
+  "upcoming": "आगामी",
+  "create": {
+    "title": "स्ट्रीमिंग शुरू करें",
+    "streamTitle": "स्ट्रीम शीर्षक",
+    "streamTitlePlaceholder": "स्ट्रीम शीर्षक दर्ज करें",
+    "description": "विवरण",
+    "descriptionPlaceholder": "आपकी स्ट्रीम किस बारे में है?",
+    "category": "श्रेणी",
+    "selectCategory": "श्रेणी चुनें",
+    "tags": "टैग",
+    "addTag": "टैग जोड़ें",
+    "match": "मैच से लिंक करें",
+    "selectMatch": "मैच चुनें (वैकल्पिक)",
+    "visibility": "दृश्यता",
+    "public": "सार्वजनिक",
+    "private": "निजी",
+    "startStream": "स्ट्रीम शुरू करें",
+    "preparing": "स्ट्रीम तैयार हो रही है..."
+  },
+  "player": {
+    "play": "चलाएं",
+    "pause": "रोकें",
+    "mute": "म्यूट करें",
+    "unmute": "अनम्यूट करें",
+    "fullscreen": "फुलस्क्रीन",
+    "exitFullscreen": "फुलस्क्रीन से बाहर निकलें",
+    "quality": "गुणवत्ता",
+    "settings": "सेटिंग्स",
+    "pip": "पिक्चर इन पिक्चर",
+    "theater": "थिएटर मोड",
+    "streamEnded": "स्ट्रीम समाप्त हो गई",
+    "streamOffline": "स्ट्रीम ऑफलाइन है"
+  },
+  "chat": {
+    "title": "लाइव चैट",
+    "sendMessage": "संदेश भेजें",
+    "placeholder": "संदेश टाइप करें...",
+    "emotes": "इमोट्स",
+    "slowMode": "स्लो मोड सक्षम",
+    "subscribersOnly": "केवल सब्सक्राइबर्स",
+    "chatDisabled": "चैट अक्षम है",
+    "banned": "आप इस चैट से प्रतिबंधित हैं"
+  },
+  "controls": {
+    "endStream": "स्ट्रीम समाप्त करें",
+    "confirmEnd": "क्या आप वाकई स्ट्रीम समाप्त करना चाहते हैं?",
+    "muteAudio": "ऑडियो म्यूट करें",
+    "muteVideo": "वीडियो म्यूट करें",
+    "shareScreen": "स्क्रीन शेयर करें",
+    "stopSharing": "शेयरिंग बंद करें",
+    "settings": "स्ट्रीम सेटिंग्स"
+  },
+  "stats": {
+    "title": "स्ट्रीम आंकड़े",
+    "peakViewers": "पीक दर्शक",
+    "averageViewers": "औसत दर्शक",
+    "duration": "अवधि",
+    "messages": "चैट संदेश"
+  },
+  "categories": {
+    "sports": "खेल",
+    "gaming": "गेमिंग",
+    "talkShow": "टॉक शो",
+    "analysis": "विश्लेषण",
+    "other": "अन्य"
+  },
+  "empty": {
+    "noStreams": "कोई लाइव स्ट्रीम नहीं",
+    "checkBackLater": "लाइव सामग्री के लिए बाद में वापस आएं"
+  },
+  "analytics": {
+    "realtimeViewers": "रियलटाइम दर्शक",
+    "live": "लाइव",
+    "current": "वर्तमान",
+    "max": "अधिकतम",
+    "avg": "औसत",
+    "noData": "कोई डेटा उपलब्ध नहीं",
+    "dataAppears": "स्ट्रीम शुरू होने पर डेटा दिखाई देगा",
+    "timeAgo1h": "-1 घंटा",
+    "timeAgo30m": "-30 मिनट",
+    "now": "अभी"
+  }
+}

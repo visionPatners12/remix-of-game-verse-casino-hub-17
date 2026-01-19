@@ -1,0 +1,56 @@
+{
+  "title": "नोटिफिकेशन",
+  "markAllRead": "सभी को पढ़ा हुआ मार्क करें",
+  "clearAll": "सभी साफ करें",
+  "settings": "नोटिफिकेशन सेटिंग्स",
+  "empty": {
+    "title": "कोई नोटिफिकेशन नहीं",
+    "description": "आप अप टू डेट हैं!"
+  },
+  "tabs": {
+    "all": "सभी",
+    "unread": "अपठित",
+    "mentions": "मेंशन",
+    "bets": "दांव",
+    "social": "सोशल"
+  },
+  "types": {
+    "betWon": "दांव जीता",
+    "betLost": "दांव हारा",
+    "betSettled": "दांव सेटल हुआ",
+    "matchStarting": "मैच शुरू हो रहा है",
+    "matchEnded": "मैच समाप्त",
+    "newFollower": "नया फॉलोअर",
+    "newLike": "नया लाइक",
+    "newComment": "नया कमेंट",
+    "newMention": "आपको मेंशन किया गया",
+    "tipsterTip": "नई टिप",
+    "deposit": "जमा कन्फर्म",
+    "withdraw": "निकासी प्रोसेस्ड",
+    "promo": "प्रमोशन",
+    "system": "सिस्टम"
+  },
+  "time": {
+    "now": "अभी",
+    "minutesAgo": "{{count}} मिनट पहले",
+    "hoursAgo": "{{count}} घंटे पहले",
+    "daysAgo": "{{count}} दिन पहले",
+    "weeksAgo": "{{count}} हफ्ते पहले"
+  },
+  "actions": {
+    "view": "देखें",
+    "dismiss": "खारिज करें",
+    "viewBet": "दांव देखें",
+    "viewMatch": "मैच देखें",
+    "viewProfile": "प्रोफाइल देखें"
+  },
+  "preferences": {
+    "title": "प्राथमिकताएं",
+    "push": "पुश नोटिफिकेशन",
+    "email": "ईमेल नोटिफिकेशन",
+    "bets": "दांव अपडेट",
+    "matches": "मैच अलर्ट",
+    "social": "सोशल एक्टिविटी",
+    "marketing": "मार्केटिंग और प्रमोशन"
+  }
+}
