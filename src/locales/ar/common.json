@@ -88,5 +88,15 @@
     "networkMargin": "هامش الشبكة",
     "totalEarnings": "إجمالي الأرباح",
     "pending": "قيد الانتظار"
+  },
+  "pwa": {
+    "installTitle": "تثبيت Pryzen",
+    "iosInstructions": "على iPhone، تُضاف التطبيقات من Safari.",
+    "step1Title": "اضغط على زر المشاركة",
+    "step1Subtitle": "في أسفل Safari",
+    "step2Title": "مرر واضغط على إضافة إلى الشاشة الرئيسية",
+    "step2Subtitle": "ثم اضغط إضافة",
+    "showMe": "أرني",
+    "gotIt": "فهمت"
   }
 }

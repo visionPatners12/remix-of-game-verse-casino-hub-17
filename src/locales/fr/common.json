@@ -103,5 +103,15 @@
     "networkMargin": "Marge",
     "totalEarnings": "Gains",
     "pending": "En attente"
+  },
+  "pwa": {
+    "installTitle": "Installer Pryzen",
+    "iosInstructions": "Sur iPhone, les apps s'ajoutent depuis Safari.",
+    "step1Title": "Appuie sur le bouton Partager",
+    "step1Subtitle": "en bas de Safari",
+    "step2Title": "Fais défiler et appuie sur Sur l'écran d'accueil",
+    "step2Subtitle": "puis appuie sur Ajouter",
+    "showMe": "Montre-moi",
+    "gotIt": "Compris"
   }
 }
