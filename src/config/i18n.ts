@@ -200,8 +200,9 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'en', // Force English as default
     fallbackLng: 'en',
+    supportedLngs: ['en', 'fr', 'es', 'hi', 'pt', 'ar'],
+    load: 'languageOnly', // 'fr-FR' → 'fr'
     defaultNS: 'common',
     ns: ['common', 'navigation', 'profile', 'auth', 'tipster', 'bets', 'deposit', 'feed', 'pages', 'games', 'wallet', 'withdraw', 'nft', 'streaming', 'support', 'notifications', 'search', 'landing', 'polymarket', 'security'],
     
