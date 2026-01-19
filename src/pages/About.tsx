@@ -6,17 +6,17 @@ import { PageSEO } from "@/components/seo/PageSEO";
 
 export default function About() {
   const stats = [
-    { label: "Joueurs", value: "50K+", icon: Users },
-    { label: "Parties", value: "2M+", icon: Trophy },
-    { label: "Pays", value: "180+", icon: Globe },
+    { label: "Players", value: "50K+", icon: Users },
+    { label: "Games", value: "2M+", icon: Trophy },
+    { label: "Countries", value: "180+", icon: Globe },
     { label: "Satisfaction", value: "99%", icon: Heart }
   ];
 
   const features = [
-    { icon: Shield, title: "Sécurité", description: "Plateforme sécurisée avec chiffrement de bout en bout" },
-    { icon: Zap, title: "Performance", description: "Technologie avancée pour une expérience fluide" },
-    { icon: Trophy, title: "Fair Play", description: "Système anti-triche et modération 24h/24" },
-    { icon: Users, title: "Communauté", description: "Rejoignez des gamers du monde entier" }
+    { icon: Shield, title: "Security", description: "Secure platform with end-to-end encryption" },
+    { icon: Zap, title: "Performance", description: "Advanced technology for a smooth experience" },
+    { icon: Trophy, title: "Fair Play", description: "Anti-cheat system and 24/7 moderation" },
+    { icon: Users, title: "Community", description: "Join gamers from around the world" }
   ];
 
   return (
@@ -31,13 +31,13 @@ export default function About() {
         {/* Hero mobile optimized */}
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            À Propos de PRYZEN
+            About PRYZEN
           </h1>
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-            PRYZEN révolutionne l'univers du gaming en ligne avec une plateforme innovante.
+            PRYZEN is revolutionizing online gaming with an innovative platform.
           </p>
           <Badge variant="outline" className="text-xs px-3 py-1">
-            🚀 Lancé en 2024
+            🚀 Launched in 2024
           </Badge>
         </div>
 
@@ -57,28 +57,28 @@ export default function About() {
         {/* Mission - Compact */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-xl">Notre Mission</CardTitle>
+            <CardTitle className="text-xl">Our Mission</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-              Créer la meilleure plateforme de jeux en ligne où les joueurs peuvent s'affronter, 
-              parier de manière responsable et construire une communauté forte.
+              To create the best online gaming platform where players can compete, 
+              bet responsibly and build a strong community.
             </p>
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
                 <div className="text-lg mb-1">🎯</div>
                 <h4 className="text-xs font-semibold mb-1">Innovation</h4>
-                <p className="text-xs text-muted-foreground">Technologies de pointe</p>
+                <p className="text-xs text-muted-foreground">Cutting-edge technology</p>
               </div>
               <div>
                 <div className="text-lg mb-1">🤝</div>
-                <h4 className="text-xs font-semibold mb-1">Communauté</h4>
-                <p className="text-xs text-muted-foreground">Liens authentiques</p>
+                <h4 className="text-xs font-semibold mb-1">Community</h4>
+                <p className="text-xs text-muted-foreground">Authentic connections</p>
               </div>
               <div>
                 <div className="text-lg mb-1">🛡️</div>
-                <h4 className="text-xs font-semibold mb-1">Intégrité</h4>
-                <p className="text-xs text-muted-foreground">Fair-play total</p>
+                <h4 className="text-xs font-semibold mb-1">Integrity</h4>
+                <p className="text-xs text-muted-foreground">Total fair-play</p>
               </div>
             </div>
           </CardContent>
@@ -86,7 +86,7 @@ export default function About() {
 
         {/* Features */}
         <div>
-          <h2 className="text-xl font-bold text-center mb-4">Pourquoi PRYZEN ?</h2>
+          <h2 className="text-xl font-bold text-center mb-4">Why PRYZEN?</h2>
           <div className="space-y-3">
             {features.map((feature, index) => (
               <Card key={index}>
@@ -108,10 +108,10 @@ export default function About() {
         <Card className="bg-gradient-to-r from-primary/10 to-accent/10">
           <CardContent className="pt-6">
             <div className="text-center">
-              <h2 className="text-xl font-bold mb-3">Notre Vision</h2>
+              <h2 className="text-xl font-bold mb-3">Our Vision</h2>
               <p className="text-sm text-muted-foreground">
-                Devenir la référence mondiale du gaming social responsable, où chaque joueur 
-                peut exprimer son talent dans un environnement sûr et équitable.
+                To become the global reference for responsible social gaming, where every player 
+                can express their talent in a safe and fair environment.
               </p>
             </div>
           </CardContent>

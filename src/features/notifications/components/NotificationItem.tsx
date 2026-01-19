@@ -89,7 +89,7 @@ export function NotificationItem({ notification, onMarkAsRead }: NotificationIte
                   )}
                   {notification.metadata.betAmount && !notification.metadata.winAmount && (
                     <span>
-                      Mise: {notification.metadata.betAmount}€
+                      Stake: {notification.metadata.betAmount}€
                     </span>
                   )}
                 </div>
@@ -114,16 +114,16 @@ export function NotificationItem({ notification, onMarkAsRead }: NotificationIte
             <div className="flex gap-2 mt-3">
               {notification.type === 'follow' && (
                 <Button size="sm" className="h-8">
-                  Suivre
+                  Follow
                 </Button>
               )}
               {notification.type === 'friend_request' && (
                 <>
                   <Button size="sm" className="h-8">
-                    Accepter
+                    Accept
                   </Button>
                   <Button size="sm" variant="outline" className="h-8">
-                    Ignorer
+                    Ignore
                   </Button>
                 </>
               )}

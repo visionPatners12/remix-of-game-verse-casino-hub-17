@@ -12,53 +12,53 @@ export default function FAQ() {
 
   const faqs = [
     {
-      category: "Comptes et Sécurité",
+      category: "Accounts & Security",
       questions: [
         {
-          question: "Comment créer un compte ?",
-          answer: "Cliquez sur 'S'inscrire', remplissez vos informations et vérifiez votre email."
+          question: "How do I create an account?",
+          answer: "Click on 'Sign Up', fill in your information and verify your email."
         },
         {
-          question: "Comment sécuriser mon compte ?",
-          answer: "Activez l'authentification à deux facteurs et utilisez un mot de passe fort."
+          question: "How do I secure my account?",
+          answer: "Enable two-factor authentication and use a strong password."
         },
         {
-          question: "Mot de passe oublié ?",
-          answer: "Cliquez sur 'Mot de passe oublié' et suivez les instructions par email."
+          question: "Forgot your password?",
+          answer: "Click on 'Forgot Password' and follow the email instructions."
         }
       ]
     },
     {
-      category: "Paiements",
+      category: "Payments",
       questions: [
         {
-          question: "Quels moyens de paiement ?",
-          answer: "Cartes bancaires, PayPal, cryptomonnaies, Mobile Money et virements."
+          question: "What payment methods are available?",
+          answer: "Credit cards, PayPal, cryptocurrencies, Mobile Money and bank transfers."
         },
         {
-          question: "Comment retirer mes gains ?",
-          answer: "Allez dans Portefeuille > Retirer, choisissez votre méthode et confirmez."
+          question: "How do I withdraw my winnings?",
+          answer: "Go to Wallet > Withdraw, choose your method and confirm."
         },
         {
-          question: "Y a-t-il des frais ?",
-          answer: "Dépôts gratuits. Frais de retrait: 0% crypto, 2% cartes, 1% Mobile Money."
+          question: "Are there any fees?",
+          answer: "Free deposits. Withdrawal fees: 0% crypto, 2% cards, 1% Mobile Money."
         }
       ]
     },
     {
-      category: "Paris et Jeux",
+      category: "Betting & Games",
       questions: [
         {
-          question: "Comment créer un pari ?",
-          answer: "Allez dans Sports, sélectionnez un match, définissez votre mise et partagez."
+          question: "How do I place a bet?",
+          answer: "Go to Sports, select a match, set your stake and share."
         },
         {
-          question: "Système peer-to-peer ?",
-          answer: "Vous pariez directement contre d'autres joueurs, pas contre la maison."
+          question: "Peer-to-peer system?",
+          answer: "You bet directly against other players, not against the house."
         },
         {
-          question: "Rejoindre un jeu classique ?",
-          answer: "Allez dans Games, choisissez votre jeu et rejoignez une partie."
+          question: "How to join a classic game?",
+          answer: "Go to Games, choose your game and join a match."
         }
       ]
     }
@@ -94,7 +94,7 @@ export default function FAQ() {
             FAQ
           </h1>
           <p className="text-sm text-muted-foreground">
-            Réponses aux questions fréquentes
+            Answers to frequently asked questions
           </p>
         </div>
 
@@ -102,7 +102,7 @@ export default function FAQ() {
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input
-            placeholder="Rechercher..."
+            placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
@@ -139,16 +139,16 @@ export default function FAQ() {
           <CardContent className="pt-6">
             <div className="text-center">
               <MessageSquare className="h-8 w-8 mx-auto mb-3 text-primary" />
-              <h3 className="text-lg font-semibold mb-2">Besoin d'aide ?</h3>
+              <h3 className="text-lg font-semibold mb-2">Need help?</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Notre équipe est là 24h/24 et 7j/7
+                Our team is available 24/7
               </p>
               <div className="space-y-2">
                 <a href="/support" className="block bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm">
-                  Contacter le Support
+                  Contact Support
                 </a>
                 <a href="/messages" className="block border border-primary text-primary px-4 py-2 rounded-lg text-sm">
-                  Chat en Direct
+                  Live Chat
                 </a>
               </div>
             </div>

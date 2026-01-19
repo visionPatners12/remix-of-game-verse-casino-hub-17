@@ -32,7 +32,7 @@ export default function SmartVideoContainer({
   if (!url || url.trim() === '') {
     return (
       <div className={`relative overflow-hidden bg-muted aspect-[16/9] rounded-xl ${className} flex items-center justify-center`}>
-        <span className="text-muted-foreground text-sm">Vidéo non disponible</span>
+        <span className="text-muted-foreground text-sm">Video unavailable</span>
       </div>
     );
   }
@@ -173,7 +173,7 @@ export default function SmartVideoContainer({
             <button
               onClick={toggleFullscreen}
               className="p-2 bg-black/70 hover:bg-black/90 backdrop-blur-sm rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
-              aria-label={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
+              aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
               type="button"
             >
               {isFullscreen ? (

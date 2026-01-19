@@ -83,6 +83,45 @@ export type Database = {
         }
         Relationships: []
       }
+      cdp_fiat_events: {
+        Row: {
+          cdp_transaction_id: string | null
+          event_hash: string
+          event_type: string
+          flow: string
+          hook0_timestamp: number | null
+          id: string
+          payload: Json
+          received_at: string
+          signature_header: string | null
+          status: Database["public"]["Enums"]["tx_status_enum"]
+        }
+        Insert: {
+          cdp_transaction_id?: string | null
+          event_hash: string
+          event_type: string
+          flow: string
+          hook0_timestamp?: number | null
+          id?: string
+          payload: Json
+          received_at?: string
+          signature_header?: string | null
+          status: Database["public"]["Enums"]["tx_status_enum"]
+        }
+        Update: {
+          cdp_transaction_id?: string | null
+          event_hash?: string
+          event_type?: string
+          flow?: string
+          hook0_timestamp?: number | null
+          id?: string
+          payload?: Json
+          received_at?: string
+          signature_header?: string | null
+          status?: Database["public"]["Enums"]["tx_status_enum"]
+        }
+        Relationships: []
+      }
       cdp_offramp_supported_countries: {
         Row: {
           country_code: string

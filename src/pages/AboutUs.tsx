@@ -12,53 +12,53 @@ export default function AboutUs() {
   const values = [
     {
       icon: Shield,
-      title: "Sécurité",
-      description: "Protection avancée de vos données"
+      title: "Security",
+      description: "Advanced protection of your data"
     },
     {
       icon: Zap,
       title: "Innovation", 
-      description: "Technologie de pointe"
+      description: "Cutting-edge technology"
     },
     {
       icon: Users,
-      title: "Communauté",
-      description: "Expérience collaborative"
+      title: "Community",
+      description: "Collaborative experience"
     }
   ];
 
   return (
     <Layout hideNavigation>
       <div className="min-h-screen bg-background">
-        <MobilePageHeader title="À Propos" />
+        <MobilePageHeader title="About Us" />
 
-        {/* Hero Simplifié */}
+        {/* Hero Simplified */}
         <div className="px-3 py-8 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
             <Users className="w-8 h-8 text-primary" />
           </div>
           <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-            Paris Sportifs Nouvelle Génération
+            Next Generation Sports Betting
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            Technologie avancée et passion du sport pour une expérience unique.
+            Advanced technology and passion for sports for a unique experience.
           </p>
         </div>
 
-        {/* Mission Ultra-Courte */}
+        {/* Mission Ultra-Short */}
         <div className="px-3 py-6">
           <div className="max-w-md mx-auto text-center">
-            <h3 className="text-lg font-bold mb-3">Notre Mission</h3>
+            <h3 className="text-lg font-bold mb-3">Our Mission</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Démocratiser les paris sportifs intelligents avec des outils d'analyse avancés et une communauté engagée pour transformer votre expérience de pari.
+              Democratizing smart sports betting with advanced analytics tools and an engaged community to transform your betting experience.
             </p>
           </div>
         </div>
 
-        {/* Valeurs Compactes */}
+        {/* Compact Values */}
         <div className="px-3 py-6 bg-muted/30">
           <div className="max-w-md mx-auto">
-            <h3 className="text-lg font-bold text-center mb-6">Nos Valeurs</h3>
+            <h3 className="text-lg font-bold text-center mb-6">Our Values</h3>
             <div className="grid grid-cols-1 gap-4">
               {values.map((value, index) => (
                 <Card key={index} className="bg-card/50 backdrop-blur-sm border border-primary/10 p-4">
@@ -77,9 +77,9 @@ export default function AboutUs() {
           </div>
         </div>
 
-        {/* Contact Simple */}
+        {/* Simple Contact */}
         <div className="px-3 py-8 text-center">
-          <h3 className="text-lg font-bold mb-4">Nous Contacter</h3>
+          <h3 className="text-lg font-bold mb-4">Contact Us</h3>
           <div className="max-w-md mx-auto space-y-3">
             <Button 
               variant="outline" 
@@ -88,15 +88,15 @@ export default function AboutUs() {
               className="w-full"
             >
               <Mail className="h-4 w-4 mr-2" />
-              Support Client
+              Customer Support
             </Button>
           </div>
         </div>
 
-        {/* Liens Utiles */}
+        {/* Useful Links */}
         <div className="px-3 py-6 bg-muted/20">
           <div className="max-w-md mx-auto">
-            <h4 className="text-sm font-medium mb-3 text-center">Informations Légales</h4>
+            <h4 className="text-sm font-medium mb-3 text-center">Legal Information</h4>
             <div className="flex flex-col gap-2">
               <Button 
                 variant="ghost" 
@@ -104,7 +104,7 @@ export default function AboutUs() {
                 onClick={() => navigate('/privacy')}
                 className="justify-between h-auto py-2"
               >
-                <span className="text-xs">Confidentialité</span>
+                <span className="text-xs">Privacy Policy</span>
                 <ExternalLink className="h-3 w-3" />
               </Button>
               <Button 
@@ -113,7 +113,7 @@ export default function AboutUs() {
                 onClick={() => navigate('/terms')}
                 className="justify-between h-auto py-2"
               >
-                <span className="text-xs">Conditions d'Utilisation</span>
+                <span className="text-xs">Terms of Use</span>
                 <ExternalLink className="h-3 w-3" />
               </Button>
             </div>
@@ -123,7 +123,7 @@ export default function AboutUs() {
         {/* Version */}
         <div className="px-3 py-4 text-center border-t border-border">
           <p className="text-xs text-muted-foreground">
-            Version 1.0.0 • Mise à jour janvier 2025
+            Version 1.0.0 • Last updated January 2025
           </p>
         </div>
       </div>
