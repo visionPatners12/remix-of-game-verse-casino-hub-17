@@ -44,7 +44,7 @@ export default function ShareTarget() {
         const referralMatch = url.pathname.match(/^\/r\/([A-Za-z0-9]+)$/);
         if (referralMatch) {
           saveReferralCode(referralMatch[1]);
-          targetPath = '/auth';
+          targetPath = '/';
         }
       }
     } catch {
@@ -57,7 +57,7 @@ export default function ShareTarget() {
         const codeMatch = sharedUrl.match(/\/r\/([A-Za-z0-9]+)/);
         if (codeMatch) {
           saveReferralCode(codeMatch[1]);
-          targetPath = '/auth';
+          targetPath = '/';
         }
       }
     }
