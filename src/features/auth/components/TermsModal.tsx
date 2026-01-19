@@ -38,42 +38,42 @@ export const TermsModal = ({ isOpen, onClose, onAccept, type }: TermsModalProps)
   const content = type === 'terms' ? {
     title: "Terms of Service (ToS)",
     content: `
-      PRYZEN - CONDITIONS GÉNÉRALES D'UTILISATION
+      PRYZEN - TERMS OF SERVICE
 
-      Article 1 : Objet
-      Les présentes conditions générales d'utilisation (CGU) ont pour objet de définir les modalités et conditions d'utilisation de la plateforme PRYZEN.
+      Article 1: Purpose
+      These terms of service (ToS) define the terms and conditions of use of the PRYZEN platform.
 
-      Article 2 : Acceptation des conditions
-      L'accès et l'utilisation de la plateforme PRYZEN impliquent l'acceptation pleine et entière des présentes CGU.
+      Article 2: Acceptance of Terms
+      Access to and use of the PRYZEN platform implies full acceptance of these ToS.
 
-      Article 3 : Description des services
-      PRYZEN est une plateforme de gaming et de paris sportifs qui permet aux utilisateurs de participer à des jeux en ligne.
+      Article 3: Description of Services
+      PRYZEN is a gaming and sports betting platform that allows users to participate in online games.
 
-      Article 4 : Inscription et compte utilisateur
-      Pour accéder aux services, vous devez créer un compte en fournissant des informations exactes et à jour.
+      Article 4: Registration and User Account
+      To access services, you must create an account by providing accurate and up-to-date information.
 
-      Article 5 : Règles d'utilisation
-      Les utilisateurs s'engagent à respecter les lois et réglementations en vigueur.
+      Article 5: Rules of Use
+      Users agree to comply with applicable laws and regulations.
 
-      Dernière mise à jour : 2025
+      Last updated: 2025
     `
   } : {
     title: "Terms of Sale and Privacy Policy",
     content: `
-      CONDITIONS GÉNÉRALES DE VENTE ET POLITIQUE DE CONFIDENTIALITÉ
+      TERMS OF SALE AND PRIVACY POLICY
 
-      PARTIE I - CONDITIONS GÉNÉRALES DE VENTE
-      Article 1 : Champ d'application
-      Les présentes CGV s'appliquent à tous les achats effectués sur la plateforme PRYZEN.
+      PART I - TERMS OF SALE
+      Article 1: Scope
+      These terms of sale apply to all purchases made on the PRYZEN platform.
 
-      PARTIE II - POLITIQUE DE CONFIDENTIALITÉ
-      Article 5 : Collecte des données
-      Nous collectons les données d'identification, de navigation et de jeu.
+      PART II - PRIVACY POLICY
+      Article 5: Data Collection
+      We collect identification, navigation, and gaming data.
 
-      Article 9 : Vos droits
-      Vous disposez des droits d'accès, de rectification et d'effacement de vos données.
+      Article 9: Your Rights
+      You have rights of access, rectification, and deletion of your data.
 
-      Dernière mise à jour : 2025
+      Last updated: 2025
     `
   };
 
@@ -110,11 +110,11 @@ export const TermsModal = ({ isOpen, onClose, onAccept, type }: TermsModalProps)
         {hasScrolledToEnd ? (
           <div className="flex items-center gap-2 text-green-400">
             <Check className="h-4 w-4" />
-            <span>Document lu jusqu'à la fin</span>
+            <span>Document read to the end</span>
           </div>
         ) : (
           <span className="text-slate-400">
-            Veuillez faire défiler jusqu'à la fin du document
+            Please scroll to the end of the document
           </span>
         )}
       </div>

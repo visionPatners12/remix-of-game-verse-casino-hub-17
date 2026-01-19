@@ -27,16 +27,16 @@ export function UpdatePrompt() {
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-foreground text-sm">
-                  Mise à jour disponible
+                  Update available
                 </h3>
                 <p className="text-muted-foreground text-xs mt-0.5">
-                  Une nouvelle version de PRYZEN est disponible
+                  A new version of PRYZEN is available
                 </p>
               </div>
               <button
                 onClick={close}
                 className="flex-shrink-0 p-1 text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Fermer"
+                aria-label="Close"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -49,7 +49,7 @@ export function UpdatePrompt() {
                 onClick={close}
                 className="flex-1 text-xs"
               >
-                Plus tard
+                Later
               </Button>
               <Button
                 size="sm"
@@ -57,7 +57,7 @@ export function UpdatePrompt() {
                 className="flex-1 text-xs bg-primary hover:bg-primary-hover"
               >
                 <RefreshCw className="w-4 h-4 mr-1" />
-                Mettre à jour
+                Update
               </Button>
             </div>
           </div>

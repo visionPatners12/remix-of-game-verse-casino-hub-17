@@ -15,7 +15,7 @@ import {
 // import { useReactiveWallet } from '@/hooks/useReactiveWallet';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { enUS } from 'date-fns/locale';
 import type { Transaction } from '@/integrations/supabase/payments.types';
 
 type TransactionFilter = 'all' | 'deposits' | 'withdrawals' | 'pending' | 'completed';
@@ -83,7 +83,7 @@ export const ReactiveTransactionsList: React.FC = () => {
   }, [transactions, filter]);
 
   const formatAmount = (amount: number) => {
-    return new Intl.NumberFormat('fr-FR', {
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 2,
@@ -137,11 +137,11 @@ export const ReactiveTransactionsList: React.FC = () => {
         {/* Filter Tabs */}
         <Tabs value={filter} onValueChange={(value) => setFilter(value as TransactionFilter)}>
           <TabsList className="grid w-full grid-cols-5 mb-6">
-            <TabsTrigger value="all" className="text-xs">Toutes</TabsTrigger>
-            <TabsTrigger value="deposits" className="text-xs">Dépôts</TabsTrigger>
-            <TabsTrigger value="withdrawals" className="text-xs">Retraits</TabsTrigger>
-            <TabsTrigger value="pending" className="text-xs">En cours</TabsTrigger>
-            <TabsTrigger value="completed" className="text-xs">Terminées</TabsTrigger>
+            <TabsTrigger value="all" className="text-xs">All</TabsTrigger>
+            <TabsTrigger value="deposits" className="text-xs">Deposits</TabsTrigger>
+            <TabsTrigger value="withdrawals" className="text-xs">Withdrawals</TabsTrigger>
+            <TabsTrigger value="pending" className="text-xs">Pending</TabsTrigger>
+            <TabsTrigger value="completed" className="text-xs">Completed</TabsTrigger>
           </TabsList>
 
           <TabsContent value={filter} className="mt-0">
@@ -150,14 +150,14 @@ export const ReactiveTransactionsList: React.FC = () => {
                 <History className="h-12 w-12 mx-auto mb-4 opacity-50" />
                 <p className="text-lg font-medium mb-2">
                   {filter === 'all' 
-                    ? 'Aucune transaction' 
-                    : `Aucune transaction ${filter === 'deposits' ? 'de dépôt' : filter === 'withdrawals' ? 'de retrait' : filter}`
+                    ? 'No transactions' 
+                    : `No ${filter === 'deposits' ? 'deposit' : filter === 'withdrawals' ? 'withdrawal' : filter} transactions`
                   }
                 </p>
                 <p className="text-sm">
                   {filter === 'all' 
-                    ? 'Vos transactions apparaîtront ici'
-                    : 'Changez de filtre pour voir d\'autres transactions'
+                    ? 'Your transactions will appear here'
+                    : 'Change the filter to see other transactions'
                   }
                 </p>
               </div>
@@ -192,7 +192,7 @@ export const ReactiveTransactionsList: React.FC = () => {
                             <p className="text-xs text-muted-foreground mt-1">
                               {formatDistanceToNow(new Date(transaction.created_at), { 
                                 addSuffix: true, 
-                                locale: fr 
+                                locale: enUS 
                               })}
                             </p>
                           </div>

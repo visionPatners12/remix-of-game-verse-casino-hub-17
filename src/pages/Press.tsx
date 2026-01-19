@@ -8,48 +8,48 @@ import { Download, ExternalLink, Calendar, Award, Newspaper } from "lucide-react
 export default function Press() {
   const pressReleases = [
     {
-      title: "PRYZEN lève 5M€ pour révolutionner le gaming peer-to-peer",
-      date: "8 janvier 2025",
-      summary: "La startup française annonce une levée de fonds de série A pour accélérer son développement international.",
-      category: "Financement"
+      title: "PRYZEN raises $5M to revolutionize peer-to-peer gaming",
+      date: "January 8, 2025",
+      summary: "The French startup announces a Series A funding round to accelerate its international expansion.",
+      category: "Funding"
     },
     {
-      title: "50 000 joueurs actifs en 6 mois : PRYZEN cartonne",
-      date: "15 décembre 2024",
-      summary: "La plateforme de gaming atteint un nouveau record avec plus de 2 millions de parties jouées.",
-      category: "Croissance"
+      title: "50,000 active players in 6 months: PRYZEN is a hit",
+      date: "December 15, 2024",
+      summary: "The gaming platform reaches a new record with over 2 million games played.",
+      category: "Growth"
     },
     {
-      title: "Partenariat stratégique avec les plus grands éditeurs de jeux",
-      date: "22 novembre 2024",
-      summary: "PRYZEN s'associe avec des leaders du gaming pour enrichir son catalogue de jeux.",
-      category: "Partenariat"
+      title: "Strategic partnership with major game publishers",
+      date: "November 22, 2024",
+      summary: "PRYZEN partners with gaming leaders to expand its game catalog.",
+      category: "Partnership"
     }
   ];
 
   const awards = [
     {
-      title: "Startup Gaming de l'Année 2024",
+      title: "Gaming Startup of the Year 2024",
       organization: "French Tech Awards",
-      date: "Décembre 2024"
+      date: "December 2024"
     },
     {
       title: "Innovation Prize - Blockchain Gaming",
       organization: "GameTech Summit",
-      date: "Octobre 2024"
+      date: "October 2024"
     },
     {
       title: "Best User Experience - Gaming Platform",
       organization: "UX Design Awards",
-      date: "Septembre 2024"
+      date: "September 2024"
     }
   ];
 
   const mediaKit = [
-    { name: "Logo PRYZEN (PNG)", size: "2.3 MB" },
-    { name: "Logo PRYZEN (SVG)", size: "145 KB" },
-    { name: "Screenshots App", size: "8.7 MB" },
-    { name: "Photos Équipe", size: "12.4 MB" },
+    { name: "PRYZEN Logo (PNG)", size: "2.3 MB" },
+    { name: "PRYZEN Logo (SVG)", size: "145 KB" },
+    { name: "App Screenshots", size: "8.7 MB" },
+    { name: "Team Photos", size: "12.4 MB" },
     { name: "Fact Sheet", size: "1.2 MB" }
   ];
 
@@ -59,35 +59,35 @@ export default function Press() {
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2">
             <Newspaper className="h-6 w-6 text-primary" />
-            Presse & Médias
+            Press & Media
           </h1>
           <p className="text-sm text-muted-foreground">
-            Ressources et actualités pour les journalistes
+            Resources and news for journalists
           </p>
         </div>
 
         {/* Quick facts */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg">PRYZEN en Chiffres</CardTitle>
+            <CardTitle className="text-lg">PRYZEN in Numbers</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4 text-center">
               <div>
                 <div className="text-xl font-bold text-primary">50K+</div>
-                <div className="text-xs text-muted-foreground">Joueurs Actifs</div>
+                <div className="text-xs text-muted-foreground">Active Players</div>
               </div>
               <div>
                 <div className="text-xl font-bold text-primary">2M+</div>
-                <div className="text-xs text-muted-foreground">Parties Jouées</div>
+                <div className="text-xs text-muted-foreground">Games Played</div>
               </div>
               <div>
                 <div className="text-xl font-bold text-primary">180+</div>
-                <div className="text-xs text-muted-foreground">Pays</div>
+                <div className="text-xs text-muted-foreground">Countries</div>
               </div>
               <div>
-                <div className="text-xl font-bold text-primary">5M€</div>
-                <div className="text-xs text-muted-foreground">Levée de Fonds</div>
+                <div className="text-xl font-bold text-primary">$5M</div>
+                <div className="text-xs text-muted-foreground">Funding Raised</div>
               </div>
             </div>
           </CardContent>
@@ -95,7 +95,7 @@ export default function Press() {
 
         {/* Press releases */}
         <div>
-          <h2 className="text-xl font-bold mb-4">Communiqués de Presse</h2>
+          <h2 className="text-xl font-bold mb-4">Press Releases</h2>
           <div className="space-y-3">
             {pressReleases.map((release, index) => (
               <Card key={index}>
@@ -117,7 +117,7 @@ export default function Press() {
                       </div>
                       <Button size="sm" variant="outline">
                         <ExternalLink className="h-3 w-3 mr-1" />
-                        Lire
+                        Read
                       </Button>
                     </div>
                   </div>
@@ -131,7 +131,7 @@ export default function Press() {
         <div>
           <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
             <Award className="h-5 w-5" />
-            Récompenses
+            Awards
           </h2>
           <div className="space-y-3">
             {awards.map((award, index) => (
@@ -157,7 +157,7 @@ export default function Press() {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
               <Download className="h-5 w-5" />
-              Kit Média
+              Media Kit
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -176,22 +176,22 @@ export default function Press() {
             </div>
             <Button className="w-full mt-4">
               <Download className="h-4 w-4 mr-2" />
-              Télécharger le Kit Complet
+              Download Full Kit
             </Button>
           </CardContent>
         </Card>
 
-        {/* Contact presse */}
+        {/* Press contact */}
         <Card className="bg-gradient-to-r from-primary/10 to-accent/10">
           <CardContent className="pt-6">
             <div className="text-center">
-              <h3 className="text-lg font-semibold mb-2">Contact Presse</h3>
+              <h3 className="text-lg font-semibold mb-2">Press Contact</h3>
               <div className="space-y-2 text-sm">
-                <p><strong>Emma Rousseau</strong><br />Responsable Communication</p>
-                <p>📧 presse@pryzen.com<br />📱 +33 6 12 34 56 78</p>
+                <p><strong>Emma Rousseau</strong><br />Communications Manager</p>
+                <p>📧 press@pryzen.com<br />📱 +33 6 12 34 56 78</p>
               </div>
               <Button className="mt-4" asChild>
-                <a href="mailto:presse@pryzen.com">Contacter la Presse</a>
+                <a href="mailto:press@pryzen.com">Contact Press</a>
               </Button>
             </div>
           </CardContent>

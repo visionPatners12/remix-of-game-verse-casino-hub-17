@@ -149,7 +149,7 @@ export function VideoPlayerAdvanced({
       {showControls && (
         <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-70 transition-opacity duration-500 delay-1000">
           <div className="bg-black/80 text-white text-xs px-2 py-1 rounded backdrop-blur-sm">
-            <div>Raccourcis: espace (play), ← → (±5s), M (mute), F (plein écran)</div>
+            <div>Shortcuts: space (play), ← → (±5s), M (mute), F (fullscreen)</div>
           </div>
         </div>
       )}

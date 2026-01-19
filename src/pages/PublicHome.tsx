@@ -20,7 +20,7 @@ export default function PublicHome() {
     return (
       <main className="flex flex-col h-screen items-center justify-center bg-background">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-        <span className="text-lg text-muted-foreground mt-4">Chargement…</span>
+        <span className="text-lg text-muted-foreground mt-4">Loading…</span>
       </main>
     );
   }
@@ -58,7 +58,7 @@ export default function PublicHome() {
             onClick={() => navigate("/auth")}
             className="text-muted-foreground hover:text-foreground"
           >
-            Connexion
+            Sign In
           </Button>
         </header>
 
@@ -70,13 +70,13 @@ export default function PublicHome() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-[1.1] mb-6">
-              Jouez entre amis.
+              Play with friends.
               <br />
-              <span className="text-primary">Gagnez ensemble.</span>
+              <span className="text-primary">Win together.</span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-lg mb-8 leading-relaxed">
-              Ludo, paris sportifs et pronostiques — le tout sur une seule plateforme pensée pour les joueurs.
+              Ludo, sports betting and predictions — all on one platform built for players.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
@@ -85,7 +85,7 @@ export default function PublicHome() {
                 onClick={() => navigate("/auth")}
                 className="bg-primary hover:bg-primary-hover text-primary-foreground font-medium px-6 h-12 rounded-lg"
               >
-                Créer un compte
+                Create Account
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
@@ -94,7 +94,7 @@ export default function PublicHome() {
                 onClick={() => navigate("/auth")}
                 className="border-border text-foreground hover:bg-muted font-medium px-6 h-12 rounded-lg"
               >
-                J'ai déjà un compte
+                I already have an account
               </Button>
             </div>
           </motion.div>
@@ -110,18 +110,18 @@ export default function PublicHome() {
           <div className="flex flex-col md:flex-row gap-8 md:gap-16">
             <FeatureItem 
               icon={<Gamepad2 className="h-5 w-5" />}
-              title="Jeux multijoueurs"
-              description="Ludo, Dames, Cartes"
+              title="Multiplayer Games"
+              description="Ludo, Checkers, Cards"
             />
             <FeatureItem 
               icon={<TrendingUp className="h-5 w-5" />}
-              title="Paris sportifs"
+              title="Sports Betting"
               description="Football, Tennis, Basketball"
             />
             <FeatureItem 
               icon={<Users className="h-5 w-5" />}
-              title="Communauté"
-              description="Pronostiques et conseils"
+              title="Community"
+              description="Predictions and tips"
             />
           </div>
         </motion.div>
@@ -135,16 +135,16 @@ export default function PublicHome() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-sm font-medium text-primary mb-3 uppercase tracking-wide">Jeux disponibles</p>
+          <p className="text-sm font-medium text-primary mb-3 uppercase tracking-wide">Available Games</p>
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-10">
-            Choisissez votre jeu préféré
+            Choose your favorite game
           </h2>
           
           <div className="flex gap-4 overflow-x-auto pb-4 -mx-2 px-2 hide-scrollbar">
             <GameCard emoji="🎲" name="Ludo" players="2-4" />
-            <GameCard emoji="⚫" name="Dames" players="2" />
-            <GameCard emoji="🃏" name="Cartes" players="2-6" />
-            <GameCard emoji="❓" name="Bientôt" players="..." comingSoon />
+            <GameCard emoji="⚫" name="Checkers" players="2" />
+            <GameCard emoji="🃏" name="Cards" players="2-6" />
+            <GameCard emoji="❓" name="Coming Soon" players="..." comingSoon />
           </div>
         </motion.div>
       </section>
@@ -159,17 +159,17 @@ export default function PublicHome() {
           className="max-w-2xl"
         >
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-            Prêt à jouer ?
+            Ready to play?
           </h2>
           <p className="text-muted-foreground mb-6">
-            Inscrivez-vous gratuitement et commencez à jouer en quelques secondes.
+            Sign up for free and start playing in seconds.
           </p>
           <Button
             size="lg"
             onClick={() => navigate("/auth")}
             className="bg-primary hover:bg-primary-hover text-primary-foreground font-medium px-6 h-12 rounded-lg"
           >
-            Commencer maintenant
+            Get Started
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </motion.div>
@@ -183,7 +183,7 @@ export default function PublicHome() {
             <span className="font-semibold text-foreground">PRYZEN</span>
           </div>
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} PRYZEN. Tous droits réservés.
+            © {new Date().getFullYear()} PRYZEN. All rights reserved.
           </p>
         </div>
       </footer>
@@ -210,7 +210,7 @@ function GameCard({ emoji, name, players, comingSoon = false }: { emoji: string;
     <div className={`flex-shrink-0 w-36 p-5 rounded-xl border transition-colors ${comingSoon ? 'border-dashed border-border bg-transparent' : 'border-border bg-card hover:border-primary/50'}`}>
       <span className="text-3xl block mb-3">{emoji}</span>
       <p className="font-medium text-foreground text-sm">{name}</p>
-      <p className="text-xs text-muted-foreground">{players} joueurs</p>
+      <p className="text-xs text-muted-foreground">{players} players</p>
     </div>
   );
 }

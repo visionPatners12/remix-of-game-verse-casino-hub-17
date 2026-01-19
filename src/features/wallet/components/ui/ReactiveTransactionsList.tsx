@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { RefreshCw, History, ArrowUpRight, ArrowDownLeft, Clock, CheckCircle, XCircle } from 'lucide-react';
 import { useWalletTransactionsThirdWeb } from '../../hooks/transactions/useWalletTransactionsThirdWeb';
 import { formatDistanceToNow } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { enUS } from 'date-fns/locale';
 
 export const ReactiveTransactionsList: React.FC = () => {
   const { data: transactions = [], isLoading, refetch } = useWalletTransactionsThirdWeb();
@@ -76,8 +76,8 @@ export const ReactiveTransactionsList: React.FC = () => {
         {transactions.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <History className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            <p className="text-lg font-medium mb-2">Aucune transaction</p>
-            <p className="text-sm">Vos transactions apparaîtront ici</p>
+            <p className="text-lg font-medium mb-2">No transactions</p>
+            <p className="text-sm">Your transactions will appear here</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -95,7 +95,7 @@ export const ReactiveTransactionsList: React.FC = () => {
                         <p className="text-xs text-muted-foreground">
                           {formatDistanceToNow(new Date(transaction.created_at), { 
                             addSuffix: true, 
-                            locale: fr 
+                            locale: enUS 
                           })}
                         </p>
                       </div>
@@ -108,7 +108,7 @@ export const ReactiveTransactionsList: React.FC = () => {
                       </p>
                       {transaction.fee && (
                         <p className="text-xs text-muted-foreground">
-                          Frais: {transaction.fee.toFixed(6)} MATIC
+                          Fee: {transaction.fee.toFixed(6)} MATIC
                         </p>
                       )}
                     </div>

@@ -14,7 +14,7 @@ const mockNotifications: NotificationItem[] = [
       username: 'marie_dub',
       avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b5e5?w=150&h=150&fit=crop&crop=face'
     },
-    content: 'a commencé à vous suivre',
+    content: 'started following you',
     time: new Date(Date.now() - 1000 * 60 * 15),
     read: false,
     actionable: true
@@ -27,7 +27,7 @@ const mockNotifications: NotificationItem[] = [
       name: 'System',
       username: 'system',
     },
-    content: 'Félicitations ! Votre pari sur PSG vs OM a été gagnant',
+    content: 'Congratulations! Your bet on PSG vs OM was a winner',
     time: new Date(Date.now() - 1000 * 60 * 60 * 2),
     read: false,
     metadata: {
@@ -44,7 +44,7 @@ const mockNotifications: NotificationItem[] = [
       username: 'tom_martin',
       avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
     },
-    content: 'a aimé votre prédiction',
+    content: 'liked your prediction',
     time: new Date(Date.now() - 1000 * 60 * 60 * 4),
     read: true
   },
@@ -57,7 +57,7 @@ const mockNotifications: NotificationItem[] = [
       username: 'sophie_lr',
       avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face'
     },
-    content: 'vous a envoyé une demande d\'ami',
+    content: 'sent you a friend request',
     time: new Date(Date.now() - 1000 * 60 * 60 * 6),
     read: false,
     actionable: true
@@ -71,7 +71,7 @@ const mockNotifications: NotificationItem[] = [
       username: 'alex_r',
       avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face'
     },
-    content: 'a commenté votre pari: "Excellent choix !"',
+    content: 'commented on your bet: "Excellent choice!"',
     time: new Date(Date.now() - 1000 * 60 * 60 * 8),
     read: true
   },
@@ -83,7 +83,7 @@ const mockNotifications: NotificationItem[] = [
       name: 'System',
       username: 'system',
     },
-    content: 'Votre pari sur Barcelone vs Real Madrid n\'a pas été gagnant',
+    content: 'Your bet on Barcelona vs Real Madrid was not a winner',
     time: new Date(Date.now() - 1000 * 60 * 60 * 24),
     read: true,
     metadata: {
@@ -93,7 +93,7 @@ const mockNotifications: NotificationItem[] = [
   {
     id: '7',
     type: 'system',
-    content: 'Nouvelle fonctionnalité disponible : Sports !',
+    content: 'New feature available: Sports!',
     time: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2),
     read: true
   }
@@ -149,14 +149,14 @@ export function useNotifications() {
       );
 
       toast({
-        title: "Notifications mises à jour",
-        description: "Toutes les notifications ont été marquées comme lues"
+        title: "Notifications updated",
+        description: "All notifications have been marked as read"
       });
     } catch (error) {
       console.error('Error marking all notifications as read:', error);
       toast({
-        title: "Erreur",
-        description: "Impossible de marquer les notifications comme lues",
+        title: "Error",
+        description: "Unable to mark notifications as read",
         variant: "destructive"
       });
     }
