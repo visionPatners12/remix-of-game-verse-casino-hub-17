@@ -64,10 +64,24 @@ function SwapWidgetSkeleton() {
 }
 
 export function SwapWidget() {
-  const { address, signerAddress, isConnected, connectWallet, isAAWallet } = useUnifiedWallet();
+  const { address, signerAddress, isConnected, connectWallet, isAAWallet, activePrivyWallet } = useUnifiedWallet();
   
-  // Configure LI.FI SDK with wallet provider
-  const { isReady: isLifiReady } = useLifiConfig();
+  // Chain state - declare first so we can pass to useLifiConfig
+  const [fromChainId, setFromChainId] = useState<number>(DEFAULT_CHAIN_ID);
+  const [toChainId, setToChainId] = useState<number>(DEFAULT_CHAIN_ID);
+  
+  // Token state
+  const [fromToken, setFromToken] = useState<SwapToken | null>(null);
+  const [toToken, setToToken] = useState<SwapToken | null>(null);
+  
+  // Effective fromChainId considering selected token
+  const effectiveFromChainId = fromToken?.chainId ?? fromChainId;
+  
+  // Configure LI.FI SDK with wallet provider - pass source chain for sync
+  const { isReady: isLifiReady, switchToChain } = useLifiConfig(effectiveFromChainId);
+  
+  // State for chain switching
+  const [isSwitchingChain, setIsSwitchingChain] = useState(false);
   
   // STRATEGY: Use Smart Account address for AA wallets, EOA signer for external wallets
   // This allows AA users to swap directly from their Smart Account
@@ -77,14 +91,6 @@ export function SwapWidget() {
     }
     return signerAddress; // Use EOA for external wallet users
   }, [isAAWallet, address, signerAddress]);
-  
-  // Chain state
-  const [fromChainId, setFromChainId] = useState<number>(DEFAULT_CHAIN_ID);
-  const [toChainId, setToChainId] = useState<number>(DEFAULT_CHAIN_ID);
-  
-  // Token state
-  const [fromToken, setFromToken] = useState<SwapToken | null>(null);
-  const [toToken, setToToken] = useState<SwapToken | null>(null);
   
   // Amount state
   const [fromAmount, setFromAmount] = useState('');
@@ -193,18 +199,46 @@ export function SwapWidget() {
     setFromAmount('');
   }, [fromChainId, toChainId, fromToken, toToken]);
 
-  // Handle swap execution
+  // Handle swap execution - force chain switch before executing
   const handleSwap = useCallback(async () => {
-    if (!route || !effectiveSwapAddress) return;
+    if (!route || !effectiveSwapAddress || !activePrivyWallet) return;
     
-    if (isAAWallet) {
-      // Execute via Smart Account
-      await aaExecution.execute(route, effectiveSwapAddress);
-    } else {
-      // Execute via EOA
-      await eoaExecution.execute(route);
+    const targetChainId = fromToken?.chainId ?? fromChainId;
+    
+    try {
+      // Get current wallet chain
+      const provider = await activePrivyWallet.getEthereumProvider();
+      const walletChainIdHex = await provider.request({ method: 'eth_chainId' });
+      const currentWalletChain = parseInt(walletChainIdHex as string, 16);
+      
+      console.log('[Swap] Current wallet chain:', currentWalletChain, 'target chain:', targetChainId);
+      
+      // Force switch if wallet is on wrong chain
+      if (currentWalletChain !== targetChainId) {
+        console.log('[Swap] Switching to source chain before execution:', targetChainId);
+        setIsSwitchingChain(true);
+        try {
+          await activePrivyWallet.switchChain(targetChainId);
+          // Also update the LiFi config ref
+          await switchToChain(targetChainId);
+        } finally {
+          setIsSwitchingChain(false);
+        }
+      }
+      
+      // Now execute on correct chain
+      if (isAAWallet) {
+        // Execute via Smart Account
+        await aaExecution.execute(route, effectiveSwapAddress);
+      } else {
+        // Execute via EOA
+        await eoaExecution.execute(route);
+      }
+    } catch (error) {
+      console.error('[Swap] Execution error:', error);
+      setIsSwitchingChain(false);
     }
-  }, [route, effectiveSwapAddress, isAAWallet, aaExecution, eoaExecution]);
+  }, [route, effectiveSwapAddress, isAAWallet, aaExecution, eoaExecution, activePrivyWallet, fromToken, fromChainId, switchToChain]);
 
   // Reset on success after delay
   useEffect(() => {
@@ -218,6 +252,7 @@ export function SwapWidget() {
   const getButtonState = (): { text: string; disabled: boolean; variant: 'default' | 'outline' | 'destructive' } => {
     if (!isConnected) return { text: 'Connect Wallet', disabled: false, variant: 'default' };
     if (!isLifiReady) return { text: 'Initializing...', disabled: true, variant: 'outline' };
+    if (isSwitchingChain) return { text: 'Switching network...', disabled: true, variant: 'default' };
     if (isExecuting) return { text: 'Swapping...', disabled: true, variant: 'default' };
     if (status === 'success') return { text: 'Swap Complete!', disabled: true, variant: 'default' };
     if (!fromToken || !toToken) return { text: 'Select tokens', disabled: true, variant: 'outline' };
