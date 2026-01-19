@@ -5,3 +5,4 @@ export { PWAOptimizations } from './PWAOptimizations';
 export { PWAInstallButton } from './PWAInstallButton';
 export { IOSInstallGuide } from './IOSInstallGuide';
 export { ShareIcon, AddToHomeScreenIcon } from './icons/IOSInstallIcons';
+export { DeferredDeeplinkHandler } from './DeferredDeeplinkHandler';
