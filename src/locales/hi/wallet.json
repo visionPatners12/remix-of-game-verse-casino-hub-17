@@ -1,0 +1,70 @@
+{
+  "title": "वॉलेट",
+  "balance": "शेष राशि",
+  "availableBalance": "उपलब्ध शेष",
+  "totalBalance": "कुल शेष",
+  "pendingBalance": "लंबित",
+  "send": "भेजें",
+  "receive": "प्राप्त करें",
+  "deposit": "जमा करें",
+  "withdraw": "निकालें",
+  "swap": "स्वैप",
+  "buy": "खरीदें",
+  "sell": "बेचें",
+  "copyAddress": "पता कॉपी करें",
+  "addressCopied": "पता कॉपी हो गया!",
+  "scanQR": "QR कोड स्कैन करें",
+  "shareAddress": "पता साझा करें",
+  "transactions": {
+    "title": "लेनदेन",
+    "history": "लेनदेन इतिहास",
+    "pending": "लंबित",
+    "completed": "पूर्ण",
+    "failed": "विफल",
+    "noTransactions": "अभी तक कोई लेनदेन नहीं",
+    "viewAll": "सभी देखें",
+    "sent": "भेजा गया",
+    "received": "प्राप्त हुआ",
+    "swapped": "स्वैप किया",
+    "deposited": "जमा किया",
+    "withdrawn": "निकाला गया"
+  },
+  "assets": {
+    "title": "संपत्तियां",
+    "tokens": "टोकन",
+    "nfts": "NFTs",
+    "noAssets": "कोई संपत्ति नहीं मिली"
+  },
+  "network": {
+    "title": "नेटवर्क",
+    "polygon": "पॉलीगॉन",
+    "ethereum": "एथेरियम",
+    "switchNetwork": "नेटवर्क बदलें"
+  },
+  "security": {
+    "title": "सुरक्षा",
+    "backup": "वॉलेट बैकअप",
+    "exportKey": "निजी कुंजी निर्यात करें",
+    "warning": "अपनी निजी कुंजी कभी साझा न करें"
+  },
+  "ens": {
+    "domain": "ENS डोमेन",
+    "fullAddress": "पूरा पता"
+  },
+  "clipboard": {
+    "copied": "कॉपी हो गया",
+    "addressCopied": "पता कॉपी हो गया",
+    "addressCopiedDesc": "वॉलेट पता क्लिपबोर्ड पर कॉपी हो गया",
+    "txHashCopied": "लेनदेन हैश क्लिपबोर्ड पर कॉपी हो गया"
+  },
+  "qr": {
+    "title": "मेरा क्रिप्टो वॉलेट",
+    "copyAddress": "पता कॉपी करें",
+    "explorer": "एक्सप्लोरर"
+  },
+  "actions": {
+    "deposit": "जमा करें",
+    "send": "भेजें",
+    "receive": "प्राप्त करें"
+  }
+}

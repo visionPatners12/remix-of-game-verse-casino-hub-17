@@ -1,0 +1,71 @@
+{
+  "title": "الألعاب",
+  "categories": {
+    "all": "جميع الألعاب",
+    "board": "ألعاب الطاولة",
+    "casino": "كازينو",
+    "sports": "رياضة"
+  },
+  "soon": "قريباً",
+  "play": "العب الآن",
+  "players": "لاعبين",
+  "upcoming": {
+    "title": "قريباً",
+    "description": "ألعابنا الجديدة ستكون متاحة قريباً!",
+    "features": {
+      "tournaments": "بطولات",
+      "leaderboards": "لوحات الصدارة",
+      "rewards": "مكافآت"
+    },
+    "notify": "أبلغني"
+  },
+  "ludo": {
+    "title": "لودو",
+    "createGame": "إنشاء لعبة",
+    "joinGame": "انضم للعبة",
+    "joinWithCode": "انضم بالرمز",
+    "enterCode": "أدخل رمز الغرفة",
+    "publicGames": "ألعاب عامة",
+    "privateGame": "لعبة خاصة",
+    "betAmount": "مبلغ الرهان",
+    "maxPlayers": "أقصى عدد لاعبين",
+    "roomCode": "رمز الغرفة",
+    "waitingForPlayers": "في انتظار اللاعبين...",
+    "gameStarting": "اللعبة تبدأ...",
+    "yourTurn": "دورك!",
+    "rollDice": "ارمِ النرد",
+    "selectPiece": "اختر قطعة للتحريك",
+    "colors": {
+      "red": "أحمر",
+      "blue": "أزرق",
+      "green": "أخضر",
+      "yellow": "أصفر"
+    },
+    "status": {
+      "created": "في الانتظار",
+      "active": "جارية",
+      "finished": "انتهت",
+      "abandoned": "مهجورة"
+    },
+    "winner": "الفائز",
+    "youWon": "فزت!",
+    "youLost": "انتهت اللعبة",
+    "claimWinnings": "اطلب أرباحك",
+    "leaveGame": "غادر اللعبة",
+    "confirmLeave": "هل أنت متأكد من المغادرة؟",
+    "leaveWarning": "ستخسر رهانك إذا غادرت.",
+    "depositRequired": "إيداع مطلوب",
+    "depositPending": "الإيداع قيد الانتظار...",
+    "ready": "جاهز",
+    "notReady": "غير جاهز",
+    "startGame": "ابدأ اللعبة",
+    "extraTurnOnSix": "دور إضافي عند 6",
+    "rules": {
+      "title": "قواعد اللعبة",
+      "rule1": "احصل على 6 لإخراج قطعة",
+      "rule2": "حرك القطع في اتجاه عقارب الساعة",
+      "rule3": "الوقوف على خصم يعيده للبداية",
+      "rule4": "أول من يوصل كل قطعه للمنزل يفوز"
+    }
+  }
+}

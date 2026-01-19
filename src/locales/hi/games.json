@@ -1,0 +1,71 @@
+{
+  "title": "खेल",
+  "categories": {
+    "all": "सभी खेल",
+    "board": "बोर्ड गेम्स",
+    "casino": "कैसीनो",
+    "sports": "खेल-कूद"
+  },
+  "soon": "जल्द आ रहा है",
+  "play": "अभी खेलें",
+  "players": "खिलाड़ी",
+  "upcoming": {
+    "title": "जल्द आ रहा है",
+    "description": "हमारे नए गेम्स जल्द ही उपलब्ध होंगे!",
+    "features": {
+      "tournaments": "टूर्नामेंट",
+      "leaderboards": "लीडरबोर्ड",
+      "rewards": "इनाम"
+    },
+    "notify": "मुझे सूचित करें"
+  },
+  "ludo": {
+    "title": "लूडो",
+    "createGame": "खेल बनाएं",
+    "joinGame": "खेल में शामिल हों",
+    "joinWithCode": "कोड से जुड़ें",
+    "enterCode": "रूम कोड दर्ज करें",
+    "publicGames": "सार्वजनिक खेल",
+    "privateGame": "निजी खेल",
+    "betAmount": "दांव राशि",
+    "maxPlayers": "अधिकतम खिलाड़ी",
+    "roomCode": "रूम कोड",
+    "waitingForPlayers": "खिलाड़ियों की प्रतीक्षा...",
+    "gameStarting": "खेल शुरू हो रहा है...",
+    "yourTurn": "आपकी बारी!",
+    "rollDice": "पासा फेंकें",
+    "selectPiece": "चलने के लिए गोटी चुनें",
+    "colors": {
+      "red": "लाल",
+      "blue": "नीला",
+      "green": "हरा",
+      "yellow": "पीला"
+    },
+    "status": {
+      "created": "प्रतीक्षा में",
+      "active": "चल रहा है",
+      "finished": "समाप्त",
+      "abandoned": "छोड़ दिया"
+    },
+    "winner": "विजेता",
+    "youWon": "आप जीते!",
+    "youLost": "खेल समाप्त",
+    "claimWinnings": "जीत का दावा करें",
+    "leaveGame": "खेल छोड़ें",
+    "confirmLeave": "क्या आप सच में छोड़ना चाहते हैं?",
+    "leaveWarning": "छोड़ने पर आपका दांव खो जाएगा।",
+    "depositRequired": "जमा आवश्यक",
+    "depositPending": "जमा प्रतीक्षारत...",
+    "ready": "तैयार",
+    "notReady": "तैयार नहीं",
+    "startGame": "खेल शुरू करें",
+    "extraTurnOnSix": "6 पर अतिरिक्त बारी",
+    "rules": {
+      "title": "खेल के नियम",
+      "rule1": "गोटी बाहर लाने के लिए 6 लाएं",
+      "rule2": "गोटियों को दक्षिणावर्त घुमाएं",
+      "rule3": "प्रतिद्वंद्वी की गोटी पर उतरने से वह घर लौटती है",
+      "rule4": "पहले सभी गोटियां घर पहुंचाने वाला जीतता है"
+    }
+  }
+}

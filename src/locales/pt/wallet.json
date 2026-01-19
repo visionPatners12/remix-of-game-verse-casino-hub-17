@@ -1,0 +1,70 @@
+{
+  "title": "Carteira",
+  "balance": "Saldo",
+  "availableBalance": "Saldo Disponível",
+  "totalBalance": "Saldo Total",
+  "pendingBalance": "Pendente",
+  "send": "Enviar",
+  "receive": "Receber",
+  "deposit": "Depositar",
+  "withdraw": "Sacar",
+  "swap": "Trocar",
+  "buy": "Comprar",
+  "sell": "Vender",
+  "copyAddress": "Copiar Endereço",
+  "addressCopied": "Endereço copiado!",
+  "scanQR": "Escanear QR Code",
+  "shareAddress": "Compartilhar Endereço",
+  "transactions": {
+    "title": "Transações",
+    "history": "Histórico de Transações",
+    "pending": "Pendente",
+    "completed": "Concluída",
+    "failed": "Falhou",
+    "noTransactions": "Nenhuma transação ainda",
+    "viewAll": "Ver Todas",
+    "sent": "Enviado",
+    "received": "Recebido",
+    "swapped": "Trocado",
+    "deposited": "Depositado",
+    "withdrawn": "Sacado"
+  },
+  "assets": {
+    "title": "Ativos",
+    "tokens": "Tokens",
+    "nfts": "NFTs",
+    "noAssets": "Nenhum ativo encontrado"
+  },
+  "network": {
+    "title": "Rede",
+    "polygon": "Polygon",
+    "ethereum": "Ethereum",
+    "switchNetwork": "Trocar Rede"
+  },
+  "security": {
+    "title": "Segurança",
+    "backup": "Backup da Carteira",
+    "exportKey": "Exportar Chave Privada",
+    "warning": "Nunca compartilhe sua chave privada"
+  },
+  "ens": {
+    "domain": "Domínio ENS",
+    "fullAddress": "Endereço Completo"
+  },
+  "clipboard": {
+    "copied": "Copiado",
+    "addressCopied": "Endereço copiado",
+    "addressCopiedDesc": "Endereço da carteira copiado",
+    "txHashCopied": "Hash da transação copiado"
+  },
+  "qr": {
+    "title": "Minha Carteira Crypto",
+    "copyAddress": "Copiar Endereço",
+    "explorer": "Explorador"
+  },
+  "actions": {
+    "deposit": "Depositar",
+    "send": "Enviar",
+    "receive": "Receber"
+  }
+}

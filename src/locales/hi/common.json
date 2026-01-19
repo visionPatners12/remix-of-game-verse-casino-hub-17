@@ -1,0 +1,92 @@
+{
+  "buttons": {
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "submit": "सबमिट करें",
+    "edit": "संपादित करें",
+    "delete": "हटाएं",
+    "confirm": "पुष्टि करें",
+    "close": "बंद करें",
+    "back": "वापस",
+    "next": "आगे",
+    "previous": "पिछला",
+    "continue": "जारी रखें",
+    "finish": "समाप्त करें",
+    "retry": "पुनः प्रयास करें",
+    "refresh": "रिफ्रेश करें",
+    "seeMore": "और देखें",
+    "seeLess": "कम देखें"
+  },
+  "tabs": {
+    "posts": "पोस्ट",
+    "bets": "दांव",
+    "predictions": "भविष्यवाणियां"
+  },
+  "errors": {
+    "generic": "एक त्रुटि हुई",
+    "notFound": "नहीं मिला",
+    "unauthorized": "अनधिकृत",
+    "networkError": "नेटवर्क त्रुटि",
+    "serverError": "सर्वर त्रुटि",
+    "validationError": "सत्यापन त्रुटि",
+    "timeout": "अनुरोध समय समाप्त",
+    "loadingError": "लोड करने में विफल",
+    "somethingWentWrong": "कुछ गलत हो गया"
+  },
+  "status": {
+    "online": "ऑनलाइन",
+    "offline": "ऑफलाइन",
+    "loading": "लोड हो रहा है...",
+    "success": "सफल",
+    "error": "त्रुटि",
+    "pending": "लंबित"
+  },
+  "settings": {
+    "username": "उपयोगकर्ता नाम",
+    "email": "ईमेल",
+    "phoneNumber": "फोन नंबर",
+    "oddsFormat": "ऑड्स फॉर्मेट",
+    "oddsFormatHint": "चुनें कि ऑड्स कैसे प्रदर्शित हों",
+    "language": "भाषा",
+    "languageHint": "अपनी पसंदीदा भाषा चुनें",
+    "profileUpdated": "प्रोफाइल अपडेट की गई",
+    "profileUpdateSuccess": "आपकी प्रोफाइल सफलतापूर्वक अपडेट हो गई।",
+    "profileUpdateError": "प्रोफाइल अपडेट करने में विफल। कृपया पुनः प्रयास करें।",
+    "usernameAvailable": "उपयोगकर्ता नाम उपलब्ध है!",
+    "usernameTaken": "उपयोगकर्ता नाम पहले से लिया हुआ है",
+    "usernameMinLength": "उपयोगकर्ता नाम कम से कम 3 अक्षर का होना चाहिए"
+  },
+  "referral": {
+    "linkCopied": "लिंक कॉपी हो गया!",
+    "linkCopiedMessage": "रेफरल लिंक क्लिपबोर्ड पर कॉपी हो गया",
+    "shareTitle": "मेरे साथ जुड़ें!",
+    "shareText": "इस लिंक से जुड़ें और विशेष लाभ पाएं!",
+    "yourReferralCode": "आपका रेफरल कोड"
+  },
+  "dashboard": {
+    "title": "डैशबोर्ड",
+    "tipsterPremium": {
+      "title": "टिपस्टर प्रीमियम",
+      "subtitle": "पेशेवर टिपस्टर बनें",
+      "description": "अपनी भविष्यवाणियां साझा करें और कमाई करें",
+      "benefit1": "प्रीमियम टिप्स तक पहुंच",
+      "benefit2": "विशेष रणनीतियां",
+      "benefit3": "व्यक्तिगत समर्थन"
+    },
+    "referralProgram": {
+      "title": "रेफरल प्रोग्राम",
+      "subtitle": "अपने दोस्तों को आमंत्रित करें",
+      "description": "अपना नेटवर्क बनाएं और कमाई करें",
+      "benefit1": "प्रति रेफरल 5% कमीशन",
+      "benefit2": "3 स्तरों तक कमाई",
+      "benefit3": "स्वचालित भुगतान"
+    }
+  },
+  "stats": {
+    "yourStats": "आपके आंकड़े",
+    "referrals": "रेफरल",
+    "networkMargin": "नेटवर्क मार्जिन",
+    "totalEarnings": "कुल कमाई",
+    "pending": "लंबित"
+  }
+}

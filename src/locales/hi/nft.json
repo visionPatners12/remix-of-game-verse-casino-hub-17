@@ -1,0 +1,71 @@
+{
+  "title": "NFT संग्रह",
+  "myNFTs": "मेरे NFTs",
+  "explore": "खोजें",
+  "create": "बनाएं",
+  "collection": {
+    "title": "संग्रह",
+    "items": "आइटम",
+    "owners": "मालिक",
+    "floorPrice": "न्यूनतम मूल्य",
+    "volume": "वॉल्यूम",
+    "description": "विवरण",
+    "viewAll": "सभी देखें"
+  },
+  "item": {
+    "owner": "मालिक",
+    "creator": "निर्माता",
+    "price": "मूल्य",
+    "lastSale": "अंतिम बिक्री",
+    "rarity": "दुर्लभता",
+    "traits": "विशेषताएं",
+    "history": "इतिहास",
+    "buy": "अभी खरीदें",
+    "makeOffer": "ऑफर दें",
+    "transfer": "ट्रांसफर करें",
+    "sell": "बेचें",
+    "burn": "बर्न करें"
+  },
+  "mint": {
+    "title": "NFT बनाएं",
+    "upload": "फ़ाइल अपलोड करें",
+    "dragDrop": "खींचें और छोड़ें या अपलोड के लिए क्लिक करें",
+    "formats": "PNG, JPG, GIF, MP4 (अधिकतम 50MB)",
+    "name": "नाम",
+    "description": "विवरण",
+    "collection": "संग्रह",
+    "properties": "गुण",
+    "addProperty": "गुण जोड़ें",
+    "supply": "मात्रा",
+    "royalties": "रॉयल्टी",
+    "mint": "बनाएं",
+    "minting": "बना रहे हैं..."
+  },
+  "transfer": {
+    "title": "NFT ट्रांसफर करें",
+    "recipient": "प्राप्तकर्ता पता",
+    "confirm": "ट्रांसफर की पुष्टि करें",
+    "warning": "यह क्रिया पूर्ववत नहीं की जा सकती"
+  },
+  "filters": {
+    "title": "फ़िल्टर",
+    "priceRange": "मूल्य सीमा",
+    "rarity": "दुर्लभता",
+    "traits": "विशेषताएं",
+    "status": "स्थिति",
+    "forSale": "बिक्री के लिए",
+    "hasOffers": "ऑफर हैं"
+  },
+  "sort": {
+    "title": "क्रमबद्ध करें",
+    "priceAsc": "मूल्य: कम से अधिक",
+    "priceDesc": "मूल्य: अधिक से कम",
+    "recent": "हाल ही में सूचीबद्ध",
+    "oldest": "सबसे पुराने"
+  },
+  "empty": {
+    "noItems": "कोई NFT नहीं मिला",
+    "noCollections": "कोई संग्रह नहीं मिला",
+    "startCollecting": "NFT इकट्ठा करना शुरू करें"
+  }
+}
