@@ -1,0 +1,203 @@
+{
+  "meta": {
+    "title": "Pryzen Game - Jogos Multiplayer Cripto e Apostas On-Chain",
+    "description": "Jogue jogos cripto multiplayer com amigos. Aposte on-chain, compita no Ludo e mais. Ganhe recompensas em cripto."
+  },
+  "nav": {
+    "features": "Recursos",
+    "games": "Jogos",
+    "community": "Comunidade",
+    "login": "Entrar",
+    "signup": "Cadastrar",
+    "getStarted": "Começar a Jogar"
+  },
+  "hero": {
+    "tagline": "JOGOS CRIPTO",
+    "title": "Jogue. Aposte.",
+    "titleHighlight": "Ganhe Cripto.",
+    "subtitle": "Jogos multiplayer com apostas on-chain. Jogue Ludo com amigos, faça previsões, ganhe USDC na Base.",
+    "cta": "Começar a Jogar",
+    "secondaryCta": "Explorar Jogos",
+    "stats": {
+      "users": "Jogadores Ativos",
+      "predictions": "Jogos Jogados",
+      "paid": "USDC Ganho"
+    }
+  },
+  "features": {
+    "title": "Por que Pryzen Game?",
+    "subtitle": "A plataforma definitiva de jogos cripto",
+    "social": {
+      "title": "Multiplayer em Tempo Real",
+      "description": "Desafie amigos ou encontre jogadores do mundo todo. Jogue a qualquer hora, em qualquer lugar."
+    },
+    "crypto": {
+      "title": "Apostas On-Chain",
+      "description": "Apostas transparentes na Base. Pagamentos em USDC instantaneamente na sua carteira."
+    },
+    "live": {
+      "title": "Comprovadamente Justo",
+      "description": "Todos os resultados são verificáveis on-chain. Sem trapaças, sem manipulação."
+    },
+    "games": {
+      "title": "Múltiplos Jogos",
+      "description": "Ludo, previsões e mais jogos em breve. Nunca fique entediado."
+    },
+    "leaderboard": {
+      "title": "Rankings",
+      "description": "Compita pelos primeiros lugares e ganhe recompensas"
+    },
+    "tipsters": {
+      "title": "Ganhe Cripto",
+      "description": "Recompensas cripto reais. Saque a qualquer momento."
+    }
+  },
+  "games": {
+    "title": "Jogos",
+    "subtitle": "Desafie seus amigos e ganhe cripto",
+    "viewAll": "Ver Todos os Jogos"
+  },
+  "community": {
+    "title": "Junte-se à comunidade",
+    "subtitle": "Milhares de jogadores cripto estão esperando",
+    "discord": "Discord",
+    "telegram": "Telegram",
+    "twitter": "X"
+  },
+  "cta": {
+    "title": "Pronto para jogar?",
+    "subtitle": "Baixe o app e comece a ganhar cripto hoje.",
+    "button": "Criar minha conta"
+  },
+  "footer": {
+    "product": "Produto",
+    "company": "Empresa",
+    "legal": "Legal",
+    "about": "Sobre",
+    "careers": "Carreiras",
+    "press": "Imprensa",
+    "terms": "Termos",
+    "privacy": "Privacidade",
+    "cookies": "Cookies",
+    "responsible": "Jogo Responsável",
+    "copyright": "© {{year}} Pryzen Game. Todos os direitos reservados"
+  },
+  "discover": {
+    "backToHome": "Voltar ao Início",
+    "feed": {
+      "badge": "SOCIAL",
+      "title": "Jogos Sociais",
+      "description": "Conecte-se com jogadores do mundo todo. Compartilhe suas vitórias, siga os melhores jogadores e construa sua reputação.",
+      "bestOfBothWorlds": {
+        "badge": "ÚNICO",
+        "title": "Jogos + Social",
+        "description": "Recursos sociais combinados com jogos competitivos"
+      },
+      "socialContent": {
+        "title": "Perfis de Jogadores",
+        "description": "Acompanhe suas estatísticas, vitórias e rankings"
+      },
+      "liveHighlights": {
+        "title": "Jogos ao Vivo",
+        "description": "Assista jogos em tempo real"
+      },
+      "communityPredictions": {
+        "title": "Rankings",
+        "description": "Compita pelos primeiros lugares"
+      },
+      "postTypes": {
+        "badge": "RECURSOS",
+        "title": "Recursos Sociais",
+        "description": "Conecte e compita",
+        "simplePost": { "title": "Chat", "description": "Converse com outros jogadores" },
+        "prediction": { "title": "Desafios", "description": "Desafie amigos diretamente" },
+        "opinion": { "title": "Rankings", "description": "Suba nos rankings" },
+        "bet": { "title": "Recompensas", "description": "Ganhe prêmios cripto" },
+        "highlight": { "title": "Conquistas", "description": "Desbloqueie distintivos e recompensas" },
+        "liveEvent": { "title": "Torneios", "description": "Participe de eventos competitivos" }
+      },
+      "screenshots": { "title": "Veja em ação" },
+      "cta": {
+        "title": "Pronto para entrar?",
+        "description": "Crie sua conta e comece a jogar hoje.",
+        "button": "Entrar Agora"
+      }
+    },
+    "sports": {
+      "badge": "PREVISÕES",
+      "title": "Previsões Esportivas",
+      "description": "Preveja resultados de partidas e ganhe cripto. Em breve!",
+      "pageTypes": {
+        "league": {
+          "title": "Previsões de Liga",
+          "description": "Preveja vencedores e classificações.",
+          "standings": "Classificação",
+          "schedule": "Calendário de jogos",
+          "stats": "Estatísticas",
+          "scorers": "Artilheiros"
+        },
+        "team": {
+          "title": "Previsões de Time",
+          "description": "Preveja o desempenho do time.",
+          "squad": "Informações do time",
+          "stats": "Estatísticas do time",
+          "upcoming": "Próximas partidas",
+          "history": "Histórico de resultados"
+        },
+        "match": {
+          "title": "Previsões de Partida",
+          "description": "Preveja resultados de partidas.",
+          "liveScore": "Placar ao vivo",
+          "odds": "Odds de apostas",
+          "stats": "Estatísticas da partida",
+          "bets": "Apostas disponíveis"
+        },
+        "player": {
+          "title": "Estatísticas do Jogador",
+          "description": "Veja dados de desempenho do jogador.",
+          "bio": "Biografia e carreira",
+          "stats": "Estatísticas detalhadas",
+          "value": "Valor de mercado",
+          "transfers": "Histórico de transferências"
+        }
+      },
+      "supported": {
+        "title": "Esportes Suportados",
+        "description": "Principais esportes em breve"
+      },
+      "cta": {
+        "title": "Em Breve",
+        "description": "Previsões esportivas lançando em breve. Entre na lista de espera.",
+        "button": "Entrar na Lista"
+      }
+    },
+    "gaming": {
+      "badge": "AO VIVO",
+      "title": "Jogos On-Chain",
+      "description": "Jogue jogos clássicos na blockchain. Justo, transparente e divertido. Aposte cripto e compita com jogadores do mundo todo.",
+      "ludo": {
+        "title": "Ludo",
+        "subtitle": "O Jogo de Tabuleiro Clássico, On-Chain",
+        "players": "2-4 Jogadores",
+        "bets": "Apostas USDC",
+        "leaderboard": "Ranking",
+        "realtime": "Tempo Real",
+        "play": "Jogar Ludo"
+      },
+      "upcoming": {
+        "badge": "EM BREVE",
+        "title": "Próximos Jogos",
+        "description": "Mais jogos lançando em breve",
+        "checkers": { "title": "Damas", "description": "Jogo de estratégia clássico" },
+        "cards": { "title": "Cartas", "description": "Poker e mais" },
+        "quiz": { "title": "Trivia", "description": "Teste seus conhecimentos" },
+        "dice": { "title": "Dados", "description": "Rolagens de sorte" }
+      },
+      "cta": {
+        "title": "Pronto para jogar?",
+        "description": "Comece a jogar Ludo agora e compita por prêmios USDC.",
+        "button": "Começar a Jogar"
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "event": {
+    "back": "رجوع",
+    "pause": "متوقف",
+    "noMarkets": "لا توجد أسواق متاحة لهذا الحدث"
+  },
+  "prediction": {
+    "toggle": "قم بتوقع",
+    "cancel": "إلغاء وضع التوقع",
+    "predictYes": "توقع نعم",
+    "predictNo": "توقع لا",
+    "predict": "توقع"
+  },
+  "opinion": {
+    "title": "رأي الحدث",
+    "comingSoon": "قريباً - شارك رأيك"
+  },
+  "auth": {
+    "loginRequired": "تسجيل الدخول مطلوب",
+    "loginToPredict": "سجّل الدخول للتوقع"
+  },
+  "createPrediction": {
+    "title": "إنشاء توقع",
+    "noMarketSelected": "لم يتم اختيار سوق. يرجى العودة لصفحة الحدث.",
+    "return": "رجوع",
+    "yourPrediction": "توقعك",
+    "odds": "الاحتمالات",
+    "impliedProbability": "الاحتمالية الضمنية",
+    "analysis": "التحليل (اختياري)",
+    "analysisPlaceholder": "شارك تحليلك وأسبابك لهذا التوقع...",
+    "confidenceLevel": "مستوى الثقة",
+    "confidenceLabels": ["منخفض جداً", "منخفض", "متوسط", "عالي", "عالي جداً"],
+    "premiumTip": "نصيحة مميزة",
+    "premiumDescription": "مرئية فقط لمشتركيك",
+    "publishing": "جاري النشر...",
+    "loading": "جاري التحميل...",
+    "publish": "نشر توقعي"
+  }
+}

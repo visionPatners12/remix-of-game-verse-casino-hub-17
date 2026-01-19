@@ -1,0 +1,136 @@
+{
+  "page": {
+    "title": "الإيداع",
+    "subtitle": "أضف أموالاً إلى حسابك"
+  },
+  "steps": {
+    "method": "الطريقة",
+    "details": "التفاصيل",
+    "confirmation": "التأكيد"
+  },
+  "methods": {
+    "title": "اختر طريقة الإيداع",
+    "crypto": {
+      "title": "عملات مشفرة",
+      "description": "إيداع بالعملات المشفرة"
+    },
+    "coinbase": {
+      "title": "Coinbase Pay",
+      "buyTitle": "اشترِ USDC على Base باستخدام",
+      "description": "بطاقة خصم، Apple Pay، بنك"
+    },
+    "mobileMoney": {
+      "title": "المال المحمول",
+      "description": "قريباً"
+    },
+    "bankTransfer": {
+      "title": "تحويل بنكي",
+      "description": "قريباً"
+    },
+    "applePay": {
+      "title": "Apple Pay",
+      "description": "إيداع فوري عبر Apple Pay"
+    },
+    "comingSoon": "قريباً",
+    "processing": "جاري المعالجة...",
+    "recommended": "شائع"
+  },
+  "crypto": {
+    "title": "إيداع العملات المشفرة",
+    "subtitle": "عنوان الإيداع الشخصي الخاص بك",
+    "loading": "جاري استرداد عنوان الإيداع الخاص بك...",
+    "error": "تعذر إنشاء العنوان. يرجى المحاولة مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "qrTitle": "امسح للإيداع",
+    "qrDescription": "امسح رمز QR هذا بمحفظتك لإرسال التوكنات",
+    "supportedChains": "الشبكات المدعومة",
+    "copyTitle": "عنوان إيداع {{symbol}}",
+    "copyDescription": "استخدم هذا العنوان لإيداعاتك",
+    "copied": "تم النسخ!",
+    "copyAddress": "نسخ العنوان",
+    "addressCopied": "تم نسخ عنوان الإيداع إلى الحافظة",
+    "primaryAddress": "العنوان الرئيسي",
+    "alternativeAddress": "عنوان المحفظة",
+    "recommended": "موصى به",
+    "easyToShare": "سهل التذكر والمشاركة",
+    "ensTitle": "اسم الإيداع الخاص بك",
+    "ensDescription": "شارك هذا الاسم لاستلام العملات المشفرة بسهولة",
+    "ensCopied": "تم نسخ اسم ENS إلى الحافظة",
+    "walletTitle": "عنوان المحفظة",
+    "walletDescription": "استخدم هذا العنوان للتحويلات المباشرة",
+    "importantNote": "مهم",
+    "gameNote": "رهانات الألعاب تتم بعملة USDC على Base. يمكنك إيداع أي عملة مشفرة واستخدام ميزة المبادلة لتحويلها."
+  },
+  "mobileMoney": {
+    "title": "المال المحمول",
+    "serviceTitle": "الخدمة قيد التطوير",
+    "serviceDescription": "سيتوفر إيداع المال المحمول قريباً",
+    "chooseAnother": "اختر طريقة أخرى"
+  },
+  "instructions": {
+    "title": "كيفية الإيداع",
+    "step1Title": "انسخ العنوان",
+    "step1Desc": "انسخ عنوان الإيداع أو امسح رمز QR",
+    "step2Title": "افتح محفظتك",
+    "step2Desc": "استخدم تطبيق محفظة العملات المشفرة المفضل لديك",
+    "step3Title": "أرسل أموالك",
+    "step3Desc": "أرسل فقط {{name}} ({{symbol}}) إلى هذا العنوان",
+    "step4Title": "انتظر التأكيد",
+    "step4Desc": "مطلوب 1-3 تأكيدات من الشبكة"
+  },
+  "reminders": {
+    "title": "تذكيرات مهمة",
+    "onlySend": "أرسل فقط {{name}} ({{symbol}}) إلى هذا العنوان",
+    "verifyAddress": "تحقق دائماً من العنوان قبل الإرسال",
+    "minimum": "الحد الأدنى للمبلغ: 0.001 {{symbol}}",
+    "confirmation": "سيتم إضافة الأموال بعد تأكيد الشبكة"
+  },
+  "confirmation": {
+    "title": "التأكيد",
+    "applePayTitle": "اكتمل الإيداع",
+    "applePayDesc": "تمت معالجة إيداعك عبر Apple Pay بنجاح.",
+    "cryptoTitle": "تم تكوين الإيداع",
+    "cryptoDesc": "تم إنشاء عنوان USDC الخاص بك. يمكنك الآن إجراء إيداعك.",
+    "viewWallet": "عرض محفظتي",
+    "newDeposit": "إيداع جديد"
+  },
+  "processing": {
+    "title": "وقت المعالجة",
+    "network": "الشبكة",
+    "confirmations": "التأكيدات",
+    "blocks": "1-3 كتل",
+    "estimatedTime": "الوقت المقدر",
+    "time": "2-5 دقائق"
+  },
+  "security": {
+    "title": "الأمان والخصوصية",
+    "description": "تم إنشاء هذا العنوان خصيصاً لك. أرسل فقط USDC على الشبكة المدعومة."
+  },
+  "coinbase": {
+    "title": "اشترِ USDC على Base باستخدام Coinbase Pay",
+    "selectMethod": "اختر طريقة الدفع المفضلة لديك",
+    "securedBy": "مؤمّن بواسطة Coinbase",
+    "securityNote": "إيداعك آمن ويتم معالجته مباشرة بواسطة Coinbase على شبكة Base",
+    "enterAmount": "أدخل المبلغ",
+    "opening": "جاري فتح Coinbase...",
+    "buyUsdc": "شراء USDC",
+    "noMethods": "لا توجد طرق دفع متاحة"
+  },
+  "applePay": {
+    "native": "Apple Pay مباشر",
+    "description": "دفع سريع وآمن",
+    "phoneRequired": "رقم الهاتف مطلوب",
+    "phoneRequiredMessage": "يرجى إضافة رقم هاتفك في الإعدادات لاستخدام Apple Pay",
+    "goToSettings": "الذهاب إلى الإعدادات",
+    "processing": "جاري معالجة Apple Pay...",
+    "fees": "رسوم المعاملة",
+    "exchangeFee": "رسوم الصرف",
+    "networkFee": "رسوم الشبكة",
+    "total": "المبلغ الإجمالي للدفع",
+    "youReceive": "ستستلم"
+  },
+  "buttons": {
+    "back": "رجوع",
+    "continue": "متابعة"
+  }
+}

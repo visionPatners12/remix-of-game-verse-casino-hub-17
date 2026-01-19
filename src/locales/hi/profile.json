@@ -1,0 +1,59 @@
+{
+  "header": {
+    "followers": "फॉलोअर्स",
+    "following": "फॉलोइंग",
+    "editProfile": "प्रोफाइल संपादित करें",
+    "follow": "फॉलो करें",
+    "unfollow": "अनफॉलो करें"
+  },
+  "tabs": {
+    "posts": "पोस्ट",
+    "bets": "दांव",
+    "predictions": "भविष्यवाणियां"
+  },
+  "settings": {
+    "title": "प्रोफाइल सेटिंग्स",
+    "username": "यूज़रनेम",
+    "email": "ईमेल",
+    "phone": "फ़ोन नंबर",
+    "verifyPhone": "सत्यापित करें",
+    "oddsFormat": "ऑड्स प्रारूप",
+    "language": "भाषा"
+  },
+  "errors": {
+    "loadError": "प्रोफाइल लोड करने में असमर्थ",
+    "userNotFound": "उपयोगकर्ता नहीं मिला",
+    "updateError": "प्रोफाइल अपडेट करने में असमर्थ",
+    "error": "त्रुटि",
+    "profileNotAccessible": "यह उपयोगकर्ता मौजूद नहीं है या उनकी प्रोफाइल सुलभ नहीं है।"
+  },
+  "empty": {
+    "noPosts": "अभी तक कोई पोस्ट नहीं",
+    "noBets": "अभी तक कोई दांव नहीं",
+    "noPredictions": "अभी तक कोई भविष्यवाणी नहीं"
+  },
+  "edit": {
+    "title": "प्रोफाइल संपादित करें",
+    "avatarHint": "अपनी प्रोफाइल फोटो बदलने के लिए अवतार पर टैप करें",
+    "firstName": "पहला नाम",
+    "firstNamePlaceholder": "आपका पहला नाम",
+    "lastName": "अंतिम नाम",
+    "lastNamePlaceholder": "आपका अंतिम नाम",
+    "bio": "बायो",
+    "bioPlaceholder": "हमें अपने बारे में बताएं...",
+    "characters": "अक्षर",
+    "favoriteSports": "पसंदीदा खेल",
+    "selected": "चुने गए",
+    "sportsLimitReached": "5 खेलों की सीमा पहुंच गई",
+    "saving": "सहेजा जा रहा है...",
+    "saveChanges": "परिवर्तन सहेजें",
+    "cancel": "रद्द करें",
+    "successMessage": "प्रोफाइल सफलतापूर्वक अपडेट किया गया!",
+    "errorMessage": "प्रोफाइल अपडेट करने में त्रुटि",
+    "sportAdded": "पसंदीदा में जोड़ा गया",
+    "sportRemoved": "पसंदीदा से हटाया गया",
+    "sportAddError": "खेल जोड़ने में त्रुटि",
+    "sportRemoveError": "खेल हटाने में त्रुटि",
+    "maxSportsError": "आप केवल अधिकतम 5 खेल चुन सकते हैं"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "title": "إرسال",
+  "subtitle": "أرسل أموالك",
+  "modes": {
+    "title": "كيف تريد الإرسال؟",
+    "address": {
+      "title": "إلى عنوان",
+      "description": "أدخل عنوان المحفظة يدوياً"
+    },
+    "user": {
+      "title": "إلى مستخدم",
+      "description": "ابحث عن مستخدمي المنصة"
+    },
+    "cashout": {
+      "title": "سحب نقدي",
+      "description": "تحويل إلى البنك عبر Coinbase"
+    }
+  },
+  "cashout": {
+    "title": "سحب نقدي إلى USD",
+    "subtitle": "حوّل عملاتك المشفرة إلى نقد",
+    "description": "بِع USDC الخاص بك واستلم USD مباشرة في حسابك البنكي أو رصيد Coinbase.",
+    "poweredBy": "مدعوم من Coinbase",
+    "button": "سحب نقدي مع Coinbase",
+    "processing": "جاري التحضير...",
+    "comingSoon": "قريباً",
+    "note": "سيتم توجيهك إلى Coinbase لإكمال المعاملة.",
+    "securityNote": "معاملتك مؤمنة بأمان Coinbase على مستوى المؤسسات.",
+    "paymentMethod": "أين تستلم",
+    "toYourBank": "إلى حسابك البنكي",
+    "toCoinbaseBalance": "إلى رصيد Coinbase الخاص بك",
+    "toCoinbaseCrypto": "إلى حساب Coinbase للعملات المشفرة",
+    "methods": {
+      "fiatWallet": "رصيد Coinbase",
+      "fiatWalletDesc": "استلم USD في حساب Coinbase الخاص بك",
+      "bankAccount": "حساب بنكي",
+      "bankAccountDesc": "تحويل مباشر إلى بنكك (الولايات المتحدة فقط)",
+      "cryptoAccount": "حساب العملات المشفرة",
+      "cryptoAccountDesc": "الاحتفاظ كعملة مشفرة في Coinbase"
+    }
+  },
+  "userSearch": {
+    "title": "إرسال إلى مستخدم",
+    "placeholder": "ابحث باسم المستخدم أو الاسم...",
+    "hint": "أدخل حرفين على الأقل للبحث",
+    "noResults": "لم يتم العثور على مستخدمين",
+    "noWallet": "لا توجد محفظة متصلة"
+  },
+  "token": {
+    "title": "اختر التوكن",
+    "select": "اختر التوكن",
+    "connectWallet": "اربط محفظتك لرؤية التوكنات",
+    "noTokens": "لا توجد توكنات متاحة"
+  },
+  "details": {
+    "title": "أدخل التفاصيل",
+    "network": "الشبكة"
+  },
+  "amount": "المبلغ",
+  "max": "الحد الأقصى",
+  "availableBalance": "المتاح",
+  "destination": {
+    "to": "إلى",
+    "address": "عنوان الوجهة",
+    "verified": "موثق",
+    "validAddress": "عنوان صالح",
+    "invalidAddress": "صيغة عنوان غير صالحة",
+    "recent": "المستلمون الأخيرون"
+  },
+  "confirmation": {
+    "title": "تأكيد المعاملة",
+    "processing": "جاري المعالجة...",
+    "completed": "اكتمل",
+    "confirm": "تحقق وأرسل"
+  },
+  "summary": {
+    "amount": "المبلغ",
+    "to": "إلى",
+    "network": "الشبكة",
+    "fee": "الرسوم المقدرة",
+    "txSent": "تم إرسال المعاملة",
+    "hashCopied": "تم نسخ هاش المعاملة",
+    "warningTitle": "تحقق من كل شيء مرة أخرى",
+    "warningText": "لا يمكن التراجع عن هذه المعاملة. تأكد من صحة العنوان."
+  },
+  "pinVerification": {
+    "title": "تحقق من PIN",
+    "description": "أدخل PIN الخاص بك لتأكيد السحب"
+  },
+  "pinVerified": "تم التحقق من PIN، جاري المعالجة...",
+  "buttons": {
+    "back": "رجوع",
+    "continue": "متابعة",
+    "change": "تغيير"
+  },
+  "errors": {
+    "insufficientBalance": "رصيد غير كافٍ",
+    "invalidAddress": "عنوان غير صالح",
+    "pinRequired": "مطلوب رمز PIN للسحب",
+    "pinRequiredTitle": "PIN مطلوب",
+    "pinRequiredDesc": "مطلوب رمز PIN للسحب. جاري التوجيه إلى الإعدادات..."
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "title": "الإشعارات",
+  "markAllRead": "تحديد الكل كمقروء",
+  "clearAll": "مسح الكل",
+  "settings": "إعدادات الإشعارات",
+  "empty": {
+    "title": "لا توجد إشعارات",
+    "description": "أنت على اطلاع بكل شيء!"
+  },
+  "tabs": {
+    "all": "الكل",
+    "unread": "غير مقروءة",
+    "mentions": "الإشارات",
+    "bets": "الرهانات",
+    "social": "اجتماعي"
+  },
+  "types": {
+    "betWon": "رهان فائز",
+    "betLost": "رهان خاسر",
+    "betSettled": "رهان مُسوّى",
+    "matchStarting": "المباراة تبدأ",
+    "matchEnded": "المباراة انتهت",
+    "newFollower": "متابع جديد",
+    "newLike": "إعجاب جديد",
+    "newComment": "تعليق جديد",
+    "newMention": "أشار إليك",
+    "tipsterTip": "نصيحة جديدة",
+    "deposit": "الإيداع مؤكد",
+    "withdraw": "السحب تمت معالجته",
+    "promo": "ترويج",
+    "system": "النظام"
+  },
+  "time": {
+    "now": "الآن",
+    "minutesAgo": "منذ {{count}} دقيقة",
+    "hoursAgo": "منذ {{count}} ساعة",
+    "daysAgo": "منذ {{count}} يوم",
+    "weeksAgo": "منذ {{count}} أسبوع"
+  },
+  "actions": {
+    "view": "عرض",
+    "dismiss": "تجاهل",
+    "viewBet": "عرض الرهان",
+    "viewMatch": "عرض المباراة",
+    "viewProfile": "عرض الملف الشخصي"
+  },
+  "preferences": {
+    "title": "التفضيلات",
+    "push": "إشعارات الدفع",
+    "email": "إشعارات البريد الإلكتروني",
+    "bets": "تحديثات الرهانات",
+    "matches": "تنبيهات المباريات",
+    "social": "النشاط الاجتماعي",
+    "marketing": "التسويق والعروض"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "title": "الدعم",
+  "subtitle": "كيف يمكننا مساعدتك؟",
+  "contactUs": "اتصل بنا",
+  "email": "البريد الإلكتروني",
+  "socialMedia": "وسائل التواصل الاجتماعي",
+  "helpCenter": "مركز المساعدة",
+  "faq": "الأسئلة الشائعة",
+  "guides": "الإرشادات",
+  "tickets": {
+    "title": "تذاكري",
+    "create": "إنشاء تذكرة",
+    "noTickets": "لا توجد تذاكر بعد",
+    "viewAll": "عرض جميع التذاكر",
+    "subject": "الموضوع",
+    "subjectPlaceholder": "وصف موجز لمشكلتك",
+    "message": "الرسالة",
+    "messagePlaceholder": "صف مشكلتك بالتفصيل...",
+    "category": "الفئة",
+    "priority": "الأولوية",
+    "submit": "إرسال التذكرة",
+    "submitting": "جاري الإرسال..."
+  },
+  "categories": {
+    "technical": "مشكلة تقنية",
+    "billing": "الفوترة والمدفوعات",
+    "behavior": "الإبلاغ عن مستخدم",
+    "other": "أخرى"
+  },
+  "priority": {
+    "low": "منخفضة",
+    "medium": "متوسطة",
+    "high": "عالية",
+    "urgent": "عاجلة"
+  },
+  "status": {
+    "open": "مفتوحة",
+    "inProgress": "قيد المعالجة",
+    "resolved": "تم الحل",
+    "closed": "مغلقة"
+  },
+  "chat": {
+    "title": "محادثة التذكرة",
+    "reply": "الرد",
+    "replyPlaceholder": "اكتب ردك...",
+    "send": "إرسال",
+    "fromSupport": "فريق الدعم",
+    "attachFile": "إرفاق ملف"
+  },
+  "howToAddFunds": {
+    "title": "كيفية إضافة الأموال",
+    "step1": "اربط محفظتك",
+    "step2": "اذهب للإيداع",
+    "step3": "اختر طريقتك",
+    "step4": "أكد المعاملة"
+  },
+  "success": {
+    "ticketCreated": "تم إنشاء التذكرة بنجاح",
+    "messageSent": "تم إرسال الرسالة"
+  },
+  "errors": {
+    "subjectRequired": "الموضوع مطلوب",
+    "messageRequired": "الرسالة مطلوبة",
+    "submitFailed": "فشل إرسال التذكرة"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "page": {
+    "title": "رهاناتي",
+    "subtitle": "تتبع أدائك"
+  },
+  "wallet": {
+    "connect": "اربط محفظتك",
+    "connectMessage": "اربط محفظتك لعرض سجل رهاناتك",
+    "connecting": "جاري الاتصال...",
+    "connectingMessage": "جاري الاتصال بمحفظتك"
+  },
+  "empty": {
+    "title": "لا توجد رهانات بعد",
+    "message": "سيظهر سجلك هنا بعد رهانك الأول"
+  },
+  "stats": {
+    "winRate": "معدل الفوز",
+    "wagered": "المراهنة",
+    "profit": "الربح",
+    "bets": "الرهانات"
+  },
+  "bet": {
+    "single": "رهان فردي",
+    "parlay": "رهان مجمع",
+    "stake": "الحصة",
+    "odds": "الاحتمالات",
+    "payout": "العائد",
+    "potentialWin": "الربح المحتمل"
+  },
+  "status": {
+    "won": "فاز",
+    "lost": "خسر",
+    "pending": "معلق",
+    "cashedOut": "تم السحب",
+    "canceled": "ملغي"
+  },
+  "actions": {
+    "redeem": "استرداد الأرباح",
+    "redeeming": "جاري الاسترداد...",
+    "cashout": "سحب",
+    "cashingOut": "جاري السحب...",
+    "loadMore": "تحميل المزيد",
+    "loading": "جاري التحميل..."
+  },
+  "cashout": {
+    "available": "السحب متاح",
+    "unavailable": "السحب غير متاح",
+    "processing": "جاري المعالجة...",
+    "success": "تم السحب بنجاح!",
+    "error": "فشل السحب",
+    "approving": "جاري الموافقة..."
+  }
+}

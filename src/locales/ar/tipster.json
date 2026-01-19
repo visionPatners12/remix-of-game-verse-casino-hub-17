@@ -1,0 +1,47 @@
+{
+  "dashboard": {
+    "tabs": {
+      "stats": "الإحصائيات",
+      "fanzone": "منطقة المشجعين"
+    },
+    "status": {
+      "active": "نشط",
+      "inactive": "غير نشط"
+    },
+    "perMonth": "USDC/شهر",
+    "stats": {
+      "winRate": "معدل الفوز",
+      "won": "فاز",
+      "yield": "العائد",
+      "profit": "الربح",
+      "subscribers": "المشتركون",
+      "avgOdds": "متوسط الاحتمالات",
+      "tipsInProgress": "نصائح قيد التنفيذ"
+    },
+    "form": {
+      "title": "الأداء الأخير"
+    },
+    "predictions": {
+      "title": "التوقعات الأخيرة",
+      "viewAll": "عرض الكل",
+      "none": "لا توجد توقعات أخيرة"
+    },
+    "subscribers": {
+      "title": "المشتركون الأخيرون",
+      "active": "نشط",
+      "since": "منذ"
+    },
+    "toast": {
+      "activated": "تم تفعيل الملف الشخصي",
+      "deactivated": "تم إلغاء تفعيل الملف الشخصي",
+      "visiblePublicly": "ملفك الشخصي مرئي الآن",
+      "notVisiblePublicly": "ملفك الشخصي لم يعد مرئياً للعامة",
+      "error": "خطأ",
+      "statusError": "تعذر تعديل الحالة"
+    },
+    "feed": {
+      "noPremiumTips": "لا توجد نصائح مميزة منشورة",
+      "noPremiumTipsDesc": "ستظهر نصائحك المميزة هنا. أنشئ أول نصيحة لك لبدء مشاركة تحليلاتك مع مشتركيك."
+    }
+  }
+}

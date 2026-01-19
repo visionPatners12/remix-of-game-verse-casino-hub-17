@@ -1,0 +1,103 @@
+{
+  "title": "भेजें",
+  "subtitle": "अपना धन भेजें",
+  "modes": {
+    "title": "आप कैसे भेजना चाहते हैं?",
+    "address": {
+      "title": "एक पते पर",
+      "description": "मैन्युअल रूप से वॉलेट पता दर्ज करें"
+    },
+    "user": {
+      "title": "एक उपयोगकर्ता को",
+      "description": "प्लेटफॉर्म उपयोगकर्ता खोजें"
+    },
+    "cashout": {
+      "title": "कैश आउट",
+      "description": "Coinbase के माध्यम से बैंक में बदलें"
+    }
+  },
+  "cashout": {
+    "title": "USD में कैश आउट",
+    "subtitle": "अपने क्रिप्टो को नकद में बदलें",
+    "description": "अपना USDC बेचें और सीधे अपने बैंक खाते या Coinbase बैलेंस में USD प्राप्त करें।",
+    "poweredBy": "Coinbase द्वारा संचालित",
+    "button": "Coinbase के साथ कैश आउट",
+    "processing": "तैयारी हो रही है...",
+    "comingSoon": "जल्द आ रहा है",
+    "note": "लेनदेन पूर्ण करने के लिए आपको Coinbase पर रीडायरेक्ट किया जाएगा।",
+    "securityNote": "आपका लेनदेन Coinbase की संस्थागत-ग्रेड सुरक्षा द्वारा सुरक्षित है।",
+    "paymentMethod": "कहाँ प्राप्त करें",
+    "toYourBank": "आपके बैंक खाते में",
+    "toCoinbaseBalance": "आपके Coinbase बैलेंस में",
+    "toCoinbaseCrypto": "आपके Coinbase क्रिप्टो खाते में",
+    "methods": {
+      "fiatWallet": "Coinbase बैलेंस",
+      "fiatWalletDesc": "अपने Coinbase खाते में USD प्राप्त करें",
+      "bankAccount": "बैंक खाता",
+      "bankAccountDesc": "सीधे अपने बैंक में ट्रांसफर (केवल US)",
+      "cryptoAccount": "क्रिप्टो खाता",
+      "cryptoAccountDesc": "Coinbase में क्रिप्टो के रूप में रखें"
+    }
+  },
+  "userSearch": {
+    "title": "उपयोगकर्ता को भेजें",
+    "placeholder": "यूज़रनेम या नाम से खोजें...",
+    "hint": "खोजने के लिए कम से कम 2 अक्षर दर्ज करें",
+    "noResults": "कोई उपयोगकर्ता नहीं मिला",
+    "noWallet": "कोई वॉलेट कनेक्ट नहीं"
+  },
+  "token": {
+    "title": "टोकन चुनें",
+    "select": "टोकन चुनें",
+    "connectWallet": "टोकन देखने के लिए अपना वॉलेट कनेक्ट करें",
+    "noTokens": "कोई टोकन उपलब्ध नहीं"
+  },
+  "details": {
+    "title": "विवरण दर्ज करें",
+    "network": "नेटवर्क"
+  },
+  "amount": "राशि",
+  "max": "अधिकतम",
+  "availableBalance": "उपलब्ध",
+  "destination": {
+    "to": "को",
+    "address": "गंतव्य पता",
+    "verified": "सत्यापित",
+    "validAddress": "वैध पता",
+    "invalidAddress": "अमान्य पता प्रारूप",
+    "recent": "हालिया प्राप्तकर्ता"
+  },
+  "confirmation": {
+    "title": "लेनदेन की पुष्टि करें",
+    "processing": "प्रोसेस हो रहा है...",
+    "completed": "पूर्ण",
+    "confirm": "सत्यापित करें और भेजें"
+  },
+  "summary": {
+    "amount": "राशि",
+    "to": "को",
+    "network": "नेटवर्क",
+    "fee": "अनुमानित शुल्क",
+    "txSent": "लेनदेन भेजा गया",
+    "hashCopied": "लेनदेन हैश कॉपी किया गया",
+    "warningTitle": "सब कुछ दोबारा जांचें",
+    "warningText": "यह लेनदेन उलटा नहीं किया जा सकता। सुनिश्चित करें कि पता सही है।"
+  },
+  "pinVerification": {
+    "title": "PIN सत्यापित करें",
+    "description": "निकासी की पुष्टि करने के लिए अपना PIN दर्ज करें"
+  },
+  "pinVerified": "PIN सत्यापित, प्रोसेस हो रहा है...",
+  "buttons": {
+    "back": "वापस",
+    "continue": "जारी रखें",
+    "change": "बदलें"
+  },
+  "errors": {
+    "insufficientBalance": "अपर्याप्त बैलेंस",
+    "invalidAddress": "अमान्य पता",
+    "pinRequired": "निकासी के लिए PIN कोड आवश्यक है",
+    "pinRequiredTitle": "PIN आवश्यक",
+    "pinRequiredDesc": "निकासी के लिए PIN कोड आवश्यक है। सेटिंग्स पर रीडायरेक्ट हो रहा है..."
+  }
+}

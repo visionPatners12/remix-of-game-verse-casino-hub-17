@@ -1,0 +1,59 @@
+{
+  "header": {
+    "followers": "المتابعون",
+    "following": "يتابع",
+    "editProfile": "تعديل الملف الشخصي",
+    "follow": "متابعة",
+    "unfollow": "إلغاء المتابعة"
+  },
+  "tabs": {
+    "posts": "المنشورات",
+    "bets": "الرهانات",
+    "predictions": "التوقعات"
+  },
+  "settings": {
+    "title": "إعدادات الملف الشخصي",
+    "username": "اسم المستخدم",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "verifyPhone": "تحقق",
+    "oddsFormat": "تنسيق الاحتمالات",
+    "language": "اللغة"
+  },
+  "errors": {
+    "loadError": "تعذر تحميل الملف الشخصي",
+    "userNotFound": "المستخدم غير موجود",
+    "updateError": "تعذر تحديث الملف الشخصي",
+    "error": "خطأ",
+    "profileNotAccessible": "هذا المستخدم غير موجود أو ملفه الشخصي غير متاح."
+  },
+  "empty": {
+    "noPosts": "لا توجد منشورات بعد",
+    "noBets": "لا توجد رهانات بعد",
+    "noPredictions": "لا توجد توقعات بعد"
+  },
+  "edit": {
+    "title": "تعديل الملف الشخصي",
+    "avatarHint": "انقر على الصورة الرمزية لتغيير صورة ملفك الشخصي",
+    "firstName": "الاسم الأول",
+    "firstNamePlaceholder": "اسمك الأول",
+    "lastName": "اسم العائلة",
+    "lastNamePlaceholder": "اسم عائلتك",
+    "bio": "نبذة",
+    "bioPlaceholder": "أخبرنا عن نفسك...",
+    "characters": "حرف",
+    "favoriteSports": "الرياضات المفضلة",
+    "selected": "محدد",
+    "sportsLimitReached": "تم الوصول لحد 5 رياضات",
+    "saving": "جاري الحفظ...",
+    "saveChanges": "حفظ التغييرات",
+    "cancel": "إلغاء",
+    "successMessage": "تم تحديث الملف الشخصي بنجاح!",
+    "errorMessage": "خطأ في تحديث الملف الشخصي",
+    "sportAdded": "أضيفت إلى المفضلة",
+    "sportRemoved": "أزيلت من المفضلة",
+    "sportAddError": "خطأ في إضافة الرياضة",
+    "sportRemoveError": "خطأ في إزالة الرياضة",
+    "maxSportsError": "يمكنك اختيار 5 رياضات كحد أقصى"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "title": "Enviar",
+  "subtitle": "Envie seus fundos",
+  "modes": {
+    "title": "Como você quer enviar?",
+    "address": {
+      "title": "Para um Endereço",
+      "description": "Digite o endereço da carteira manualmente"
+    },
+    "user": {
+      "title": "Para um Usuário",
+      "description": "Pesquise usuários da plataforma"
+    },
+    "cashout": {
+      "title": "Sacar",
+      "description": "Converter para banco via Coinbase"
+    }
+  },
+  "cashout": {
+    "title": "Sacar para USD",
+    "subtitle": "Converta seu cripto em dinheiro",
+    "description": "Venda seu USDC e receba USD diretamente na sua conta bancária ou saldo Coinbase.",
+    "poweredBy": "Desenvolvido por Coinbase",
+    "button": "Sacar com Coinbase",
+    "processing": "Preparando...",
+    "comingSoon": "Em Breve",
+    "note": "Você será redirecionado para a Coinbase para completar a transação.",
+    "securityNote": "Sua transação é protegida pela segurança de nível institucional da Coinbase.",
+    "paymentMethod": "Onde receber",
+    "toYourBank": "na sua conta bancária",
+    "toCoinbaseBalance": "no seu saldo Coinbase",
+    "toCoinbaseCrypto": "na sua conta cripto Coinbase",
+    "methods": {
+      "fiatWallet": "Saldo Coinbase",
+      "fiatWalletDesc": "Receba USD na sua conta Coinbase",
+      "bankAccount": "Conta Bancária",
+      "bankAccountDesc": "Transferência direta para seu banco (apenas EUA)",
+      "cryptoAccount": "Conta Cripto",
+      "cryptoAccountDesc": "Manter como cripto na Coinbase"
+    }
+  },
+  "userSearch": {
+    "title": "Enviar para Usuário",
+    "placeholder": "Pesquisar por nome de usuário ou nome...",
+    "hint": "Digite pelo menos 2 caracteres para pesquisar",
+    "noResults": "Nenhum usuário encontrado",
+    "noWallet": "Nenhuma carteira conectada"
+  },
+  "token": {
+    "title": "Selecionar Token",
+    "select": "Selecionar Token",
+    "connectWallet": "Conecte sua carteira para ver os tokens",
+    "noTokens": "Nenhum token disponível"
+  },
+  "details": {
+    "title": "Digite os Detalhes",
+    "network": "Rede"
+  },
+  "amount": "Valor",
+  "max": "MÁX",
+  "availableBalance": "Disponível",
+  "destination": {
+    "to": "Para",
+    "address": "Endereço de Destino",
+    "verified": "Verificado",
+    "validAddress": "Endereço válido",
+    "invalidAddress": "Formato de endereço inválido",
+    "recent": "Destinatários recentes"
+  },
+  "confirmation": {
+    "title": "Confirmar Transação",
+    "processing": "Processando...",
+    "completed": "Concluído",
+    "confirm": "Verificar e Enviar"
+  },
+  "summary": {
+    "amount": "Valor",
+    "to": "Para",
+    "network": "Rede",
+    "fee": "Taxa Estimada",
+    "txSent": "Transação Enviada",
+    "hashCopied": "Hash da transação copiado",
+    "warningTitle": "Verifique tudo novamente",
+    "warningText": "Esta transação não pode ser revertida. Certifique-se de que o endereço está correto."
+  },
+  "pinVerification": {
+    "title": "Verificar PIN",
+    "description": "Digite seu PIN para confirmar o saque"
+  },
+  "pinVerified": "PIN verificado, processando...",
+  "buttons": {
+    "back": "Voltar",
+    "continue": "Continuar",
+    "change": "Alterar"
+  },
+  "errors": {
+    "insufficientBalance": "Saldo insuficiente",
+    "invalidAddress": "Endereço inválido",
+    "pinRequired": "Um código PIN é necessário para saques",
+    "pinRequiredTitle": "PIN Necessário",
+    "pinRequiredDesc": "Um código PIN é necessário para saques. Redirecionando para configurações..."
+  }
+}

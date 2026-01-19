@@ -1,0 +1,136 @@
+{
+  "page": {
+    "title": "Depósito",
+    "subtitle": "Adicione fundos à sua conta"
+  },
+  "steps": {
+    "method": "Método",
+    "details": "Detalhes",
+    "confirmation": "Confirmação"
+  },
+  "methods": {
+    "title": "Escolha o Método de Depósito",
+    "crypto": {
+      "title": "Cripto",
+      "description": "Depósito em cripto"
+    },
+    "coinbase": {
+      "title": "Coinbase Pay",
+      "buyTitle": "Compre USDC na Base com",
+      "description": "Cartão de Débito, Apple Pay, Banco"
+    },
+    "mobileMoney": {
+      "title": "Dinheiro Móvel",
+      "description": "Em breve"
+    },
+    "bankTransfer": {
+      "title": "Transferência Bancária",
+      "description": "Em breve"
+    },
+    "applePay": {
+      "title": "Apple Pay",
+      "description": "Depósito instantâneo via Apple Pay"
+    },
+    "comingSoon": "Em breve",
+    "processing": "Processando...",
+    "recommended": "Popular"
+  },
+  "crypto": {
+    "title": "Depositar Cripto",
+    "subtitle": "Seu endereço de depósito pessoal",
+    "loading": "Recuperando seu endereço de depósito...",
+    "error": "Não foi possível gerar o endereço. Por favor, tente novamente.",
+    "retry": "Tentar novamente",
+    "qrTitle": "Escaneie para Depositar",
+    "qrDescription": "Escaneie este código QR com sua carteira para enviar tokens",
+    "supportedChains": "Redes suportadas",
+    "copyTitle": "Endereço de Depósito {{symbol}}",
+    "copyDescription": "Use este endereço para seus depósitos",
+    "copied": "Copiado!",
+    "copyAddress": "Copiar Endereço",
+    "addressCopied": "Endereço de depósito copiado para a área de transferência",
+    "primaryAddress": "Endereço Principal",
+    "alternativeAddress": "Endereço da Carteira",
+    "recommended": "Recomendado",
+    "easyToShare": "Fácil de lembrar e compartilhar",
+    "ensTitle": "Seu Nome de Depósito",
+    "ensDescription": "Compartilhe este nome para receber cripto facilmente",
+    "ensCopied": "Nome ENS copiado para a área de transferência",
+    "walletTitle": "Endereço da Carteira",
+    "walletDescription": "Use este endereço para transferências diretas",
+    "importantNote": "Importante",
+    "gameNote": "Apostas de jogos são feitas em USDC na Base. Você pode depositar qualquer cripto e usar o recurso Swap para converter."
+  },
+  "mobileMoney": {
+    "title": "Dinheiro Móvel",
+    "serviceTitle": "Serviço em desenvolvimento",
+    "serviceDescription": "Depósito por Dinheiro Móvel estará disponível em breve",
+    "chooseAnother": "Escolher outro método"
+  },
+  "instructions": {
+    "title": "Como depositar",
+    "step1Title": "Copie o endereço",
+    "step1Desc": "Copie o endereço de depósito ou escaneie o código QR",
+    "step2Title": "Abra sua carteira",
+    "step2Desc": "Use seu aplicativo de carteira cripto preferido",
+    "step3Title": "Envie seus fundos",
+    "step3Desc": "Envie apenas {{name}} ({{symbol}}) para este endereço",
+    "step4Title": "Aguarde a confirmação",
+    "step4Desc": "1-3 confirmações de rede necessárias"
+  },
+  "reminders": {
+    "title": "Lembretes importantes",
+    "onlySend": "Envie apenas {{name}} ({{symbol}}) para este endereço",
+    "verifyAddress": "Sempre verifique o endereço antes de enviar",
+    "minimum": "Valor mínimo: 0,001 {{symbol}}",
+    "confirmation": "Fundos creditados após confirmação da rede"
+  },
+  "confirmation": {
+    "title": "Confirmação",
+    "applePayTitle": "Depósito Concluído",
+    "applePayDesc": "Seu depósito via Apple Pay foi processado com sucesso.",
+    "cryptoTitle": "Depósito Configurado",
+    "cryptoDesc": "Seu endereço USDC foi gerado. Agora você pode fazer seu depósito.",
+    "viewWallet": "Ver Minha Carteira",
+    "newDeposit": "Novo Depósito"
+  },
+  "processing": {
+    "title": "Tempo de Processamento",
+    "network": "Rede",
+    "confirmations": "Confirmações",
+    "blocks": "1-3 blocos",
+    "estimatedTime": "Tempo estimado",
+    "time": "2-5 minutos"
+  },
+  "security": {
+    "title": "Segurança e Privacidade",
+    "description": "Este endereço foi gerado especificamente para você. Envie apenas USDC na rede suportada."
+  },
+  "coinbase": {
+    "title": "Compre USDC na Base com Coinbase Pay",
+    "selectMethod": "Selecione seu método de pagamento preferido",
+    "securedBy": "Protegido pela Coinbase",
+    "securityNote": "Seu depósito é seguro e processado diretamente pela Coinbase na rede Base",
+    "enterAmount": "Digite o Valor",
+    "opening": "Abrindo Coinbase...",
+    "buyUsdc": "Comprar USDC",
+    "noMethods": "Nenhum método de pagamento disponível"
+  },
+  "applePay": {
+    "native": "Apple Pay Direto",
+    "description": "Checkout rápido e seguro",
+    "phoneRequired": "Número de telefone necessário",
+    "phoneRequiredMessage": "Por favor, adicione seu número de telefone nas configurações para usar o Apple Pay",
+    "goToSettings": "Ir para Configurações",
+    "processing": "Processando Apple Pay...",
+    "fees": "Taxas de transação",
+    "exchangeFee": "Taxa de câmbio",
+    "networkFee": "Taxa de rede",
+    "total": "Total a pagar",
+    "youReceive": "Você receberá"
+  },
+  "buttons": {
+    "back": "Voltar",
+    "continue": "Continuar"
+  }
+}

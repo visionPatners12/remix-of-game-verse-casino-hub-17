@@ -1,0 +1,81 @@
+{
+  "navigation": {
+    "forYou": "Para Você",
+    "betsHub": "Hub de Apostas",
+    "bets": "Apostas",
+    "predictions": "Previsões",
+    "highlights": "Destaques",
+    "trending": "Em Alta",
+    "hot": "Quente",
+    "liveNow": "Ao Vivo",
+    "live": "Ao Vivo",
+    "liveBadge": "AO VIVO"
+  },
+  "loading": {
+    "initStream": "Iniciando Stream...",
+    "feed": "Carregando feed...",
+    "socialFeed": "Carregando feed social...",
+    "bets": "Carregando apostas...",
+    "predictions": "Carregando previsões...",
+    "trendingTopics": "Carregando tópicos em alta...",
+    "more": "Carregando mais...",
+    "generic": "Carregando..."
+  },
+  "empty": {
+    "noPosts": "Nenhuma publicação disponível no momento.",
+    "noBets": "Nenhuma aposta disponível no momento.",
+    "noPredictions": "Nenhuma previsão disponível no momento.",
+    "noTrending": "Nenhum tópico em alta agora",
+    "noMatchPredictions": "Nenhuma previsão ou aposta para esta partida ainda",
+    "predictionsWillAppear": "Previsões e apostas aparecerão aqui",
+    "noComments": "Nenhum comentário ainda",
+    "beFirst": "Seja o primeiro a comentar!"
+  },
+  "end": {
+    "allPosts": "Você viu todas as publicações",
+    "allBets": "Você viu todas as apostas",
+    "allPredictions": "Você viu todas as previsões",
+    "allLoaded": "Todas as publicações carregadas"
+  },
+  "error": {
+    "unableToLoad": "Não foi possível carregar o feed",
+    "somethingWrong": "Algo deu errado ao carregar seu feed. Por favor, tente novamente.",
+    "tryAgain": "Tentar novamente"
+  },
+  "focus": {
+    "post": "Publicação",
+    "highlight": "Destaque",
+    "match": "Partida",
+    "comments": "Comentários",
+    "goToMatch": "Ir para partida"
+  },
+  "live": {
+    "title": "Ao Vivo",
+    "liveCount": "{{count}} ao vivo",
+    "createLive": "Criar uma Live",
+    "upcoming": "Em Breve"
+  },
+  "trending": {
+    "title": "Em Alta",
+    "hashtags": "Hashtags em Alta",
+    "popularPosts": "Publicações Populares",
+    "disabledMessage": "Publicações em alta temporariamente desabilitadas durante refatoração"
+  },
+  "tipsters": {
+    "title": "Melhores Tipsters",
+    "top4": "Top 4",
+    "seeAll": "Ver todos",
+    "viewRankings": "Ver rankings",
+    "tips": "dicas",
+    "winRate": "Taxa de Vitória",
+    "avgOdds": "Odds Média",
+    "form": "Forma",
+    "open": "Abrir"
+  },
+  "ticket": {
+    "bet": "Aposta",
+    "prediction": "Previsão",
+    "parlay": "Múltipla",
+    "single": "Simples"
+  }
+}

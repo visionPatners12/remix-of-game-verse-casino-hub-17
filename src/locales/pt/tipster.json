@@ -1,0 +1,47 @@
+{
+  "dashboard": {
+    "tabs": {
+      "stats": "Estatísticas",
+      "fanzone": "Fanzone"
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "perMonth": "USDC/mês",
+    "stats": {
+      "winRate": "Taxa de Vitória",
+      "won": "ganhas",
+      "yield": "Rendimento",
+      "profit": "Lucro",
+      "subscribers": "Assinantes",
+      "avgOdds": "Odds Média",
+      "tipsInProgress": "dicas em andamento"
+    },
+    "form": {
+      "title": "Forma Recente"
+    },
+    "predictions": {
+      "title": "Previsões Recentes",
+      "viewAll": "Ver todas",
+      "none": "Nenhuma previsão recente"
+    },
+    "subscribers": {
+      "title": "Assinantes Recentes",
+      "active": "ativo(s)",
+      "since": "Desde"
+    },
+    "toast": {
+      "activated": "Perfil ativado",
+      "deactivated": "Perfil desativado",
+      "visiblePublicly": "Seu perfil agora está visível",
+      "notVisiblePublicly": "Seu perfil não está mais visível publicamente",
+      "error": "Erro",
+      "statusError": "Não foi possível modificar o status"
+    },
+    "feed": {
+      "noPremiumTips": "Nenhuma dica premium publicada",
+      "noPremiumTipsDesc": "Suas dicas premium aparecerão aqui. Crie sua primeira dica para começar a compartilhar suas análises com seus assinantes."
+    }
+  }
+}
