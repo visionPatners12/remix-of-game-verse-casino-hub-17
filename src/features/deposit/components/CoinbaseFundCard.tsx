@@ -47,13 +47,13 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   const { t } = useTranslation('deposit');
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { walletAddress } = useUnifiedWallet();
+  const { address } = useUnifiedWallet();
   const { ensSubdomain } = useEnsSubdomain();
   const { country } = useUserCountry();
   const { data: paymentData, isLoading: isLoadingMethods } = useCdpPaymentMethods();
   
-  // Use ENS subdomain if available, fallback to wallet address
-  const destinationAddress = ensSubdomain || walletAddress;
+  // Use Safe address (Smart Account) as destination for onramp - ENS is for display only
+  const destinationAddress = address;
   
   // CDP Session hook (JWT is now handled server-side)
   const { quote, isLoading: isCreatingSession, error: sessionError, createSession, reset: resetSession } = useCdpOnrampSession();
@@ -141,7 +141,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
       onError?.(errorMessage);
       toast.error(errorMessage);
     }
-  }, [amount, walletAddress, user, country, selectedPaymentMethod, createSession, sessionError, onError]);
+  }, [amount, address, user, country, selectedPaymentMethod, createSession, sessionError, onError]);
 
   // Step 2: Confirm and open Coinbase Pay
   const handleConfirmPayment = useCallback(() => {
