@@ -3,7 +3,7 @@ import { Button } from "@/ui";
 import { ProfileMenu } from "./ProfileMenu";
 import { WebProfileMenu } from "./web/WebProfileMenu";
 import { NavigationMobile } from "./NavigationMobile";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { NavItem } from "./types";
 import { Plus } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -53,6 +53,7 @@ export const UserSection = ({
 }: UserSectionProps) => {
   const isMobile = useIsMobile();
   const { isMobile: isResponsiveMobile } = useResponsive();
+  const location = useLocation();
 
   if (isAuthenticated) {
     return (
@@ -69,7 +70,7 @@ export const UserSection = ({
                   isMobile ? "w-8 h-8 rounded-xl" : "w-6 h-6 rounded-lg"
                 }`}
               >
-                <Link to="/deposit" aria-label="Add funds">
+                <Link to="/deposit" state={{ from: location.pathname }} aria-label="Add funds">
                   <Plus className={isMobile ? "w-4 h-4" : "w-3.5 h-3.5"} />
                 </Link>
               </Button>

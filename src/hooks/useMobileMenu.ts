@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useFollowRequests } from '@/hooks/useFollowRequests';
 import { useWalletTokensThirdWeb } from '@/features/wallet';
@@ -7,6 +7,7 @@ import { useWalletTokensThirdWeb } from '@/features/wallet';
 export function useMobileMenu() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const { receivedRequests } = useFollowRequests();
   const { tokens = [], totalValue = 0, isLoading: isBalanceLoading } = useWalletTokensThirdWeb();
   
@@ -40,7 +41,12 @@ export function useMobileMenu() {
   };
 
   const handleNavigation = (path: string) => {
-    navigate(path);
+    // For deposit/withdrawal, pass current path as origin for contextual back navigation
+    if (path === '/deposit' || path === '/withdrawal') {
+      navigate(path, { state: { from: location.pathname } });
+    } else {
+      navigate(path);
+    }
   };
 
   return {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TokenUSDC, NetworkBase } from '@web3icons/react';
 import { Shield, ArrowLeft, Info } from 'lucide-react';
@@ -10,8 +10,12 @@ import { getCoinbaseDepositPending, clearCoinbaseDepositPending } from '@/utils/
 
 const CoinbaseDepositPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation('deposit');
   const { isConnected } = useUnifiedWallet();
+  
+  // Get origin path propagated from DepositFlow
+  const fromPath = (location.state as { from?: string })?.from || '/wallet';
 
   // PWA Return Detection - Listen for when user comes back from Coinbase Pay
   useEffect(() => {
@@ -66,7 +70,7 @@ const CoinbaseDepositPage = () => {
     >
       <div className="flex items-center h-14 px-4">
         <button 
-          onClick={() => navigate('/deposit', { replace: true })}
+          onClick={() => navigate('/deposit', { replace: true, state: { from: fromPath } })}
           className="w-10 h-10 -ml-2 flex items-center justify-center rounded-full active:bg-muted transition-colors"
         >
           <ArrowLeft className="h-5 w-5" />
