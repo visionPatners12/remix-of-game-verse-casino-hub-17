@@ -261,13 +261,19 @@ export const LudoKonva: React.FC = () => {
 
     // Detect which pawn moved by comparing positions
     const colors: Color[] = ['R', 'G', 'Y', 'B'];
+    let foundMove = false;
+    
     for (const color of colors) {
+      if (foundMove) break; // Exit outer loop if move already found
+      
       const prev = prevPositions[color];
       const curr = currentPositions[color];
       if (!prev || !curr) continue;
 
       for (let pawnIndex = 0; pawnIndex < 4; pawnIndex++) {
         if (prev[pawnIndex] !== curr[pawnIndex]) {
+          foundMove = true; // Mark as found to exit both loops
+          
           // Movement detected! Generate path and animate
           const path = generatePath(prev[pawnIndex], curr[pawnIndex], color);
           
@@ -279,13 +285,12 @@ export const LudoKonva: React.FC = () => {
               pawnIndex,
               from: prev[pawnIndex],
               to: curr[pawnIndex],
-              path
+              pathLength: path.length
             });
             startAnimation(player.id, pawnIndex, color, path);
             playPieceMoveSound();
           }
-          // Only one pawn moves per turn, break after finding it
-          break;
+          break; // Exit inner loop
         }
       }
     }
