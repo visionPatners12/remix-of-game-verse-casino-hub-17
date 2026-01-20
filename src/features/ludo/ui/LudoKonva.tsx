@@ -42,7 +42,7 @@ export const LudoKonva: React.FC = () => {
   const [possibleMoves, setPossibleMoves] = useState<UIMove[]>([]);
   const [showWinnerModal, setShowWinnerModal] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
-  const [skipRollTrigger, setSkipRollTrigger] = useState(0);
+  // skipRollTrigger removed - dice should not animate on skip
   const [winnerInfo, setWinnerInfo] = useState<{
     color: string;
     name: string;
@@ -168,9 +168,7 @@ export const LudoKonva: React.FC = () => {
         
         // Delay before auto-skip to let player see the situation
         const skipTimeout = setTimeout(() => {
-          // Trigger dice animation before calling skip
-          setSkipRollTrigger(prev => prev + 1);
-          
+          // Skip without animating the dice
           supabase.functions.invoke('ludo-game', {
             body: { action: 'skip', gameId }
           }).then(({ data, error }) => {
@@ -615,7 +613,6 @@ export const LudoKonva: React.FC = () => {
               diceValue={gameData?.dice}
               isGameActive={gameData?.status === 'active'}
               onDiceRolled={handleDiceRolled}
-              triggerRoll={skipRollTrigger}
               isSpectator={isSpectator}
               potAmount={gameData?.pot ?? (gameData?.bet_amount || 0) * players.length}
               betAmount={gameData?.bet_amount || 0}
