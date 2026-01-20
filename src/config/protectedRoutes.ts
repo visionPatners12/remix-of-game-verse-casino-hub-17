@@ -21,6 +21,7 @@ import Wallet from '@/pages/Wallet';
 import { LudoGamesPage } from '@/features/ludo';
 import MessagesPage from '@/pages/MessagesPage';
 import { PryzenCardPage } from '@/features/nft';
+import MyGamesPage from '@/pages/MyGamesPage';
 
 export interface ProtectedRoute {
   path: string;
@@ -31,6 +32,7 @@ export const protectedRoutes: ProtectedRoute[] = [
   // Games - Ludo focused
   { path: '/games', component: Games },
   { path: '/games/ludo', component: LudoGamesPage },
+  { path: '/my-games', component: MyGamesPage },
   
   // User profile
   { path: '/user/:username', component: UserProfile },
