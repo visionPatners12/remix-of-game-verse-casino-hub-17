@@ -12,6 +12,7 @@ export interface OnrampSessionRequest {
   subdivision?: string;
   redirectUrl?: string;
   partnerUserRef?: string;
+  clientIp?: string;
 }
 
 export interface OnrampFee {
@@ -67,7 +68,7 @@ export const useCdpOnrampSession = (): UseCdpOnrampSessionResult => {
         country: request.country,
       });
 
-      const payload = {
+      const payload: Record<string, unknown> = {
         purchaseCurrency: request.purchaseCurrency || 'USDC',
         destinationNetwork: request.destinationNetwork || 'base',
         destinationAddress: request.walletAddress,
@@ -80,10 +81,15 @@ export const useCdpOnrampSession = (): UseCdpOnrampSessionResult => {
         partnerUserRef: request.partnerUserRef,
       };
 
+      // Add clientIp if provided
+      if (request.clientIp) {
+        payload.clientIp = request.clientIp;
+      }
+
       // Remove undefined fields
       Object.keys(payload).forEach(key => {
-        if (payload[key as keyof typeof payload] === undefined) {
-          delete payload[key as keyof typeof payload];
+        if (payload[key] === undefined) {
+          delete payload[key];
         }
       });
 

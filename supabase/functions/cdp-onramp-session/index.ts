@@ -45,6 +45,24 @@ interface OnrampSessionRequest {
   subdivision?: string;
   redirectUrl?: string;
   partnerUserRef?: string;
+  clientIp?: string;
+}
+
+// Extract client IP from request headers (Supabase/Cloudflare)
+function getClientIp(req: Request, bodyIp?: string): string | undefined {
+  // Priority: body.clientIp > CF-Connecting-IP > X-Forwarded-For > X-Real-IP
+  if (bodyIp) return bodyIp;
+  
+  const cfIp = req.headers.get("cf-connecting-ip");
+  if (cfIp) return cfIp;
+  
+  const xForwardedFor = req.headers.get("x-forwarded-for");
+  if (xForwardedFor) return xForwardedFor.split(",")[0].trim();
+  
+  const xRealIp = req.headers.get("x-real-ip");
+  if (xRealIp) return xRealIp;
+  
+  return undefined;
 }
 
 serve(async (req) => {
@@ -74,7 +92,9 @@ serve(async (req) => {
       return json(400, { error: "country is required" });
     }
 
-    console.log(`[cdp-onramp-session] Creating session for ${body.destinationAddress}`);
+    // Get client IP from headers or body
+    const clientIp = getClientIp(req, body.clientIp);
+    console.log(`[cdp-onramp-session] Creating session for ${body.destinationAddress}, clientIp: ${clientIp || 'unknown'}`);
 
     // Step 1: Generate JWT for the onramp sessions API
     console.log(`[cdp-onramp-session] Generating JWT for ${CDP_ONRAMP_METHOD} ${CDP_ONRAMP_HOST}${CDP_ONRAMP_PATH}`);
@@ -91,7 +111,7 @@ serve(async (req) => {
     console.log(`[cdp-onramp-session] JWT generated successfully`);
 
     // Step 2: Build the onramp session payload
-    const onrampPayload = {
+    const onrampPayload: Record<string, unknown> = {
       purchase_currency: body.purchaseCurrency || "USDC",
       destination_network: body.destinationNetwork || "base",
       destination_address: body.destinationAddress,
@@ -103,6 +123,11 @@ serve(async (req) => {
       ...(body.redirectUrl && { redirect_url: body.redirectUrl }),
       ...(body.partnerUserRef && { partner_user_ref: body.partnerUserRef }),
     };
+
+    // Add client_ip if available (required by Coinbase for some regions)
+    if (clientIp) {
+      onrampPayload.client_ip = clientIp;
+    }
 
     console.log(`[cdp-onramp-session] Calling CDP API with payload:`, JSON.stringify(onrampPayload));
 
