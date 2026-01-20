@@ -38,7 +38,7 @@ export const usePlayersWithUsernames = (players: PlayerData[]) => {
         const userIds = players.map(p => p.user_id);
         
         const { data: users, error } = await supabase
-          .from('users')
+          .from('public_profiles')
           .select('id, username, first_name, last_name, avatar_url')
           .in('id', userIds);
 
