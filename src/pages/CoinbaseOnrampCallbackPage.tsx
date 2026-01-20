@@ -44,7 +44,7 @@ const CoinbaseOnrampCallbackPage: React.FC = () => {
   };
 
   const handleNewDeposit = () => {
-    navigate('/deposit');
+    navigate('/deposit', { state: { from: '/wallet' } });
   };
 
   const renderContent = () => {

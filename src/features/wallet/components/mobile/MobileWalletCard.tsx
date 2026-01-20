@@ -100,7 +100,7 @@ export const MobileWalletCard = () => {
           <Button
             variant="secondary"
             size="sm"
-            onClick={() => navigate('/deposit')}
+            onClick={() => navigate('/deposit', { state: { from: '/wallet' } })}
             className="flex flex-col items-center gap-1 h-auto py-3 bg-muted/50 hover:bg-muted border-0"
           >
             <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">

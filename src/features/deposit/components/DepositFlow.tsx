@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Smartphone, Building2, ChevronRight, Check, Copy, Clock, AlertCircle, Info, Wallet } from 'lucide-react';
@@ -26,6 +26,10 @@ interface DepositMethodOption {
 
 const DepositFlow = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get origin path from navigation state, default to /wallet
+  const fromPath = (location.state as { from?: string })?.from || '/wallet';
   const { t } = useTranslation('deposit');
   const { selectedCrypto, isLoadingAddress, ensSubdomain } = useDeposit();
   const { address } = useUnifiedWallet();
@@ -106,7 +110,8 @@ const DepositFlow = () => {
 
   const handleMethodSelect = (method: DepositMethod) => {
     if (method === 'coinbase') {
-      navigate('/deposit/coinbase');
+      // Propagate origin path to Coinbase page
+      navigate('/deposit/coinbase', { state: { from: fromPath } });
       return;
     }
     if (method === 'apple-pay') {
@@ -119,7 +124,8 @@ const DepositFlow = () => {
 
   const handleBack = () => {
     if (currentStep === 1) {
-      navigate('/wallet', { replace: true });
+      // Return to the origin page, not always /wallet
+      navigate(fromPath, { replace: true });
     } else {
       setCurrentStep(1);
       setSelectedMethod(null);
