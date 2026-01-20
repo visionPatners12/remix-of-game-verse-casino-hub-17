@@ -76,7 +76,7 @@ export const useCdpOnrampSession = (): UseCdpOnrampSessionResult => {
         paymentMethod: request.paymentMethod,
         country: request.country,
         subdivision: request.subdivision,
-        redirectUrl: request.redirectUrl || `${window.location.origin}/deposit/coinbase`,
+        redirectUrl: request.redirectUrl || `${window.location.origin}/deposit`,
         partnerUserRef: request.partnerUserRef,
       };
 
