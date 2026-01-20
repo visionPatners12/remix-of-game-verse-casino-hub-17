@@ -7,8 +7,10 @@ import { useAuth } from '@/features/auth';
 import { useUserActiveGame } from '@/features/ludo/hooks/useUserActiveGame';
 import { useUserPastGames } from '@/features/ludo/hooks/useUserPastGames';
 import { Button } from '@/components/ui/button';
+import { useHideNavigation } from '@/hooks/useHideNavigation';
 
 const MyGamesPage: React.FC = () => {
+  useHideNavigation();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { activeGame, loading: activeLoading } = useUserActiveGame(user?.id);
