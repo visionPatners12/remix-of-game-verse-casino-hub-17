@@ -53,7 +53,7 @@ export const useLeaveGame = () => {
           throw new Error(errorMessage);
         }
         
-        navigate('/games/ludo');
+        navigate('/games/ludo', { replace: true });
         return;
       }
 
@@ -64,7 +64,7 @@ export const useLeaveGame = () => {
         } else {
           toast.success('You left the waiting room');
         }
-        navigate('/games/ludo');
+        navigate('/games/ludo', { replace: true });
         return;
       }
 
@@ -79,13 +79,13 @@ export const useLeaveGame = () => {
         if (data.finished && data.winner) {
           toast.info(`Game ended! Winner: ${data.winner}`);
         }
-        navigate('/games/ludo');
+        navigate('/games/ludo', { replace: true });
         return;
       }
 
       // Fallback for unexpected response format
       toast.success('You left the game');
-      navigate('/games/ludo');
+      navigate('/games/ludo', { replace: true });
       
     } catch (error) {
       console.error('Error leaving game:', error);
