@@ -46,7 +46,7 @@ export const useLudoGameActions = ({
   const { playPieceMoveSound } = useGameSounds();
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [isStartingGame, setIsStartingGame] = useState(false);
-  const [skipRollTrigger, setSkipRollTrigger] = useState(0);
+  // skipRollTrigger removed - dice should not animate on skip
   const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   /**
@@ -283,20 +283,11 @@ export const useLudoGameActions = ({
     }
   }, [gameId, gameData, toast]);
 
-  /**
-   * Trigger skip roll animation
-   */
-  const triggerSkipRoll = useCallback(() => {
-    setSkipRollTrigger(prev => prev + 1);
-  }, []);
-
   return {
     handleDiceRolled,
     handlePawnClick,
     handleTimeExpired,
     startGame,
-    triggerSkipRoll,
-    skipRollTrigger,
     isAutoPlaying,
     isStartingGame,
   };

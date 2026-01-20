@@ -22,7 +22,6 @@ interface FloatingGameControlsProps {
   diceValue: number | null;
   isGameActive: boolean;
   onDiceRolled?: (diceValue: number) => void;
-  triggerRoll?: number;
   isSpectator?: boolean;
   
   // Pot props
@@ -41,7 +40,6 @@ export const FloatingGameControls: React.FC<FloatingGameControlsProps> = ({
   diceValue,
   isGameActive,
   onDiceRolled,
-  triggerRoll,
   isSpectator,
   potAmount,
   betAmount,
@@ -78,7 +76,6 @@ export const FloatingGameControls: React.FC<FloatingGameControlsProps> = ({
             diceValue={diceValue}
             isGameActive={isGameActive}
             onDiceRolled={onDiceRolled}
-            triggerRoll={triggerRoll}
           />
         </div>
 

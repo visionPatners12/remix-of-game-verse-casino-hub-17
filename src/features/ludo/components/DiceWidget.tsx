@@ -21,7 +21,7 @@ interface DiceWidgetProps {
   diceValue: number | null;
   isGameActive: boolean;
   onDiceRolled?: (diceValue: number) => void;
-  triggerRoll?: number;
+  // Removed triggerRoll - skip should not animate the dice
 }
 
 export const DiceWidget: React.FC<DiceWidgetProps> = ({
@@ -32,10 +32,11 @@ export const DiceWidget: React.FC<DiceWidgetProps> = ({
   diceValue,
   isGameActive,
   onDiceRolled,
-  triggerRoll
 }) => {
   const [isRolling, setIsRolling] = useState(false);
   const [animationValue, setAnimationValue] = useState(1);
+  const [lastDiceValue, setLastDiceValue] = useState<number | null>(null);
+  const [isLocalRoll, setIsLocalRoll] = useState(false);
   const { toast } = useToast();
   const { playDiceRollSound } = useGameSounds();
 
@@ -51,14 +52,12 @@ export const DiceWidget: React.FC<DiceWidgetProps> = ({
 
   const diceColor = getPlayerColor(currentPlayerColor);
 
+  // Detect dice value changes from network (other players rolling)
+  // and trigger animation for everyone
   useEffect(() => {
-    if (diceValue && !isRolling) {
-      setAnimationValue(diceValue);
-    }
-  }, [diceValue, isRolling]);
-
-  useEffect(() => {
-    if (triggerRoll && triggerRoll > 0 && !isRolling) {
+    if (diceValue && diceValue !== lastDiceValue && !isLocalRoll) {
+      // Another player rolled - animate for this viewer too
+      logger.debug('🎲 Remote dice roll detected:', diceValue);
       setIsRolling(true);
       playDiceRollSound();
       
@@ -68,15 +67,26 @@ export const DiceWidget: React.FC<DiceWidgetProps> = ({
       
       const timeout = setTimeout(() => {
         clearInterval(animationInterval);
+        setAnimationValue(diceValue);
         setIsRolling(false);
-      }, 1500);
+        setLastDiceValue(diceValue);
+      }, 1200);
       
       return () => {
         clearInterval(animationInterval);
         clearTimeout(timeout);
       };
+    } else if (diceValue && !isRolling) {
+      // Just update the value without animation (initial load or after animation)
+      setAnimationValue(diceValue);
+      setLastDiceValue(diceValue);
     }
-  }, [triggerRoll]);
+    
+    // Reset local roll flag when dice value changes
+    if (diceValue !== lastDiceValue) {
+      setIsLocalRoll(false);
+    }
+  }, [diceValue, lastDiceValue, isLocalRoll, isRolling, playDiceRollSound]);
 
   const rollDice = async () => {
     if (isRolling) return;
@@ -104,6 +114,8 @@ export const DiceWidget: React.FC<DiceWidgetProps> = ({
       return;
     }
 
+    // Mark this as a local roll to prevent double animation
+    setIsLocalRoll(true);
     setIsRolling(true);
     playDiceRollSound();
     
@@ -121,6 +133,7 @@ export const DiceWidget: React.FC<DiceWidgetProps> = ({
       if (!data?.ok) {
         clearInterval(animationInterval);
         setIsRolling(false);
+        setIsLocalRoll(false);
         toast({
           title: "Error",
           description: data?.error || "Roll failed",
@@ -132,13 +145,15 @@ export const DiceWidget: React.FC<DiceWidgetProps> = ({
       setTimeout(() => {
         clearInterval(animationInterval);
         setAnimationValue(data.diceValue);
+        setLastDiceValue(data.diceValue);
         setIsRolling(false);
         onDiceRolled?.(data.diceValue);
-      }, 1500);
+      }, 1200);
 
     } catch (error: any) {
       clearInterval(animationInterval);
       setIsRolling(false);
+      setIsLocalRoll(false);
       toast({
         title: "Error",
         description: error?.message || "Cannot roll dice",
