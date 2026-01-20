@@ -3,7 +3,6 @@ import Profile from '@/pages/Profile';
 import ProfileEdit from '@/pages/ProfileEdit';
 import Settings from '@/pages/Settings';
 import SimpleMobileMenuPage from '@/pages/SimpleMobileMenuPage';
-import MobileDepositPage from '@/pages/MobileDepositPage';
 import CoinbaseDepositPage from '@/pages/CoinbaseDepositPage';
 import CoinbaseCashOutPage from '@/pages/CoinbaseCashOutPage';
 import CoinbaseOnrampCallbackPage from '@/pages/CoinbaseOnrampCallbackPage';
@@ -55,7 +54,6 @@ export const protectedRoutes: ProtectedRoute[] = [
   // Wallet & Finances
   { path: '/wallet', component: Wallet },
   { path: '/deposit', component: UnifiedDepositPage },
-  { path: '/mobile-deposit', component: MobileDepositPage },
   { path: '/deposit/coinbase', component: CoinbaseDepositPage },
   { path: '/deposit/coinbase/callback', component: CoinbaseOnrampCallbackPage },
   { path: '/withdrawal', component: UnifiedWithdrawPage },

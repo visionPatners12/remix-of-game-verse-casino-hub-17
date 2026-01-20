@@ -75,7 +75,7 @@ export default function SimpleMobileMenuPage() {
           usdcBalance={usdcToken?.formattedBalance || null}
           usdcChainId={usdcToken?.chainId || null}
           isLoading={isBalanceLoading}
-          onDeposit={() => handleNavigation('/mobile-deposit')}
+          onDeposit={() => handleNavigation('/deposit')}
           onWithdraw={() => handleNavigation('/withdrawal')}
           onBalanceClick={() => handleNavigation('/wallet')}
         />

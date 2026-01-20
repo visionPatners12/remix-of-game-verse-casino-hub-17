@@ -69,7 +69,7 @@ export const UserSection = ({
                   isMobile ? "w-8 h-8 rounded-xl" : "w-6 h-6 rounded-lg"
                 }`}
               >
-                <Link to="/mobile-deposit" aria-label="Add funds">
+                <Link to="/deposit" aria-label="Add funds">
                   <Plus className={isMobile ? "w-4 h-4" : "w-3.5 h-3.5"} />
                 </Link>
               </Button>
