@@ -57,11 +57,13 @@ export const LudoKonva: React.FC = () => {
   const { playersWithUsernames } = usePlayersWithUsernames(players);
   const { leaveGame, isLeaving } = useLeaveGame();
   const { animatingPawn, startAnimation, clearAnimation, isAnimating } = usePawnAnimation();
-  // Move clickTimeoutRef to top with other hooks
-  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Refs for remote animation detection
+  const isLocalMoveRef = useRef<boolean>(false);
+  const previousPositionsRef = useRef<Record<string, number[]> | null>(null);
   
   // Use hook for game actions - MUST be called before any conditional returns (Rules of Hooks)
-  const { startGame, isStartingGame: hookIsStarting } = useLudoGameActions({
+  const { startGame, isStartingGame: hookIsStarting, handlePawnClick } = useLudoGameActions({
     gameId: gameId || '',
     gameData,
     currentPlayer,
@@ -74,6 +76,9 @@ export const LudoKonva: React.FC = () => {
     setIsMoving,
     startAnimation,
     clearAnimation,
+    onLocalMoveStart: () => {
+      isLocalMoveRef.current = true;
+    },
   });
   
   // Memoized start game handler - also before conditional returns
@@ -230,6 +235,63 @@ export const LudoKonva: React.FC = () => {
       clearAnimation();
     }
   }, [gameData?.positions, animatingPawn, clearAnimation]);
+
+  // Remote movement detection - animate pawns for other players
+  React.useEffect(() => {
+    if (!gameData?.positions) {
+      previousPositionsRef.current = null;
+      return;
+    }
+
+    const currentPositions = gameData.positions;
+    const prevPositions = previousPositionsRef.current;
+
+    // First load - just save positions
+    if (!prevPositions) {
+      previousPositionsRef.current = JSON.parse(JSON.stringify(currentPositions));
+      return;
+    }
+
+    // If this was a local move, skip remote animation (we already animated)
+    if (isLocalMoveRef.current) {
+      isLocalMoveRef.current = false;
+      previousPositionsRef.current = JSON.parse(JSON.stringify(currentPositions));
+      return;
+    }
+
+    // Detect which pawn moved by comparing positions
+    const colors: Color[] = ['R', 'G', 'Y', 'B'];
+    for (const color of colors) {
+      const prev = prevPositions[color];
+      const curr = currentPositions[color];
+      if (!prev || !curr) continue;
+
+      for (let pawnIndex = 0; pawnIndex < 4; pawnIndex++) {
+        if (prev[pawnIndex] !== curr[pawnIndex]) {
+          // Movement detected! Generate path and animate
+          const path = generatePath(prev[pawnIndex], curr[pawnIndex], color);
+          
+          // Find the player for this color
+          const player = players.find(p => p.color === color);
+          if (player && path.length > 0) {
+            logger.debug('🎬 Remote movement detected, animating:', {
+              color,
+              pawnIndex,
+              from: prev[pawnIndex],
+              to: curr[pawnIndex],
+              path
+            });
+            startAnimation(player.id, pawnIndex, color, path);
+            playPieceMoveSound();
+          }
+          // Only one pawn moves per turn, break after finding it
+          break;
+        }
+      }
+    }
+
+    previousPositionsRef.current = JSON.parse(JSON.stringify(currentPositions));
+  }, [gameData?.positions, players, startAnimation, playPieceMoveSound]);
 
   // Detect game finished and show winner modal
   useEffect(() => {
@@ -400,169 +462,8 @@ export const LudoKonva: React.FC = () => {
   };
 
 
-  const handlePawnClickInternal = async (playerId: string, pawnIndex: number) => {
-    logger.debug('🎯 Pawn click attempt:', {
-      playerId,
-      pawnIndex,
-      isMoving,
-      isAnimating,
-      waitingForMove,
-      currentPlayerColor: currentPlayer?.color,
-      gameDataTurn: gameData?.turn
-    });
-    
-    if (!waitingForMove || isMoving || isAnimating) {
-      logger.debug('❌ Click ignored - not waiting for move or already moving/animating');
-      return;
-    }
-    
-    const move = possibleMoves.find(m => m.pawnIndex === pawnIndex);
-    if (!move) {
-      logger.debug('❌ Click ignored - no valid move for this pawn');
-      return;
-    }
-
-    // Enhanced validation with retry before making move
-    const validationResult = await validateTurnWithRetry({
-      currentPlayerColor: currentPlayer?.color,
-      gameDataTurn: gameData?.turn,
-      isGameActive: isActiveGame,
-      diceValue: gameData?.dice,
-      waitingForMove
-    });
-
-    if (!validationResult.isValid) {
-      logger.warn('❌ Pawn move blocked by validation:', validationResult);
-      
-      if (validationResult.canRetry) {
-        toast({
-          title: "Synchronizing",
-          description: "Data is syncing, please retry.",
-          variant: "default"
-        });
-      } else {
-        toast({
-          title: "Action not allowed",
-          description: validationResult.reason,
-          variant: "destructive"
-        });
-      }
-      return;
-    }
-
-    setIsMoving(true);
-    logger.debug('🔄 Starting pawn movement...');
-
-    // Calculer la position de départ actuelle
-    const playerPositions = gameData?.positions?.[currentPlayer.color as Color] ?? [];
-    const currentPos = playerPositions[pawnIndex];
-    
-    // Générer le chemin pour l'animation
-    const targetPos = move.target ?? START_INDEX[currentPlayer.color as Color];
-    const path = generatePath(currentPos, targetPos, currentPlayer.color as Color);
-    
-    logger.debug('🚶 Animation path:', { currentPos, targetPos, path });
-
-    // Démarrer l'animation et attendre qu'elle finisse
-    if (path.length > 0) {
-      playPieceMoveSound();
-      await startAnimation(playerId, pawnIndex, currentPlayer.color as Color, path);
-    }
-
-    try {
-      const { data, error } = await supabase.functions.invoke('ludo-game', {
-        body: { 
-          action: 'move',
-          gameId: gameId,
-          pawnIndex: pawnIndex
-        }
-      });
-
-      if (error) throw error;
-
-      // Check for backend error response
-      if (!data?.ok) {
-        const errorCode = data?.code;
-        const errorMessage = data?.error || 'Move failed';
-        
-        if (errorCode === 'FORBIDDEN') {
-          throw new Error(errorMessage);
-        } else if (errorCode === 'BAD_STATE') {
-          throw new Error(errorMessage);
-        } else if (errorCode === 'INVALID_MOVE') {
-          throw new Error(errorMessage);
-        }
-        throw new Error(errorMessage);
-      }
-
-      // Animation sera effacée par le useEffect quand les positions realtime seront synchronisées
-      logger.debug('✅ Move successful, waiting for realtime sync:', data);
-
-      // Don't rely on data.newPositions - let realtime sync handle position updates
-      // Just clear the move state and let the next dice roll calculate new moves
-      setWaitingForMove(false);
-      setPossibleMoves([]);
-
-      // Handle captured pawn feedback
-      if (data.moveResult?.capturedPawn) {
-        toast({
-          title: "Pawn captured!",
-          description: `Captured ${data.moveResult.capturedPawn.color} pawn`,
-        });
-      } else {
-        toast({
-          title: "Move successful",
-          description: data.moveResult?.valid ? "Pawn moved" : "Move processed",
-        });
-      }
-
-      // Check if this move finished the game
-      if (data.finished && data.winner) {
-        logger.debug('🏆 Game finished after move:', data.winner);
-      }
-      
-    } catch (error: any) {
-      // En cas d'erreur, effacer l'animation aussi
-      clearAnimation();
-      logger.error('❌ Move failed:', error);
-      
-      // Check if it's a "Not your turn" error that might be a sync issue
-      const errorMessage = error?.message || error?.toString() || 'Unknown error';
-      const isNotYourTurnError = errorMessage.includes('Not your turn');
-      
-      if (isNotYourTurnError) {
-        toast({
-          title: "Sync error",
-          description: "Game data not synchronized. Please wait and retry.",
-          variant: "destructive"
-        });
-        
-        // Force refresh game state in a few seconds
-        setTimeout(() => {
-          logger.debug('🔄 Attempting to refresh game state after sync error');
-        }, 2000);
-      } else {
-        toast({
-          title: "Error",
-          description: errorMessage || "Cannot move pawn",
-          variant: "destructive"
-        });
-      }
-    } finally {
-      setIsMoving(false);
-      logger.debug('🏁 Movement finished');
-    }
-  };
-
-  // Debounced version to prevent double-clicks
-  const handlePawnClick = (playerId: string, pawnIndex: number) => {
-    if (clickTimeoutRef.current) {
-      clearTimeout(clickTimeoutRef.current);
-    }
-    clickTimeoutRef.current = setTimeout(() => {
-      handlePawnClickInternal(playerId, pawnIndex);
-    }, 100);
-  };
+  // handlePawnClick is now provided by useLudoGameActions hook
+  
   
   // Find player by color helper
   const getPlayerByColor = (color: 'R' | 'G' | 'Y' | 'B') => {
