@@ -600,7 +600,7 @@ export const LudoKonva: React.FC = () => {
             isSpectator={isSpectator}
             isLeaving={isLeaving}
             onExit={() => user && gameId && leaveGame(gameId, user.id)}
-            onBack={() => navigate('/games/ludo')}
+            onBack={() => navigate('/games/ludo', { replace: true })}
             onShare={() => setShowShareModal(true)}
           >
             {/* Floating Controls - Timer, Dice, Pot */}
@@ -707,7 +707,7 @@ export const LudoKonva: React.FC = () => {
             claimStatus={(gameData as any)?.claim_status}
             claimTxHash={(gameData as any)?.claim_tx_hash}
             onPlayAgain={() => navigate('/games/ludo/create')}
-            onBackToGames={() => navigate('/games/ludo')}
+            onBackToGames={() => navigate('/games/ludo', { replace: true })}
           />
         </div>
       </div>
