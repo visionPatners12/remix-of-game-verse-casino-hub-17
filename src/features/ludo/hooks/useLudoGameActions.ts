@@ -27,6 +27,7 @@ interface UseLudoGameActionsProps {
   setIsMoving: (moving: boolean) => void;
   startAnimation: (playerId: string, pawnIndex: number, color: Color, path: number[]) => Promise<void>;
   clearAnimation: () => void;
+  onLocalMoveStart?: () => void;
 }
 
 export const useLudoGameActions = ({
@@ -42,6 +43,7 @@ export const useLudoGameActions = ({
   setIsMoving,
   startAnimation,
   clearAnimation,
+  onLocalMoveStart,
 }: UseLudoGameActionsProps) => {
   const { toast } = useToast();
   const { playPieceMoveSound } = useGameSounds();
@@ -97,6 +99,9 @@ export const useLudoGameActions = ({
     setIsMoving(true);
     setWaitingForMove(false);
     setPossibleMoves([]);
+    
+    // Mark as local move BEFORE animation to prevent duplicate animation from realtime
+    onLocalMoveStart?.();
     
     logger.debug('🔄 Starting optimistic pawn movement...');
 
@@ -180,7 +185,8 @@ export const useLudoGameActions = ({
     startAnimation,
     clearAnimation,
     playPieceMoveSound,
-    toast
+    toast,
+    onLocalMoveStart
   ]);
 
   /**
