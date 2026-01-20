@@ -112,21 +112,21 @@ serve(async (req) => {
 
     // Step 2: Build the onramp session payload
     const onrampPayload: Record<string, unknown> = {
-      purchase_currency: body.purchaseCurrency || "USDC",
-      destination_network: body.destinationNetwork || "base",
-      destination_address: body.destinationAddress,
-      payment_amount: body.paymentAmount,
-      payment_currency: body.paymentCurrency || "USD",
-      payment_method: body.paymentMethod || "CARD",
+      purchaseCurrency: body.purchaseCurrency || "USDC",
+      destinationNetwork: body.destinationNetwork || "base",
+      destinationAddress: body.destinationAddress,
+      paymentAmount: body.paymentAmount,
+      paymentCurrency: body.paymentCurrency || "USD",
+      paymentMethod: body.paymentMethod || "CARD",
       country: body.country,
       ...(body.subdivision && { subdivision: body.subdivision }),
-      ...(body.redirectUrl && { redirect_url: body.redirectUrl }),
-      ...(body.partnerUserRef && { partner_user_ref: body.partnerUserRef }),
+      ...(body.redirectUrl && { redirectUrl: body.redirectUrl }),
+      ...(body.partnerUserRef && { partnerUserRef: body.partnerUserRef }),
     };
 
-    // Add client_ip if available (required by Coinbase for some regions)
+    // Add clientIp if available (required by Coinbase for some regions)
     if (clientIp) {
-      onrampPayload.client_ip = clientIp;
+      onrampPayload.clientIp = clientIp;
     }
 
     console.log(`[cdp-onramp-session] Calling CDP API with payload:`, JSON.stringify(onrampPayload));
