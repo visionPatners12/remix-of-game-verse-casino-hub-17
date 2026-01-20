@@ -1,13 +1,14 @@
 /**
  * Game actions hook - handles all game interactions
  * Encapsulates API calls, validation, and state updates
+ * Uses optimistic UI pattern for instant feedback
  */
 
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useGameSounds } from '@/hooks/useGameSounds';
 import { ludoApi } from '../services/ludoApi';
-import { validateTurnWithRetry } from '../utils/turnValidation';
+import { isPlayerTurnSimple } from '../utils/turnValidation';
 import { generatePath } from '../utils/pathGenerator';
 import { START_INDEX } from '../model/ludoModel';
 import { logger } from '@/utils/logger';
@@ -46,8 +47,6 @@ export const useLudoGameActions = ({
   const { playPieceMoveSound } = useGameSounds();
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [isStartingGame, setIsStartingGame] = useState(false);
-  // skipRollTrigger removed - dice should not animate on skip
-  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   /**
    * Handle dice rolled - calculate possible moves
@@ -61,7 +60,7 @@ export const useLudoGameActions = ({
   }, [currentPlayer, gameData?.positions, setPossibleMoves, setWaitingForMove]);
 
   /**
-   * Handle pawn click - internal implementation
+   * Handle pawn click - optimistic UI pattern for instant feedback
    */
   const handlePawnClickInternal = useCallback(async (playerId: string, pawnIndex: number) => {
     logger.debug('🎯 Pawn click attempt:', {
@@ -85,55 +84,43 @@ export const useLudoGameActions = ({
       return;
     }
 
-    // Enhanced validation with retry before making move
-    const validationResult = await validateTurnWithRetry({
-      currentPlayerColor: currentPlayer?.color,
-      gameDataTurn: gameData?.turn,
-      isGameActive: gameData?.status === 'active',
-      diceValue: gameData?.dice,
-      waitingForMove
-    });
-
-    if (!validationResult.isValid) {
-      logger.warn('❌ Pawn move blocked by validation:', validationResult);
-
-      if (validationResult.canRetry) {
-        toast({
-          title: "Synchronizing",
-          description: "Data is syncing, please retry.",
-          variant: "default"
-        });
-      } else {
-        toast({
-          title: "Action not allowed",
-          description: validationResult.reason,
-          variant: "destructive"
-        });
-      }
+    // Simple synchronous validation - no async delays
+    if (!isPlayerTurnSimple(currentPlayer?.color, gameData?.turn)) {
+      logger.debug('❌ Not your turn');
       return;
     }
 
-    setIsMoving(true);
-    logger.debug('🔄 Starting pawn movement...');
+    // Store current state for potential rollback
+    const previousPossibleMoves = [...possibleMoves];
 
-    // Calculate current start position
+    // OPTIMISTIC UI: Update state immediately
+    setIsMoving(true);
+    setWaitingForMove(false);
+    setPossibleMoves([]);
+    
+    logger.debug('🔄 Starting optimistic pawn movement...');
+
+    // Calculate path for animation
     const playerPositions = gameData?.positions?.[currentPlayer!.color as Color] ?? [];
     const currentPos = playerPositions[pawnIndex];
-
-    // Generate path for animation
     const targetPos = move.target ?? START_INDEX[currentPlayer!.color as Color];
     const path = generatePath(currentPos, targetPos, currentPlayer!.color as Color);
 
     logger.debug('🚶 Animation path:', { currentPos, targetPos, path });
 
-    // Start animation and wait for it to finish
-    if (path.length > 0) {
-      playPieceMoveSound();
-      await startAnimation(playerId, pawnIndex, currentPlayer!.color as Color, path);
-    }
+    // Start sound and animation IMMEDIATELY
+    playPieceMoveSound();
+    
+    // Create promises for parallel execution
+    const animationPromise = path.length > 0 
+      ? startAnimation(playerId, pawnIndex, currentPlayer!.color as Color, path)
+      : Promise.resolve();
+    
+    const apiPromise = ludoApi.move(gameId, pawnIndex);
 
     try {
-      const data = await ludoApi.move(gameId, pawnIndex);
+      // Wait for both animation and API in parallel
+      const [, data] = await Promise.all([animationPromise, apiPromise]);
 
       // Check for backend error response
       if (!data?.ok) {
@@ -144,19 +131,11 @@ export const useLudoGameActions = ({
       // Animation will be cleared by useEffect when realtime positions sync
       logger.debug('✅ Move successful, waiting for realtime sync:', data);
 
-      setWaitingForMove(false);
-      setPossibleMoves([]);
-
       // Handle captured pawn feedback
       if (data.moveResult?.capturedPawn) {
         toast({
           title: "Pawn captured!",
           description: `Captured ${data.moveResult.capturedPawn.color} pawn`,
-        });
-      } else {
-        toast({
-          title: "Move successful",
-          description: data.moveResult?.valid ? "Pawn moved" : "Move processed",
         });
       }
 
@@ -166,26 +145,23 @@ export const useLudoGameActions = ({
       }
 
     } catch (error: any) {
-      // On error, clear animation too
+      // ROLLBACK: Clear animation and restore state
       clearAnimation();
-      logger.error('❌ Move failed:', error);
+      setWaitingForMove(true);
+      setPossibleMoves(previousPossibleMoves);
+      
+      logger.error('❌ Move failed, rolling back:', error);
 
       const errorMessage = error?.message || error?.toString() || 'Unknown error';
       const isNotYourTurnError = errorMessage.includes('Not your turn');
 
-      if (isNotYourTurnError) {
-        toast({
-          title: "Sync error",
-          description: "Game data not synchronized. Please wait and retry.",
-          variant: "destructive"
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: errorMessage || "Cannot move pawn",
-          variant: "destructive"
-        });
-      }
+      toast({
+        title: isNotYourTurnError ? "Sync error" : "Error",
+        description: isNotYourTurnError 
+          ? "Game data not synchronized. Please wait and retry."
+          : (errorMessage || "Cannot move pawn"),
+        variant: "destructive"
+      });
     } finally {
       setIsMoving(false);
       logger.debug('🏁 Movement finished');
@@ -208,15 +184,10 @@ export const useLudoGameActions = ({
   ]);
 
   /**
-   * Debounced pawn click handler
+   * Direct pawn click handler - no debounce for instant response
    */
   const handlePawnClick = useCallback((playerId: string, pawnIndex: number) => {
-    if (clickTimeoutRef.current) {
-      clearTimeout(clickTimeoutRef.current);
-    }
-    clickTimeoutRef.current = setTimeout(() => {
-      handlePawnClickInternal(playerId, pawnIndex);
-    }, 100);
+    handlePawnClickInternal(playerId, pawnIndex);
   }, [handlePawnClickInternal]);
 
   /**
