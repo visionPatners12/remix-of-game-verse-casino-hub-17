@@ -12,6 +12,7 @@ import { useAuth } from '@/features/auth';
 import { useUnifiedWallet } from '@/features/wallet/hooks/core/useUnifiedWallet';
 import { useUserCountry } from '@/hooks/useUserCountry';
 import { useEnsSubdomain } from '@/hooks/useEnsSubdomain';
+import { useGeoLocation } from '@/hooks/useGeoLocation';
 import { toast } from 'sonner';
 
 // Apple Pay icon component
@@ -50,6 +51,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
   const { address } = useUnifiedWallet();
   const { ensSubdomain } = useEnsSubdomain();
   const { country } = useUserCountry();
+  const { data: geoData, isLoading: isLoadingGeo } = useGeoLocation();
   const { data: paymentData, isLoading: isLoadingMethods } = useCdpPaymentMethods();
   
   // Use Safe address (Smart Account) as destination for onramp - ENS is for display only
@@ -109,12 +111,18 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
       return;
     }
 
+    if (!geoData?.ip) {
+      onError?.('Unable to detect client IP. Please try again.');
+      return;
+    }
+
     try {
       const userId = user?.id || '';
 
       console.log('[CoinbaseFundCard] Creating onramp session via edge function...', {
         destinationAddress,
-        usingEns: !!ensSubdomain
+        usingEns: !!ensSubdomain,
+        clientIp: geoData.ip
       });
 
       const response = await createSession({
@@ -123,6 +131,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
         paymentMethod: selectedPaymentMethod,
         country,
         partnerUserRef: userId.substring(0, 50),
+        clientIp: geoData.ip,
       });
 
       if (!response) {
@@ -141,7 +150,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
       onError?.(errorMessage);
       toast.error(errorMessage);
     }
-  }, [amount, address, user, country, selectedPaymentMethod, createSession, sessionError, onError]);
+  }, [amount, destinationAddress, user, country, selectedPaymentMethod, createSession, sessionError, onError, geoData?.ip, ensSubdomain]);
 
   // Step 2: Confirm and open Coinbase Pay
   const handleConfirmPayment = useCallback(() => {
@@ -184,7 +193,7 @@ export const CoinbaseFundCard: React.FC<CoinbaseFundCardProps> = ({
 
   const numericAmount = parseFloat(amount) || 0;
   const methods = paymentData?.methods || [];
-  const isLoading = isLoadingMethods;
+  const isLoading = isLoadingMethods || isLoadingGeo;
   const selectedMethodName = methods.find(m => m.id === selectedPaymentMethod)?.name || selectedPaymentMethod;
 
   // Confirmation step UI
