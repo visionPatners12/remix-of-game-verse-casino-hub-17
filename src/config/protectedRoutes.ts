@@ -16,6 +16,7 @@ import SettingsSmsVerificationPage from '@/pages/SettingsSmsVerificationPage';
 import { PinSettingsPage, PinChallengePage, PinEntryPage } from '@/features/security';
 import UnifiedDepositPage from '@/pages/UnifiedDepositPage';
 import UnifiedWithdrawPage from '@/pages/UnifiedWithdrawPage';
+import ReceivePage from '@/pages/ReceivePage';
 import Wallet from '@/pages/Wallet';
 import { LudoGamesPage } from '@/features/ludo';
 import MessagesPage from '@/pages/MessagesPage';
@@ -59,6 +60,7 @@ export const protectedRoutes: ProtectedRoute[] = [
   { path: '/withdrawal', component: UnifiedWithdrawPage },
   { path: '/withdrawal/coinbase-cashout', component: CoinbaseCashOutPage },
   { path: '/withdrawal/coinbase/callback', component: CoinbaseOfframpCallbackPage },
+  { path: '/receive', component: ReceivePage },
   { path: '/transactions', component: TransactionsPage },
   
   // Search
