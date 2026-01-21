@@ -56,6 +56,18 @@
       "rule2": "Mueve las fichas en sentido horario",
       "rule3": "Aterrizar sobre un oponente lo envía a casa",
       "rule4": "El primero en llevar todas las fichas a casa gana"
+    },
+    "leaveDialog": {
+      "waitingTitle": "¿Salir de la sala?",
+      "waitingDesc": "Puedes unirte a otra partida cuando quieras.",
+      "waitingRefund": "Tu depósito de {{amount}} USDC será reembolsado.",
+      "activeTitle": "¿Abandonar la partida?",
+      "activeDesc": "No podrás volver.",
+      "activeLoss": "Perderás tu apuesta de {{amount}} USDC.",
+      "confirm": "Salir",
+      "confirmForfeit": "Abandonar",
+      "cancel": "Quedarme",
+      "leaving": "Saliendo..."
     }
   }
 }

@@ -77,6 +77,18 @@
       "rule2": "Déplace tes pions dans le sens horaire",
       "rule3": "Atterrir sur un adversaire le renvoie chez lui",
       "rule4": "Le premier à ramener tous ses pions gagne"
+    },
+    "leaveDialog": {
+      "waitingTitle": "Quitter la salle ?",
+      "waitingDesc": "Tu peux rejoindre une autre partie.",
+      "waitingRefund": "Ton dépôt de {{amount}} USDC sera remboursé.",
+      "activeTitle": "Quitter la partie ?",
+      "activeDesc": "Tu ne pourras pas revenir.",
+      "activeLoss": "Tu perdras ta mise de {{amount}} USDC.",
+      "confirm": "Quitter",
+      "confirmForfeit": "Abandonner",
+      "cancel": "Rester",
+      "leaving": "Fermeture..."
     }
   }
 }

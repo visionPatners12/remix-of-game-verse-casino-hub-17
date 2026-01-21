@@ -503,6 +503,7 @@ export const LudoKonva: React.FC = () => {
             isOnline={isOnline}
             isSpectator={isSpectator}
             isLeaving={isLeaving}
+            betAmount={gameData?.bet_amount || 0}
             onExit={() => user && gameId && leaveGame(gameId, user.id)}
             onBack={() => navigate('/games/ludo', { replace: true })}
             onShare={() => setShowShareModal(true)}
@@ -609,7 +610,7 @@ export const LudoKonva: React.FC = () => {
             potAmount={winnerInfo?.potAmount}
             claimStatus={(gameData as any)?.claim_status}
             claimTxHash={(gameData as any)?.claim_tx_hash}
-            onPlayAgain={() => navigate('/games/ludo/create')}
+            onPlayAgain={() => navigate('/games/ludo/create', { replace: true })}
             onBackToGames={() => navigate('/games/ludo', { replace: true })}
           />
         </div>

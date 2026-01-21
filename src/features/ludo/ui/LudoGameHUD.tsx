@@ -3,11 +3,12 @@
  * Minimal top bar + floating controls overlay
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { LogOut, Share, Eye, Wifi, WifiOff } from 'lucide-react';
+import { LogOut, Share, Eye } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { LeaveGameDialog } from '../components/LeaveGameDialog';
 
 interface LudoGameHUDProps {
   // Header props
@@ -15,6 +16,7 @@ interface LudoGameHUDProps {
   isOnline: boolean;
   isSpectator: boolean;
   isLeaving: boolean;
+  betAmount: number;
   onExit: () => void;
   onBack: () => void;
   onShare: () => void;
@@ -26,11 +28,27 @@ export const LudoGameHUD: React.FC<LudoGameHUDProps> = ({
   isOnline,
   isSpectator,
   isLeaving,
+  betAmount,
   onExit,
   onBack,
   onShare,
   children,
 }) => {
+  const [showLeaveDialog, setShowLeaveDialog] = useState(false);
+
+  const handleExitClick = () => {
+    if (isSpectator) {
+      onBack();
+    } else {
+      setShowLeaveDialog(true);
+    }
+  };
+
+  const handleConfirmLeave = () => {
+    onExit();
+    setShowLeaveDialog(false);
+  };
+
   return (
     <>
       {/* Ultra-minimal Top Bar */}
@@ -60,26 +78,20 @@ export const LudoGameHUD: React.FC<LudoGameHUDProps> = ({
         <div className="relative flex items-center justify-between h-12 px-3">
           {/* Exit/Back - icon only with subtle bg */}
           <motion.div whileTap={{ scale: 0.9 }}>
-            {isSpectator ? (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={onBack}
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/10"
-              >
-                <LogOut className="w-4 h-4" />
-              </Button>
-            ) : (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={onExit}
-                disabled={isLeaving}
-                className="w-9 h-9 rounded-full bg-destructive/10 hover:bg-destructive/20 border border-destructive/20 text-destructive"
-              >
-                <LogOut className="w-4 h-4" />
-              </Button>
-            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleExitClick}
+              disabled={isLeaving}
+              className={cn(
+                "w-9 h-9 rounded-full border",
+                isSpectator
+                  ? "bg-white/5 hover:bg-white/10 border-white/10"
+                  : "bg-destructive/10 hover:bg-destructive/20 border-destructive/20 text-destructive"
+              )}
+            >
+              <LogOut className="w-4 h-4" />
+            </Button>
           </motion.div>
 
           {/* Center: Room code pill + Network status */}
@@ -118,6 +130,18 @@ export const LudoGameHUD: React.FC<LudoGameHUDProps> = ({
 
       {/* Floating Controls Container - children go here */}
       {children}
+
+      {/* Leave Confirmation Dialog - only for non-spectators */}
+      {!isSpectator && (
+        <LeaveGameDialog
+          open={showLeaveDialog}
+          onOpenChange={setShowLeaveDialog}
+          gameStatus="active"
+          betAmount={betAmount}
+          isLeaving={isLeaving}
+          onConfirm={handleConfirmLeave}
+        />
+      )}
     </>
   );
 };
