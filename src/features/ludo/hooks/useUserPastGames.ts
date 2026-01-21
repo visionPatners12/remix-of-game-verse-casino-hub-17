@@ -13,6 +13,8 @@ interface PastGamePlayer {
   } | null;
 }
 
+export type ClaimStatus = 'received' | 'pending_confirmations' | 'confirmed' | 'mismatch' | 'reverted' | 'timeout' | null;
+
 export interface PastGame {
   id: string;
   game_name: string | null;
@@ -23,6 +25,8 @@ export interface PastGame {
   winner_user_id: string | null;
   finished_at: string | null;
   max_players: number;
+  claim_status: ClaimStatus;
+  claim_tx_hash: string | null;
   userColor: string | null;
   isWinner: boolean;
   players: PastGamePlayer[];
@@ -77,7 +81,9 @@ export const useUserPastGames = (userId: string | undefined) => {
           winner,
           winner_user_id,
           finished_at,
-          max_players
+          max_players,
+          claim_status,
+          claim_tx_hash
         `)
         .in('id', gameIds)
         .eq('status', 'finished')
