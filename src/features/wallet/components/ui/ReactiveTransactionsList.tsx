@@ -1,14 +1,24 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { RefreshCw, History, ArrowUpRight, ArrowDownLeft, Clock, CheckCircle, XCircle } from 'lucide-react';
 import { useWalletTransactionsCDP } from '../../hooks/transactions/useWalletTransactionsCDP';
 import { formatDistanceToNow } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
+import { SUPPORTED_CHAINS, DEFAULT_CHAIN_ID } from '@/config/chains';
+import { ChainIcon } from '@/components/ui/chain-icon';
 
 export const ReactiveTransactionsList: React.FC = () => {
-  const { data: transactions = [], isLoading, sync, isSyncing } = useWalletTransactionsCDP();
+  const { 
+    data: transactions = [], 
+    isLoading, 
+    sync, 
+    isSyncing, 
+    chainId, 
+    setChainId 
+  } = useWalletTransactionsCDP(DEFAULT_CHAIN_ID);
 
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -38,6 +48,11 @@ export const ReactiveTransactionsList: React.FC = () => {
     return `${sign}${amount.toFixed(decimals)} ${currency}`;
   };
 
+  const handleChainChange = (value: string) => {
+    const newChainId = parseInt(value, 10);
+    setChainId(newChainId);
+  };
+
   if (isLoading) {
     return (
       <Card>
@@ -62,7 +77,7 @@ export const ReactiveTransactionsList: React.FC = () => {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <History className="h-5 w-5" />
@@ -81,7 +96,32 @@ export const ReactiveTransactionsList: React.FC = () => {
             <RefreshCw className={cn("h-4 w-4", isSyncing && "animate-spin")} />
           </Button>
         </div>
+        
+        {/* Chain Selector */}
+        <div className="mt-3">
+          <Select value={chainId.toString()} onValueChange={handleChainChange}>
+            <SelectTrigger className="w-full">
+              <SelectValue>
+                <div className="flex items-center gap-2">
+                  <ChainIcon chainId={chainId} />
+                  <span>{SUPPORTED_CHAINS.find(c => c.id === chainId)?.name || 'Select Chain'}</span>
+                </div>
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {SUPPORTED_CHAINS.map((chain) => (
+                <SelectItem key={chain.id} value={chain.id.toString()}>
+                  <div className="flex items-center gap-2">
+                    <ChainIcon chainId={chain.id} />
+                    <span>{chain.name}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </CardHeader>
+      
       <CardContent>
         {transactions.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
@@ -114,11 +154,11 @@ export const ReactiveTransactionsList: React.FC = () => {
                       <p className={`font-medium text-sm ${
                         transaction.type === 'withdrawal' ? 'text-red-500' : 'text-green-500'
                       }`}>
-                        {formatAmount(transaction.amount, transaction.type, transaction.currency || 'MATIC')}
+                        {formatAmount(transaction.amount, transaction.type, transaction.currency || 'ETH')}
                       </p>
-                      {transaction.fee && (
+                      {transaction.fee && transaction.fee > 0 && (
                         <p className="text-xs text-muted-foreground">
-                          Fee: {transaction.fee.toFixed(6)} MATIC
+                          Fee: {transaction.fee.toFixed(6)} ETH
                         </p>
                       )}
                     </div>
