@@ -129,8 +129,26 @@ export const WinnerModal: React.FC<WinnerModalProps> = ({
 }) => {
   const [showParticles, setShowParticles] = useState(false);
   const [showEnergyWave, setShowEnergyWave] = useState(false);
+  const [showRetryForPending, setShowRetryForPending] = useState(false);
   const { playVictorySound, playGameOverSound } = useGameSounds();
   const { claimPrize, isPending } = useClaimPrize();
+
+  // Timer to show retry button after 30 seconds of pending state
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    
+    const isStuckPending = !isPending && (claimStatus === 'received' || claimStatus === 'pending_confirmations');
+    
+    if (isStuckPending) {
+      timer = setTimeout(() => {
+        setShowRetryForPending(true);
+      }, 30000); // 30 seconds
+    } else {
+      setShowRetryForPending(false);
+    }
+    
+    return () => clearTimeout(timer);
+  }, [claimStatus, isPending]);
 
   const playerColor = PLAYER_COLORS[winnerColor] || PLAYER_COLORS.B;
 
@@ -432,9 +450,38 @@ export const WinnerModal: React.FC<WinnerModalProps> = ({
                 )}
 
                 {isClaimPending && (
-                  <div className="flex items-center justify-center gap-2 py-2 text-accent">
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span className="text-sm">Processing transaction...</span>
+                  <div className="flex flex-col items-center gap-3 py-2">
+                    <div className="flex items-center gap-2 text-accent">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span className="text-sm">
+                        {claimStatus === 'pending_confirmations' 
+                          ? 'Awaiting blockchain confirmations...' 
+                          : 'Processing transaction...'}
+                      </span>
+                    </div>
+                    
+                    {/* Retry button visible after 30 seconds delay */}
+                    {showRetryForPending && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="w-full"
+                      >
+                        <p className="text-xs text-muted-foreground text-center mb-2">
+                          Taking too long? Try again.
+                        </p>
+                        <Button
+                          onClick={handleRetryClaim}
+                          variant="outline"
+                          size="sm"
+                          className="w-full border-accent/50 text-accent hover:bg-accent/10"
+                          disabled={isPending}
+                        >
+                          <RefreshCw className={cn("w-4 h-4 mr-2", isPending && "animate-spin")} />
+                          Retry Claim
+                        </Button>
+                      </motion.div>
+                    )}
                   </div>
                 )}
 

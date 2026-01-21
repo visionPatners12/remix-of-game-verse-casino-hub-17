@@ -34,6 +34,11 @@ export type Database = {
           raw: Json
           signed_payload: string | null
           status: string | null
+          token_amount_raw: number | null
+          token_contract_address: string | null
+          token_method: string | null
+          token_recipient: string | null
+          token_standard: string | null
           transaction_hash: string
           transaction_link: string | null
           tx_type: number | null
@@ -61,6 +66,11 @@ export type Database = {
           raw?: Json
           signed_payload?: string | null
           status?: string | null
+          token_amount_raw?: number | null
+          token_contract_address?: string | null
+          token_method?: string | null
+          token_recipient?: string | null
+          token_standard?: string | null
           transaction_hash: string
           transaction_link?: string | null
           tx_type?: number | null
@@ -88,6 +98,11 @@ export type Database = {
           raw?: Json
           signed_payload?: string | null
           status?: string | null
+          token_amount_raw?: number | null
+          token_contract_address?: string | null
+          token_method?: string | null
+          token_recipient?: string | null
+          token_standard?: string | null
           transaction_hash?: string
           transaction_link?: string | null
           tx_type?: number | null
