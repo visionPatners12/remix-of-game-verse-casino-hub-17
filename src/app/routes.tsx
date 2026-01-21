@@ -43,6 +43,7 @@ const LudoKonvaWithGuard = lazyWithRetry(() => import('@/features/ludo/component
 const OnboardingRouter = lazyWithRetry(() => import('@/features/onboarding').then(m => ({ default: m.OnboardingRouter })));
 const NFTDetailPage = lazyWithRetry(() => import('@/features/nft').then(m => ({ default: m.NFTDetailPage })));
 const SwapPage = lazyWithRetry(() => import('@/pages/SwapPage'));
+const TournamentCreatePage = lazyWithRetry(() => import('@/features/tournaments').then(m => ({ default: m.TournamentCreatePage })));
 
 // Components
 import { ProtectedRoute } from '@/components/ProtectedRoute';
@@ -105,6 +106,9 @@ export function AppRoutes() {
           
           {/* NFT Detail route */}
           <Route path="/nft-details" element={<NFTDetailPage />} />
+          
+          {/* Tournament routes */}
+          <Route path="/tournaments/create" element={<TournamentCreatePage />} />
           
           {/* Onboarding routes */}
           <Route path="/onboarding/*" element={

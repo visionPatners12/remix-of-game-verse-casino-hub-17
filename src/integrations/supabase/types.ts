@@ -1232,6 +1232,90 @@ export type Database = {
         }
         Relationships: []
       }
+      tournaments: {
+        Row: {
+          bet_per_match: number | null
+          bracket_size: number
+          commission_rate: number | null
+          created_at: string | null
+          created_by: string | null
+          current_round: number | null
+          description: string | null
+          entry_fee: number
+          extra_turn_on_six: boolean | null
+          game_type: string
+          id: string
+          name: string
+          prize_distribution: Json
+          prize_pool: number | null
+          registration_end: string
+          registration_start: string
+          status: string
+          total_rounds: number | null
+          tournament_start: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          bet_per_match?: number | null
+          bracket_size: number
+          commission_rate?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          current_round?: number | null
+          description?: string | null
+          entry_fee?: number
+          extra_turn_on_six?: boolean | null
+          game_type?: string
+          id?: string
+          name: string
+          prize_distribution?: Json
+          prize_pool?: number | null
+          registration_end: string
+          registration_start: string
+          status?: string
+          total_rounds?: number | null
+          tournament_start?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          bet_per_match?: number | null
+          bracket_size?: number
+          commission_rate?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          current_round?: number | null
+          description?: string | null
+          entry_fee?: number
+          extra_turn_on_six?: boolean | null
+          game_type?: string
+          id?: string
+          name?: string
+          prize_distribution?: Json
+          prize_pool?: number | null
+          registration_end?: string
+          registration_start?: string
+          status?: string
+          total_rounds?: number | null
+          tournament_start?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tournaments_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "public_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tournaments_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tx_status: {
         Row: {
           amount_wei: number | null
