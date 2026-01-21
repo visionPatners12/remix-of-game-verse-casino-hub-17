@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   ArrowLeft, 
   ArrowDownCircle, 
@@ -16,13 +17,29 @@ import {
   TrendingUp,
   ExternalLink
 } from 'lucide-react';
-import { useWalletTransactionsPrivy } from '@/features/wallet/hooks/transactions/useWalletTransactionsPrivy';
+import { ChainIcon } from '@/components/ui/chain-icon';
+import { useWalletTransactionsCDP } from '@/features/wallet/hooks/transactions/useWalletTransactionsCDP';
+import { SUPPORTED_CHAINS, DEFAULT_CHAIN_ID, getBlockExplorer } from '@/config/chains';
 
 const TransactionsPage = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState<string>('all');
   
-  const { data: transactions = [], isLoading, error, refetch } = useWalletTransactionsPrivy({ chain: 'base', asset: 'usdc' });
+  const { 
+    data: transactions = [], 
+    isLoading, 
+    error, 
+    refetch,
+    sync,
+    isSyncing,
+    chainId,
+    setChainId 
+  } = useWalletTransactionsCDP(DEFAULT_CHAIN_ID);
+
+  // Sync on mount and chain change
+  useEffect(() => {
+    sync();
+  }, [chainId]);
 
   const getTypeIcon = (type: string) => {
     if (type === 'withdrawal') {
@@ -137,15 +154,38 @@ const TransactionsPage = () => {
           >
             <ArrowLeft className="h-5 w-5 text-foreground" />
           </Button>
-          <h1 className="text-[17px] font-semibold text-foreground">Transactions</h1>
+          
+          <Select value={chainId.toString()} onValueChange={(v) => setChainId(Number(v))}>
+            <SelectTrigger className="w-[130px] h-9 bg-muted/40 border-border/30 rounded-full">
+              <SelectValue>
+                <div className="flex items-center gap-2">
+                  <ChainIcon chainId={chainId} size={16} />
+                  <span className="text-sm font-medium">
+                    {SUPPORTED_CHAINS.find(c => c.id === chainId)?.name || 'Base'}
+                  </span>
+                </div>
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {SUPPORTED_CHAINS.map((chain) => (
+                <SelectItem key={chain.id} value={chain.id.toString()}>
+                  <div className="flex items-center gap-2">
+                    <ChainIcon chainId={chain.id} size={16} />
+                    {chain.name}
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
           <Button 
             variant="ghost" 
             size="sm" 
-            onClick={() => refetch()}
-            disabled={isLoading}
+            onClick={() => sync()}
+            disabled={isSyncing}
             className="h-9 w-9 p-0 rounded-full hover:bg-accent/50 transition-all duration-150 active:scale-95"
           >
-            <RefreshCw className={`h-5 w-5 text-foreground transition-transform duration-200 ${isLoading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`h-5 w-5 text-foreground transition-transform duration-200 ${isSyncing ? 'animate-spin' : ''}`} />
           </Button>
         </nav>
       </header>
@@ -251,7 +291,7 @@ const TransactionsPage = () => {
                                 variant="ghost"
                                 size="sm"
                                 className="h-6 w-6 p-0 rounded-full hover:bg-accent/30 transition-colors"
-                                onClick={() => window.open(`https://basescan.org/tx/${transaction.hash}`, '_blank')}
+                                onClick={() => window.open(`${getBlockExplorer(chainId)}/tx/${transaction.hash}`, '_blank')}
                               >
                                 <ExternalLink className="h-3 w-3" />
                               </Button>
