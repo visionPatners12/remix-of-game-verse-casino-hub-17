@@ -66,6 +66,18 @@
       "rule2": "Mova as peças no sentido horário",
       "rule3": "Cair em um oponente o envia de volta",
       "rule4": "O primeiro a levar todas as peças para casa vence"
+    },
+    "leaveDialog": {
+      "waitingTitle": "Sair da sala?",
+      "waitingDesc": "Você pode entrar em outro jogo quando quiser.",
+      "waitingRefund": "Seu depósito de {{amount}} USDC será reembolsado.",
+      "activeTitle": "Abandonar o jogo?",
+      "activeDesc": "Você não poderá voltar.",
+      "activeLoss": "Você perderá sua aposta de {{amount}} USDC.",
+      "confirm": "Sair",
+      "confirmForfeit": "Abandonar",
+      "cancel": "Ficar",
+      "leaving": "Saindo..."
     }
   }
 }

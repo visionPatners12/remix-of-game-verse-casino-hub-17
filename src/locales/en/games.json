@@ -77,6 +77,18 @@
       "rule2": "Move pieces clockwise around the board",
       "rule3": "Landing on an opponent sends them home",
       "rule4": "First to get all pieces home wins"
+    },
+    "leaveDialog": {
+      "waitingTitle": "Leave waiting room?",
+      "waitingDesc": "You can join another game anytime.",
+      "waitingRefund": "Your {{amount}} USDC deposit will be refunded.",
+      "activeTitle": "Leave the game?",
+      "activeDesc": "You won't be able to return.",
+      "activeLoss": "You will lose your {{amount}} USDC bet.",
+      "confirm": "Leave",
+      "confirmForfeit": "Forfeit",
+      "cancel": "Stay",
+      "leaving": "Leaving..."
     }
   }
 }
