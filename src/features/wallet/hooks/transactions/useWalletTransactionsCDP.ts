@@ -1,14 +1,25 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useUnifiedWallet } from '../core/useUnifiedWallet';
 import { CDPTransaction, TransformedCDPTransaction, transformCDPTransaction } from '../../types/cdpTransactions';
+import { DEFAULT_CHAIN_ID, CHAIN_SLUGS, SUPPORTED_CHAINS } from '@/config/chains';
 
-const NETWORK_ID = 'base-mainnet';
+// Map chain IDs to CDP network IDs
+const CDP_NETWORK_MAP: Record<number, string> = {
+  8453: 'base-mainnet',      // Base
+  137: 'polygon-mainnet',    // Polygon
+  1: 'ethereum-mainnet',     // Ethereum
+  42161: 'arbitrum-mainnet', // Arbitrum
+  10: 'optimism-mainnet',    // Optimism
+};
 
-export const useWalletTransactionsCDP = () => {
+export const useWalletTransactionsCDP = (initialChainId?: number) => {
+  const [chainId, setChainId] = useState<number>(initialChainId || DEFAULT_CHAIN_ID);
   const { address, isConnected } = useUnifiedWallet();
   const queryClient = useQueryClient();
+
+  const networkId = CDP_NETWORK_MAP[chainId] || 'base-mainnet';
 
   // Get current user
   const getUserId = async (): Promise<string | null> => {
@@ -20,11 +31,11 @@ export const useWalletTransactionsCDP = () => {
   const syncTransactions = async () => {
     if (!address || !isConnected) return null;
 
-    console.log('[CDP Sync] Starting sync for address:', address);
+    console.log('[CDP Sync] Starting sync for address:', address, 'network:', networkId);
 
     const { data, error } = await supabase.functions.invoke('cdp-address-tx-history', {
       body: { 
-        networkId: NETWORK_ID, 
+        networkId, 
         addressId: address 
       }
     });
@@ -43,12 +54,13 @@ export const useWalletTransactionsCDP = () => {
     const userId = await getUserId();
     if (!userId || !address) return [];
 
-    console.log('[CDP DB] Fetching transactions for user:', userId);
+    console.log('[CDP DB] Fetching transactions for user:', userId, 'network:', networkId);
 
     const { data, error } = await supabase
       .from('cdp_address_transactions')
       .select('*')
       .eq('user_id', userId)
+      .eq('network_id', networkId)
       .order('block_timestamp', { ascending: false, nullsFirst: false })
       .limit(50);
 
@@ -70,7 +82,7 @@ export const useWalletTransactionsCDP = () => {
     mutationFn: syncTransactions,
     onSuccess: () => {
       // Invalidate query to refetch from DB
-      queryClient.invalidateQueries({ queryKey: ['wallet-transactions-cdp'] });
+      queryClient.invalidateQueries({ queryKey: ['wallet-transactions-cdp', address, networkId] });
     },
     onError: (error) => {
       console.error('[CDP Sync] Mutation error:', error);
@@ -79,7 +91,7 @@ export const useWalletTransactionsCDP = () => {
 
   // Main query from database
   const query = useQuery({
-    queryKey: ['wallet-transactions-cdp', address],
+    queryKey: ['wallet-transactions-cdp', address, networkId],
     queryFn: fetchFromDatabase,
     enabled: !!address && isConnected,
     staleTime: 30000, // 30 seconds
@@ -95,7 +107,7 @@ export const useWalletTransactionsCDP = () => {
       if (!userId) return;
 
       channel = supabase
-        .channel('cdp-transactions-realtime')
+        .channel(`cdp-transactions-realtime-${networkId}`)
         .on(
           'postgres_changes',
           {
@@ -106,7 +118,7 @@ export const useWalletTransactionsCDP = () => {
           },
           (payload) => {
             console.log('[CDP Realtime] Change detected:', payload.eventType);
-            queryClient.invalidateQueries({ queryKey: ['wallet-transactions-cdp'] });
+            queryClient.invalidateQueries({ queryKey: ['wallet-transactions-cdp', address, networkId] });
           }
         )
         .subscribe((status) => {
@@ -123,14 +135,14 @@ export const useWalletTransactionsCDP = () => {
         supabase.removeChannel(channel);
       }
     };
-  }, [isConnected, address, queryClient]);
+  }, [isConnected, address, networkId, queryClient]);
 
-  // Auto-sync on mount
+  // Auto-sync on mount or chain change
   useEffect(() => {
     if (isConnected && address && !syncMutation.isPending) {
       syncMutation.mutate();
     }
-  }, [isConnected, address]);
+  }, [isConnected, address, networkId]);
 
   return {
     data: query.data || [],
@@ -140,5 +152,8 @@ export const useWalletTransactionsCDP = () => {
     refetch: query.refetch,
     sync: () => syncMutation.mutate(),
     isSyncing: syncMutation.isPending,
+    chainId,
+    setChainId,
+    networkId,
   };
 };
