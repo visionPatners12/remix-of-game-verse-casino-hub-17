@@ -14,6 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
+      cdp_address_transactions: {
+        Row: {
+          block_timestamp: string | null
+          content: Json | null
+          content_from: string | null
+          content_to: string | null
+          created_at: string
+          from_address_id: string | null
+          gas: number | null
+          gas_price: number | null
+          id: string
+          max_fee_per_gas: number | null
+          max_priority_fee_per_gas: number | null
+          mint: string | null
+          network_id: string
+          nonce: number | null
+          priority_fee_per_gas: number | null
+          raw: Json
+          signed_payload: string | null
+          status: string | null
+          transaction_hash: string
+          transaction_link: string | null
+          tx_type: number | null
+          unsigned_payload: string | null
+          updated_at: string
+          user_id: string
+          value: number | null
+        }
+        Insert: {
+          block_timestamp?: string | null
+          content?: Json | null
+          content_from?: string | null
+          content_to?: string | null
+          created_at?: string
+          from_address_id?: string | null
+          gas?: number | null
+          gas_price?: number | null
+          id?: string
+          max_fee_per_gas?: number | null
+          max_priority_fee_per_gas?: number | null
+          mint?: string | null
+          network_id: string
+          nonce?: number | null
+          priority_fee_per_gas?: number | null
+          raw?: Json
+          signed_payload?: string | null
+          status?: string | null
+          transaction_hash: string
+          transaction_link?: string | null
+          tx_type?: number | null
+          unsigned_payload?: string | null
+          updated_at?: string
+          user_id: string
+          value?: number | null
+        }
+        Update: {
+          block_timestamp?: string | null
+          content?: Json | null
+          content_from?: string | null
+          content_to?: string | null
+          created_at?: string
+          from_address_id?: string | null
+          gas?: number | null
+          gas_price?: number | null
+          id?: string
+          max_fee_per_gas?: number | null
+          max_priority_fee_per_gas?: number | null
+          mint?: string | null
+          network_id?: string
+          nonce?: number | null
+          priority_fee_per_gas?: number | null
+          raw?: Json
+          signed_payload?: string | null
+          status?: string | null
+          transaction_hash?: string
+          transaction_link?: string | null
+          tx_type?: number | null
+          unsigned_payload?: string | null
+          updated_at?: string
+          user_id?: string
+          value?: number | null
+        }
+        Relationships: []
+      }
       cdp_buy_options: {
         Row: {
           country_code: string
@@ -606,6 +690,56 @@ export type Database = {
             columns: ["winner_user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ludo_refund_queue: {
+        Row: {
+          amount: number
+          created_at: string
+          error: string | null
+          game_id: string
+          id: string
+          player_id: string
+          processed_at: string | null
+          status: string
+          tx_hash: string | null
+          user_id: string
+          wallet_address: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          error?: string | null
+          game_id: string
+          id?: string
+          player_id: string
+          processed_at?: string | null
+          status?: string
+          tx_hash?: string | null
+          user_id: string
+          wallet_address: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          error?: string | null
+          game_id?: string
+          id?: string
+          player_id?: string
+          processed_at?: string | null
+          status?: string
+          tx_hash?: string | null
+          user_id?: string
+          wallet_address?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ludo_refund_queue_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "ludo_games"
             referencedColumns: ["id"]
           },
         ]
@@ -2417,7 +2551,12 @@ export type Database = {
         | "Abandoned"
         | "NotPlayed"
       game_state: "prematch" | "live" | "resolved" | "canceled"
-      game_status_enum: "created" | "active" | "finished" | "abandoned"
+      game_status_enum:
+        | "created"
+        | "active"
+        | "finished"
+        | "abandoned"
+        | "refund"
       highlight_type: "VERIFIED" | "UNVERIFIED"
       ludo_color_enum: "R" | "G" | "Y" | "B"
       provider_enum: "api_sport" | "highlightly"
@@ -2585,7 +2724,13 @@ export const Constants = {
         "NotPlayed",
       ],
       game_state: ["prematch", "live", "resolved", "canceled"],
-      game_status_enum: ["created", "active", "finished", "abandoned"],
+      game_status_enum: [
+        "created",
+        "active",
+        "finished",
+        "abandoned",
+        "refund",
+      ],
       highlight_type: ["VERIFIED", "UNVERIFIED"],
       ludo_color_enum: ["R", "G", "Y", "B"],
       provider_enum: ["api_sport", "highlightly"],
