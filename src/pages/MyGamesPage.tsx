@@ -69,7 +69,7 @@ const MyGamesPage: React.FC = () => {
             <p className="text-xs text-muted-foreground">Win Rate</p>
           </div>
           <div className="bg-card rounded-xl p-4 border border-border/50 text-center">
-            <p className="text-2xl font-bold text-primary">${totalWinnings.toFixed(0)}</p>
+            <p className="text-2xl font-bold text-primary">${totalWinnings.toFixed(2)}</p>
             <p className="text-xs text-muted-foreground">Earnings</p>
           </div>
         </div>
@@ -288,7 +288,7 @@ const GameHistoryCard: React.FC<GameHistoryCardProps> = ({ game, index, onClaimR
                 game.isWinner ? 'text-success' : 'text-muted-foreground'
               )}
             >
-              {game.isWinner ? '+' : '-'}${game.isWinner ? netPrize.toFixed(0) : (game.bet_amount || 0)}
+              {game.isWinner ? '+' : '-'}${game.isWinner ? netPrize.toFixed(2) : (game.bet_amount || 0)}
             </span>
             <p className="text-[10px] text-muted-foreground">
               Pot: ${game.pot}

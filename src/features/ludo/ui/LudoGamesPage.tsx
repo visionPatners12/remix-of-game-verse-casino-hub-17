@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useActiveLudoGames } from '../hooks/useActiveLudoGames';
 import { useUserActiveGame } from '../hooks/useUserActiveGame';
 import { useUserPastGames } from '../hooks/useUserPastGames';
+import { useClaimPrize } from '../hooks/useClaimPrize';
 import { useAuth } from '@/hooks/useAuth';
 import { LudoStatusBar } from './LudoStatusBar';
 import { LudoActionCards } from './LudoActionCards';
@@ -20,7 +21,24 @@ const LudoGamesPage: React.FC = () => {
 
   const { games, loading, refetch } = useActiveLudoGames();
   const { activeGame, loading: activeLoading } = useUserActiveGame(userId);
-  const { games: pastGames, loading: loadingPast } = useUserPastGames(userId);
+  const { games: pastGames, loading: loadingPast, refetch: refetchPast } = useUserPastGames(userId);
+  const { claimPrize, isPending: isClaimPending } = useClaimPrize();
+  
+  const [claimingGameId, setClaimingGameId] = React.useState<string | null>(null);
+
+  const handleClaimRetry = async (gameId: string) => {
+    const game = pastGames.find(g => g.id === gameId);
+    const isRetry = !!game?.claim_status;
+    
+    setClaimingGameId(gameId);
+    await claimPrize(gameId, isRetry);
+    
+    // Refetch after a delay to get updated status
+    setTimeout(() => {
+      refetchPast();
+      setClaimingGameId(null);
+    }, 2000);
+  };
 
   // Filter games - show only games user hasn't joined
   const availableGames = React.useMemo(() => {
@@ -136,6 +154,8 @@ const LudoGamesPage: React.FC = () => {
           games={pastGames} 
           loading={loadingPast}
           userId={userId}
+          onClaimRetry={handleClaimRetry}
+          isClaimingGame={claimingGameId}
         />
       </main>
     </div>
