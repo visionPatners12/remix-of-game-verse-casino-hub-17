@@ -2,12 +2,13 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { RefreshCw, History, ArrowUpRight, ArrowDownLeft, Clock, CheckCircle, XCircle } from 'lucide-react';
-import { useWalletTransactionsThirdWeb } from '../../hooks/transactions/useWalletTransactionsThirdWeb';
+import { useWalletTransactionsCDP } from '../../hooks/transactions/useWalletTransactionsCDP';
 import { formatDistanceToNow } from 'date-fns';
 import { enUS } from 'date-fns/locale';
+import { cn } from '@/lib/utils';
 
 export const ReactiveTransactionsList: React.FC = () => {
-  const { data: transactions = [], isLoading, refetch } = useWalletTransactionsThirdWeb();
+  const { data: transactions = [], isLoading, sync, isSyncing } = useWalletTransactionsCDP();
 
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -66,9 +67,18 @@ export const ReactiveTransactionsList: React.FC = () => {
           <CardTitle className="flex items-center gap-2">
             <History className="h-5 w-5" />
             Transactions
+            {isSyncing && (
+              <RefreshCw className="h-4 w-4 animate-spin text-muted-foreground" />
+            )}
           </CardTitle>
-          <Button variant="ghost" size="sm" onClick={() => refetch()} className="h-8 w-8 p-0">
-            <RefreshCw className="h-4 w-4" />
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => sync()} 
+            disabled={isSyncing}
+            className="h-8 w-8 p-0"
+          >
+            <RefreshCw className={cn("h-4 w-4", isSyncing && "animate-spin")} />
           </Button>
         </div>
       </CardHeader>
