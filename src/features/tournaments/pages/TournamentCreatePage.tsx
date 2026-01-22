@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Trophy, FileText } from 'lucide-react';
+import { ArrowLeft, Trophy, FileText, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,10 +13,12 @@ import { SchedulePicker } from '../components/SchedulePicker';
 import { LudoSettingsCard } from '../components/LudoSettingsCard';
 import { TournamentSummary } from '../components/TournamentSummary';
 import { TournamentFormData, DEFAULT_FORM_DATA } from '../types';
+import { useTournamentApi } from '../hooks/useTournamentApi';
 
 const TournamentCreatePage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<TournamentFormData>(DEFAULT_FORM_DATA);
+  const { createTournament } = useTournamentApi();
 
   const updateForm = <K extends keyof TournamentFormData>(
     key: K, 
@@ -25,9 +27,13 @@ const TournamentCreatePage = () => {
     setFormData(prev => ({ ...prev, [key]: value }));
   };
 
-  const handleCreate = () => {
-    // Static for now - will add API call later
-    console.log('Creating tournament:', formData);
+  const handleCreate = async () => {
+    try {
+      await createTournament.mutateAsync(formData);
+      navigate('/tournaments');
+    } catch (error) {
+      console.error('Failed to create tournament:', error);
+    }
   };
 
   return (
@@ -146,11 +152,15 @@ const TournamentCreatePage = () => {
         <div className="max-w-lg mx-auto">
           <Button
             onClick={handleCreate}
-            disabled={!formData.name.trim()}
+            disabled={!formData.name.trim() || createTournament.isPending}
             className="w-full h-14 rounded-xl text-base font-semibold bg-primary hover:bg-primary/90"
           >
-            <Trophy className="h-5 w-5 mr-2" />
-            Créer le Tournoi
+            {createTournament.isPending ? (
+              <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+            ) : (
+              <Trophy className="h-5 w-5 mr-2" />
+            )}
+            {createTournament.isPending ? 'Création...' : 'Créer le Tournoi'}
           </Button>
         </div>
       </div>

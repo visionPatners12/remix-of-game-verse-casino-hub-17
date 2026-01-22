@@ -1393,9 +1393,11 @@ export type Database = {
           name: string
           players_per_match: number | null
           prize_distribution: Json
+          prize_distribution_type: string | null
           prize_pool: number | null
           registration_end: string
           registration_start: string
+          start_when_full: boolean | null
           status: string
           total_rounds: number | null
           tournament_format: string | null
@@ -1417,9 +1419,11 @@ export type Database = {
           name: string
           players_per_match?: number | null
           prize_distribution?: Json
+          prize_distribution_type?: string | null
           prize_pool?: number | null
           registration_end: string
           registration_start: string
+          start_when_full?: boolean | null
           status?: string
           total_rounds?: number | null
           tournament_format?: string | null
@@ -1441,9 +1445,11 @@ export type Database = {
           name?: string
           players_per_match?: number | null
           prize_distribution?: Json
+          prize_distribution_type?: string | null
           prize_pool?: number | null
           registration_end?: string
           registration_start?: string
+          start_when_full?: boolean | null
           status?: string
           total_rounds?: number | null
           tournament_format?: string | null
