@@ -1,19 +1,19 @@
-// Tournament Types
+// Tournament Types - Format Ludo 4 joueurs par match
+
+export type TournamentSize = 16 | 64;
 
 export type PrizeDistributionType = 'standard' | 'winner-takes-all' | 'top-heavy' | 'balanced';
 
 export interface TournamentFormData {
   name: string;
   description: string;
-  bracketSize: 4 | 8 | 16 | 32;
+  tournamentSize: TournamentSize;
   entryFee: number;
   commissionRate: number;
   registrationStart: Date;
   registrationEnd: Date;
   tournamentStart: Date | null;
   startWhenFull: boolean;
-  extraTurnOnSix: boolean;
-  betPerMatch: number;
   prizeDistributionType: PrizeDistributionType;
 }
 
@@ -23,32 +23,34 @@ export interface PrizeDistribution {
   amount: number;
 }
 
-export interface BracketConfig {
-  size: 4 | 8 | 16 | 32;
+export interface TournamentConfig {
+  size: TournamentSize;
+  playersPerMatch: 4;
+  matchesRound1: number;
+  totalMatches: number;
   rounds: number;
   roundNames: string[];
 }
 
-export const BRACKET_CONFIGS: Record<4 | 8 | 16 | 32, BracketConfig> = {
-  4: {
-    size: 4,
-    rounds: 2,
-    roundNames: ['Semi-Finals', 'Final']
-  },
-  8: {
-    size: 8,
-    rounds: 3,
-    roundNames: ['Quarter-Finals', 'Semi-Finals', 'Final']
-  },
+// Configuration des tournois basée sur le nombre de joueurs
+// - 16 joueurs : 4 matchs de Quarts → 1 Finale (5 matchs, 2 rounds)
+// - 64 joueurs : 16 matchs Round 1 → 4 Demi-finales → 1 Finale (21 matchs, 3 rounds)
+export const TOURNAMENT_CONFIGS: Record<TournamentSize, TournamentConfig> = {
   16: {
     size: 16,
-    rounds: 4,
-    roundNames: ['Round of 16', 'Quarter-Finals', 'Semi-Finals', 'Final']
+    playersPerMatch: 4,
+    matchesRound1: 4,
+    totalMatches: 5,
+    rounds: 2,
+    roundNames: ['Quarts de finale', 'Finale']
   },
-  32: {
-    size: 32,
-    rounds: 5,
-    roundNames: ['Round of 32', 'Round of 16', 'Quarter-Finals', 'Semi-Finals', 'Final']
+  64: {
+    size: 64,
+    playersPerMatch: 4,
+    matchesRound1: 16,
+    totalMatches: 21,
+    rounds: 3,
+    roundNames: ['Premier tour', 'Demi-finales', 'Finale']
   }
 };
 
@@ -79,7 +81,7 @@ export const PRIZE_DISTRIBUTIONS: Record<PrizeDistributionType, {
   'winner-takes-all': {
     name: 'Winner Takes All',
     emoji: '👑',
-    description: '100% to winner',
+    description: '100% au gagnant',
     distribution: [
       { position: 1, percentage: 100, amount: 0 }
     ]
@@ -95,7 +97,7 @@ export const PRIZE_DISTRIBUTIONS: Record<PrizeDistributionType, {
     ]
   },
   'balanced': {
-    name: 'Balanced',
+    name: 'Équilibré',
     emoji: '🤝',
     description: '50 / 30 / 12 / 8',
     distribution: [
@@ -110,14 +112,12 @@ export const PRIZE_DISTRIBUTIONS: Record<PrizeDistributionType, {
 export const DEFAULT_FORM_DATA: TournamentFormData = {
   name: '',
   description: '',
-  bracketSize: 8,
+  tournamentSize: 16,
   entryFee: 5,
   commissionRate: 10,
   registrationStart: new Date(),
   registrationEnd: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
   tournamentStart: null,
   startWhenFull: true,
-  extraTurnOnSix: true,
-  betPerMatch: 0,
   prizeDistributionType: 'standard'
 };

@@ -4,8 +4,9 @@
 export { default as TournamentCreatePage } from './pages/TournamentCreatePage';
 
 // Components
-export { BracketSizeSelector } from './components/BracketSizeSelector';
+export { TournamentSizeSelector } from './components/TournamentSizeSelector';
 export { EntryFeeInput } from './components/EntryFeeInput';
+export { PrizeDistributionSelector } from './components/PrizeDistributionSelector';
 export { PrizePoolPreview } from './components/PrizePoolPreview';
 export { SchedulePicker } from './components/SchedulePicker';
 export { LudoSettingsCard } from './components/LudoSettingsCard';
@@ -15,11 +16,14 @@ export { TournamentSummary } from './components/TournamentSummary';
 export type { 
   TournamentFormData, 
   PrizeDistribution, 
-  BracketConfig 
+  TournamentConfig,
+  TournamentSize,
+  PrizeDistributionType
 } from './types';
 
 export { 
-  BRACKET_CONFIGS, 
+  TOURNAMENT_CONFIGS, 
   DEFAULT_PRIZE_DISTRIBUTION, 
-  DEFAULT_FORM_DATA 
+  DEFAULT_FORM_DATA,
+  PRIZE_DISTRIBUTIONS
 } from './types';

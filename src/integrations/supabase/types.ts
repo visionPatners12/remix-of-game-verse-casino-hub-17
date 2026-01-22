@@ -1247,6 +1247,136 @@ export type Database = {
         }
         Relationships: []
       }
+      tournament_match_players: {
+        Row: {
+          created_at: string | null
+          id: string
+          match_id: string
+          result: string | null
+          seed_position: number | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          match_id: string
+          result?: string | null
+          seed_position?: number | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          match_id?: string
+          result?: string | null
+          seed_position?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tournament_match_players_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "tournament_matches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tournament_matches: {
+        Row: {
+          created_at: string | null
+          finished_at: string | null
+          id: string
+          ludo_game_id: string | null
+          match_number: number
+          round_number: number
+          started_at: string | null
+          status: string | null
+          tournament_id: string
+          winner_user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          finished_at?: string | null
+          id?: string
+          ludo_game_id?: string | null
+          match_number: number
+          round_number: number
+          started_at?: string | null
+          status?: string | null
+          tournament_id: string
+          winner_user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          finished_at?: string | null
+          id?: string
+          ludo_game_id?: string | null
+          match_number?: number
+          round_number?: number
+          started_at?: string | null
+          status?: string | null
+          tournament_id?: string
+          winner_user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tournament_matches_ludo_game_id_fkey"
+            columns: ["ludo_game_id"]
+            isOneToOne: false
+            referencedRelation: "ludo_games"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tournament_matches_tournament_id_fkey"
+            columns: ["tournament_id"]
+            isOneToOne: false
+            referencedRelation: "tournaments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tournament_participants: {
+        Row: {
+          final_position: number | null
+          id: string
+          prize_amount: number | null
+          registered_at: string | null
+          status: string | null
+          tournament_id: string
+          tx_hash: string | null
+          user_id: string
+        }
+        Insert: {
+          final_position?: number | null
+          id?: string
+          prize_amount?: number | null
+          registered_at?: string | null
+          status?: string | null
+          tournament_id: string
+          tx_hash?: string | null
+          user_id: string
+        }
+        Update: {
+          final_position?: number | null
+          id?: string
+          prize_amount?: number | null
+          registered_at?: string | null
+          status?: string | null
+          tournament_id?: string
+          tx_hash?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tournament_participants_tournament_id_fkey"
+            columns: ["tournament_id"]
+            isOneToOne: false
+            referencedRelation: "tournaments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tournaments: {
         Row: {
           bet_per_match: number | null
@@ -1261,12 +1391,14 @@ export type Database = {
           game_type: string
           id: string
           name: string
+          players_per_match: number | null
           prize_distribution: Json
           prize_pool: number | null
           registration_end: string
           registration_start: string
           status: string
           total_rounds: number | null
+          tournament_format: string | null
           tournament_start: string | null
           updated_at: string | null
         }
@@ -1283,12 +1415,14 @@ export type Database = {
           game_type?: string
           id?: string
           name: string
+          players_per_match?: number | null
           prize_distribution?: Json
           prize_pool?: number | null
           registration_end: string
           registration_start: string
           status?: string
           total_rounds?: number | null
+          tournament_format?: string | null
           tournament_start?: string | null
           updated_at?: string | null
         }
@@ -1305,12 +1439,14 @@ export type Database = {
           game_type?: string
           id?: string
           name?: string
+          players_per_match?: number | null
           prize_distribution?: Json
           prize_pool?: number | null
           registration_end?: string
           registration_start?: string
           status?: string
           total_rounds?: number | null
+          tournament_format?: string | null
           tournament_start?: string | null
           updated_at?: string | null
         }
