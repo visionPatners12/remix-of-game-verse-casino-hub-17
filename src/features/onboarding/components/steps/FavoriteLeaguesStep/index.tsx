@@ -5,7 +5,7 @@ import { OnboardingStepProps } from '@/features/onboarding/types';
 import { useFavoriteLeagues } from '@/features/onboarding/hooks';
 import { FavoriteStepLayout } from '../../favorites/FavoriteStepLayout';
 import { SelectedItemsGrid } from '../../favorites/SelectedItemsGrid';
-import { getSportIcon } from '@/lib/sportIcons';
+import { getSportIcon } from '@/lib/sportIconsLite';
 import { LeagueSearchForOnboarding } from './LeagueSearchForOnboarding';
 
 const MAX_LEAGUES = 5;

@@ -1,8 +1,8 @@
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { SportIcon } from '@/components/ui/sport-icon';
 import { CountryFlag } from '@/components/ui/country-flag';
+import { getSportIcon } from '@/lib/sportIconsLite';
 
 interface DetailPageHeaderProps {
   onBack?: () => void;
@@ -22,6 +22,7 @@ export function DetailPageHeader({
   const navigate = useNavigate();
   
   const handleBack = onBack || (() => navigate(-1));
+  const SportIcon = getSportIcon(null);
   
   return (
     <div 
@@ -43,7 +44,7 @@ export function DetailPageHeader({
       {/* Badge Sport */}
       {sportSlug && (
         <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-primary/10 text-primary text-xs ml-2">
-          <SportIcon slug={sportSlug} className="h-3.5 w-3.5" />
+          <SportIcon className="h-3.5 w-3.5" />
           {sportName && <span className="font-medium capitalize">{sportName}</span>}
         </div>
       )}
