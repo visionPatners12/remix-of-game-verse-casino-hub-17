@@ -323,7 +323,7 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks: {
             'react-vendor': ['react', 'react-dom'],
-            'web3-vendor': ['wagmi', 'viem', 'ethers'],
+            'web3-vendor': ['wagmi', 'viem'],
             'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-toast'],
             'icons-vendor': ['lucide-react'],
             // Nouveaux chunks pour optimisation

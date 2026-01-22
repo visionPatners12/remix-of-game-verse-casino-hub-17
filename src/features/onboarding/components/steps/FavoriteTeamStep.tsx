@@ -6,7 +6,7 @@ import { useFavoriteTeams } from '@/features/onboarding/hooks';
 import { FavoriteStepLayout } from '../favorites/FavoriteStepLayout';
 import { SelectedItemsGrid } from '../favorites/SelectedItemsGrid';
 import { TeamSearchForOnboarding } from './FavoriteTeamStep/TeamSearchForOnboarding';
-import { getSportIcon } from '@/lib/sportIcons';
+import { getSportIcon } from '@/lib/sportIconsLite';
 
 const MAX_TEAMS = 5;
 

@@ -40,7 +40,7 @@ export const useActivePlayers = () => {
         totalPlayers: players,
       };
     },
-    refetchInterval: 30000,
-    staleTime: 10000,
+    refetchInterval: () => document.visibilityState === 'visible' ? 60000 : false,
+    staleTime: 30000,
   });
 };

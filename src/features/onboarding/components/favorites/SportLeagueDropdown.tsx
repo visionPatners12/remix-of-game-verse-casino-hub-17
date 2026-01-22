@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { SportWithLeagues } from '@/hooks/useTopLeaguesBySport';
 import { SelectionCard } from './SelectionCard';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { getSportById } from '@/lib/sportsMapping';
+import { getSportIcon } from '@/lib/sportIconsLite';
 
 interface SportLeagueDropdownProps {
   sport: SportWithLeagues;
@@ -25,8 +25,7 @@ export const SportLeagueDropdown = ({
   const isMobile = useIsMobile();
   
   // Get sport icon from sports mapping
-  const sportMapping = getSportById(sport.sportId, sport.sportName);
-  const SportIcon = sportMapping.icon;
+  const SportIcon = getSportIcon(null); // Use default icon
 
   const toggleExpanded = () => {
     if (!disabled) {

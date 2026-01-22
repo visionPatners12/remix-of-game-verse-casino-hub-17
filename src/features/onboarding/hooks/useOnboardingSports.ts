@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { sportsDataClient } from '@/integrations/supabase/client';
-import { getSportIcon } from '@/lib/sportIcons';
+import { getSportIcon } from '@/lib/sportIconsLite';
 
 /**
  * Interface pour les sports de l'onboarding

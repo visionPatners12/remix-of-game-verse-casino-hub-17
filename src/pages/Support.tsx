@@ -1,11 +1,11 @@
 import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
-import { Mail, Wallet, ChevronRight, MessageCircle } from "lucide-react";
+import { Mail, Wallet, ChevronRight } from "lucide-react";
 import { SupportTickets } from "@/components/support/SupportTickets";
 import { CreateTicketDialog } from "@/components/support/CreateTicketDialog";
 import { useNavigate } from "react-router-dom";
 import { MobilePageHeader } from "@/components/shared/MobilePageHeader";
-import { FaTelegram, FaDiscord, FaWhatsapp } from "react-icons/fa";
+import { TelegramIcon, DiscordIcon, WhatsAppIcon } from "@/components/icons/SocialIcons";
 import { PageSEO } from "@/components/seo/PageSEO";
 
 export default function Support() {
@@ -16,28 +16,28 @@ export default function Support() {
       name: "Telegram",
       handle: "@pryzenx",
       url: "https://t.me/pryzenx",
-      icon: FaTelegram,
+      icon: TelegramIcon,
       color: "text-[#0088cc]"
     },
     {
       name: "Telegram",
       handle: "@pryzen_x",
       url: "https://t.me/pryzen_x",
-      icon: FaTelegram,
+      icon: TelegramIcon,
       color: "text-[#0088cc]"
     },
     {
       name: "Discord",
       handle: "Join our server",
       url: "https://discord.gg/pryzen",
-      icon: FaDiscord,
+      icon: DiscordIcon,
       color: "text-[#5865F2]"
     },
     {
       name: "WhatsApp",
       handle: "Chat with us",
       url: "https://wa.me/message/pryzen",
-      icon: FaWhatsapp,
+      icon: WhatsAppIcon,
       color: "text-[#25D366]"
     }
   ];
@@ -70,9 +70,9 @@ export default function Support() {
 
         {/* Social Links */}
         <div className="grid grid-cols-3 gap-3">
-          {socialLinks.map((link) => (
+          {socialLinks.map((link, index) => (
             <a
-              key={link.name}
+              key={`${link.name}-${index}`}
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"

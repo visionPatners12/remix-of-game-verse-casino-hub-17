@@ -94,8 +94,8 @@ export const useWalletTransactionsCDP = (initialChainId?: number) => {
     queryKey: ['wallet-transactions-cdp', address, networkId],
     queryFn: fetchFromDatabase,
     enabled: !!address && isConnected,
-    staleTime: 30000, // 30 seconds
-    refetchInterval: 60000, // Refetch every minute
+    staleTime: 60000,
+    refetchInterval: () => document.visibilityState === 'visible' ? 120000 : false,
   });
 
   // Realtime subscription for automatic updates
