@@ -41,23 +41,18 @@ const TransactionIcon = ({
   if (tokenStandard === 'erc1155') {
     return (
       <div className="relative flex-shrink-0">
-        {/* NFT icon with gradient background */}
-        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/30 to-pink-500/30 flex items-center justify-center border border-purple-500/20">
-          <span className="text-lg">🖼️</span>
+        <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-500/30 to-pink-500/30 flex items-center justify-center border border-purple-500/20">
+          <span className="text-base">🖼️</span>
         </div>
-        
-        {/* Chain badge overlay - bottom right */}
-        <div className="absolute -bottom-0.5 -right-0.5 bg-background rounded-full p-0.5 shadow-sm">
-          <ChainIcon chainId={chainId} size={14} />
+        <div className="absolute -bottom-0.5 -right-0.5 bg-background rounded-full p-0.5">
+          <ChainIcon chainId={chainId} size={12} />
         </div>
-        
-        {/* Direction arrow overlay - top left */}
-        <div className={`absolute -top-1 -left-1 w-4 h-4 rounded-full flex items-center justify-center shadow-sm ${
+        <div className={`absolute -top-0.5 -left-0.5 w-3.5 h-3.5 rounded-full flex items-center justify-center ${
           type === 'withdrawal' ? 'bg-destructive' : 'bg-green-500'
         }`}>
           {type === 'withdrawal' 
-            ? <ArrowUpCircle className="h-3 w-3 text-white" />
-            : <ArrowDownCircle className="h-3 w-3 text-white" />
+            ? <ArrowUpCircle className="h-2.5 w-2.5 text-white" />
+            : <ArrowDownCircle className="h-2.5 w-2.5 text-white" />
           }
         </div>
       </div>
@@ -66,28 +61,23 @@ const TransactionIcon = ({
   
   return (
     <div className="relative flex-shrink-0">
-      {/* Main token icon */}
-      <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden">
+      <div className="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden">
         <TokenIcon 
           symbol={symbol}
           variant="branded"
-          size={28}
+          size={24}
           className="rounded-full"
         />
       </div>
-      
-      {/* Chain badge overlay - bottom right */}
-      <div className="absolute -bottom-0.5 -right-0.5 bg-background rounded-full p-0.5 shadow-sm">
-        <ChainIcon chainId={chainId} size={14} />
+      <div className="absolute -bottom-0.5 -right-0.5 bg-background rounded-full p-0.5">
+        <ChainIcon chainId={chainId} size={12} />
       </div>
-      
-      {/* Direction arrow overlay - top left */}
-      <div className={`absolute -top-1 -left-1 w-4 h-4 rounded-full flex items-center justify-center shadow-sm ${
+      <div className={`absolute -top-0.5 -left-0.5 w-3.5 h-3.5 rounded-full flex items-center justify-center ${
         type === 'withdrawal' ? 'bg-destructive' : 'bg-green-500'
       }`}>
         {type === 'withdrawal' 
-          ? <ArrowUpCircle className="h-3 w-3 text-white" />
-          : <ArrowDownCircle className="h-3 w-3 text-white" />
+          ? <ArrowUpCircle className="h-2.5 w-2.5 text-white" />
+          : <ArrowDownCircle className="h-2.5 w-2.5 text-white" />
         }
       </div>
     </div>
@@ -197,25 +187,18 @@ const TransactionsPage = () => {
           </nav>
         </header>
         
-        <section className="px-6 pt-6 space-y-3">
-          <ul className="space-y-3">
+        <section className="px-4 pt-4">
+          <ul className="bg-card/30 rounded-xl overflow-hidden divide-y divide-border/30">
             {[...Array(6)].map((_, i) => (
-              <li key={i}>
-                <article className="p-4 animate-pulse border-border/50 border rounded-lg">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-muted/70 rounded-full animate-pulse" />
-                    <div className="flex-1 space-y-3">
-                      <div className="flex justify-between items-center">
-                        <div className="h-4 bg-muted/70 rounded-md w-32 animate-pulse" />
-                        <div className="h-4 bg-muted/70 rounded-md w-20 animate-pulse" />
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <div className="h-3 bg-muted/50 rounded-md w-24 animate-pulse" />
-                        <div className="h-6 bg-muted/50 rounded-full w-16 animate-pulse" />
-                      </div>
-                    </div>
+              <li key={i} className="px-3 py-2.5">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 bg-muted/50 rounded-full animate-pulse" />
+                  <div className="flex-1 space-y-1.5">
+                    <div className="h-3.5 bg-muted/50 rounded w-2/3 animate-pulse" />
+                    <div className="h-3 bg-muted/40 rounded w-1/3 animate-pulse" />
                   </div>
-                </article>
+                  <div className="h-4 bg-muted/50 rounded w-16 animate-pulse" />
+                </div>
               </li>
             ))}
           </ul>
@@ -273,64 +256,61 @@ const TransactionsPage = () => {
       </header>
 
       <section className="pb-20">
-        <Tabs value={filter} onValueChange={setFilter} className="mt-4">
-          <TabsList className="grid w-full grid-cols-3 h-10 bg-muted/40 rounded-full p-0.5">
+        <Tabs value={filter} onValueChange={setFilter} className="px-4 mt-4">
+          <TabsList className="grid w-full grid-cols-3 h-9 bg-muted/40 rounded-full p-0.5">
             <TabsTrigger 
               value="all" 
-              className="rounded-full text-sm font-medium transition-all duration-200 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:text-foreground"
+              className="rounded-full text-sm font-medium transition-all duration-200 data-[state=active]:bg-background data-[state=active]:shadow-sm"
             >
               All
             </TabsTrigger>
             <TabsTrigger 
               value="deposits"
-              className="rounded-full text-sm font-medium transition-all duration-200 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:text-foreground"
+              className="rounded-full text-sm font-medium transition-all duration-200 data-[state=active]:bg-background data-[state=active]:shadow-sm"
             >
               Deposits
             </TabsTrigger>
             <TabsTrigger 
               value="withdrawals"
-              className="rounded-full text-sm font-medium transition-all duration-200 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:text-foreground"
+              className="rounded-full text-sm font-medium transition-all duration-200 data-[state=active]:bg-background data-[state=active]:shadow-sm"
             >
               Withdrawals
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value={filter} className="mt-6 space-y-3">
+          <TabsContent value={filter} className="mt-4">
             {error ? (
-              <Card className="p-8 text-center border-destructive/20 bg-destructive/5">
-                <XCircle className="h-16 w-16 text-destructive mx-auto mb-4 animate-pulse" />
-                <h3 className="text-lg font-semibold mb-2">Loading Error</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  Unable to load transactions
-                </p>
-                <Button 
-                  onClick={() => refetch()} 
-                  variant="outline"
-                  className="hover:bg-destructive/10 transition-colors"
-                >
+              <Card className="mx-0 p-6 text-center border-destructive/20 bg-destructive/5">
+                <XCircle className="h-12 w-12 text-destructive mx-auto mb-3" />
+                <h3 className="text-base font-semibold mb-1">Loading Error</h3>
+                <p className="text-sm text-muted-foreground mb-4">Unable to load transactions</p>
+                <Button onClick={() => refetch()} variant="outline" size="sm">
                   <RefreshCw className="h-4 w-4 mr-2" />
                   Retry
                 </Button>
               </Card>
             ) : filteredTransactions.length === 0 ? (
-              <div className="mx-4 mt-20 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-accent/20 rounded-full flex items-center justify-center">
-                  {filter === 'deposits' && <ArrowDownCircle className="h-8 w-8 text-muted-foreground" />}
-                  {filter === 'withdrawals' && <ArrowUpCircle className="h-8 w-8 text-muted-foreground" />}
-                  {filter === 'all' && <TrendingUp className="h-8 w-8 text-muted-foreground" />}
+              <div className="mt-16 text-center">
+                <div className="w-14 h-14 mx-auto mb-3 bg-accent/20 rounded-full flex items-center justify-center">
+                  {filter === 'deposits' && <ArrowDownCircle className="h-7 w-7 text-muted-foreground" />}
+                  {filter === 'withdrawals' && <ArrowUpCircle className="h-7 w-7 text-muted-foreground" />}
+                  {filter === 'all' && <TrendingUp className="h-7 w-7 text-muted-foreground" />}
                 </div>
-                <h3 className="text-[17px] font-semibold mb-2 text-foreground">No transactions</h3>
-                <p className="text-[14px] text-muted-foreground leading-relaxed">
+                <h3 className="text-base font-semibold mb-1 text-foreground">No transactions</h3>
+                <p className="text-sm text-muted-foreground">
                   {filter === 'deposits' && 'No deposits found yet'}
                   {filter === 'withdrawals' && 'No withdrawals found yet'}
                   {filter === 'all' && 'No transactions found yet'}
                 </p>
               </div>
             ) : (
-              <ul className="space-y-3">
+              <ul className="bg-card/30 rounded-xl overflow-hidden divide-y divide-border/30">
                 {filteredTransactions.map((transaction) => (
                   <li key={transaction.hash}>
-                    <article className="mx-4 mb-3 p-4 bg-card/50 backdrop-blur-sm border border-border/20 rounded-2xl hover:bg-card/70 hover:border-border/40 transition-all duration-200 active:scale-[0.98]">
+                    <article 
+                      className="px-3 py-2.5 hover:bg-accent/30 active:bg-accent/50 transition-colors cursor-pointer"
+                      onClick={() => window.open(`${getBlockExplorer(chainId)}/tx/${transaction.hash}`, '_blank')}
+                    >
                       <div className="flex items-center gap-3">
                         <TransactionIcon 
                           currency={transaction.currency}
@@ -340,54 +320,30 @@ const TransactionsPage = () => {
                         />
                         
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between mb-1">
-                            <h3 className="font-medium text-[15px] text-foreground leading-tight">
+                          <div className="flex items-center justify-between">
+                            <h3 className="text-sm font-medium text-foreground truncate pr-2">
                               {transaction.description || 
-                               (transaction.type === 'withdrawal' ? 'Withdrawal' : 'Deposit')}
+                               (transaction.type === 'withdrawal' ? 'Sent' : 'Received')}
                             </h3>
-                            <span className={`text-[15px] font-semibold ${
+                            <span className={`text-sm font-semibold shrink-0 ${
                               transaction.type === 'withdrawal' ? 'text-destructive' : 'text-green-600'
                             }`}>
                               {formatAmount(transaction.amount, transaction.type, transaction.currency)}
                             </span>
                           </div>
                           
-                          <div className="flex items-center justify-between mb-2">
-                            <p className="text-[13px] text-muted-foreground">
+                          <div className="flex items-center justify-between mt-0.5">
+                            <span className="text-xs text-muted-foreground">
                               {formatDistanceToNow(new Date(transaction.created_at), { addSuffix: true })}
-                            </p>
-                            <Badge 
-                              variant="outline" 
-                              className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${getStatusColor(transaction.status)} transition-colors`}
-                            >
-                              <div className="flex items-center gap-1">
-                                {getStatusIcon(transaction.status)}
-                                {getStatusText(transaction.status)}
-                              </div>
-                            </Badge>
+                            </span>
+                            <span className={`text-xs flex items-center gap-1 ${
+                              transaction.status === 'completed' ? 'text-green-500' :
+                              transaction.status === 'pending' ? 'text-yellow-500' : 'text-red-500'
+                            }`}>
+                              {getStatusIcon(transaction.status)}
+                              {getStatusText(transaction.status)}
+                            </span>
                           </div>
-                          
-                          {transaction.hash && (
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-[11px] text-muted-foreground font-mono bg-accent/20 px-2 py-1 rounded-md">
-                                {transaction.hash.slice(0, 6)}...{transaction.hash.slice(-4)}
-                              </span>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-6 w-6 p-0 rounded-full hover:bg-accent/30 transition-colors"
-                                onClick={() => window.open(`${getBlockExplorer(chainId)}/tx/${transaction.hash}`, '_blank')}
-                              >
-                                <ExternalLink className="h-3 w-3" />
-                              </Button>
-                            </div>
-                          )}
-                          
-                          {transaction.fee > 0 && (
-                            <p className="text-[11px] text-muted-foreground">
-                              Fee: {transaction.fee.toFixed(6)} {NATIVE_SYMBOLS[transaction.chainId] || 'ETH'}
-                            </p>
-                          )}
                         </div>
                       </div>
                     </article>
