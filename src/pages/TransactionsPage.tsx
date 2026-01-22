@@ -17,9 +17,53 @@ import {
   TrendingUp,
   ExternalLink
 } from 'lucide-react';
+import { TokenIcon } from '@web3icons/react/dynamic';
 import { ChainIcon } from '@/components/ui/chain-icon';
 import { useWalletTransactionsCDP } from '@/features/wallet/hooks/transactions/useWalletTransactionsCDP';
-import { SUPPORTED_CHAINS, DEFAULT_CHAIN_ID, getBlockExplorer } from '@/config/chains';
+import { SUPPORTED_CHAINS, DEFAULT_CHAIN_ID, getBlockExplorer, NATIVE_SYMBOLS } from '@/config/chains';
+
+// Transaction icon component with token + chain overlay
+const TransactionIcon = ({ 
+  currency, 
+  type, 
+  chainId 
+}: { 
+  currency: string; 
+  type: 'deposit' | 'withdrawal';
+  chainId: number;
+}) => {
+  // Normalize symbol for TokenIcon (remove .e suffix)
+  const symbol = currency.replace('.e', '').toUpperCase();
+  
+  return (
+    <div className="relative flex-shrink-0">
+      {/* Main token icon */}
+      <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden">
+        <TokenIcon 
+          symbol={symbol}
+          variant="branded"
+          size={28}
+          className="rounded-full"
+        />
+      </div>
+      
+      {/* Chain badge overlay - bottom right */}
+      <div className="absolute -bottom-0.5 -right-0.5 bg-background rounded-full p-0.5 shadow-sm">
+        <ChainIcon chainId={chainId} size={14} />
+      </div>
+      
+      {/* Direction arrow overlay - top left */}
+      <div className={`absolute -top-1 -left-1 w-4 h-4 rounded-full flex items-center justify-center shadow-sm ${
+        type === 'withdrawal' ? 'bg-destructive' : 'bg-green-500'
+      }`}>
+        {type === 'withdrawal' 
+          ? <ArrowUpCircle className="h-3 w-3 text-white" />
+          : <ArrowDownCircle className="h-3 w-3 text-white" />
+        }
+      </div>
+    </div>
+  );
+};
 
 const TransactionsPage = () => {
   const navigate = useNavigate();
@@ -259,9 +303,11 @@ const TransactionsPage = () => {
                   <li key={transaction.hash}>
                     <article className="mx-4 mb-3 p-4 bg-card/50 backdrop-blur-sm border border-border/20 rounded-2xl hover:bg-card/70 hover:border-border/40 transition-all duration-200 active:scale-[0.98]">
                       <div className="flex items-center gap-3">
-                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
-                          {getTypeIcon(transaction.type)}
-                        </div>
+                        <TransactionIcon 
+                          currency={transaction.currency}
+                          type={transaction.type}
+                          chainId={transaction.chainId}
+                        />
                         
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between mb-1">
@@ -309,7 +355,7 @@ const TransactionsPage = () => {
                           
                           {transaction.fee > 0 && (
                             <p className="text-[11px] text-muted-foreground">
-                              Fee: {transaction.fee.toFixed(6)} MATIC
+                              Fee: {transaction.fee.toFixed(6)} {NATIVE_SYMBOLS[transaction.chainId] || 'ETH'}
                             </p>
                           )}
                         </div>
