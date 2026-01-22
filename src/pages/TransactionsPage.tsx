@@ -26,14 +26,43 @@ import { SUPPORTED_CHAINS, DEFAULT_CHAIN_ID, getBlockExplorer, NATIVE_SYMBOLS } 
 const TransactionIcon = ({ 
   currency, 
   type, 
-  chainId 
+  chainId,
+  tokenStandard
 }: { 
   currency: string; 
   type: 'deposit' | 'withdrawal';
   chainId: number;
+  tokenStandard?: 'native' | 'erc20' | 'erc1155' | null;
 }) => {
   // Normalize symbol for TokenIcon (remove .e suffix)
   const symbol = currency.replace('.e', '').toUpperCase();
+  
+  // NFT specific rendering
+  if (tokenStandard === 'erc1155') {
+    return (
+      <div className="relative flex-shrink-0">
+        {/* NFT icon with gradient background */}
+        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/30 to-pink-500/30 flex items-center justify-center border border-purple-500/20">
+          <span className="text-lg">🖼️</span>
+        </div>
+        
+        {/* Chain badge overlay - bottom right */}
+        <div className="absolute -bottom-0.5 -right-0.5 bg-background rounded-full p-0.5 shadow-sm">
+          <ChainIcon chainId={chainId} size={14} />
+        </div>
+        
+        {/* Direction arrow overlay - top left */}
+        <div className={`absolute -top-1 -left-1 w-4 h-4 rounded-full flex items-center justify-center shadow-sm ${
+          type === 'withdrawal' ? 'bg-destructive' : 'bg-green-500'
+        }`}>
+          {type === 'withdrawal' 
+            ? <ArrowUpCircle className="h-3 w-3 text-white" />
+            : <ArrowDownCircle className="h-3 w-3 text-white" />
+          }
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="relative flex-shrink-0">
@@ -307,6 +336,7 @@ const TransactionsPage = () => {
                           currency={transaction.currency}
                           type={transaction.type}
                           chainId={transaction.chainId}
+                          tokenStandard={transaction.tokenStandard}
                         />
                         
                         <div className="flex-1 min-w-0">

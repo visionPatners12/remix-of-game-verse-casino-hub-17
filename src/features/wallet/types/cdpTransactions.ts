@@ -48,6 +48,7 @@ export interface TransformedCDPTransaction {
   network: string;
   chainId: number;
   tokenContractAddress: string | null;
+  tokenStandard: 'native' | 'erc20' | 'erc1155' | null;
   fee: number;
 }
 
@@ -120,21 +121,30 @@ export function transformCDPTransaction(
 ): TransformedCDPTransaction {
   const walletLower = walletAddress.toLowerCase();
   
-  // Detect if this is an ERC20 token transfer
+  // Detect token standard
+  const isERC1155 = tx.token_standard === 'erc1155';
+  const isERC20 = tx.token_standard === 'erc20' || (tx.token_contract_address && !isERC1155);
   const isTokenTransfer = !!tx.token_contract_address && tx.token_amount_raw;
   
   let amount = 0;
   let currency = getNetworkCurrency(tx.network_id);
   let toAddress = tx.content_to;
+  let tokenStandard: 'native' | 'erc20' | 'erc1155' | null = null;
   
-  if (isTokenTransfer) {
-    // Get token info from known tokens map
+  if (isERC1155) {
+    // NFT transfer
+    tokenStandard = 'erc1155';
+    currency = 'NFT';
+    amount = Number(tx.token_amount_raw || 1);
+    toAddress = tx.token_recipient || tx.content_to;
+  } else if (isTokenTransfer && isERC20) {
+    // ERC20 token transfer
+    tokenStandard = 'erc20';
     const tokenAddress = tx.token_contract_address!.toLowerCase();
     const tokenInfo = KNOWN_TOKENS[tokenAddress];
-    const decimals = tokenInfo?.decimals || 6; // Default to 6 for stablecoins
+    const decimals = tokenInfo?.decimals || 6;
     currency = tokenInfo?.symbol || 'TOKEN';
     
-    // Parse token amount (token_amount_raw is stored as numeric)
     try {
       const rawAmount = BigInt(Math.floor(tx.token_amount_raw || 0));
       amount = Number(rawAmount) / Math.pow(10, decimals);
@@ -142,10 +152,10 @@ export function transformCDPTransaction(
       amount = 0;
     }
     
-    // For token transfers, use token_recipient as destination
     toAddress = tx.token_recipient || tx.content_to;
   } else {
     // Native ETH/MATIC transaction
+    tokenStandard = 'native';
     try {
       const valueWei = BigInt(Math.floor(Number(tx.value) || 0));
       amount = Number(valueWei) / 1e18;
@@ -154,7 +164,7 @@ export function transformCDPTransaction(
     }
   }
   
-  // Determine type based on addresses (use token_recipient for token transfers)
+  // Determine type based on addresses
   const fromLower = tx.content_from?.toLowerCase() || '';
   const effectiveToLower = (isTokenTransfer ? tx.token_recipient : tx.content_to)?.toLowerCase() || '';
   
@@ -168,9 +178,13 @@ export function transformCDPTransaction(
     type = 'deposit';
   }
   
-  // Build description with currency info
+  // Build description
   let description = '';
-  if (amount === 0) {
+  if (isERC1155) {
+    description = type === 'withdrawal' 
+      ? `Sent NFT to ${formatAddress(toAddress)}`
+      : `Received NFT from ${formatAddress(tx.content_from)}`;
+  } else if (amount === 0) {
     description = 'Contract interaction';
   } else if (type === 'withdrawal') {
     description = `Sent ${currency} to ${formatAddress(toAddress)}`;
@@ -178,7 +192,7 @@ export function transformCDPTransaction(
     description = `Received ${currency} from ${formatAddress(tx.content_from)}`;
   }
   
-  // Calculate fee if gas info available
+  // Calculate fee
   let fee = 0;
   if (tx.gas && tx.gas_price) {
     fee = (Number(tx.gas) * Number(tx.gas_price)) / 1e18;
@@ -198,6 +212,7 @@ export function transformCDPTransaction(
     network: tx.network_id,
     chainId: getChainIdFromNetwork(tx.network_id),
     tokenContractAddress: tx.token_contract_address,
+    tokenStandard,
     fee,
   };
 }
