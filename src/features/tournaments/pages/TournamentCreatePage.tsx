@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { SoonOverlay } from '@/components/ui/SoonOverlay';
-import { BracketSizeSelector } from '../components/BracketSizeSelector';
+import { TournamentSizeSelector } from '../components/TournamentSizeSelector';
 import { EntryFeeInput } from '../components/EntryFeeInput';
 import { PrizeDistributionSelector } from '../components/PrizeDistributionSelector';
 import { PrizePoolPreview } from '../components/PrizePoolPreview';
@@ -45,7 +45,7 @@ const TournamentCreatePage = () => {
           </Button>
           <div className="flex items-center gap-2">
             <Trophy className="h-5 w-5 text-primary" />
-            <h1 className="text-lg font-semibold">New Tournament</h1>
+            <h1 className="text-lg font-semibold">Nouveau Tournoi</h1>
           </div>
           <div className="w-9" /> {/* Spacer */}
         </nav>
@@ -58,13 +58,13 @@ const TournamentCreatePage = () => {
         <section className="bg-muted/20 rounded-xl p-4 space-y-4">
           <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
             <FileText className="h-4 w-4" />
-            <span>Basic Info</span>
+            <span>Informations</span>
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm text-muted-foreground">Tournament Name</label>
+            <label className="text-sm text-muted-foreground">Nom du tournoi</label>
             <Input
-              placeholder="e.g. Ludo Championship"
+              placeholder="ex: Ludo Championship"
               value={formData.name}
               onChange={(e) => updateForm('name', e.target.value)}
               className="h-12 bg-muted/30 border-0 rounded-xl"
@@ -72,9 +72,9 @@ const TournamentCreatePage = () => {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm text-muted-foreground">Description (optional)</label>
+            <label className="text-sm text-muted-foreground">Description (optionnel)</label>
             <Textarea
-              placeholder="Tell players what makes this tournament special..."
+              placeholder="Décrivez ce qui rend ce tournoi spécial..."
               value={formData.description}
               onChange={(e) => updateForm('description', e.target.value)}
               className="min-h-[80px] bg-muted/30 border-0 rounded-xl resize-none"
@@ -82,11 +82,11 @@ const TournamentCreatePage = () => {
           </div>
         </section>
 
-        {/* Bracket Size Section */}
+        {/* Tournament Size Section */}
         <section className="bg-muted/20 rounded-xl p-4">
-          <BracketSizeSelector
-            value={formData.bracketSize}
-            onChange={(size) => updateForm('bracketSize', size)}
+          <TournamentSizeSelector
+            value={formData.tournamentSize}
+            onChange={(size) => updateForm('tournamentSize', size)}
           />
         </section>
 
@@ -104,7 +104,7 @@ const TournamentCreatePage = () => {
           
           <PrizePoolPreview
             entryFee={formData.entryFee}
-            bracketSize={formData.bracketSize}
+            tournamentSize={formData.tournamentSize}
             commissionRate={formData.commissionRate}
             distributionType={formData.prizeDistributionType}
           />
@@ -150,7 +150,7 @@ const TournamentCreatePage = () => {
             className="w-full h-14 rounded-xl text-base font-semibold bg-primary hover:bg-primary/90"
           >
             <Trophy className="h-5 w-5 mr-2" />
-            Create Tournament
+            Créer le Tournoi
           </Button>
         </div>
       </div>

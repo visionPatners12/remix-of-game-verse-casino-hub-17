@@ -1,11 +1,11 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Trophy, Percent } from 'lucide-react';
-import { PrizeDistribution, PrizeDistributionType, PRIZE_DISTRIBUTIONS } from '../types';
+import { PrizeDistribution, PrizeDistributionType, PRIZE_DISTRIBUTIONS, TournamentSize } from '../types';
 
 interface PrizePoolPreviewProps {
   entryFee: number;
-  bracketSize: number;
+  tournamentSize: TournamentSize;
   commissionRate: number;
   distributionType: PrizeDistributionType;
 }
@@ -20,11 +20,11 @@ const POSITION_COLORS = [
 
 export const PrizePoolPreview = ({ 
   entryFee, 
-  bracketSize, 
+  tournamentSize, 
   commissionRate,
   distributionType
 }: PrizePoolPreviewProps) => {
-  const totalPool = entryFee * bracketSize;
+  const totalPool = entryFee * tournamentSize;
   const commissionAmount = totalPool * (commissionRate / 100);
   const netPrizePool = totalPool - commissionAmount;
 
@@ -39,12 +39,12 @@ export const PrizePoolPreview = ({
       <div className="bg-muted/20 rounded-xl p-4">
         <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground mb-3">
           <Trophy className="h-4 w-4" />
-          <span>Prize Pool Preview</span>
+          <span>Aperçu du Prize Pool</span>
         </div>
         <div className="text-center py-6 text-muted-foreground">
           <Trophy className="h-8 w-8 mx-auto mb-2 opacity-50" />
-          <p>No prize pool for free tournaments</p>
-          <p className="text-xs mt-1">Players compete for glory only!</p>
+          <p>Pas de prize pool pour les tournois gratuits</p>
+          <p className="text-xs mt-1">Les joueurs jouent pour la gloire !</p>
         </div>
       </div>
     );
@@ -54,17 +54,17 @@ export const PrizePoolPreview = ({
     <div className="bg-muted/20 rounded-xl p-4 space-y-4">
       <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
         <Trophy className="h-4 w-4" />
-        <span>Prize Pool Preview</span>
+        <span>Aperçu du Prize Pool</span>
       </div>
 
       {/* Pool breakdown */}
       <div className="space-y-2 pb-3 border-b border-border/30">
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Total Pool</span>
+          <span className="text-muted-foreground">Pool total</span>
           <span className="font-medium">
             {totalPool.toFixed(2)} USDC 
             <span className="text-muted-foreground text-xs ml-1">
-              ({bracketSize} × ${entryFee})
+              ({tournamentSize} × ${entryFee})
             </span>
           </span>
         </div>
@@ -78,7 +78,7 @@ export const PrizePoolPreview = ({
           </span>
         </div>
         <div className="flex justify-between text-base font-semibold pt-2 border-t border-border/20">
-          <span>Net Prize Pool</span>
+          <span>Prize Pool Net</span>
           <span className="text-primary">{netPrizePool.toFixed(2)} USDC</span>
         </div>
       </div>
@@ -96,7 +96,7 @@ export const PrizePoolPreview = ({
             <div className="flex items-center gap-2">
               <span className="text-lg">{POSITION_ICONS[idx]}</span>
               <span className={cn("font-medium", POSITION_COLORS[idx])}>
-                {prize.position === 3 ? '3rd-4th' : `${prize.position}${getOrdinalSuffix(prize.position)}`}
+                {prize.position === 3 ? '3ème-4ème' : `${prize.position}${getOrdinalSuffix(prize.position)}`}
               </span>
             </div>
             <div className="text-right">
@@ -113,7 +113,6 @@ export const PrizePoolPreview = ({
 };
 
 function getOrdinalSuffix(n: number): string {
-  const s = ['th', 'st', 'nd', 'rd'];
-  const v = n % 100;
-  return s[(v - 20) % 10] || s[v] || s[0];
+  if (n === 1) return 'er';
+  return 'ème';
 }
