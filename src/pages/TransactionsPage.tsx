@@ -89,10 +89,19 @@ const TransactionsPage = () => {
 
   const formatAmount = (amount: number, type: string, currency: string) => {
     const sign = type === 'withdrawal' ? '-' : '+';
-    if (currency === 'USDT' || currency === 'USDC') {
+    
+    // Stablecoins → display as dollar amount
+    if (['USDC', 'USDC.e', 'USDT', 'DAI'].includes(currency)) {
       return `${sign}$${Math.abs(amount).toFixed(2)}`;
     }
-    return `${sign}${Math.abs(amount).toFixed(4)} ${currency}`;
+    
+    // Handle zero amounts
+    if (amount === 0) return '0';
+    
+    // Native crypto → more decimals for small amounts
+    const absAmount = Math.abs(amount);
+    const decimals = absAmount < 0.01 ? 6 : absAmount < 1 ? 4 : 2;
+    return `${sign}${absAmount.toFixed(decimals)} ${currency}`;
   };
 
   const filteredTransactions = transactions.filter(transaction => {

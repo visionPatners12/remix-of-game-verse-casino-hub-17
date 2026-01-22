@@ -26,6 +26,12 @@ export interface CDPTransaction {
   raw: Record<string, unknown>;
   created_at: string;
   updated_at: string;
+  // ERC20 token fields
+  token_contract_address: string | null;
+  token_amount_raw: number | null;
+  token_standard: string | null;
+  token_method: string | null;
+  token_recipient: string | null;
 }
 
 export interface TransformedCDPTransaction {
@@ -43,11 +49,31 @@ export interface TransformedCDPTransaction {
   fee: number;
 }
 
-// Known token addresses on Base
+// Known token addresses across chains (lowercase)
 const KNOWN_TOKENS: Record<string, { symbol: string; decimals: number }> = {
+  // Base
   '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913': { symbol: 'USDC', decimals: 6 },
   '0x50c5725949a6f0c72e6c4a641f24049a917db0cb': { symbol: 'DAI', decimals: 18 },
   '0x4200000000000000000000000000000000000006': { symbol: 'WETH', decimals: 18 },
+  // Polygon
+  '0x3c499c542cef5e3811e1192ce70d8cc03d5c3359': { symbol: 'USDC', decimals: 6 },
+  '0x2791bca1f2de4661ed88a30c99a7a9449aa84174': { symbol: 'USDC.e', decimals: 6 },
+  '0xc2132d05d31c914a87c6611c10748aeb04b58e8f': { symbol: 'USDT', decimals: 6 },
+  '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619': { symbol: 'WETH', decimals: 18 },
+  '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063': { symbol: 'DAI', decimals: 18 },
+  // Ethereum
+  '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48': { symbol: 'USDC', decimals: 6 },
+  '0xdac17f958d2ee523a2206206994597c13d831ec7': { symbol: 'USDT', decimals: 6 },
+  '0x6b175474e89094c44da98b954eedeac495271d0f': { symbol: 'DAI', decimals: 18 },
+  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2': { symbol: 'WETH', decimals: 18 },
+  // Arbitrum
+  '0xaf88d065e77c8cc2239327c5edb3a432268e5831': { symbol: 'USDC', decimals: 6 },
+  '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8': { symbol: 'USDC.e', decimals: 6 },
+  '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9': { symbol: 'USDT', decimals: 6 },
+  // Optimism
+  '0x0b2c639c533813f4aa9d7837caf62653d097ff85': { symbol: 'USDC', decimals: 6 },
+  '0x7f5c764cbc14f9669b88837ca1490cca17c31607': { symbol: 'USDC.e', decimals: 6 },
+  '0x94b008aa00579c1307b0ef2c499ad98a8ce58e58': { symbol: 'USDT', decimals: 6 },
 };
 
 function formatAddress(address: string | null): string {
@@ -75,44 +101,69 @@ export function transformCDPTransaction(
   walletAddress: string
 ): TransformedCDPTransaction {
   const walletLower = walletAddress.toLowerCase();
-  const fromLower = tx.content_from?.toLowerCase() || '';
-  const toLower = tx.content_to?.toLowerCase() || '';
   
-  const isOutgoing = fromLower === walletLower;
-  const isIncoming = toLower === walletLower;
+  // Detect if this is an ERC20 token transfer
+  const isTokenTransfer = !!tx.token_contract_address && tx.token_amount_raw;
   
-  // Parse value (stored as number in wei)
-  const valueWei = BigInt(tx.value || 0);
-  const amount = Number(valueWei) / 1e18;
+  let amount = 0;
+  let currency = getNetworkCurrency(tx.network_id);
+  let toAddress = tx.content_to;
   
-  // Determine currency based on network
-  const currency = getNetworkCurrency(tx.network_id);
-  
-  // Calculate fee if gas info available
-  let fee = 0;
-  if (tx.gas && tx.gas_price) {
-    fee = (tx.gas * tx.gas_price) / 1e18;
+  if (isTokenTransfer) {
+    // Get token info from known tokens map
+    const tokenAddress = tx.token_contract_address!.toLowerCase();
+    const tokenInfo = KNOWN_TOKENS[tokenAddress];
+    const decimals = tokenInfo?.decimals || 6; // Default to 6 for stablecoins
+    currency = tokenInfo?.symbol || 'TOKEN';
+    
+    // Parse token amount (token_amount_raw is stored as numeric)
+    try {
+      const rawAmount = BigInt(Math.floor(tx.token_amount_raw || 0));
+      amount = Number(rawAmount) / Math.pow(10, decimals);
+    } catch {
+      amount = 0;
+    }
+    
+    // For token transfers, use token_recipient as destination
+    toAddress = tx.token_recipient || tx.content_to;
+  } else {
+    // Native ETH/MATIC transaction
+    try {
+      const valueWei = BigInt(Math.floor(Number(tx.value) || 0));
+      amount = Number(valueWei) / 1e18;
+    } catch {
+      amount = 0;
+    }
   }
   
-  // Determine type
+  // Determine type based on addresses (use token_recipient for token transfers)
+  const fromLower = tx.content_from?.toLowerCase() || '';
+  const effectiveToLower = (isTokenTransfer ? tx.token_recipient : tx.content_to)?.toLowerCase() || '';
+  
+  const isOutgoing = fromLower === walletLower;
+  const isIncoming = effectiveToLower === walletLower;
+  
   let type: 'deposit' | 'withdrawal' = 'deposit';
-  if (isOutgoing) {
+  if (isOutgoing && !isIncoming) {
     type = 'withdrawal';
   } else if (isIncoming) {
     type = 'deposit';
   }
   
-  // Build description
+  // Build description with currency info
   let description = '';
-  if (type === 'withdrawal') {
-    description = `Sent to ${formatAddress(tx.content_to)}`;
+  if (amount === 0) {
+    description = 'Contract interaction';
+  } else if (type === 'withdrawal') {
+    description = `Sent ${currency} to ${formatAddress(toAddress)}`;
   } else {
-    description = `Received from ${formatAddress(tx.content_from)}`;
+    description = `Received ${currency} from ${formatAddress(tx.content_from)}`;
   }
   
-  // Handle zero-value transactions (contract interactions)
-  if (amount === 0 && tx.content) {
-    description = 'Contract interaction';
+  // Calculate fee if gas info available
+  let fee = 0;
+  if (tx.gas && tx.gas_price) {
+    fee = (Number(tx.gas) * Number(tx.gas_price)) / 1e18;
   }
 
   return {
@@ -125,7 +176,7 @@ export function transformCDPTransaction(
     description,
     created_at: tx.block_timestamp || tx.created_at,
     from_address: tx.content_from,
-    to_address: tx.content_to,
+    to_address: toAddress,
     network: tx.network_id,
     fee,
   };
