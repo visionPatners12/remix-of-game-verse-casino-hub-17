@@ -121,10 +121,12 @@ export function transformCDPTransaction(
 ): TransformedCDPTransaction {
   const walletLower = walletAddress.toLowerCase();
   
-  // Detect token standard
+  // Detect token standard and transfer type
   const isERC1155 = tx.token_standard === 'erc1155';
-  const isERC20 = tx.token_standard === 'erc20' || (tx.token_contract_address && !isERC1155);
-  const isTokenTransfer = !!tx.token_contract_address && tx.token_amount_raw;
+  const hasTokenTransfer = tx.token_contract_address !== null && 
+                           tx.token_amount_raw !== null && 
+                           Number(tx.token_amount_raw) > 0;
+  const hasNativeTransfer = tx.value !== null && Number(tx.value) > 0;
   
   let amount = 0;
   let currency = getNetworkCurrency(tx.network_id);
@@ -137,36 +139,49 @@ export function transformCDPTransaction(
     currency = 'NFT';
     amount = Number(tx.token_amount_raw || 1);
     toAddress = tx.token_recipient || tx.content_to;
-  } else if (isTokenTransfer && isERC20) {
+  } else if (hasTokenTransfer) {
     // ERC20 token transfer
     tokenStandard = 'erc20';
     const tokenAddress = tx.token_contract_address!.toLowerCase();
     const tokenInfo = KNOWN_TOKENS[tokenAddress];
-    const decimals = tokenInfo?.decimals || 6;
-    currency = tokenInfo?.symbol || 'TOKEN';
+    
+    // Handle unknown tokens with heuristics
+    let decimals = 18;
+    if (tokenInfo) {
+      decimals = tokenInfo.decimals;
+      currency = tokenInfo.symbol;
+    } else {
+      // Heuristic: if raw amount is very large (>1e15), likely 18 decimals
+      // if smaller (<1e10), likely 6 decimals (stablecoins)
+      const rawAmount = Number(tx.token_amount_raw);
+      decimals = rawAmount > 1e15 ? 18 : rawAmount > 1e10 ? 8 : 6;
+      currency = 'TOKEN';
+      console.log(`[Transform] Unknown token ${tokenAddress}, using ${decimals} decimals`);
+    }
     
     try {
-      const rawAmount = BigInt(Math.floor(tx.token_amount_raw || 0));
-      amount = Number(rawAmount) / Math.pow(10, decimals);
+      amount = Number(tx.token_amount_raw) / Math.pow(10, decimals);
     } catch {
       amount = 0;
     }
     
     toAddress = tx.token_recipient || tx.content_to;
-  } else {
-    // Native ETH/MATIC transaction
+  } else if (hasNativeTransfer) {
+    // Native ETH/MATIC/POL transaction
     tokenStandard = 'native';
     try {
-      const valueWei = BigInt(Math.floor(Number(tx.value) || 0));
-      amount = Number(valueWei) / 1e18;
+      amount = Number(tx.value) / 1e18;
     } catch {
       amount = 0;
     }
+  } else {
+    // Contract interaction without value transfer
+    tokenStandard = null;
   }
   
   // Determine type based on addresses
   const fromLower = tx.content_from?.toLowerCase() || '';
-  const effectiveToLower = (isTokenTransfer ? tx.token_recipient : tx.content_to)?.toLowerCase() || '';
+  const effectiveToLower = (hasTokenTransfer ? tx.token_recipient : tx.content_to)?.toLowerCase() || '';
   
   const isOutgoing = fromLower === walletLower;
   const isIncoming = effectiveToLower === walletLower;
@@ -178,18 +193,25 @@ export function transformCDPTransaction(
     type = 'deposit';
   }
   
-  // Build description
+  // Build description based on what we detected
   let description = '';
   if (isERC1155) {
     description = type === 'withdrawal' 
       ? `Sent NFT to ${formatAddress(toAddress)}`
       : `Received NFT from ${formatAddress(tx.content_from)}`;
-  } else if (amount === 0) {
-    description = 'Contract interaction';
-  } else if (type === 'withdrawal') {
-    description = `Sent ${currency} to ${formatAddress(toAddress)}`;
+  } else if (tokenStandard === 'erc20' && amount > 0) {
+    description = type === 'withdrawal'
+      ? `Sent ${currency} to ${formatAddress(toAddress)}`
+      : `Received ${currency} from ${formatAddress(tx.content_from)}`;
+  } else if (tokenStandard === 'native' && amount > 0) {
+    description = type === 'withdrawal'
+      ? `Sent ${currency} to ${formatAddress(toAddress)}`
+      : `Received ${currency} from ${formatAddress(tx.content_from)}`;
+  } else if (tx.token_contract_address) {
+    // Contract interaction (approve, etc.)
+    description = tx.token_method ? `${tx.token_method}` : 'Contract approval';
   } else {
-    description = `Received ${currency} from ${formatAddress(tx.content_from)}`;
+    description = 'Contract call';
   }
   
   // Calculate fee
