@@ -15,6 +15,8 @@ interface CompactUpcomingCardProps {
   chips: FeatureChip[];
   accentColor: 'amber' | 'violet';
   index?: number;
+  onClick?: () => void;
+  showBadge?: boolean;
 }
 
 export const CompactUpcomingCard = ({
@@ -24,6 +26,8 @@ export const CompactUpcomingCard = ({
   chips,
   accentColor = 'amber',
   index = 0,
+  onClick,
+  showBadge = true,
 }: CompactUpcomingCardProps) => {
   const isAmber = accentColor === 'amber';
 
@@ -33,12 +37,15 @@ export const CompactUpcomingCard = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, type: 'spring', stiffness: 120, damping: 14 }}
       whileHover={{ scale: 1.02, y: -2 }}
+      whileTap={onClick ? { scale: 0.98 } : undefined}
+      onClick={onClick}
       className={cn(
         'relative flex items-center gap-3 p-3 rounded-xl overflow-hidden',
         'bg-card/40 backdrop-blur-lg',
         'border border-border/30',
         'hover:border-border/50 hover:shadow-lg transition-all duration-300',
-        isAmber ? 'hover:shadow-amber-500/10' : 'hover:shadow-violet-500/10'
+        isAmber ? 'hover:shadow-amber-500/10' : 'hover:shadow-violet-500/10',
+        onClick && 'cursor-pointer'
       )}
     >
       {/* Background gradient */}
@@ -77,17 +84,19 @@ export const CompactUpcomingCard = ({
         {/* Title + Badge */}
         <div className="flex items-center gap-2 mb-1">
           <span className="font-semibold text-sm text-foreground truncate">{title}</span>
-          <Badge
-            className={cn(
-              'text-[9px] px-1.5 py-0 h-4 font-bold border-0 shrink-0',
-              'bg-gradient-to-r animate-gradient-x bg-[length:200%]',
-              isAmber
-                ? 'from-amber-500 via-orange-500 to-amber-500'
-                : 'from-violet-500 via-primary to-violet-500'
-            )}
-          >
-            SOON
-          </Badge>
+          {showBadge && (
+            <Badge
+              className={cn(
+                'text-[9px] px-1.5 py-0 h-4 font-bold border-0 shrink-0',
+                'bg-gradient-to-r animate-gradient-x bg-[length:200%]',
+                isAmber
+                  ? 'from-amber-500 via-orange-500 to-amber-500'
+                  : 'from-violet-500 via-primary to-violet-500'
+              )}
+            >
+              SOON
+            </Badge>
+          )}
         </div>
 
         {/* Description - truncated */}

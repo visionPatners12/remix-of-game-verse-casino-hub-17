@@ -99,7 +99,7 @@ export default function Games() {
         {/* 2. Hero Featured Game - Compact horizontal */}
         <HeroFeaturedGame />
 
-        {/* 3. Coming Soon - Tournaments only */}
+        {/* 3. Tournaments */}
         <section>
           <CompactUpcomingCard
             icon={Trophy}
@@ -108,6 +108,8 @@ export default function Games() {
             chips={tournamentsChips}
             accentColor="amber"
             index={0}
+            onClick={() => navigate('/tournaments/create')}
+            showBadge={false}
           />
         </section>
 

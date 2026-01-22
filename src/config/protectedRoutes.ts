@@ -22,6 +22,7 @@ import { LudoGamesPage } from '@/features/ludo';
 import MessagesPage from '@/pages/MessagesPage';
 import { PryzenCardPage } from '@/features/nft';
 import MyGamesPage from '@/pages/MyGamesPage';
+import { TournamentCreatePage } from '@/features/tournaments';
 
 export interface ProtectedRoute {
   path: string;
@@ -70,4 +71,7 @@ export const protectedRoutes: ProtectedRoute[] = [
   
   // NFT
   { path: '/pryzen-card', component: PryzenCardPage },
+  
+  // Tournaments
+  { path: '/tournaments/create', component: TournamentCreatePage },
 ];
