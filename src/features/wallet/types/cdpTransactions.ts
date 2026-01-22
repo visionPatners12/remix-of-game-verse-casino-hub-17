@@ -46,6 +46,8 @@ export interface TransformedCDPTransaction {
   from_address: string | null;
   to_address: string | null;
   network: string;
+  chainId: number;
+  tokenContractAddress: string | null;
   fee: number;
 }
 
@@ -91,9 +93,25 @@ function parseStatus(status: string | null): 'completed' | 'pending' | 'failed' 
 
 function getNetworkCurrency(networkId: string): string {
   if (networkId.includes('base')) return 'ETH';
-  if (networkId.includes('polygon')) return 'MATIC';
+  if (networkId.includes('polygon')) return 'POL';
   if (networkId.includes('ethereum')) return 'ETH';
+  if (networkId.includes('arbitrum')) return 'ETH';
+  if (networkId.includes('optimism')) return 'ETH';
   return 'ETH';
+}
+
+// CDP Network ID to Chain ID mapping
+const CDP_NETWORK_TO_CHAIN_ID: Record<string, number> = {
+  'base-mainnet': 8453,
+  'base-sepolia': 84532,
+  'polygon-mainnet': 137,
+  'ethereum-mainnet': 1,
+  'arbitrum-mainnet': 42161,
+  'optimism-mainnet': 10,
+};
+
+function getChainIdFromNetwork(networkId: string): number {
+  return CDP_NETWORK_TO_CHAIN_ID[networkId] || 8453;
 }
 
 export function transformCDPTransaction(
@@ -178,6 +196,8 @@ export function transformCDPTransaction(
     from_address: tx.content_from,
     to_address: toAddress,
     network: tx.network_id,
+    chainId: getChainIdFromNetwork(tx.network_id),
+    tokenContractAddress: tx.token_contract_address,
     fee,
   };
 }
