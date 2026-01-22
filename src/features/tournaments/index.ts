@@ -12,6 +12,9 @@ export { SchedulePicker } from './components/SchedulePicker';
 export { LudoSettingsCard } from './components/LudoSettingsCard';
 export { TournamentSummary } from './components/TournamentSummary';
 
+// Hooks
+export { useTournamentApi, useTournament, useTournaments } from './hooks/useTournamentApi';
+
 // Types
 export type { 
   TournamentFormData, 
