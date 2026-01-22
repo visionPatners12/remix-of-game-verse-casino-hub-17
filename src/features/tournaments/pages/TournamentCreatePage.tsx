@@ -4,8 +4,10 @@ import { ArrowLeft, Trophy, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { SoonOverlay } from '@/components/ui/SoonOverlay';
 import { BracketSizeSelector } from '../components/BracketSizeSelector';
 import { EntryFeeInput } from '../components/EntryFeeInput';
+import { PrizeDistributionSelector } from '../components/PrizeDistributionSelector';
 import { PrizePoolPreview } from '../components/PrizePoolPreview';
 import { SchedulePicker } from '../components/SchedulePicker';
 import { LudoSettingsCard } from '../components/LudoSettingsCard';
@@ -95,10 +97,16 @@ const TournamentCreatePage = () => {
             onChange={(value) => updateForm('entryFee', value)}
           />
           
+          <PrizeDistributionSelector
+            value={formData.prizeDistributionType}
+            onChange={(type) => updateForm('prizeDistributionType', type)}
+          />
+          
           <PrizePoolPreview
             entryFee={formData.entryFee}
             bracketSize={formData.bracketSize}
             commissionRate={formData.commissionRate}
+            distributionType={formData.prizeDistributionType}
           />
         </section>
 
@@ -116,15 +124,17 @@ const TournamentCreatePage = () => {
           />
         </section>
 
-        {/* Ludo Settings Section */}
-        <section className="bg-muted/20 rounded-xl p-4">
-          <LudoSettingsCard
-            extraTurnOnSix={formData.extraTurnOnSix}
-            betPerMatch={formData.betPerMatch}
-            onExtraTurnChange={(value) => updateForm('extraTurnOnSix', value)}
-            onBetPerMatchChange={(value) => updateForm('betPerMatch', value)}
-          />
-        </section>
+        {/* Ludo Settings Section - Coming Soon */}
+        <SoonOverlay enabled={true}>
+          <section className="bg-muted/20 rounded-xl p-4">
+            <LudoSettingsCard
+              extraTurnOnSix={true}
+              betPerMatch={0}
+              onExtraTurnChange={() => {}}
+              onBetPerMatchChange={() => {}}
+            />
+          </section>
+        </SoonOverlay>
 
         {/* Summary */}
         <TournamentSummary formData={formData} />

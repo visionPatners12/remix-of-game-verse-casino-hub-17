@@ -1,12 +1,13 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Trophy, Percent } from 'lucide-react';
-import { DEFAULT_PRIZE_DISTRIBUTION, PrizeDistribution } from '../types';
+import { PrizeDistribution, PrizeDistributionType, PRIZE_DISTRIBUTIONS } from '../types';
 
 interface PrizePoolPreviewProps {
   entryFee: number;
   bracketSize: number;
   commissionRate: number;
+  distributionType: PrizeDistributionType;
 }
 
 const POSITION_ICONS = ['🥇', '🥈', '🥉', '4️⃣'];
@@ -20,13 +21,15 @@ const POSITION_COLORS = [
 export const PrizePoolPreview = ({ 
   entryFee, 
   bracketSize, 
-  commissionRate 
+  commissionRate,
+  distributionType
 }: PrizePoolPreviewProps) => {
   const totalPool = entryFee * bracketSize;
   const commissionAmount = totalPool * (commissionRate / 100);
   const netPrizePool = totalPool - commissionAmount;
 
-  const prizes: PrizeDistribution[] = DEFAULT_PRIZE_DISTRIBUTION.map(p => ({
+  const selectedDistribution = PRIZE_DISTRIBUTIONS[distributionType].distribution;
+  const prizes: PrizeDistribution[] = selectedDistribution.map(p => ({
     ...p,
     amount: Number((netPrizePool * (p.percentage / 100)).toFixed(2))
   }));
