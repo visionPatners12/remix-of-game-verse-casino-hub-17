@@ -51,7 +51,7 @@ export const LudoRoomCard: React.FC<LudoRoomCardProps> = ({
   const isFree = !bet_amount || bet_amount === 0;
 
   const handleClick = () => {
-    navigate(`/games/ludo/${id}`);
+    navigate(`/games/ludo/play/${id}`);
   };
 
   return (
