@@ -260,32 +260,338 @@ Mais comme `current_players` n'est pas maintenu, cette vérification se fait par
 
 ---
 
-## Résumé des priorités de correction
+---
 
-| # | Sévérité | Erreur | Impact |
-|---|----------|--------|--------|
-| 1 | 🔴 CRITIQUE | ENTRY_INDEX.Y = 28 au lieu de 26 | Yellow OP, jeu déséquilibré |
-| 2 | 🔴 CRITIQUE | SAFE_LEN = 5 vs 6 | État de jeu corrompu |
-| 3 | 🔴 CRITIQUE | 3 edge functions conflictuelles actives | État de jeu corrompu |
-| 4 | 🔴 CRITIQUE | roll-dice change le tour avant le move | Jeu injouable si appelé |
-| 5 | 🟠 HAUTE | ludo_increment_pot RPC manquante | Pot jamais incrémenté (jeux payants cassés) |
-| 6 | 🟠 HAUTE | current_players jamais synchronisé | Compteur joueurs faux |
-| 7 | 🟠 HAUTE | Pending deposits bloqués (tx_hash null) | Joueurs coincés |
-| 8 | 🟡 MOYENNE | Winner sans GOAL atteint | UX confuse |
-| 9 | 🟡 MOYENNE | Pas de protection START_INDEX (old) | Capture injuste (old fn) |
-| 10-13 | 🟢 BASSE | Inconsistances mineures | Maintenance |
+# PARTIE 2 : SYSTÈME DE JEU, EXPÉRIENCE UTILISATEUR & CONNEXION EN TEMPS RÉEL
 
 ---
 
-## Recommandations
+## ERREURS CRITIQUES - CONNEXION EN TEMPS RÉEL
 
-### Actions immédiates :
-1. **Désactiver** les edge functions `ludo` et `roll-dice` (les remplacer par des redirections vers `ludo-game` ou les supprimer)
-2. **Corriger `ENTRY_INDEX.Y`** de 28 à 26 dans `ludo-game/ludoLogic.ts` ET le frontend `ludoModel.ts`
-3. **Créer la fonction RPC `ludo_increment_pot`** pour que `check-ludo-deposits` fonctionne
-4. **Ajouter un mécanisme de timeout** pour les jeux avec `deposit_status=pending` et `tx_hash=null`
+### 14. ❌ Timer expire simultanément sur TOUS les clients → multiple autoPlay
 
-### Actions court terme :
-5. Synchroniser `current_players` dans les handlers create/join/exit
-6. Nettoyer les données incohérentes en base
-7. Ajouter des logs de monitoring pour détecter les appels aux anciennes fonctions
+**Fichier :** `TurnTimer.tsx` + `LudoKonva.tsx` (handleTimeExpired)
+
+**Problème :** Le `TurnTimer` tourne sur CHAQUE client connecté. Quand le timer atteint 0, CHAQUE client appelle `handleTimeExpired()` → `autoPlay`. Avec 4 joueurs, 4 requêtes `autoPlay` arrivent en parallèle au backend.
+
+```
+Joueur 1 → autoPlay ← succès (gagne le lock optimiste)
+Joueur 2 → autoPlay ← RETRY (rev a changé)
+Joueur 3 → autoPlay ← RETRY
+Joueur 4 → autoPlay ← RETRY
+```
+
+**Impact :** 
+- 3 requêtes inutiles sur 4 (75% de charge gaspillée)
+- Race condition potentielle si le retry aboutit entre-temps
+- Confusion côté UX : le joueur dont le timer expire voit un toast alors que ce n'était pas sa faute
+
+**Fix recommandé :** Seul le joueur dont c'est le tour devrait appeler `autoPlay`. Ou mieux : un cron/scheduler côté backend qui vérifie les timeouts.
+
+---
+
+### 15. ❌ `beforeunload` est async mais le navigateur n'attend pas
+
+**Fichier :** `useRealtimeGame.ts` (lignes 223-239)
+
+```typescript
+// ❌ Le navigateur peut fermer AVANT que ces await se terminent
+const handleBeforeUnload = async () => {
+  const { data: player } = await supabase.from(...).select(...);
+  if (player) {
+    await supabase.from(...).update({ is_connected: false });
+  }
+};
+```
+
+**Impact :** Le joueur reste `is_connected: true` en base même après avoir fermé l'onglet. Les autres joueurs voient ce joueur comme "en ligne" alors qu'il est parti.
+
+**Fix recommandé :** Utiliser `navigator.sendBeacon()` ou Supabase Presence channel au lieu de l'approche heartbeat.
+
+---
+
+### 16. ⚠️ Pas de retry automatique sur CHANNEL_ERROR / TIMED_OUT
+
+**Fichier :** `useRealtimeGame.ts` (lignes 103-111, 151-159)
+
+```typescript
+.subscribe((status, err) => {
+  if (status === 'CHANNEL_ERROR') {
+    logger.error('❌ Game channel error:', err);
+    // ❌ Aucun retry ! Le joueur perd la connexion temps réel silencieusement
+  } else if (status === 'TIMED_OUT') {
+    logger.warn('⏱️ Game channel timed out, will retry...');
+    // ❌ Le commentaire dit "will retry" mais aucun code de retry !
+  }
+});
+```
+
+**Impact :** Si le WebSocket tombe, le joueur ne reçoit plus les mises à jour en temps réel (mouvements des adversaires, changements de tour, dés). Le jeu semble "gelé" sans aucune notification à l'utilisateur.
+
+---
+
+### 17. ⚠️ Heartbeat toutes les 30s est trop lent pour un jeu temps réel
+
+**Fichier :** `useRealtimeGame.ts` (ligne 219)
+
+```typescript
+const interval = setInterval(updateHeartbeat, 30000); // 30 secondes !
+```
+
+Le timer de tour est de 30s. Le heartbeat est aussi de 30s. Un joueur peut être déconnecté pendant presque tout un tour sans que les autres le sachent.
+
+**Fix recommandé :** Réduire à 10s ou utiliser Supabase Presence qui gère la connectivité nativement.
+
+---
+
+## ERREURS SYSTÈME DE JEU
+
+### 18. ❌ `isAtHome` frontend accepte des positions invalides
+
+**Fichier :** `LudoKonva.tsx` (lignes 363-367)
+
+```typescript
+const isAtHome = (position: number, color: Color): boolean => {
+  const base = HOME_BASE[color]; // {R:-10, G:-20, Y:-30, B:-40}
+  return (position >= base && position <= base + 3) 
+      || (position <= base && position >= base - 3);
+};
+```
+
+Pour Red (base = -10) :
+- Première condition : `-10 ≤ position ≤ -7` → accepte **-9, -8, -7** ❌ (pas des positions home valides)
+- Deuxième condition : `-13 ≤ position ≤ -10` → accepte **-10, -11, -12, -13** ✅
+
+**Positions valides :** -10, -11, -12, -13
+**Positions acceptées :** -13 à -7 (7 positions au lieu de 4 !)
+
+**Impact :** Un pion à la position -9 (qui est invalide) serait considéré comme "à la maison" et le joueur pourrait le faire sortir avec un 6. Cela permet des mouvements illégaux.
+
+**Fix :** `return position <= base && position >= base - 3;`
+
+---
+
+### 19. ❌ `calculatePossibleMoves` dupliqué et DIVERGENT du modèle
+
+**Fichier :** `LudoKonva.tsx` (lignes 386-459) vs `model/movement.ts`
+
+Le frontend a DEUX systèmes de calcul de mouvements :
+1. **`model/movement.ts`** : Modèle complet avec blockades, protection START_INDEX, prison
+2. **`LudoKonva.tsx` inline** : Version simplifiée sans vérification des blockades
+
+| Feature | `movement.ts` | `LudoKonva.tsx` inline |
+|---------|-------------|----------------------|
+| Blockade check | ✅ `hasBlockOnTrack()` | ❌ Non vérifié |
+| START_INDEX protection | ✅ Vérifié | ❌ Non vérifié |
+| Prison enemy check | ✅ `isInEnemyPrison()` | ✅ `isInEnemyPrison()` |
+| Safe corridor | ✅ | ✅ |
+
+**Impact :** Le frontend peut afficher un mouvement comme "possible" (highlight du pion) alors que le backend le rejettera comme invalide (blockade). L'utilisateur clique, le backend renvoie une erreur, et le joueur est frustré.
+
+---
+
+### 20. ⚠️ Animation de 1.5s fixe sur le dé, indépendante du réseau
+
+**Fichier :** `DiceRoller.tsx` (lignes 187-199)
+
+```typescript
+// L'animation dure TOUJOURS 1.5s, même si le backend répond en 100ms
+setTimeout(() => {
+  clearInterval(animationInterval);
+  setAnimationValue(data.diceValue);
+  setIsRolling(false);
+  onDiceRolled?.(data.diceValue);
+}, 1500);
+```
+
+**Impact :** 
+- Si le backend répond en 100ms : le joueur attend 1.4s inutilement
+- Si le backend met 3s : l'animation s'arrête à 1.5s, le résultat n'arrive pas encore → UX bizarre
+
+---
+
+### 21. ⚠️ Auto-skip de 2s sans possibilité d'annuler
+
+**Fichier :** `LudoKonva.tsx` (lignes 163-202)
+
+Quand un joueur n'a pas de mouvement possible, le frontend auto-skip après 2 secondes sans aucune interaction possible :
+```typescript
+toast({ title: "No moves available", description: "Your turn will be skipped in 2 seconds..." });
+const skipTimeout = setTimeout(() => {
+  supabase.functions.invoke('ludo-game', { body: { action: 'skip', gameId } });
+}, 2000);
+```
+
+**Impact :** Le joueur ne peut pas voir la situation, analyser les positions, ou même confirmer manuellement le skip. Pour un jeu de stratégie, c'est trop rapide.
+
+---
+
+### 22. ⚠️ Animation distante peut manquer des mouvements
+
+**Fichier :** `LudoKonva.tsx` (lignes 240-299)
+
+La détection de mouvement distant se fait par comparaison des positions :
+```typescript
+for (const color of colors) {
+  for (let pawnIndex = 0; pawnIndex < 4; pawnIndex++) {
+    if (prev[pawnIndex] !== curr[pawnIndex]) {
+      foundMove = true; // Seulement le PREMIER changement trouvé
+      break;
+    }
+  }
+}
+```
+
+**Impact :** Si deux pions changent dans la même mise à jour (ex: pion capturé → prison + pion captureur → nouvelle position), seul le PREMIER mouvement est animé. La capture n'est pas visuellement représentée.
+
+---
+
+### 23. ⚠️ `pathGenerator.ts` - boucle infinie potentielle pour Yellow
+
+**Fichier :** `utils/pathGenerator.ts` (lignes 49-85)
+
+Pour Yellow avec le bug ENTRY_INDEX.Y = 28 :
+```typescript
+// Si startPosition = 28 (START) et endPosition = 300 (safe corridor)
+while (current !== entryIndex) { // entry = 28, current = 28
+  current = (current + 1) % TRACK_LEN; // N'entre jamais dans la boucle
+  path.push(current);
+}
+```
+
+Pour Yellow, `current === entryIndex` dès le départ, donc la boucle while ne s'exécute pas, et Yellow passe directement au safe corridor sans animation de parcours sur la piste. L'animation saute d'un coup de START au safe corridor.
+
+---
+
+## ERREURS UX (Expérience Utilisateur)
+
+### 24. ⚠️ WaitingRoom auto-start seulement pour 4 joueurs exactement
+
+**Fichier :** `LudoWaitingRoom.tsx` (lignes 158-165)
+
+```typescript
+useEffect(() => {
+  const allFourConfirmed = players.length === 4 && 
+    players.every(p => p.deposit_status === 'confirmed' || p.deposit_status === 'free');
+  if (allFourConfirmed && !isStartingGame) {
+    onStartGame();
+  }
+}, [players, isStartingGame, onStartGame]);
+```
+
+**Impact :** L'auto-start ne fonctionne que pour exactement 4 joueurs. Pour les parties à 2 ou 3 joueurs (`max_players = 2 ou 3`), l'auto-start ne se déclenche JAMAIS. Seul le créateur peut démarrer manuellement.
+
+---
+
+### 25. ⚠️ Auto-join à chaque navigation sur la page du jeu
+
+**Fichier :** `useAutoJoin.ts`
+
+Le hook `useAutoJoin` appelle systématiquement `ludo-game` avec `action: 'join'` à chaque fois que le composant se monte (navigation, refresh). Bien que le backend gère l'idempotence (`already_joined`), cela génère un appel API inutile à chaque visite.
+
+---
+
+### 26. ⚠️ Pas d'indicateur de "qui joue" clair sur mobile
+
+Le `PlayerProfileCard` indique le tour actuel, mais sur un petit écran mobile, l'utilisateur peut ne pas voir quel joueur est en train de jouer. Le seul indicateur est un highlight subtil autour du profil.
+
+---
+
+### 27. ⚠️ Turn validation retry ajoute une latence inutile
+
+**Fichier :** `turnValidation.ts` (lignes 101-129)
+
+```typescript
+export const validateTurnWithRetry = async (
+  params: TurnValidationParams,
+  maxRetries: number = 2,
+  retryDelay: number = 500 // 500ms de délai !
+) => {
+```
+
+Avant chaque lancer de dé, le frontend fait jusqu'à 3 vérifications (1 + 2 retries) avec 500ms de délai entre chaque. Cela peut ajouter jusqu'à 1 seconde de latence avant que le joueur puisse lancer le dé.
+
+---
+
+## PROBLÈMES DE SÉCURITÉ RLS
+
+### 28. ⚠️ RLS `ludo_games` UPDATE : seul `created_by` peut update
+
+```sql
+-- Policy actuelle
+UPDATE policy: auth.uid() = created_by
+```
+
+Le frontend ne fait pas de UPDATE direct sur `ludo_games` (tout passe par les edge functions en service_role), donc ce n'est pas bloquant. MAIS :
+- Un joueur malveillant ne peut pas modifier le jeu directement ✅
+- Le créateur du jeu pourrait théoriquement modifier le jeu directement (positions, winner) en contournant les edge functions ⚠️
+
+---
+
+## RÉSUMÉ COMPLET DES PRIORITÉS
+
+### 🔴 CRITIQUES (Game Breaking)
+| # | Erreur | Fichier |
+|---|--------|---------|
+| 1 | ENTRY_INDEX.Y = 28 → Yellow OP | ludoLogic.ts, ludoModel.ts |
+| 2 | SAFE_LEN 5 vs 6 | Vieux ludo/ vs nouveau ludo-game/ |
+| 3 | 3 edge functions conflictuelles | ludo, ludo-game, roll-dice |
+| 4 | roll-dice change tour avant move | roll-dice/index.ts |
+| 14 | Timer autoPlay sur TOUS les clients | TurnTimer.tsx + LudoKonva.tsx |
+
+### 🟠 HAUTES (Functional Issues)
+| # | Erreur | Fichier |
+|---|--------|---------|
+| 5 | ludo_increment_pot RPC manquante | check-ludo-deposits |
+| 6 | current_players jamais synchronisé | handlers/create.ts, join.ts |
+| 7 | Deposits bloqués (tx_hash null) | DB |
+| 15 | beforeunload async ne marche pas | useRealtimeGame.ts |
+| 16 | Pas de retry sur CHANNEL_ERROR | useRealtimeGame.ts |
+| 18 | isAtHome accepte positions invalides | LudoKonva.tsx |
+| 19 | calculatePossibleMoves divergent | LudoKonva.tsx vs movement.ts |
+
+### 🟡 MOYENNES (UX/Logic Issues)
+| # | Erreur | Fichier |
+|---|--------|---------|
+| 8 | Winner sans GOAL atteint | db.ts (finalizeGameIfNeeded) |
+| 17 | Heartbeat 30s trop lent | useRealtimeGame.ts |
+| 20 | Animation dé 1.5s fixe | DiceRoller.tsx |
+| 21 | Auto-skip 2s trop rapide | LudoKonva.tsx |
+| 22 | Animation manque les captures | LudoKonva.tsx |
+| 23 | pathGenerator boucle skip pour Y | pathGenerator.ts |
+| 24 | Auto-start uniquement pour 4 joueurs | LudoWaitingRoom.tsx |
+| 27 | Turn validation retry 1s latence | turnValidation.ts |
+
+### 🟢 BASSES (Minor Issues)
+| # | Erreur | Fichier |
+|---|--------|---------|
+| 9-13 | Inconsistances vieux/nouveau code | Divers |
+| 25 | Auto-join inutile à chaque navigation | useAutoJoin.ts |
+| 26 | Indicateur de tour peu visible mobile | UI |
+| 28 | RLS créateur peut UPDATE | DB policies |
+
+---
+
+## RECOMMANDATIONS PAR PRIORITÉ
+
+### 🔴 Actions immédiates (P0)
+1. **Corriger `ENTRY_INDEX.Y`** de 28 à **26** dans :
+   - `ludo-game/ludoLogic.ts`
+   - Frontend `src/features/ludo/model/ludoModel.ts`
+2. **Désactiver** les edge functions `ludo` et `roll-dice`
+3. **Créer la RPC `ludo_increment_pot`**
+4. **Limiter autoPlay au joueur actif** : seul celui dont `currentPlayer.color === gameData.turn` appelle autoPlay
+
+### 🟠 Actions court terme (P1)
+5. **Remplacer heartbeat par Supabase Presence**
+6. **Ajouter retry sur CHANNEL_ERROR** (resubscribe)
+7. **Corriger `isAtHome`** : utiliser `position <= base && position >= base - 3`
+8. **Utiliser `movement.ts` dans LudoKonva** au lieu du calcul inline
+9. **Créer mécanisme de timeout** pour deposits bloqués
+
+### 🟡 Actions moyen terme (P2)
+10. Rendre l'animation du dé dynamique (basée sur la réponse)
+11. Augmenter le délai auto-skip de 2s à 4s avec bouton "Skip maintenant"
+12. Animer les captures (mouvement du capturé vers la prison)
+13. Corriger auto-start pour 2-3 joueurs
+14. Réduire retry validation de 500ms à 200ms
