@@ -17,8 +17,22 @@ Analyser le flow du jeu Ludo avec le backend edge function et base de données S
 - Database schema analysis (4 tables)
 - Frontend code review (services, hooks, model)
 - Game data validation against actual DB records
-- Identified 13 errors across Critical/High/Medium severity
+- Identified 28 errors across Critical/High/Medium severity
 - Report saved at `/app/LUDO_FLOW_ANALYSIS.md`
+
+### Fixes Applied (Jan 2026)
+
+**Frontend Fixes (Applied):**
+- ✅ `ENTRY_INDEX.Y` fixed from 28 → 26 in `ludoModel.ts` (Yellow no longer OP)
+- ✅ `isAtHome` fixed: now correctly accepts only 4 valid positions per color
+- ✅ `autoPlay` limited to active player only (no more 4x duplicate calls)
+- ✅ `calculatePossibleMoves` replaced with centralized `movement.ts` model (blockade checks now work)
+- ✅ Channel retry on `CHANNEL_ERROR` / `TIMED_OUT` in `useRealtimeGame.ts`
+- ✅ Auto-start now works for 2-3-4 players (was only 4)
+
+**Backend Fixes (SQL scripts to apply):**
+- 📋 `supabase-fixes/01_create_ludo_increment_pot.sql` - Creates missing RPC + cleans stuck deposits
+- 📋 `supabase-fixes/02_fix_entry_index_edge_function.sql` - Instructions for edge function fix
 
 ### Key Findings (28 errors total)
 **Part 1 - Backend & DB (13 errors):**

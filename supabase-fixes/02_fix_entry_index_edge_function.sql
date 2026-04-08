@@ -1,0 +1,21 @@
+-- ============================================
+-- LUDO FIX: Edge Function ludoLogic.ts
+-- Apply this change in Supabase Dashboard > Edge Functions > ludo-game
+-- File: ludoLogic.ts
+-- ============================================
+
+-- CHANGE THIS LINE:
+-- OLD: export const ENTRY_INDEX = { R: 54, G: 12, Y: 28, B: 40 } as const;
+-- NEW: export const ENTRY_INDEX = { R: 54, G: 12, Y: 26, B: 40 } as const;
+--
+-- This fixes Yellow (Y) entering the safe corridor immediately after spawning.
+-- With Y=28 (same as START_INDEX.Y), distance to entry = 0 → Yellow enters safe on first move.
+-- With Y=26, distance = 54 (same as R, G, B) → balanced gameplay.
+
+-- ============================================
+-- OPTIONAL: Disable old edge functions
+-- In Supabase Dashboard > Edge Functions:
+-- 1. Delete or disable function "ludo" (old, SAFE_LEN=5, HOME=-2)
+-- 2. Delete or disable function "roll-dice" (changes turn before move)
+-- These conflict with the main "ludo-game" function and can corrupt game state.
+-- ============================================

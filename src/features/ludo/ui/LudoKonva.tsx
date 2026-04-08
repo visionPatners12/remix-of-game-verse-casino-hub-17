@@ -20,10 +20,10 @@ import { useRealtimeGame } from '../hooks/useRealtimeGame';
 import { usePlayersWithUsernames } from '../hooks/usePlayersWithUsernames';
 import { usePawnAnimation } from '../hooks/usePawnAnimation';
 import { useLudoGameActions } from '../hooks/useLudoGameActions';
-import { isInEnemyPrison } from '../model/movement';
+import { isInEnemyPrison, getPossibleMoves as getModelPossibleMoves } from '../model/movement';
 import type { Color } from '../model/ludoModel';
 import type { UIMove } from '../types';
-import { START_INDEX, HOME_BASE, GOAL, canEnterSafe, SAFE_BASE, SAFE_LEN, TRACK_LEN } from '../model/ludoModel';
+import { START_INDEX, HOME_BASE, GOAL, SAFE_BASE, SAFE_LEN, TRACK_LEN } from '../model/ludoModel';
 import { generatePath } from '../utils/pathGenerator';
 import { validateTurnWithRetry, isPlayerTurnSimple } from '../utils/turnValidation';
 import { logger } from '@/utils/logger';
@@ -86,9 +86,11 @@ export const LudoKonva: React.FC = () => {
     startGame(user?.id);
   }, [startGame, user?.id]);
 
-  // Auto-play handler when timer expires
+  // Auto-play handler when timer expires - only the active player triggers it
   const handleTimeExpired = useCallback(async () => {
     if (isAutoPlaying || gameData?.status !== 'active') return;
+    // Only the player whose turn it is should trigger autoPlay
+    if (currentPlayer?.color !== gameData?.turn) return;
     
     setIsAutoPlaying(true);
     try {
@@ -382,80 +384,42 @@ export const LudoKonva: React.FC = () => {
   const isActiveGame = gameData?.status === 'active';
   const isSpectator = !currentPlayer && !!user;
 
-  // Calculate possible moves after dice roll with target information
+  // Calculate possible moves using the centralized movement model (with blockade checks)
   const calculatePossibleMoves = (diceValue: number, playerColor: string, positions: any): UIMove[] => {
     if (!positions || !playerColor) return [];
     
-    const playerPositions: number[] = positions[playerColor] ?? [-10, -11, -12, -13]; // fallback
-    const res: UIMove[] = [];
+    const gameState = {
+      R: positions.R ?? [-10, -11, -12, -13],
+      G: positions.G ?? [-20, -21, -22, -23],
+      Y: positions.Y ?? [-30, -31, -32, -33],
+      B: positions.B ?? [-40, -41, -42, -43],
+    };
     
-    logger.debug('🎲 calculatePossibleMoves:', { diceValue, playerColor, positions: playerPositions, safeBase: SAFE_BASE[playerColor as Color] });
+    const color = playerColor as Color;
+    const modelMoves = getModelPossibleMoves(gameState, color, diceValue);
     
-    for (let i = 0; i < 4; i++) {
-      const pos = playerPositions[i];
-
-      // 1) PRISON ADVERSE → sortie sur 6 vers HOME (backend calcule position libre)
-      if (isInEnemyPrison(pos, playerColor as Color) && diceValue === 6) {
-        res.push({
-          pawnIndex: i,
-          from: 'prison',
-          canExit: true,
-          target: null, // Backend trouve position HOME libre
-        });
-        continue;
-      }
-
-      // 2) HOME → sortie sur 6 vers START_INDEX  
-      if (isAtHome(pos, playerColor as Color) && diceValue === 6) {
-        res.push({
-          pawnIndex: i,
-          from: 'home',
-          canExit: true,
-          target: START_INDEX[playerColor as Color],
-        });
-        continue;
-      }
-
-      // 3) COULOIR DE SÉCURITÉ (100-105, 200-205, 300-305, 400-405) → mouvement vers GOAL ou avance
-      const safeBase = SAFE_BASE[playerColor as Color];
-      if (pos >= safeBase && pos < safeBase + SAFE_LEN) {
-        const safeIndex = pos - safeBase; // 0 à 5
-        const newSafeIndex = safeIndex + diceValue;
-        
-        if (newSafeIndex === SAFE_LEN) {
-          // Arrivée exacte au GOAL
-          res.push({ pawnIndex: i, from: 'track', canExit: false, target: GOAL });
-        } else if (newSafeIndex < SAFE_LEN) {
-          // Avance dans le couloir
-          res.push({ pawnIndex: i, from: 'track', canExit: false, target: safeBase + newSafeIndex });
-        }
-        // Si newSafeIndex > SAFE_LEN → dépassement, pas de mouvement possible
-        continue;
-      }
-
-      // 4) Sur la piste (0-55) → mouvement normal avec canEnterSafe
-      if (pos >= 0 && pos < TRACK_LEN) {
-        try {
-          const info = canEnterSafe(playerColor as Color, pos, diceValue);
-          if ((info as any).invalid) {
-            // aucun move si dépassement du couloir
-          } else if ((info as any).enter && (info as any).goal) {
-            res.push({ pawnIndex: i, from: 'track', canExit: false, target: GOAL });
-          } else if ((info as any).enter && typeof (info as any).safeTo === 'number') {
-            res.push({ pawnIndex: i, from: 'track', canExit: false, target: (info as any).safeTo });
-          } else if (typeof (info as any).loopTo === 'number') {
-            res.push({ pawnIndex: i, from: 'track', canExit: false, target: (info as any).loopTo });
-          } else {
-            // fallback minimaliste
-            res.push({ pawnIndex: i, from: 'track', canExit: false, target: null });
-          }
-        } catch {
-          // si erreur, on tombe en simple
-          res.push({ pawnIndex: i, from: 'track', canExit: false, target: null });
-        }
-      }
-    }
-    return res;
+    logger.debug('🎲 calculatePossibleMoves (via movement.ts):', {
+      diceValue, playerColor,
+      positions: gameState[color],
+      movesCount: modelMoves.length,
+    });
+    
+    return modelMoves.map(({ pawnIndex, moveResult }) => {
+      const pos = gameState[color][pawnIndex];
+      const isHome = pos <= HOME_BASE[color] && pos >= HOME_BASE[color] - 3;
+      const isPrison = isInEnemyPrison(pos, color);
+      
+      let from: 'home' | 'prison' | 'track' = 'track';
+      if (isHome) from = 'home';
+      else if (isPrison) from = 'prison';
+      
+      return {
+        pawnIndex,
+        from,
+        canExit: from === 'home' || from === 'prison',
+        target: moveResult.newPosition,
+      };
+    });
   };
 
   const handleDiceRolled = (diceValue: number) => {

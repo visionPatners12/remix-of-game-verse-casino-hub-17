@@ -154,12 +154,17 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
   };
 
 
-  // Auto-start when all 4 players are confirmed
+  // Auto-start when all players are confirmed (works for 2, 3, or 4 players)
   useEffect(() => {
-    const allFourConfirmed = players.length === 4 && 
-      players.every(p => p.deposit_status === 'confirmed' || p.deposit_status === 'free');
+    if (players.length < 2 || isStartingGame) return;
     
-    if (allFourConfirmed && !isStartingGame) {
+    const allConfirmed = players.every(p => 
+      p.deposit_status === 'confirmed' || p.deposit_status === 'free'
+    );
+    
+    // Auto-start when room is full (all max_players slots filled) AND all confirmed
+    // For non-full rooms, the creator must start manually
+    if (allConfirmed && players.length >= 4) {
       onStartGame();
     }
   }, [players, isStartingGame, onStartGame]);

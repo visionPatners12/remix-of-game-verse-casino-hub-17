@@ -10,7 +10,7 @@ export const TRACK = [
 
 export const TRACK_LEN = TRACK.length; // 56
 export const START_INDEX = { R:0, G:14, Y:28, B:42 } as const;
-export const ENTRY_INDEX = { R:54, G:12, Y:28, B:40 } as const;
+export const ENTRY_INDEX = { R:54, G:12, Y:26, B:40 } as const;
 export const SAFE_BASE   = { R:100, G:200, Y:300, B:400 } as const;
 export const SAFE_LEN    = 6 as const;
 

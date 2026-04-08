@@ -104,9 +104,17 @@ export const useRealtimeGame = (gameId: string): {
         if (status === 'SUBSCRIBED') {
           logger.debug('✅ Game channel subscribed');
         } else if (status === 'CHANNEL_ERROR') {
-          logger.error('❌ Game channel error:', err);
+          logger.error('❌ Game channel error, retrying in 3s:', err);
+          setTimeout(() => {
+            supabase.removeChannel(gameChannel);
+            loadInitialData(); // Refetch data as fallback
+          }, 3000);
         } else if (status === 'TIMED_OUT') {
-          logger.warn('⏱️ Game channel timed out, will retry...');
+          logger.warn('⏱️ Game channel timed out, retrying in 2s...');
+          setTimeout(() => {
+            supabase.removeChannel(gameChannel);
+            loadInitialData();
+          }, 2000);
         }
       });
 
@@ -152,9 +160,17 @@ export const useRealtimeGame = (gameId: string): {
         if (status === 'SUBSCRIBED') {
           logger.debug('✅ Players channel subscribed');
         } else if (status === 'CHANNEL_ERROR') {
-          logger.error('❌ Players channel error:', err);
+          logger.error('❌ Players channel error, retrying in 3s:', err);
+          setTimeout(() => {
+            supabase.removeChannel(playersChannel);
+            loadInitialData();
+          }, 3000);
         } else if (status === 'TIMED_OUT') {
-          logger.warn('⏱️ Players channel timed out, will retry...');
+          logger.warn('⏱️ Players channel timed out, retrying in 2s...');
+          setTimeout(() => {
+            supabase.removeChannel(playersChannel);
+            loadInitialData();
+          }, 2000);
         }
       });
 
