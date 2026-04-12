@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useNetworkStatus } from '@/hooks/useNetworkStatus';
@@ -19,6 +19,9 @@ export const useRealtimeGame = (gameId: string): {
   const [players, setPlayers] = useState<PlayerData[]>([]);
   const [loading, setLoading] = useState(true);
   const { isOnline, wasOffline, resetWasOffline } = useNetworkStatus();
+  const [realtimeGeneration, setRealtimeGeneration] = useState(0);
+  const resubscribeLockRef = useRef(false);
+  const playerRowIdRef = useRef<string | null>(null);
 
   // Load initial data function (extracted for reuse)
   const loadInitialData = useCallback(async () => {
@@ -53,12 +56,20 @@ export const useRealtimeGame = (gameId: string): {
       }
 
       // Cast to include optional tx fields that may come from realtime updates
-      setPlayers((playersData || []) as PlayerData[]);
+      const list = (playersData || []) as PlayerData[];
+      setPlayers(list);
+
+      if (user?.id) {
+        const mine = list.find((p) => p.user_id === user.id);
+        playerRowIdRef.current = mine?.id ?? null;
+      } else {
+        playerRowIdRef.current = null;
+      }
 
     } catch (error) {
       logger.error('Error loading initial data:', error);
     }
-  }, [gameId]);
+  }, [gameId, user?.id]);
 
   // Initial data load
   useEffect(() => {
@@ -77,13 +88,27 @@ export const useRealtimeGame = (gameId: string): {
     }
   }, [isOnline, wasOffline, gameId, loadInitialData, resetWasOffline]);
 
-  // Real-time subscriptions
+  // Real-time subscriptions (re-subscribe after channel error / timeout)
   useEffect(() => {
     if (!gameId) return;
 
-    // Subscribe to game changes
+    let cancelled = false;
+    const topicSuffix = `${gameId}-${realtimeGeneration}`;
+
+    const scheduleResubscribe = (reason: string, err: unknown) => {
+      if (cancelled || resubscribeLockRef.current) return;
+      resubscribeLockRef.current = true;
+      logger.warn(`Realtime ${reason}, resubscribing…`, err);
+      setTimeout(() => {
+        if (cancelled) return;
+        resubscribeLockRef.current = false;
+        void loadInitialData();
+        setRealtimeGeneration((g) => g + 1);
+      }, 2000);
+    };
+
     const gameChannel = supabase
-      .channel(`game-${gameId}`)
+      .channel(`ludo-rt-game-${topicSuffix}`)
       .on(
         'postgres_changes',
         {
@@ -93,34 +118,20 @@ export const useRealtimeGame = (gameId: string): {
           filter: `id=eq.${gameId}`,
         },
         (payload) => {
-          setGameData(prev => prev ? { 
-            ...prev, 
-            ...payload.new, 
-            positions: payload.new.positions as Positions 
-          } as GameData : null);
+          setGameData((prev) =>
+            prev
+              ? ({
+                  ...prev,
+                  ...payload.new,
+                  positions: payload.new.positions as Positions,
+                } as GameData)
+              : null
+          );
         }
-      )
-      .subscribe((status, err) => {
-        if (status === 'SUBSCRIBED') {
-          logger.debug('✅ Game channel subscribed');
-        } else if (status === 'CHANNEL_ERROR') {
-          logger.error('❌ Game channel error, retrying in 3s:', err);
-          setTimeout(() => {
-            supabase.removeChannel(gameChannel);
-            loadInitialData(); // Refetch data as fallback
-          }, 3000);
-        } else if (status === 'TIMED_OUT') {
-          logger.warn('⏱️ Game channel timed out, retrying in 2s...');
-          setTimeout(() => {
-            supabase.removeChannel(gameChannel);
-            loadInitialData();
-          }, 2000);
-        }
-      });
+      );
 
-    // Subscribe to players changes
     const playersChannel = supabase
-      .channel(`players-${gameId}`)
+      .channel(`ludo-rt-players-${topicSuffix}`)
       .on(
         'postgres_changes',
         {
@@ -132,66 +143,96 @@ export const useRealtimeGame = (gameId: string): {
         (payload) => {
           if (payload.eventType === 'INSERT') {
             const newPlayer = payload.new as PlayerData;
-            // Ne pas ajouter les joueurs qui ont quitté
             if (!newPlayer.has_exited) {
-              setPlayers(prev => {
-                // Éviter les doublons
-                const exists = prev.some(p => p.id === newPlayer.id);
+              setPlayers((prev) => {
+                const exists = prev.some((p) => p.id === newPlayer.id);
                 if (exists) return prev;
                 return [...prev, newPlayer];
               });
             }
           } else if (payload.eventType === 'UPDATE') {
             const updatedPlayer = payload.new as PlayerData;
-            // Si le joueur a quitté, le retirer de la liste
             if (updatedPlayer.has_exited) {
-              setPlayers(prev => prev.filter(p => p.id !== updatedPlayer.id));
+              setPlayers((prev) => prev.filter((p) => p.id !== updatedPlayer.id));
             } else {
-              setPlayers(prev => prev.map(player => 
-                player.id === updatedPlayer.id ? { ...player, ...updatedPlayer } : player
-              ));
+              setPlayers((prev) =>
+                prev.map((player) =>
+                  player.id === updatedPlayer.id ? { ...player, ...updatedPlayer } : player
+                )
+              );
             }
           } else if (payload.eventType === 'DELETE') {
-            setPlayers(prev => prev.filter(player => player.id !== payload.old.id));
+            setPlayers((prev) => prev.filter((player) => player.id !== payload.old.id));
           }
         }
-      )
-      .subscribe((status, err) => {
-        if (status === 'SUBSCRIBED') {
-          logger.debug('✅ Players channel subscribed');
-        } else if (status === 'CHANNEL_ERROR') {
-          logger.error('❌ Players channel error, retrying in 3s:', err);
-          setTimeout(() => {
-            supabase.removeChannel(playersChannel);
-            loadInitialData();
-          }, 3000);
-        } else if (status === 'TIMED_OUT') {
-          logger.warn('⏱️ Players channel timed out, retrying in 2s...');
-          setTimeout(() => {
-            supabase.removeChannel(playersChannel);
-            loadInitialData();
-          }, 2000);
-        }
-      });
+      );
+
+    gameChannel.subscribe((status, err) => {
+      if (cancelled) return;
+      if (status === 'SUBSCRIBED') {
+        logger.debug('✅ Game channel subscribed');
+      } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+        supabase.removeChannel(gameChannel);
+        supabase.removeChannel(playersChannel);
+        scheduleResubscribe(`game channel ${status}`, err);
+      }
+    });
+
+    playersChannel.subscribe((status, err) => {
+      if (cancelled) return;
+      if (status === 'SUBSCRIBED') {
+        logger.debug('✅ Players channel subscribed');
+      } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+        supabase.removeChannel(gameChannel);
+        supabase.removeChannel(playersChannel);
+        scheduleResubscribe(`players channel ${status}`, err);
+      }
+    });
 
     return () => {
+      cancelled = true;
       supabase.removeChannel(gameChannel);
       supabase.removeChannel(playersChannel);
     };
-  }, [gameId]);
+  }, [gameId, realtimeGeneration, loadInitialData]);
 
-  // Refetch data when tab becomes visible again
+  // Visibility / page lifecycle: refetch when visible; mark disconnected on hide, pagehide, and unmount
   useEffect(() => {
+    if (!gameId || !user) return;
+
+    const markDisconnected = () => {
+      const rowId = playerRowIdRef.current;
+      if (!rowId) return;
+      void supabase
+        .from('ludo_game_players')
+        .update({ is_connected: false })
+        .eq('id', rowId);
+    };
+
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible' && gameId) {
+      if (document.visibilityState === 'visible') {
         logger.debug('🔄 Tab visible, refetching game data...');
-        loadInitialData();
+        void loadInitialData();
+        return;
+      }
+      if (document.visibilityState === 'hidden') {
+        markDisconnected();
       }
     };
-    
+
+    const handlePageHide = () => {
+      markDisconnected();
+    };
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [gameId, loadInitialData]);
+    window.addEventListener('pagehide', handlePageHide);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pagehide', handlePageHide);
+      markDisconnected();
+    };
+  }, [gameId, user, loadInitialData]);
 
   // Heartbeat for connection tracking
   useEffect(() => {
@@ -212,6 +253,7 @@ export const useRealtimeGame = (gameId: string): {
         }
 
         if (player) {
+          playerRowIdRef.current = player.id;
           const { error: updateError } = await supabase
             .from('ludo_game_players')
             .update({
@@ -223,6 +265,8 @@ export const useRealtimeGame = (gameId: string): {
           if (updateError) {
             logger.warn('⚠️ Heartbeat update error:', updateError.message);
           }
+        } else {
+          playerRowIdRef.current = null;
         }
       } catch (error) {
         logger.warn('⚠️ Heartbeat exception:', error);
@@ -235,28 +279,15 @@ export const useRealtimeGame = (gameId: string): {
     // Then every 30 seconds
     const interval = setInterval(updateHeartbeat, 30000);
 
-    // Mark as disconnected when leaving
-    const handleBeforeUnload = async () => {
-      const { data: player } = await supabase
-        .from('ludo_game_players')
-        .select('id')
-        .eq('game_id', gameId)
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      if (player) {
-        await supabase
-          .from('ludo_game_players')
-          .update({ is_connected: false })
-          .eq('id', player.id);
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
     return () => {
       clearInterval(interval);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      const rowId = playerRowIdRef.current;
+      if (rowId) {
+        void supabase
+          .from('ludo_game_players')
+          .update({ is_connected: false })
+          .eq('id', rowId);
+      }
     };
   }, [user, gameId]);
 

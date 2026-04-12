@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { useWalletDeepLink } from '@/hooks/useWalletDeepLink';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import {
   Dialog,
   DialogContent,
@@ -23,6 +24,16 @@ import { DEFAULT_CHAIN, USDC_ADDRESSES } from '@/config/chains';
 // Use centralized chain config
 const USDC_CONTRACT = USDC_ADDRESSES[DEFAULT_CHAIN.id] as `0x${string}`;
 const DEPOSIT_ADDRESS = '0xaB8B5F94e2C72af5F60Bd2b2D3e9c669Fec19460' as const;
+
+/** Narrow type for Privy smart-wallet `sendTransaction` (not fully exported by SDK). */
+type SmartWalletTxClient = {
+  account?: unknown;
+  sendTransaction: (args: {
+    account?: unknown;
+    chain: typeof DEFAULT_CHAIN;
+    calls: Array<{ to: `0x${string}`; data: `0x${string}`; value: bigint }>;
+  }) => Promise<`0x${string}`>;
+};
 
 type TransactionState = 'idle' | 'wallet-pending' | 'tx-pending' | 'confirming' | 'confirmed' | 'cancelled' | 'error';
 
@@ -55,7 +66,9 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
             return data.state as TransactionState;
           }
         }
-      } catch {}
+      } catch {
+        /* ignore restore errors (invalid JSON / private mode) */
+      }
     }
     return 'idle';
   });
@@ -71,7 +84,9 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
             return data.txHash as `0x${string}`;
           }
         }
-      } catch {}
+      } catch {
+        /* ignore restore errors (invalid JSON / private mode) */
+      }
     }
     return undefined;
   });
@@ -93,7 +108,9 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
         txHash: hash,
         timestamp: Date.now()
       }));
-    } catch {}
+    } catch {
+      /* ignore quota / private mode */
+    }
   };
   
   // Helper to clear sessionStorage
@@ -101,7 +118,9 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
     if (!userId) return;
     try {
       sessionStorage.removeItem(STORAGE_KEY);
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   };
 
   // Get wallet address
@@ -237,7 +256,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       // Type cast needed for Privy smart wallet client compatibility
       // IMPORTANT: Explicitly specify chain to ensure transaction goes to correct network
       console.log('[DepositButton] Sending transaction on', DEFAULT_CHAIN.name, '(chainId:', DEFAULT_CHAIN.id, ')');
-      const hash = await (smartWalletClient as any).sendTransaction({
+      const hash = await (smartWalletClient as SmartWalletTxClient).sendTransaction({
         account: smartWalletClient.account,
         chain: DEFAULT_CHAIN,
         calls: [{
@@ -250,13 +269,14 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
       // Save txHash to DB immediately (before waiting for confirmation)
       // This ensures state is preserved if user refreshes
       if (userId) {
+        const pendingPatch: Database['public']['Tables']['ludo_game_players']['Update'] = {
+          tx_hash: hash,
+          deposit_status: 'pending',
+          is_ready: true,
+        };
         await supabase
           .from('ludo_game_players')
-          .update({
-            tx_hash: hash,
-            deposit_status: 'pending',
-            is_ready: true,
-          } as any)
+          .update(pendingPatch)
           .eq('game_id', gameId)
           .eq('user_id', userId);
       }

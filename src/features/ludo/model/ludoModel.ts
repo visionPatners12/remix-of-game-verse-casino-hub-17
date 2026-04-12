@@ -51,7 +51,13 @@ export type Positions = { R:number[]; G:number[]; Y:number[]; B:number[] };
 
 export function forward(pos:number, steps:number){ return (pos + steps) % TRACK_LEN; }
 
-export function canEnterSafe(color: Color, pos: number, steps: number) {
+export type CanEnterSafeResult =
+  | { enter: false; loopTo: number }
+  | { invalid: true }
+  | { enter: true; goal: true }
+  | { enter: true; safeTo: number };
+
+export function canEnterSafe(color: Color, pos: number, steps: number): CanEnterSafeResult {
   const entry = ENTRY_INDEX[color];
   const dist = (entry - pos + TRACK_LEN) % TRACK_LEN;      // cases jusqu'à la porte
   if (steps <= dist) return { enter:false, loopTo: forward(pos, steps) };

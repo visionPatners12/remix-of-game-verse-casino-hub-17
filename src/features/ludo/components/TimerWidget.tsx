@@ -52,14 +52,19 @@ export const TimerWidget: React.FC<TimerWidgetProps> = ({
       const remaining = Math.max(0, Math.ceil(turnDuration - elapsed));
       setRemainingTime(remaining);
 
-      if (remaining === 0 && onTimeExpired && !hasExpiredRef.current) {
+      if (
+        remaining === 0 &&
+        onTimeExpired &&
+        !hasExpiredRef.current &&
+        isCurrentTurn
+      ) {
         hasExpiredRef.current = true;
         onTimeExpired();
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [turnStartedAt, turnDuration, onTimeExpired]);
+  }, [turnStartedAt, turnDuration, onTimeExpired, isCurrentTurn]);
 
   const percentage = (remainingTime / turnDuration) * 100;
   const isUrgent = remainingTime <= 10;

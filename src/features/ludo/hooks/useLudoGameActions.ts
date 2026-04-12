@@ -12,7 +12,7 @@ import { isPlayerTurnSimple } from '../utils/turnValidation';
 import { generatePath } from '../utils/pathGenerator';
 import { START_INDEX } from '../model/ludoModel';
 import { logger } from '@/utils/logger';
-import type { Color, UIMove, GameData, PlayerData, AnimatingPawn } from '../types';
+import type { Color, UIMove, GameData, PlayerData, AnimatingPawn, Positions } from '../types';
 
 interface UseLudoGameActionsProps {
   gameId: string;
@@ -53,7 +53,7 @@ export const useLudoGameActions = ({
   /**
    * Handle dice rolled - calculate possible moves
    */
-  const handleDiceRolled = useCallback((diceValue: number, calculatePossibleMoves: (dice: number, color: string, positions: any) => UIMove[]) => {
+  const handleDiceRolled = useCallback((diceValue: number, calculatePossibleMoves: (dice: number, color: string, positions: Positions) => UIMove[]) => {
     if (!currentPlayer || !gameData?.positions) return;
 
     const moves = calculatePossibleMoves(diceValue, currentPlayer.color, gameData.positions);
@@ -149,7 +149,7 @@ export const useLudoGameActions = ({
         logger.debug('🏆 Game finished after move:', data.winner);
       }
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       // ROLLBACK: Clear animation and restore state
       clearAnimation();
       setWaitingForMove(true);
@@ -157,7 +157,8 @@ export const useLudoGameActions = ({
       
       logger.error('❌ Move failed, rolling back:', error);
 
-      const errorMessage = error?.message || error?.toString() || 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : String(error || 'Unknown error');
       const isNotYourTurnError = errorMessage.includes('Not your turn');
 
       toast({
@@ -249,10 +250,10 @@ export const useLudoGameActions = ({
         title: "Game started!",
         description: "The game has begun successfully.",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error",
-        description: error?.message || "Unable to start the game.",
+        description: error instanceof Error ? error.message : "Unable to start the game.",
         variant: "destructive"
       });
     } finally {

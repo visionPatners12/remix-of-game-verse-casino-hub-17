@@ -1,4 +1,4 @@
-import { TRACK, TRACK_LEN, START_INDEX, ENTRY_INDEX, SAFE_BASE, SAFE_LEN, HOME_BASE, GOAL } from '../model/ludoModel';
+import { TRACK_LEN, START_INDEX, ENTRY_INDEX, SAFE_BASE, SAFE_LEN, HOME_BASE, GOAL } from '../model/ludoModel';
 import type { Color } from '../model/ludoModel';
 
 /**
@@ -12,9 +12,9 @@ export function generatePath(
 ): number[] {
   const path: number[] = [];
   
-  // Cas 1: Sortie de HOME vers START - saut direct
+  // Cas 1: Sortie de HOME vers START — aligné sur movement.ts (4 cases: base..base-3)
   const homeBase = HOME_BASE[color];
-  if (startPosition >= homeBase && startPosition <= homeBase + 3) {
+  if (startPosition <= homeBase && startPosition >= homeBase - 3) {
     return [START_INDEX[color]];
   }
   
@@ -49,10 +49,7 @@ export function generatePath(
   if (startPosition >= 0 && startPosition < TRACK_LEN) {
     const entryIndex = ENTRY_INDEX[color];
     let current = startPosition;
-    
-    // Calculer si on doit entrer dans le couloir de sécurité
-    const distToEntry = (entryIndex - startPosition + TRACK_LEN) % TRACK_LEN;
-    
+
     // Si la destination est dans le couloir de sécurité ou GOAL
     if (endPosition >= safeBase || endPosition === GOAL) {
       // D'abord, avancer jusqu'à l'entrée du couloir

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, type CSSProperties } from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -8,15 +8,16 @@ import { logger } from '@/utils/logger';
 import { LUDO_COLORS } from '../model/constants';
 
 // Helper to detect network-related errors
-const isNetworkError = (error: any): boolean => {
-  if (!error) return false;
-  const message = error?.message?.toLowerCase() || '';
+const isNetworkError = (error: unknown): boolean => {
+  if (!error || typeof error !== 'object') return false;
+  const e = error as { message?: string; name?: string };
+  const message = (e.message ?? '').toLowerCase();
   return (
     message.includes('failed to fetch') ||
     message.includes('network') ||
     message.includes('timeout') ||
     message.includes('aborted') ||
-    (error.name === 'TypeError' && !navigator.onLine)
+    (e.name === 'TypeError' && !navigator.onLine)
   );
 };
 
@@ -198,12 +199,13 @@ export const DiceRoller: React.FC<DiceRollerProps> = ({
         }
       }, 1500);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       clearInterval(animationInterval);
       setIsRolling(false);
       
       logger.error('💥 Dice roll failed:', error);
       
+      const msg = error instanceof Error ? error.message : 'Cannot roll dice. Please retry.';
       // Explicit network error detection
       if (isNetworkError(error) || !navigator.onLine) {
         toast({
@@ -214,7 +216,7 @@ export const DiceRoller: React.FC<DiceRollerProps> = ({
       } else {
         toast({
           title: "Error",
-          description: error?.message || "Cannot roll dice. Please retry.",
+          description: msg,
           variant: "destructive"
         });
       }
@@ -245,8 +247,7 @@ export const DiceRoller: React.FC<DiceRollerProps> = ({
       style={{
         boxShadow: isPlayerTurn && isGameActive ? `0 0 20px ${diceColor}40` : 'none',
         borderColor: isPlayerTurn && isGameActive ? diceColor : undefined,
-        // @ts-ignore
-        '--tw-ring-color': diceColor,
+        ...(isPlayerTurn && isGameActive ? ({ '--tw-ring-color': diceColor } as CSSProperties) : {}),
       }}
       onClick={isPlayerTurn && isGameActive && !isRolling ? rollDice : undefined}
     >

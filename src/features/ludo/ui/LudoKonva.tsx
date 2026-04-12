@@ -22,10 +22,10 @@ import { usePawnAnimation } from '../hooks/usePawnAnimation';
 import { useLudoGameActions } from '../hooks/useLudoGameActions';
 import { isInEnemyPrison, getPossibleMoves as getModelPossibleMoves } from '../model/movement';
 import type { Color } from '../model/ludoModel';
-import type { UIMove } from '../types';
-import { START_INDEX, HOME_BASE, GOAL, SAFE_BASE, SAFE_LEN, TRACK_LEN } from '../model/ludoModel';
+import type { UIMove, Positions } from '../types';
+import { HOME_BASE } from '../model/ludoModel';
 import { generatePath } from '../utils/pathGenerator';
-import { validateTurnWithRetry, isPlayerTurnSimple } from '../utils/turnValidation';
+import { isPlayerTurnSimple } from '../utils/turnValidation';
 import { logger } from '@/utils/logger';
 import '../styles/dice.css';
 
@@ -53,7 +53,7 @@ export const LudoKonva: React.FC = () => {
   
   // Use our custom hooks
   const { isJoining } = useAutoJoin(gameId || '');
-  const { gameData, players, currentPlayer, loading, toggleReady, isOnline } = useRealtimeGame(gameId || '');
+  const { gameData, players, currentPlayer, loading, isOnline } = useRealtimeGame(gameId || '');
   const { playersWithUsernames } = usePlayersWithUsernames(players);
   const { leaveGame, isLeaving } = useLeaveGame();
   const { animatingPawn, startAnimation, clearAnimation, isAnimating } = usePawnAnimation();
@@ -124,7 +124,7 @@ export const LudoKonva: React.FC = () => {
     } finally {
       setIsAutoPlaying(false);
     }
-  }, [gameId, isAutoPlaying, gameData?.status, toast]);
+  }, [gameId, isAutoPlaying, gameData?.status, gameData?.turn, currentPlayer?.color, toast]);
 
   // Log current game state for debugging - moved here to fix Rules of Hooks
   React.useEffect(() => {
@@ -322,7 +322,7 @@ export const LudoKonva: React.FC = () => {
         setShowWinnerModal(true);
       }
     }
-  }, [gameData?.status, gameData?.winner, playersWithUsernames, players, user?.id, showWinnerModal, gameData?.bet_amount]);
+  }, [gameData?.status, gameData?.winner, playersWithUsernames, players, user?.id, showWinnerModal, gameData?.bet_amount, gameData?.pot]);
 
   if (loading || isJoining) {
     return (
@@ -361,31 +361,14 @@ export const LudoKonva: React.FC = () => {
   const boardSize = isMobile ? availableWidth : Math.min(availableWidth, availableHeight);
   const cellSize = Math.floor(boardSize / 15); // Use 15 to exclude header space
 
-  // Helper for checking if pawn is at home
-  const isAtHome = (position: number, color: Color): boolean => {
-    const base = HOME_BASE[color]; // {R:-10,G:-20,Y:-30,B:-40}
-    // tolérant: -20..-17 ou -20..-23 selon conventions
-    return (position >= base && position <= base + 3) || (position <= base && position >= base - 3);
-  };
-
-  // Helper for color display
-  const getColorName = (color: string) => {
-    const colorNames = {
-      'R': 'RED',
-      'G': 'GREEN', 
-      'Y': 'YELLOW',
-      'B': 'BLUE'
-    };
-    return colorNames[color as keyof typeof colorNames] || color;
-  };
-
-  // Enhanced turn validation with fallback
   const isMyTurn = isPlayerTurnSimple(currentPlayer?.color, gameData?.turn);
-  const isActiveGame = gameData?.status === 'active';
   const isSpectator = !currentPlayer && !!user;
 
+  const waitingRoomCurrent =
+    playersWithUsernames.find((p) => user?.id && p.user_id === user.id) ?? null;
+
   // Calculate possible moves using the centralized movement model (with blockade checks)
-  const calculatePossibleMoves = (diceValue: number, playerColor: string, positions: any): UIMove[] => {
+  const calculatePossibleMoves = (diceValue: number, playerColor: string, positions: Positions): UIMove[] => {
     if (!positions || !playerColor) return [];
     
     const gameState = {
@@ -446,8 +429,9 @@ export const LudoKonva: React.FC = () => {
         gameId={gameId || ''}
         roomCode={gameData.room_code}
         betAmount={gameData.bet_amount || 0}
+        maxPlayers={gameData.max_players ?? 4}
         players={playersWithUsernames}
-        currentPlayer={currentPlayer as any}
+        currentPlayer={waitingRoomCurrent}
         isCreator={user?.id === gameData.created_by}
         onStartGame={handleStartGame}
         isStartingGame={hookIsStarting}
@@ -572,8 +556,8 @@ export const LudoKonva: React.FC = () => {
             winnerAvatar={winnerInfo?.avatar}
             isCurrentUserWinner={winnerInfo?.isMe || false}
             potAmount={winnerInfo?.potAmount}
-            claimStatus={(gameData as any)?.claim_status}
-            claimTxHash={(gameData as any)?.claim_tx_hash}
+            claimStatus={gameData.claim_status}
+            claimTxHash={gameData.claim_tx_hash}
             onPlayAgain={() => navigate('/games/ludo/create', { replace: true })}
             onBackToGames={() => navigate('/games/ludo', { replace: true })}
           />

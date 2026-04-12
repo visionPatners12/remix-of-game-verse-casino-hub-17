@@ -11,6 +11,8 @@ interface LudoGameWithPlayers {
   room_code: string;
   turn: string;
   created_at: string;
+  bet_amount: number | null;
+  pot: number | null;
   players: Array<{
     id: string;
     user_id: string;
@@ -49,7 +51,9 @@ export const useActiveLudoGames = () => {
           max_players,
           room_code,
           turn,
-          created_at
+          created_at,
+          bet_amount,
+          pot
         `)
         .in('status', ['created', 'active'])
         .order('created_at', { ascending: false });

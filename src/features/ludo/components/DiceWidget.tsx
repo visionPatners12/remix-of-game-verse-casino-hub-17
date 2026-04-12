@@ -150,13 +150,13 @@ export const DiceWidget: React.FC<DiceWidgetProps> = ({
         onDiceRolled?.(data.diceValue);
       }, 1200);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       clearInterval(animationInterval);
       setIsRolling(false);
       setIsLocalRoll(false);
       toast({
         title: "Error",
-        description: error?.message || "Cannot roll dice",
+        description: error instanceof Error ? error.message : "Cannot roll dice",
         variant: "destructive"
       });
     }

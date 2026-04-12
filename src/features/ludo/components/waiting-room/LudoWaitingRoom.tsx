@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Copy, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -8,6 +8,7 @@ import { WaitingPlayersList } from './WaitingPlayersList';
 import { LudoPotBadge } from '../shared/LudoPotBadge';
 import { ShareGameModal } from '../../components/ShareGameModal';
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { useClipboard } from '@/hooks/useClipboard';
@@ -55,6 +56,8 @@ interface LudoWaitingRoomProps {
   gameId: string;
   roomCode: string;
   betAmount: number;
+  /** Max seats for this room (2–4). Drives list, share modal, and auto-start when room is full. */
+  maxPlayers?: number;
   players: WaitingRoomPlayer[];
   currentPlayer: WaitingRoomPlayer | null;
   isCreator: boolean;
@@ -94,6 +97,7 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
   gameId,
   roomCode,
   betAmount,
+  maxPlayers: maxPlayersProp,
   players,
   currentPlayer,
   isCreator,
@@ -101,7 +105,9 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
   isStartingGame = false,
 }) => {
   const [showShareModal, setShowShareModal] = useState(false);
-  
+  const maxPlayers = Math.min(4, Math.max(2, maxPlayersProp ?? 4));
+  const autoStartRequested = useRef(false);
+
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -124,13 +130,14 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
 
     try {
       // Update player to PENDING with tx_hash (backend will confirm later)
+      const patch: Database['public']['Tables']['ludo_game_players']['Update'] = {
+        tx_hash: txHash,
+        deposit_status: 'pending',
+        is_ready: true,
+      };
       const { error: updateError } = await supabase
         .from('ludo_game_players')
-        .update({
-          tx_hash: txHash,
-          deposit_status: 'pending',
-          is_ready: true,
-        } as any)
+        .update(patch)
         .eq('game_id', gameId)
         .eq('user_id', user.id);
 
@@ -154,19 +161,26 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
   };
 
 
-  // Auto-start when all players are confirmed (works for 2, 3, or 4 players)
+  // Auto-start when at least 2 players are in the room and all are ready (no hard-coded wait for 4).
+  // Host can still wait before marking ready if they do not want an early auto-start in a 4-capacity room.
   useEffect(() => {
-    if (players.length < 2 || isStartingGame) return;
-    
-    const allConfirmed = players.every(p => 
-      p.deposit_status === 'confirmed' || p.deposit_status === 'free'
-    );
-    
-    // Auto-start when room is full (all max_players slots filled) AND all confirmed
-    // For non-full rooms, the creator must start manually
-    if (allConfirmed && players.length >= 4) {
-      onStartGame();
+    const everyoneReady =
+      players.length >= 2 &&
+      players.every(
+        (p) =>
+          p.deposit_status === 'confirmed' ||
+          p.deposit_status === 'free' ||
+          p.is_ready
+      );
+
+    if (!everyoneReady || isStartingGame) {
+      autoStartRequested.current = false;
+      return;
     }
+
+    if (autoStartRequested.current) return;
+    autoStartRequested.current = true;
+    onStartGame();
   }, [players, isStartingGame, onStartGame]);
 
   return (
@@ -180,7 +194,7 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
         userId={user?.id || ''}
         roomCode={roomCode}
         betAmount={betAmount}
-        playerCount={players.length || 4}
+        playerCount={players.length || maxPlayers}
         onShare={() => setShowShareModal(true)}
       />
 
@@ -283,7 +297,7 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
           >
             <WaitingPlayersList
               players={waitingPlayers}
-              maxPlayers={4}
+              maxPlayers={maxPlayers}
             />
           </motion.div>
 
@@ -328,7 +342,7 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
         gameId={gameId}
         roomCode={roomCode}
         currentPlayers={players.length}
-        maxPlayers={4}
+        maxPlayers={maxPlayers}
       />
     </div>
   );

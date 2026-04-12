@@ -3,9 +3,10 @@
  * Handles move calculations, position checks, and game state validation
  */
 
-import { useMemo, useCallback } from 'react';
+import { useCallback } from 'react';
 import { isInEnemyPrison } from '../model/movement';
 import { START_INDEX, HOME_BASE, SAFE_BASE, SAFE_LEN, TRACK_LEN, GOAL, canEnterSafe } from '../model/ludoModel';
+import type { CanEnterSafeResult } from '../model/ludoModel';
 import type { Color, Positions, UIMove } from '../types';
 import { logger } from '@/utils/logger';
 
@@ -28,8 +29,7 @@ export const useLudoGameLogic = () => {
    */
   const isAtHome = useCallback((position: number, color: Color): boolean => {
     const base = HOME_BASE[color];
-    // Tolerant: -20..-17 or -20..-23 depending on conventions
-    return (position >= base && position <= base + 3) || (position <= base && position >= base - 3);
+    return position <= base && position >= base - 3;
   }, []);
 
   /**
@@ -104,17 +104,16 @@ export const useLudoGameLogic = () => {
       // 4) On track (0-55) → normal movement with canEnterSafe
       if (pos >= 0 && pos < TRACK_LEN) {
         try {
-          const info = canEnterSafe(playerColor as Color, pos, diceValue);
-          if ((info as any).invalid) {
+          const info: CanEnterSafeResult = canEnterSafe(playerColor as Color, pos, diceValue);
+          if ('invalid' in info && info.invalid) {
             // No move if corridor overshoot
-          } else if ((info as any).enter && (info as any).goal) {
+          } else if (info.enter && 'goal' in info && info.goal) {
             res.push({ pawnIndex: i, from: 'track', canExit: false, target: GOAL });
-          } else if ((info as any).enter && typeof (info as any).safeTo === 'number') {
-            res.push({ pawnIndex: i, from: 'track', canExit: false, target: (info as any).safeTo });
-          } else if (typeof (info as any).loopTo === 'number') {
-            res.push({ pawnIndex: i, from: 'track', canExit: false, target: (info as any).loopTo });
+          } else if (info.enter && 'safeTo' in info) {
+            res.push({ pawnIndex: i, from: 'track', canExit: false, target: info.safeTo });
+          } else if (!info.enter && 'loopTo' in info) {
+            res.push({ pawnIndex: i, from: 'track', canExit: false, target: info.loopTo });
           } else {
-            // Minimal fallback
             res.push({ pawnIndex: i, from: 'track', canExit: false, target: null });
           }
         } catch {

@@ -46,8 +46,7 @@ export function useLudoReferralStats(periodDays: number = 30) {
     queryFn: async (): Promise<LudoReferralStats> => {
       if (!user?.id) return DEFAULT_STATS;
 
-      // Use any to bypass type checking since the RPC function isn't in generated types yet
-      const { data, error } = await (supabase.rpc as any)('get_ludo_referral_stats', {
+      const { data, error } = await supabase.rpc('get_ludo_referral_stats', {
         p_user_id: user.id,
         p_period_days: periodDays,
       });
