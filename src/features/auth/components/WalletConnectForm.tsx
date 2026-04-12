@@ -53,7 +53,8 @@ export const WalletConnectForm = () => {
             privyIdToken: identityToken,
             loginMethod,
             loginAccount: JSON.stringify(loginAccount),
-            user: JSON.stringify(user)
+            user: JSON.stringify(user),
+            redirect_base: window.location.origin,
           }
         });
         

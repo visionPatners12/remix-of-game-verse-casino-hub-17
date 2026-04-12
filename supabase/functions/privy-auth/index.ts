@@ -12,7 +12,44 @@ const corsHeaders = {
 const PRIVY_APP_ID = Deno.env.get("PRIVY_APP_ID") ?? "";
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
-const DEFAULT_REDIRECT_BASE = Deno.env.get("REDIRECT_BASE_URL") || "https://preview--game-verse-casino-hub-91.lovable.app";
+const FALLBACK_REDIRECT_BASE = "https://preview--game-verse-casino-hub-91.lovable.app";
+
+function normalizeRedirectBase(url: string): string {
+  const t = url.trim().replace(/\/$/, "");
+  if (!t.startsWith("http://") && !t.startsWith("https://")) return `https://${t}`;
+  return t;
+}
+
+/** Only allow overriding production redirect for local dev (magic link redirectTo). */
+function isLocalDevRedirectBase(urlStr: string): boolean {
+  try {
+    const u = new URL(urlStr.match(/^https?:\/\//) ? urlStr : `https://${urlStr}`);
+    return u.hostname === "localhost" || u.hostname === "127.0.0.1";
+  } catch {
+    return false;
+  }
+}
+
+function pickRedirectBase(req: Request, bodyRedirectBase: unknown): string {
+  const fromBody = typeof bodyRedirectBase === "string" ? bodyRedirectBase.trim() : "";
+  if (fromBody && isLocalDevRedirectBase(fromBody)) return normalizeRedirectBase(fromBody);
+  const origin = req.headers.get("origin")?.trim() ?? "";
+  if (origin && isLocalDevRedirectBase(origin)) return normalizeRedirectBase(origin);
+  const envBase = Deno.env.get("REDIRECT_BASE_URL")?.trim();
+  if (envBase) return normalizeRedirectBase(envBase);
+  // Production: same as before — use browser Origin when secret not set (not localhost)
+  if (origin && (origin.startsWith("https://") || origin.startsWith("http://"))) {
+    try {
+      const u = new URL(origin);
+      if (u.hostname !== "localhost" && u.hostname !== "127.0.0.1") {
+        return normalizeRedirectBase(origin);
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+  return FALLBACK_REDIRECT_BASE;
+}
 
 // JWKS distant de ton app Privy (jose résout automatiquement le bon `kid`)
 const JWKS_URL = new URL(`https://auth.privy.io/api/v1/apps/${PRIVY_APP_ID}/jwks.json`);
@@ -191,13 +228,8 @@ serve(async (req) => {
       throw new Error("No email available to generate a magic link without creating duplicates.");
     }
 
-    // 6) Décider la redirection (avant génération du lien)
-    let redirectBase = DEFAULT_REDIRECT_BASE || req.headers.get("origin") || "https://preview--game-verse-casino-hub-91.lovable.app";
-    if (!redirectBase.startsWith("http://") && !redirectBase.startsWith("https://")) {
-      redirectBase = `https://${redirectBase}`;
-    }
-
-    // Always redirect to /auth - let Auth.tsx handle onboarding check
+    // 6) Redirect base for magic link (local: Origin / body.redirect_base; prod: REDIRECT_BASE_URL)
+    const redirectBase = pickRedirectBase(req, body?.redirect_base);
     const finalRedirectUrl = `${redirectBase}/auth`;
 
     // 7) Générer le magic link **MAINTENANT** avec l'email résolu (et cohérent avec l'auth.user existant)

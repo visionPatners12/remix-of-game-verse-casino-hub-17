@@ -1,5 +1,31 @@
 import { jsonOk, LudoHandledError } from "../lib/http.ts";
 import { fetchGame } from "../lib/db.ts";
+import { pushToUsersLater } from "../lib/ludoPush.ts";
+
+async function notifyOthersPlayerJoined(
+  supabase: any,
+  gameId: string,
+  joinedUserId: string,
+  roomCode: string | null | undefined,
+) {
+  const { data } = await supabase
+    .from("ludo_game_players")
+    .select("user_id")
+    .eq("game_id", gameId)
+    .eq("has_exited", false);
+  const ids = (data ?? [])
+    .map((r: { user_id: string }) => r.user_id)
+    .filter((id: string) => id && id !== joinedUserId);
+  if (ids.length === 0) return;
+  const rc = roomCode ? ` (${roomCode})` : "";
+  pushToUsersLater(
+    supabase,
+    ids,
+    "Ludo: player joined",
+    `Someone joined your game${rc}.`,
+    { type: "ludo_join", gameId },
+  );
+}
 
 const COLORS = ["R", "G", "Y", "B"] as const;
 
@@ -105,6 +131,7 @@ export async function handleJoin(body: any, supabase: any, user: any) {
         if (Array.isArray(upd) && upd[0]) player = upd[0];
       }
 
+      notifyOthersPlayerJoined(supabase, gameId, user.id, game.room_code);
       return jsonOk({ ok: true, action: "joined", player, autoReady: isFree });
     }
 

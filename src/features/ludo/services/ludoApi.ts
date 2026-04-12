@@ -131,6 +131,16 @@ export const ludoApi = {
     logger.debug('✅ API: Exit response', data);
     return data as ExitResponse;
   },
+
+  /** Notify other players in the room (FCM) — deposit tx submitted or confirmed on-chain */
+  notifyDeposit: async (gameId: string, phase: 'tx_submitted' | 'chain_confirmed'): Promise<void> => {
+    const { error } = await supabase.functions.invoke('ludo-game', {
+      body: { action: 'notifyDeposit', gameId, phase },
+    });
+    if (error) {
+      logger.warn('notifyDeposit edge call failed', error);
+    }
+  },
 };
 
 export default ludoApi;

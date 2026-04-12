@@ -13,6 +13,7 @@ import { handleMove } from "./handlers/move.ts";
 import { handleSkipAutoPlay } from "./handlers/skip.ts";
 import { handleExit } from "./handlers/exit.ts";
 import { handleClaimPrize } from "./handlers/claimPrize.ts";
+import { handleNotifyDeposit } from "./handlers/notifyDeposit.ts";
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -54,6 +55,8 @@ serve(async (req) => {
         return await handleExit(body, supabase, user);
       case "claimPrize":
         return await handleClaimPrize(body, supabase, user);
+      case "notifyDeposit":
+        return await handleNotifyDeposit(body, supabase, user);
 
       default:
         return jsonFail("BAD_REQUEST", "Unknown endpoint");

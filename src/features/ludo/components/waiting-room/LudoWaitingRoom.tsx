@@ -9,6 +9,7 @@ import { LudoPotBadge } from '../shared/LudoPotBadge';
 import { ShareGameModal } from '../../components/ShareGameModal';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import { ludoApi } from '@/features/ludo/services/ludoApi';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { useClipboard } from '@/hooks/useClipboard';
@@ -151,9 +152,11 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
         return;
       }
 
+      void ludoApi.notifyDeposit(gameId, 'chain_confirmed');
+
       toast({
-        title: "Transaction sent!",
-        description: "Waiting for blockchain confirmation...",
+        title: "Deposit confirmed",
+        description: "Your deposit is confirmed on-chain.",
       });
     } catch (error) {
       console.error('Deposit success handler error:', error);

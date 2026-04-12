@@ -12,6 +12,7 @@ import { useWalletDeepLink } from '@/hooks/useWalletDeepLink';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import { ludoApi } from '@/features/ludo/services/ludoApi';
 import {
   Dialog,
   DialogContent,
@@ -279,6 +280,7 @@ export const DepositButton: React.FC<DepositButtonProps> = ({
           .update(pendingPatch)
           .eq('game_id', gameId)
           .eq('user_id', userId);
+        void ludoApi.notifyDeposit(gameId, 'tx_submitted');
       }
       
       setTxHash(hash);

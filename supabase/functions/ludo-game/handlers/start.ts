@@ -2,6 +2,7 @@ import { jsonOk, LudoHandledError } from "../lib/http.ts";
 import { nowIso } from "../lib/config.ts";
 import { withRetryOnOptimistic, updateGameOptimistic } from "../lib/optimistic.ts";
 import { fetchGame, fetchPlayers, pickStartTurnColorFromPlayers } from "../lib/db.ts";
+import { pushToUsersLater } from "../lib/ludoPush.ts";
 
 export async function handleStart(body: any, supabase: any, user: any) {
   const { gameId } = body;
@@ -59,6 +60,16 @@ export async function handleStart(body: any, supabase: any, user: any) {
       },
       "id,rev,status,turn,started_at,turn_started_at,dice",
     ),
+  );
+
+  const notifyIds = eligible.map((p: { user_id?: string }) => p.user_id).filter(Boolean);
+  const rc = game.room_code ? ` Room ${game.room_code}` : "";
+  pushToUsersLater(
+    supabase,
+    notifyIds,
+    "Ludo: game started",
+    `Your game is live.${rc}`,
+    { type: "ludo_started", gameId },
   );
 
   return jsonOk({

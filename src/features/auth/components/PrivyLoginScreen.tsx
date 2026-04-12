@@ -89,7 +89,8 @@ export function PrivyLoginScreen({ logoUrl = "/pryzen-logo.png" }: PrivyLoginScr
             privyIdToken: token,
             loginMethod,
             loginAccount: JSON.stringify(loginAccount),
-            user: JSON.stringify(user)
+            user: JSON.stringify(user),
+            redirect_base: window.location.origin,
           }
         });
         
