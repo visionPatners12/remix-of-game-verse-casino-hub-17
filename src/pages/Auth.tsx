@@ -1,14 +1,23 @@
 import { useAuth } from "@/features/auth";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { logger } from '@/utils/logger';
 import { supabase } from "@/integrations/supabase/client";
 import { AuthFlow } from "@/features/auth/components/AuthFlow";
+import { saveReferralCode } from "@/features/mlm/hooks/useReferralStorage";
 
 export default function Auth() {
   const { session, isLoading } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isRedirecting, setIsRedirecting] = useState(false);
+
+  useEffect(() => {
+    const ref = searchParams.get("ref");
+    if (ref) {
+      saveReferralCode(ref);
+    }
+  }, [searchParams]);
 
   // Redirect if already authenticated
   useEffect(() => {

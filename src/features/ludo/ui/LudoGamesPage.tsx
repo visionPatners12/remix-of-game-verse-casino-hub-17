@@ -1,13 +1,14 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, RefreshCw } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Trophy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useActiveLudoGames } from '../hooks/useActiveLudoGames';
 import { useUserActiveGame } from '../hooks/useUserActiveGame';
 import { useUserPastGames } from '../hooks/useUserPastGames';
 import { useClaimPrize } from '../hooks/useClaimPrize';
 import { useAuth } from '@/hooks/useAuth';
+import { LudoReferralShareRow } from '../components/LudoReferralShareRow';
 import { LudoStatusBar } from './LudoStatusBar';
 import { LudoActionCards } from './LudoActionCards';
 import { LudoRoomsList } from './LudoRoomsList';
@@ -122,6 +123,23 @@ const LudoGamesPage: React.FC = () => {
 
         {/* Action Cards - Create + Join */}
         <LudoActionCards />
+
+        <LudoReferralShareRow />
+
+        <Link
+          to="/tournaments/create"
+          className="flex items-center gap-3 rounded-2xl border border-amber-500/20 bg-amber-500/5 px-3 py-3 text-sm hover:bg-amber-500/10 transition-colors"
+        >
+          <div className="w-9 h-9 rounded-lg bg-amber-500/15 flex items-center justify-center shrink-0">
+            <Trophy className="w-4 h-4 text-amber-400" />
+          </div>
+          <div className="flex flex-col items-start min-w-0">
+            <span className="font-semibold text-foreground">Ludo tournaments</span>
+            <span className="text-[11px] text-muted-foreground">
+              Bracket events (16/64) — single winner from prize distribution
+            </span>
+          </div>
+        </Link>
 
         {/* Open Rooms List */}
         <LudoRoomsList 

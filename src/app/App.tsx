@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import { AppProvider } from './providers/AppProvider';
 import { AppRoutes } from './routes';
 import { ScrollToTop } from '@/components/ScrollToTop';
@@ -32,6 +33,7 @@ function App() {
                 <AppRoutes />
               </AnimatedRoutes>
             </AppShell>
+            <Toaster richColors position="top-center" closeButton />
           </AppProvider>
         </BrowserRouter>
       </div>

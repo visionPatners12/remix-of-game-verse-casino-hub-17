@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { saveReferralCode } from "@/features/mlm/hooks/useReferralStorage";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -123,13 +124,23 @@ const trustFeatures = [
 
 export function LandingHome() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { isStandalone } = useStandaloneMode();
+
+  // Referral link /r/CODE redirects here with ?ref= — persist for signup (same as /auth?ref=)
+  useEffect(() => {
+    const ref = searchParams.get("ref");
+    if (ref) {
+      saveReferralCode(ref);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (isStandalone) {
-      navigate('/auth', { replace: true });
+      const q = searchParams.toString();
+      navigate(q ? `/auth?${q}` : "/auth", { replace: true });
     }
-  }, [isStandalone, navigate]);
+  }, [isStandalone, navigate, searchParams]);
   
   return (
     <LandingLayout>

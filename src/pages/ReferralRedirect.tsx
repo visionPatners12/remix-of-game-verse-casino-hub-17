@@ -4,10 +4,8 @@ import { saveReferralCode } from '@/features/mlm/hooks/useReferralStorage';
 import { Loader2 } from 'lucide-react';
 
 /**
- * Short URL redirect page for referral links
- * Route: /r/:code
- * 
- * Saves the referral code to localStorage and redirects to /auth
+ * Short URL for sharing: /r/:code
+ * Persists code (storage + cookie) and lands in the app with ?ref= for auth/landing to read.
  */
 export default function ReferralRedirect() {
   const { code } = useParams<{ code: string }>();
@@ -18,8 +16,9 @@ export default function ReferralRedirect() {
       // Save code to localStorage + cookie (survives PWA installation on iOS)
       saveReferralCode(code);
     }
-    // Always redirect to home - code is persisted via cookie for later signup
-    navigate('/', { replace: true });
+    // Land in app; ?ref= keeps the code visible for onboarding while storage also holds it
+    const q = code ? `?ref=${encodeURIComponent(code)}` : '';
+    navigate(`/${q}`, { replace: true });
   }, [code, navigate]);
 
   return (

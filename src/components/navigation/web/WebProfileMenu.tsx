@@ -27,7 +27,8 @@ import {
   Wallet,
   ArrowLeftRight,
   Settings,
-  Images
+  Images,
+  Gift,
 } from 'lucide-react';
 import { TokenIcon } from '@web3icons/react/dynamic';
 import { useFollowRequests } from '@/hooks/useFollowRequests';
@@ -199,6 +200,13 @@ export const WebProfileMenu = ({ user, onLogout }: WebProfileMenuProps) => {
           >
             <User className="w-4 h-4 mr-3 text-muted-foreground" />
             <span className="font-medium">My Profile</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem 
+            onClick={() => handleNavigationAndClose('/refer')}
+            className="flex items-center px-3 py-2 cursor-pointer"
+          >
+            <Gift className="w-4 h-4 mr-3 text-primary" />
+            <span className="font-medium">Invite friends</span>
           </DropdownMenuItem>
         </div>
 

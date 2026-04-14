@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/ui";
-import { LogOut, User, HelpCircle, MessageSquare, Wallet, LayoutDashboard, History, Trophy, TrendingUp, Settings, Bell, Ticket, Copy, ShoppingCart, Shield, Receipt, RotateCcw, ChevronRight } from "lucide-react";
+import { LogOut, User, HelpCircle, MessageSquare, Wallet, LayoutDashboard, History, Trophy, TrendingUp, Settings, Bell, Ticket, Copy, ShoppingCart, Shield, Receipt, RotateCcw, ChevronRight, Gift } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useIsInGameRoom } from "@/hooks/room/useIsInGameRoom";
 import { toast } from "sonner";
@@ -195,6 +195,12 @@ export const ProfileMenu = ({ user, onLogout }: ProfileMenuProps) => {
                           <div className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
                             <User className="h-4 w-4 text-primary" />
                             <span className="text-sm text-foreground">My Profile</span>
+                          </div>
+                        </Link>
+                        <Link to="/refer" className="block">
+                          <div className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
+                            <Gift className="h-4 w-4 text-primary" />
+                            <span className="text-sm text-foreground">Invite friends</span>
                           </div>
                         </Link>
                       </div>

@@ -375,9 +375,9 @@ async function handleList(supabase: SupabaseClientType, data: ListTournamentsReq
 
 // Main handler
 Deno.serve(async (req) => {
-  // Handle CORS preflight
+  // CORS preflight — must return 2xx + CORS headers or browser blocks the real POST
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { status: 204, headers: corsHeaders });
   }
 
   try {
