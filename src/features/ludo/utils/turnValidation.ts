@@ -100,8 +100,8 @@ export const validatePlayerTurn = (params: TurnValidationParams): TurnValidation
  */
 export const validateTurnWithRetry = async (
   params: TurnValidationParams,
-  maxRetries: number = 2,
-  retryDelay: number = 500
+  maxRetries: number = 1,
+  retryDelay: number = 150
 ): Promise<TurnValidationResult> => {
   let attempt = 0;
   
@@ -120,7 +120,6 @@ export const validateTurnWithRetry = async (
     attempt++;
   }
   
-  logger.error('💥 Turn validation failed after all retries');
   return {
     isValid: false,
     reason: 'Validation failed after retries - possible persistent desync',

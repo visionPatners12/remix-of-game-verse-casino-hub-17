@@ -136,10 +136,12 @@ export const DiceRoller: React.FC<DiceRollerProps> = ({
     setIsRolling(true);
     playDiceRollSound();
     
-    // Start animation
     const animationInterval = setInterval(() => {
       setAnimationValue(Math.floor(Math.random() * 6) + 1);
     }, 100);
+
+    const rollStartTime = Date.now();
+    const MIN_ANIMATION_MS = 800;
 
     try {
       const { data, error } = await supabase.functions.invoke('ludo-game', {
@@ -151,7 +153,6 @@ export const DiceRoller: React.FC<DiceRollerProps> = ({
 
       if (error) throw error;
 
-      // Check for backend error response
       if (!data?.ok) {
         const errorCode = data?.code;
         const errorMessage = data?.error || 'Roll failed';
@@ -159,45 +160,31 @@ export const DiceRoller: React.FC<DiceRollerProps> = ({
         clearInterval(animationInterval);
         setIsRolling(false);
         
-        // Handle specific error codes
         if (errorCode === 'FORBIDDEN') {
-          toast({
-            title: "Not your turn",
-            description: errorMessage,
-            variant: "destructive"
-          });
+          toast({ title: "Not your turn", description: errorMessage, variant: "destructive" });
         } else if (errorCode === 'BAD_STATE') {
-          toast({
-            title: "Cannot roll",
-            description: errorMessage,
-            variant: "destructive"
-          });
+          toast({ title: "Cannot roll", description: errorMessage, variant: "destructive" });
         } else {
-          toast({
-            title: "Error",
-            description: errorMessage,
-            variant: "destructive"
-          });
+          toast({ title: "Error", description: errorMessage, variant: "destructive" });
         }
         return;
       }
 
       logger.debug('🎯 Dice roll successful:', data);
 
-      // Stop animation after 1.5 seconds and show result
+      const elapsed = Date.now() - rollStartTime;
+      const remainingDelay = Math.max(0, MIN_ANIMATION_MS - elapsed);
+
       setTimeout(() => {
         clearInterval(animationInterval);
         setAnimationValue(data.diceValue);
         setIsRolling(false);
-        
-        // Notify parent about dice result
         onDiceRolled?.(data.diceValue);
         
-        // Check if roll triggered game end
         if (data.finished && data.winner) {
           logger.debug('🏆 Game finished after roll:', data.winner);
         }
-      }, 1500);
+      }, remainingDelay);
 
     } catch (error: unknown) {
       clearInterval(animationInterval);
@@ -206,7 +193,6 @@ export const DiceRoller: React.FC<DiceRollerProps> = ({
       logger.error('💥 Dice roll failed:', error);
       
       const msg = error instanceof Error ? error.message : 'Cannot roll dice. Please retry.';
-      // Explicit network error detection
       if (isNetworkError(error) || !navigator.onLine) {
         toast({
           title: "Connection issue",
@@ -214,11 +200,7 @@ export const DiceRoller: React.FC<DiceRollerProps> = ({
           variant: "destructive"
         });
       } else {
-        toast({
-          title: "Error",
-          description: msg,
-          variant: "destructive"
-        });
+        toast({ title: "Error", description: msg, variant: "destructive" });
       }
     }
   };

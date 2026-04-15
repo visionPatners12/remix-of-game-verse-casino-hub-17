@@ -7,33 +7,39 @@ export interface AnimatingPawn {
   color: Color;
   path: number[];
   currentStep: number;
-  isComplete: boolean; // Animation terminée mais pas encore confirmée par backend
+  isComplete: boolean;
 }
 
 interface UsePawnAnimationReturn {
   animatingPawn: AnimatingPawn | null;
   startAnimation: (playerId: string, pawnIndex: number, color: Color, path: number[]) => Promise<void>;
-  clearAnimation: () => void; // Appelé après confirmation backend
+  clearAnimation: () => void;
   isAnimating: boolean;
 }
 
-const STEP_DURATION = 120; // ms par case
+const STEP_DURATION = 100; // ms per cell — snappy
+const MAX_ANIMATION_MS = 8000; // safety: auto-clear after 8s no matter what
 
 export function usePawnAnimation(): UsePawnAnimationReturn {
   const [animatingPawn, setAnimatingPawn] = useState<AnimatingPawn | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const stepTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const safetyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearAnimation = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
+    if (stepTimeoutRef.current) {
+      clearTimeout(stepTimeoutRef.current);
+      stepTimeoutRef.current = null;
+    }
+    if (safetyTimeoutRef.current) {
+      clearTimeout(safetyTimeoutRef.current);
+      safetyTimeoutRef.current = null;
     }
     setAnimatingPawn(null);
   }, []);
 
   const startAnimation = useCallback((
-    playerId: string, 
-    pawnIndex: number, 
+    playerId: string,
+    pawnIndex: number,
     color: Color,
     path: number[]
   ): Promise<void> => {
@@ -43,50 +49,42 @@ export function usePawnAnimation(): UsePawnAnimationReturn {
         return;
       }
 
-      // Nettoyer tout timeout précédent
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+      // Clear any previous animation
+      if (stepTimeoutRef.current) clearTimeout(stepTimeoutRef.current);
+      if (safetyTimeoutRef.current) clearTimeout(safetyTimeoutRef.current);
 
-      // Si une seule case (saut direct), pas d'animation pas-à-pas
+      // Safety timeout: auto-clear if realtime sync never arrives
+      safetyTimeoutRef.current = setTimeout(() => {
+        setAnimatingPawn(null);
+        safetyTimeoutRef.current = null;
+      }, MAX_ANIMATION_MS);
+
       if (path.length === 1) {
         setAnimatingPawn({
-          playerId,
-          pawnIndex,
-          color,
-          path,
+          playerId, pawnIndex, color, path,
           currentStep: 0,
-          isComplete: true
+          isComplete: true,
         });
-        
-        // Résoudre immédiatement mais garder la position
         setTimeout(() => resolve(), STEP_DURATION);
         return;
       }
 
       let currentStep = 0;
-      
+
       setAnimatingPawn({
-        playerId,
-        pawnIndex,
-        color,
-        path,
+        playerId, pawnIndex, color, path,
         currentStep: 0,
-        isComplete: false
+        isComplete: false,
       });
 
       const animate = () => {
         currentStep++;
-        
+
         if (currentStep >= path.length - 1) {
-          // Animation terminée - garder le pion à la position finale
           setAnimatingPawn({
-            playerId,
-            pawnIndex,
-            color,
-            path,
+            playerId, pawnIndex, color, path,
             currentStep: path.length - 1,
-            isComplete: true // Marquer comme complete mais NE PAS effacer
+            isComplete: true,
           });
           resolve();
           return;
@@ -97,10 +95,10 @@ export function usePawnAnimation(): UsePawnAnimationReturn {
           return { ...prev, currentStep, isComplete: false };
         });
 
-        timeoutRef.current = setTimeout(animate, STEP_DURATION);
+        stepTimeoutRef.current = setTimeout(animate, STEP_DURATION);
       };
 
-      timeoutRef.current = setTimeout(animate, STEP_DURATION);
+      stepTimeoutRef.current = setTimeout(animate, STEP_DURATION);
     });
   }, []);
 
@@ -108,6 +106,6 @@ export function usePawnAnimation(): UsePawnAnimationReturn {
     animatingPawn,
     startAnimation,
     clearAnimation,
-    isAnimating: animatingPawn !== null && !animatingPawn.isComplete
+    isAnimating: animatingPawn !== null && !animatingPawn.isComplete,
   };
 }

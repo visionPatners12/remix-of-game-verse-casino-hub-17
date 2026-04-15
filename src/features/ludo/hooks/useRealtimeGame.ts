@@ -276,8 +276,7 @@ export const useRealtimeGame = (gameId: string): {
     // Update immediately
     updateHeartbeat();
 
-    // Then every 30 seconds
-    const interval = setInterval(updateHeartbeat, 30000);
+    const interval = setInterval(updateHeartbeat, 15000);
 
     return () => {
       clearInterval(interval);

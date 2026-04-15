@@ -65,18 +65,7 @@ export const useLudoGameActions = ({
    * Handle pawn click - optimistic UI pattern for instant feedback
    */
   const handlePawnClickInternal = useCallback(async (playerId: string, pawnIndex: number) => {
-    logger.debug('🎯 Pawn click attempt:', {
-      playerId,
-      pawnIndex,
-      isMoving,
-      isAnimating,
-      waitingForMove,
-      currentPlayerColor: currentPlayer?.color,
-      gameDataTurn: gameData?.turn
-    });
-
-    if (!waitingForMove || isMoving || isAnimating) {
-      logger.debug('❌ Click ignored - not waiting for move or already moving/animating');
+    if (!waitingForMove || isMoving) {
       return;
     }
 
@@ -175,7 +164,6 @@ export const useLudoGameActions = ({
   }, [
     waitingForMove,
     isMoving,
-    isAnimating,
     possibleMoves,
     currentPlayer,
     gameData,

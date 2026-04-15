@@ -45,10 +45,11 @@ export function isInEnemyPrison(position: number, color: Color): boolean {
 
 /**
  * Vérifie si un pion est dans sa zone HOME
+ * HOME positions are negative: e.g. Red = -10, -11, -12, -13
  */
 function isInHome(position: number, color: Color): boolean {
   const homeStart = HOME_BASE[color];
-  return position >= homeStart && position <= homeStart + 3;
+  return position <= homeStart && position >= homeStart - 3;
 }
 
 /**
@@ -57,11 +58,10 @@ function isInHome(position: number, color: Color): boolean {
 function findFreeHomePosition(gameState: GameState, color: Color): number {
   const homeStart = HOME_BASE[color];
   for (let i = 0; i <= 3; i++) {
-    const homePos = homeStart + i;
+    const homePos = homeStart - i;
     const occupied = gameState[color].includes(homePos);
     if (!occupied) return homePos;
   }
-  // Si toutes les positions HOME sont occupées, retourner la première
   return homeStart;
 }
 

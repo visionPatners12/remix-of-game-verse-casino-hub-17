@@ -75,13 +75,13 @@ export function positionToCoordinates(
     }
   }
   
-  // Position -10 à -7 = HOME RED
-  // Position -20 à -17 = HOME GREEN  
-  // Position -30 à -27 = HOME YELLOW
-  // Position -40 à -37 = HOME BLUE
+  // Position -10 to -13 = HOME RED
+  // Position -20 to -23 = HOME GREEN  
+  // Position -30 to -33 = HOME YELLOW
+  // Position -40 to -43 = HOME BLUE
   const HOME_BASE_VALUES = { R: -10, G: -20, Y: -30, B: -40 };
-  if (position >= HOME_BASE_VALUES[color] && position <= HOME_BASE_VALUES[color] + 3) {
-    const homeIndex = position - HOME_BASE_VALUES[color]; // 0, 1, 2, 3
+  if (position <= HOME_BASE_VALUES[color] && position >= HOME_BASE_VALUES[color] - 3) {
+    const homeIndex = HOME_BASE_VALUES[color] - position; // 0, 1, 2, 3
     const homePawnIndex = HOME_PAWN_INDICES[color][homeIndex];
     const homePawn = HOME_PAWNS[homePawnIndex];
     return center(homePawn.label, cellSize, padding, showHeaders);

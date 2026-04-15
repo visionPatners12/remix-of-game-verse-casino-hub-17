@@ -231,6 +231,7 @@ export const PawnLayer: React.FC<PawnLayerProps> = ({
         const displayPosition = getDisplayPosition(pawnInfo);
         const isCurrentlyAnimating = animatingPawn?.playerId === pawnInfo.playerId && 
                                       animatingPawn?.pawnIndex === pawnInfo.pawnIndex;
+        const isMidAnimation = isCurrentlyAnimating && animatingPawn && !animatingPawn.isComplete;
         
         const basePos = positionToCoordinates(
           displayPosition, 
@@ -252,7 +253,7 @@ export const PawnLayer: React.FC<PawnLayerProps> = ({
         const isClickable = pawnInfo.color === currentTurn && 
           possibleMoves.some(move => move.pawnIndex === pawnInfo.pawnIndex) && 
           !isMoving &&
-          !animatingPawn;
+          !isMidAnimation;
         
         return (
           <InteractivePawn
@@ -266,10 +267,10 @@ export const PawnLayer: React.FC<PawnLayerProps> = ({
             isPressed={isPressed}
             cellSize={cellSize}
             isStacked={isStacked && !isCurrentlyAnimating}
-            onClick={() => isClickable && !isMoving && !animatingPawn && onPawnClick?.(pawnInfo.playerId, pawnInfo.pawnIndex)}
-            onMouseEnter={() => !isMoving && !animatingPawn && setHoveredPawn(pawnId)}
+            onClick={() => isClickable && onPawnClick?.(pawnInfo.playerId, pawnInfo.pawnIndex)}
+            onMouseEnter={() => isClickable && setHoveredPawn(pawnId)}
             onMouseLeave={() => setHoveredPawn(null)}
-            onTouchStart={() => !isMoving && !animatingPawn && setPressedPawn(pawnId)}
+            onTouchStart={() => isClickable && setPressedPawn(pawnId)}
             onTouchEnd={() => setPressedPawn(null)}
           />
         );

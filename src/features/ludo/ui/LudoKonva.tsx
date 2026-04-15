@@ -29,6 +29,37 @@ import { isPlayerTurnSimple } from '../utils/turnValidation';
 import { logger } from '@/utils/logger';
 import '../styles/dice.css';
 
+function calculatePossibleMoves(diceValue: number, playerColor: string, positions: Positions): UIMove[] {
+  if (!positions || !playerColor) return [];
+  
+  const gameState = {
+    R: positions.R ?? [-10, -11, -12, -13],
+    G: positions.G ?? [-20, -21, -22, -23],
+    Y: positions.Y ?? [-30, -31, -32, -33],
+    B: positions.B ?? [-40, -41, -42, -43],
+  };
+  
+  const color = playerColor as Color;
+  const modelMoves = getModelPossibleMoves(gameState, color, diceValue);
+  
+  return modelMoves.map(({ pawnIndex, moveResult }) => {
+    const pos = gameState[color][pawnIndex];
+    const isHome = pos <= HOME_BASE[color] && pos >= HOME_BASE[color] - 3;
+    const isPrison = isInEnemyPrison(pos, color);
+    
+    let from: 'home' | 'prison' | 'track' = 'track';
+    if (isHome) from = 'home';
+    else if (isPrison) from = 'prison';
+    
+    return {
+      pawnIndex,
+      from,
+      canExit: from === 'home' || from === 'prison',
+      target: moveResult.newPosition,
+    };
+  });
+}
+
 export const LudoKonva: React.FC = () => {
   const { gameId } = useParams<{ gameId: string }>();
   const navigate = useNavigate();
@@ -141,8 +172,15 @@ export const LudoKonva: React.FC = () => {
     }
   }, [gameData?.turn, currentPlayer?.color, gameData?.dice, gameId]);
 
+  // Clear stale animations when a new dice roll begins (new turn cycle)
+  React.useEffect(() => {
+    if (animatingPawn?.isComplete) {
+      clearAnimation();
+    }
+  }, [gameData?.dice, gameData?.turn]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Synchronize possible moves when game state changes (page reload, realtime updates)
-  // Auto-skip turn if no valid moves available
+  // Auto-skip turn if no valid moves available (only for the active player)
   React.useEffect(() => {
     const isMyTurnNow = isPlayerTurnSimple(currentPlayer?.color, gameData?.turn);
     const isGameActive = gameData?.status === 'active';
@@ -153,57 +191,28 @@ export const LudoKonva: React.FC = () => {
       
       if (moves.length > 0) {
         setWaitingForMove(true);
-        logger.debug('🔄 Synced possible moves on state change:', {
-          dice: gameData.dice,
-          color: currentPlayer.color,
-          movesCount: moves.length,
-          moves: moves.map(m => ({ pawn: m.pawnIndex, target: m.target }))
-        });
       } else {
-        // No valid moves available → auto-skip turn after a short delay
         setWaitingForMove(false);
-        logger.debug('⏭️ No valid moves available, will auto-skip in 2 seconds...', {
-          dice: gameData.dice,
-          color: currentPlayer.color
-        });
         
-        // Show immediate feedback that no moves are available
         toast({
           title: "No moves available",
-          description: "Your turn will be skipped in 2 seconds...",
+          description: "Your turn will be skipped...",
         });
         
-        // Delay before auto-skip to let player see the situation
         const skipTimeout = setTimeout(() => {
-          // Skip without animating the dice
+          if (!isPlayerTurnSimple(currentPlayer?.color, gameData?.turn)) return;
+          
           supabase.functions.invoke('ludo-game', {
             body: { action: 'skip', gameId }
           }).then(({ data, error }) => {
             if (error) {
-              logger.error('❌ Failed to skip turn:', error);
-              toast({
-                title: "Error",
-                description: "Failed to skip turn",
-                variant: "destructive"
-              });
+              logger.error('Failed to skip turn:', error);
             } else if (!data?.ok) {
-              logger.error('❌ Skip rejected:', data?.code, data?.error);
-              toast({
-                title: "Error",
-                description: data?.error || "Failed to skip turn",
-                variant: "destructive"
-              });
-            } else {
-              logger.debug('✅ Turn skipped successfully:', data);
-              // Handle game end if skip triggered finish
-              if (data.finished && data.winner) {
-                logger.debug('🏆 Game finished after skip:', data.winner);
-              }
+              logger.error('Skip rejected:', data?.code, data?.error);
             }
           });
-        }, 2000);
+        }, 3000);
         
-        // Cleanup timeout if component unmounts or dependencies change
         return () => clearTimeout(skipTimeout);
       }
     } else if (!isMyTurnNow || gameData?.dice === null) {
@@ -213,6 +222,7 @@ export const LudoKonva: React.FC = () => {
   }, [gameData?.dice, gameData?.turn, gameData?.positions, currentPlayer?.color, gameData?.status, gameId, toast]);
 
   // Synchronize clearAnimation with actual backend positions via realtime
+  // Also clear on any position change after animation completes (handles edge cases)
   React.useEffect(() => {
     if (!animatingPawn || !animatingPawn.isComplete) return;
     if (!gameData?.positions) return;
@@ -220,22 +230,22 @@ export const LudoKonva: React.FC = () => {
     const color = animatingPawn.color;
     const pawnIndex = animatingPawn.pawnIndex;
     const targetPosition = animatingPawn.path[animatingPawn.path.length - 1];
-
     const currentPositions = gameData.positions[color];
     if (!currentPositions) return;
 
     const actualPosition = currentPositions[pawnIndex];
 
-    // If the actual position matches the animation target, clear the animation
     if (actualPosition === targetPosition) {
-      logger.debug('✅ Positions synced, clearing animation:', {
-        color,
-        pawnIndex,
-        targetPosition,
-        actualPosition
-      });
       clearAnimation();
+      return;
     }
+
+    // Fallback: if positions changed but don't match target (e.g., server resolved differently),
+    // still clear the animation after a short delay to avoid stuck state
+    const fallback = setTimeout(() => {
+      clearAnimation();
+    }, 2000);
+    return () => clearTimeout(fallback);
   }, [gameData?.positions, animatingPawn, clearAnimation]);
 
   // Remote movement detection - animate pawns for other players
@@ -248,52 +258,48 @@ export const LudoKonva: React.FC = () => {
     const currentPositions = gameData.positions;
     const prevPositions = previousPositionsRef.current;
 
-    // First load - just save positions
     if (!prevPositions) {
       previousPositionsRef.current = JSON.parse(JSON.stringify(currentPositions));
       return;
     }
 
-    // If this was a local move, skip remote animation (we already animated)
     if (isLocalMoveRef.current) {
       isLocalMoveRef.current = false;
       previousPositionsRef.current = JSON.parse(JSON.stringify(currentPositions));
       return;
     }
 
-    // Detect which pawn moved by comparing positions
+    // Detect the primary mover (the pawn that moved on the track, not a captured pawn)
     const colors: Color[] = ['R', 'G', 'Y', 'B'];
-    let foundMove = false;
+    let primaryMove: { color: Color; pawnIndex: number; from: number; to: number } | null = null;
     
     for (const color of colors) {
-      if (foundMove) break; // Exit outer loop if move already found
-      
       const prev = prevPositions[color];
       const curr = currentPositions[color];
       if (!prev || !curr) continue;
 
       for (let pawnIndex = 0; pawnIndex < 4; pawnIndex++) {
         if (prev[pawnIndex] !== curr[pawnIndex]) {
-          foundMove = true; // Mark as found to exit both loops
+          const movedForward = curr[pawnIndex] >= 0 || curr[pawnIndex] === 999 ||
+            (curr[pawnIndex] >= 100 && curr[pawnIndex] < 500);
           
-          // Movement detected! Generate path and animate
-          const path = generatePath(prev[pawnIndex], curr[pawnIndex], color);
-          
-          // Find the player for this color
-          const player = players.find(p => p.color === color);
-          if (player && path.length > 0) {
-            logger.debug('🎬 Remote movement detected, animating:', {
-              color,
-              pawnIndex,
-              from: prev[pawnIndex],
-              to: curr[pawnIndex],
-              pathLength: path.length
-            });
-            startAnimation(player.id, pawnIndex, color, path);
-            playPieceMoveSound();
+          // Prefer the pawn that moved forward on track/safe/goal (not one sent to prison)
+          if (!primaryMove || movedForward) {
+            primaryMove = { color, pawnIndex, from: prev[pawnIndex], to: curr[pawnIndex] };
+            if (movedForward) break;
           }
-          break; // Exit inner loop
         }
+      }
+      if (primaryMove && (primaryMove.to >= 0 || primaryMove.to === 999 ||
+          (primaryMove.to >= 100 && primaryMove.to < 500))) break;
+    }
+
+    if (primaryMove) {
+      const path = generatePath(primaryMove.from, primaryMove.to, primaryMove.color);
+      const player = players.find(p => p.color === primaryMove!.color);
+      if (player && path.length > 0) {
+        startAnimation(player.id, primaryMove.pawnIndex, primaryMove.color, path);
+        playPieceMoveSound();
       }
     }
 
@@ -366,44 +372,6 @@ export const LudoKonva: React.FC = () => {
 
   const waitingRoomCurrent =
     playersWithUsernames.find((p) => user?.id && p.user_id === user.id) ?? null;
-
-  // Calculate possible moves using the centralized movement model (with blockade checks)
-  const calculatePossibleMoves = (diceValue: number, playerColor: string, positions: Positions): UIMove[] => {
-    if (!positions || !playerColor) return [];
-    
-    const gameState = {
-      R: positions.R ?? [-10, -11, -12, -13],
-      G: positions.G ?? [-20, -21, -22, -23],
-      Y: positions.Y ?? [-30, -31, -32, -33],
-      B: positions.B ?? [-40, -41, -42, -43],
-    };
-    
-    const color = playerColor as Color;
-    const modelMoves = getModelPossibleMoves(gameState, color, diceValue);
-    
-    logger.debug('🎲 calculatePossibleMoves (via movement.ts):', {
-      diceValue, playerColor,
-      positions: gameState[color],
-      movesCount: modelMoves.length,
-    });
-    
-    return modelMoves.map(({ pawnIndex, moveResult }) => {
-      const pos = gameState[color][pawnIndex];
-      const isHome = pos <= HOME_BASE[color] && pos >= HOME_BASE[color] - 3;
-      const isPrison = isInEnemyPrison(pos, color);
-      
-      let from: 'home' | 'prison' | 'track' = 'track';
-      if (isHome) from = 'home';
-      else if (isPrison) from = 'prison';
-      
-      return {
-        pawnIndex,
-        from,
-        canExit: from === 'home' || from === 'prison',
-        target: moveResult.newPosition,
-      };
-    });
-  };
 
   const handleDiceRolled = (diceValue: number) => {
     if (!currentPlayer || !gameData?.positions) return;
@@ -512,7 +480,7 @@ export const LudoKonva: React.FC = () => {
                   gamePositions={gameData?.positions}
                   possibleMoves={possibleMoves}
                   onPawnClick={handlePawnClick}
-                  isMoving={isMoving || isAnimating}
+                  isMoving={isMoving}
                   currentTurn={gameData?.turn}
                   animatingPawn={animatingPawn}
                 />
