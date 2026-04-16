@@ -116,11 +116,11 @@ export const DiceWidget: React.FC<DiceWidgetProps> = ({
     prevDiceRef.current = diceValue;
 
     if (!isRolling) {
-      // Remote player rolled - show short animation then result
+      // Remote player rolled - show animation then hold result
       startRollingAnimation();
       animTimeoutRef.current = setTimeout(() => {
         stopAnimation(diceValue);
-      }, 900);
+      }, 1400);
     } else {
       // Already rolling (e.g. local roll) - just update display when animation ends
       setDisplayValue(diceValue);

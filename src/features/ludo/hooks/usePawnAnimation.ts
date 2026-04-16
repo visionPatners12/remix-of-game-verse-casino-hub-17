@@ -17,7 +17,7 @@ interface UsePawnAnimationReturn {
   isAnimating: boolean;
 }
 
-const STEP_DURATION = 100; // ms per cell — snappy
+const STEP_DURATION = 150; // ms per cell — smooth and visible
 const MAX_ANIMATION_MS = 8000; // safety: auto-clear after 8s no matter what
 
 export function usePawnAnimation(): UsePawnAnimationReturn {

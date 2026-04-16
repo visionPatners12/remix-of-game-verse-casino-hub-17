@@ -118,12 +118,21 @@ export const LudoKonva: React.FC = () => {
   }, [startGame, user?.id]);
 
   // Auto-play handler when timer expires - only the active player triggers it
+  // Adds a visible delay so the user can see the timeout before auto-play executes
   const handleTimeExpired = useCallback(async () => {
     if (isAutoPlaying || gameData?.status !== 'active') return;
-    // Only the player whose turn it is should trigger autoPlay
     if (currentPlayer?.color !== gameData?.turn) return;
     
     setIsAutoPlaying(true);
+
+    toast({
+      title: "⏰ Time's up!",
+      description: "Auto-playing your turn...",
+    });
+
+    // Let the user see the timeout notification before auto-playing
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
     try {
       const { data, error } = await supabase.functions.invoke('ludo-game', {
         body: { action: 'autoPlay', gameId }
@@ -132,23 +141,27 @@ export const LudoKonva: React.FC = () => {
       if (error) {
         logger.debug('AutoPlay error:', error);
       } else if (!data?.ok) {
-        // Handle backend error response
         logger.debug('AutoPlay rejected:', data?.code, data?.error);
       } else if (data?.action === 'auto_played') {
         toast({
-          title: "⏰ Time's up!",
-          description: `Auto-played a move`,
+          title: "Auto-played",
+          description: `Rolled ${data.diceValue} — moved a piece`,
         });
       } else if (data?.action === 'auto_no_move') {
         toast({
-          title: "⏰ Time's up!",
-          description: "No valid moves - turn skipped",
+          title: "No valid moves",
+          description: `Rolled ${data.diceValue} — turn skipped`,
         });
       } else if (data?.action === 'aborted_or_finished') {
         toast({
           title: "Game ended",
           description: data?.winner ? `Winner: ${data.winner}` : "Game was aborted",
         });
+      }
+
+      // Allow time for the dice animation + pawn animation to be seen via realtime
+      if (data?.action === 'auto_played') {
+        await new Promise(resolve => setTimeout(resolve, 2500));
       }
     } catch (error) {
       logger.debug('AutoPlay already triggered by another player');

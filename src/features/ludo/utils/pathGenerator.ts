@@ -88,6 +88,6 @@ export function generatePath(
 /**
  * Calcule la durée totale de l'animation en ms
  */
-export function calculateAnimationDuration(pathLength: number, stepDuration: number = 120): number {
+export function calculateAnimationDuration(pathLength: number, stepDuration: number = 150): number {
   return pathLength * stepDuration;
 }

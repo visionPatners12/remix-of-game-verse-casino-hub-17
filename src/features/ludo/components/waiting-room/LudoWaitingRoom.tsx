@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Copy, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -107,7 +107,6 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
 }) => {
   const [showShareModal, setShowShareModal] = useState(false);
   const maxPlayers = Math.min(4, Math.max(2, maxPlayersProp ?? 4));
-  const autoStartRequested = useRef(false);
 
   const { user } = useAuth();
   const { toast } = useToast();
@@ -163,28 +162,6 @@ export const LudoWaitingRoom: React.FC<LudoWaitingRoomProps> = ({
     }
   };
 
-
-  // Auto-start when at least 2 players are in the room and all are ready (no hard-coded wait for 4).
-  // Host can still wait before marking ready if they do not want an early auto-start in a 4-capacity room.
-  useEffect(() => {
-    const everyoneReady =
-      players.length >= 2 &&
-      players.every(
-        (p) =>
-          p.deposit_status === 'confirmed' ||
-          p.deposit_status === 'free' ||
-          p.is_ready
-      );
-
-    if (!everyoneReady || isStartingGame) {
-      autoStartRequested.current = false;
-      return;
-    }
-
-    if (autoStartRequested.current) return;
-    autoStartRequested.current = true;
-    onStartGame();
-  }, [players, isStartingGame, onStartGame]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col relative ludo-pattern-bg">
